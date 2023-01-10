@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/splash_back"
+        tools:context=".intro.WelcomeFragment">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/_20sdp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/_20sdp" />
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtCreateAct"
+            style="@style/SmallCustomMaterialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:text="@string/new_user_sign_up"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/glEnd"
+            app:layout_constraintStart_toEndOf="@id/glStart" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLogin"
+            style="@style/CustomMaterialButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_8sdp"
+            android:text="@string/login"
+            app:layout_constraintBottom_toTopOf="@id/txtCreateAct"
+            app:layout_constraintEnd_toStartOf="@id/glEnd"
+            app:layout_constraintStart_toEndOf="@id/glStart" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtRandom"
+            style="@style/MediumCustomMaterialTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/it_s_time_to_get_you_moving"
+            app:layout_constraintBottom_toTopOf="@id/btnLogin"
+            app:layout_constraintEnd_toStartOf="@id/glEnd"
+            app:layout_constraintStart_toEndOf="@id/glStart"
+            app:lineHeight="@dimen/_36sdp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtCreate"
+            style="@style/SmallCustomMaterialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_or_sign_up"
+            app:layout_constraintBottom_toTopOf="@id/txtRandom"
+            app:layout_constraintStart_toEndOf="@id/glStart" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
