@@ -1,4 +1,4 @@
-package com.example.kite.forgetpassword
+package com.example.kite.program
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.kite.R
-import com.example.kite.databinding.FragmentForgetPasswordBinding
+import com.example.kite.databinding.FragmentSelectProgramBinding
 
-class ForgetPasswordFragment : Fragment() {
-    private lateinit var binding: FragmentForgetPasswordBinding
+
+class SelectProgramFragment : Fragment() {
+    private lateinit var binding: FragmentSelectProgramBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -18,17 +19,13 @@ class ForgetPasswordFragment : Fragment() {
     ): View {
         binding = DataBindingUtil.inflate(
             LayoutInflater.from(context),
-            R.layout.fragment_forget_password,
+            R.layout.fragment_select_program,
             container,
             false
         )
-        loadFragment()
+        // Inflate the layout for this fragment
         return binding.root
     }
 
-    private fun loadFragment() {
-        binding.imgBack.setOnClickListener {
-            requireActivity().onBackPressed()
-        }
-    }
+
 }

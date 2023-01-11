@@ -16,4 +16,26 @@
     <string name="forget_password"><u>Forget Password?</u></string>
     <string name="don_t_have_an_account">Don\'t have an account</string>
     <string name="password_CAPS">PASSWORD</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="looks_like_it_s_your_first_time_here">Looks like it\'s your first time here.</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="country">Country</string>
+    <string name="terms">I have read,and agree to the Terms and Conditions and Privacy Policy provided.</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="select_your_program">Select Your Program</string>
+    <string name="program_text">Let\'s get a better idea of where you are.</string>
+    <string name="email_address_small">Email Address</string>
+    <string name="confirm">Confirm</string>
+    <string name="don_t_see_your_property_search_now">Don\'t see your property? Search Now</string>
+    <string name="search">Search</string>
+    <string name="otp">OTP</string>
+
+    //String array
+    <string-array name="country_list">
+        <item>United States</item>
+        <item>Canada</item>
+    </string-array>
+
 </resources>

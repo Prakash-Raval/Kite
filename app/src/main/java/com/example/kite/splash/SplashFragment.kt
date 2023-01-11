@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.kite.R
 import com.example.kite.databinding.FragmentSplashBinding
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 
 class SplashFragment : Fragment() {
     private lateinit var binding: FragmentSplashBinding
@@ -18,10 +20,7 @@ class SplashFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-
-
-binding = DataBindingUtil.inflate(
+        binding = DataBindingUtil.inflate(
             LayoutInflater.from(context),
             R.layout.fragment_splash,
             container,
@@ -30,6 +29,7 @@ binding = DataBindingUtil.inflate(
         Handler(Looper.getMainLooper()).postDelayed({
             loadFragment()
         }, 3000)
+
         return binding.root
     }
 

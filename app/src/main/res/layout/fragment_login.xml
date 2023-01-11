@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".login.LoginFragment">
+        tools:context=".login.ui.LoginFragment">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/loginToolbar"
@@ -78,14 +78,11 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtEmail"
+            style="@style/CapitalTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp"
-            android:fontFamily="@font/avenir_light"
             android:text="@string/email_address"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_8sdp"
-            android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/glStart"
             app:layout_constraintTop_toBottomOf="@id/txtNext" />
 
@@ -110,14 +107,11 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtPassword"
+            style="@style/CapitalTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp"
-            android:fontFamily="@font/avenir_light"
             android:text="@string/password_CAPS"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_8sdp"
-            android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/glStart"
             app:layout_constraintTop_toBottomOf="@id/txtLoginEmail" />
 
@@ -135,7 +129,6 @@
                 style="@style/TextEditText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:focusable="false"
                 android:hint="@string/password"
                 android:inputType="textPassword" />
 

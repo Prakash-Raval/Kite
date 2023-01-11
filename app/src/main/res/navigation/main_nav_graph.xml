@@ -27,7 +27,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.kite.login.LoginFragment"
+        android:name="com.example.kite.login.ui.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -43,6 +43,6 @@
         android:label="ForgetPasswordFragment" />
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.example.kite.signup.SignUpFragment"
+        android:name="com.example.kite.signup.ui.SignUpFragment"
         android:label="SignUpFragment" />
 </navigation>

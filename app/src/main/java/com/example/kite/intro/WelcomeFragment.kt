@@ -33,5 +33,4 @@ class WelcomeFragment : Fragment() {
             findNavController().navigate(R.id.action_welcomeFragment_to_loginFragment)
         }
     }
-
 }

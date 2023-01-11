@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".program.SelectProgramFragment">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/programToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/BlackSmallCustomMaterialTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/select_your_program" />
+
+        </com.google.android.material.appbar.MaterialToolbar>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/programToolbar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/glStart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="@dimen/_20sdp" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/glEnd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_end="@dimen/_20sdp" />
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txtSearchBox"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    app:hintEnabled="false"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtLoginEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:hint="@string/search"
+                        android:inputType="text"
+                        android:drawableEnd="@drawable/ic_search"
+                        android:textCursorDrawable="@drawable/text_cursor_drawable" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtProgram"
+                    style="@style/BlackMediumCustomMaterialTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/program_text"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/_24sdp"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/txtSearchBox"
+                    app:lineHeight="@dimen/_24sdp" />
+
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/vpProgram"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_400sdp"
+                    android:background="@color/black"
+                    app:layout_constraintTop_toBottomOf="@id/txtProgram">
+
+                </androidx.viewpager2.widget.ViewPager2>
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnConfirm"
+                    style="@style/BlackCustomMaterialButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/_30sdp"
+                    android:text="@string/confirm"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/vpProgram" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtSearch"
+                    style="@style/BlackSmallCustomMaterialTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_20sdp"
+                    android:fontFamily="@font/avenir_regular"
+                    android:text="@string/don_t_see_your_property_search_now"
+                    android:textAlignment="center"
+                    android:textColor="#28282D"
+                    android:textSize="@dimen/_10sdp"
+                    android:textStyle="normal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/btnConfirm" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

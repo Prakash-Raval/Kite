@@ -1,4 +1,4 @@
-package com.example.kite.login
+package com.example.kite.login.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
