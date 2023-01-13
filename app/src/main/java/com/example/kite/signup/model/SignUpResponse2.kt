@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class SignUpResponse(
+data class SignUpResponse2(
     @JsonProperty("code")
     var code: Int? = null,
     @JsonProperty("data")
@@ -39,6 +39,8 @@ data class SignUpResponse(
         var deviceType: String? = null,
         @JsonProperty("dynamic_message")
         var dynamicMessage: String? = null,
+        @JsonProperty("is_default_card")
+        var isDefaultCard: Int? = null,
         @JsonProperty("is_first_ride")
         var isFirstRide: Int? = null,
         @JsonProperty("is_verify")
@@ -47,7 +49,29 @@ data class SignUpResponse(
         var otpCode: Int? = null,
         @JsonProperty("schedule_ride_message")
         var scheduleRideMessage: String? = null,
+        @JsonProperty("schedule_ride_message_french")
+        var scheduleRideMessageFrench: Any? = null,
         @JsonProperty("schedule_title")
-        var scheduleTitle: String? = null
-    )
+        var scheduleTitle: String? = null,
+        @JsonProperty("schedule_title_french")
+        var scheduleTitleFrench: Any? = null,
+        @JsonProperty("subscription")
+        var subscription: Subscription? = null
+    ) {
+        @JsonIgnoreProperties(ignoreUnknown = true)
+        data class Subscription(
+            @JsonProperty("is_subscribe")
+            var isSubscribe: Int? = null,
+            @JsonProperty("is_subscription_autorenewal")
+            var isSubscriptionAutorenewal: Int? = null,
+            @JsonProperty("subscription_end_date")
+            var subscriptionEndDate: String? = null,
+            @JsonProperty("subscription_name")
+            var subscriptionName: String? = null,
+            @JsonProperty("subscription_price")
+            var subscriptionPrice: Double? = null,
+            @JsonProperty("subscription_start_date")
+            var subscriptionStartDate: String? = null
+        )
+    }
 }

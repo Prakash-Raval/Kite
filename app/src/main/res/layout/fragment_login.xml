@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+            <variable
+                name="loginData"
+                type="com.example.kite.login.viewmodel.LoginViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -98,6 +100,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edtLoginEmail"
                 style="@style/TextEditText"
+                android:text="@={loginData.loginData.email}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/email"
@@ -127,6 +130,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edtLoginPassword"
                 style="@style/TextEditText"
+                android:text="@={loginData.loginData.password}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/password"
@@ -152,6 +156,7 @@
             android:id="@+id/btnLogin"
             style="@style/BlackCustomMaterialButton"
             android:layout_width="0dp"
+            android:onClick="@{ () -> loginData.checkValidation()}"
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/_30sdp"
             android:text="@string/login"

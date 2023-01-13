@@ -10,17 +10,18 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/bg_splash"
-        tools:context=".splash.SplashFragment">
+        tools:context=".BoardingFragment">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/kite_logo_white"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vpSlider"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_300sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+
+        </androidx.viewpager2.widget.ViewPager2>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

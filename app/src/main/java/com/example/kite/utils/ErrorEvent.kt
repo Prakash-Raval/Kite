@@ -1,6 +1,6 @@
 package com.example.kite.utils
 
-open class Event<out T>(private val content: T) {
+open class ErrorEvent<out T>(private val content: T) {
 
     private var hasBeenHandled = false
 

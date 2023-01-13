@@ -31,6 +31,10 @@
     <string name="don_t_see_your_property_search_now">Don\'t see your property? Search Now</string>
     <string name="search">Search</string>
     <string name="otp">OTP</string>
+    <string name="confirmation_code">Confirmation Code</string>
+    <string name="confirmation_text">We\'ve sent you a 4 digit confirmation code to 9999999999. Please enter it below to confirm your mobile number.</string>
+    <string name="type_code">Type Code</string>
+    <string name="send_agin_text">Haven\'t received the OTP? Send it again now</string>
 
     //String array
     <string-array name="country_list">

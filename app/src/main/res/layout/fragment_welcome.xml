@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/splash_back"
+        android:background="@color/black"
         tools:context=".intro.WelcomeFragment">
 
         <androidx.constraintlayout.widget.Guideline
@@ -33,6 +33,7 @@
             style="@style/SmallCustomMaterialTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textStyle="normal"
             android:layout_marginBottom="@dimen/_20sdp"
             android:text="@string/new_user_sign_up"
             app:layout_constraintBottom_toBottomOf="parent"

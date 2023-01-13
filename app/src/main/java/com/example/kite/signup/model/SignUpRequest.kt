@@ -1,11 +1,17 @@
 package com.example.kite.signup.model
 
+
 data class SignUpRequest(
-    val Firstname: String,
-    val lastName: String,
-    val email: String,
-    val mobile: String,
-    val country: String,
-    val password : String,
-    val confirmPassword : String,
+    var Firstname: String = "",
+    var lastName: String = "",
+    var email: String = "",
+    var mobile: String = "",
+    var country: String = "Canada",
+    var password: String = "",
+    var confirmPassword: String = "",
+    var lang: Int = 0,
+    var country_code: Int = +91,
+    var device_token: Long = 1234567893,
+    var device_type: Int = 2,
+    var signup_type: Int = 1
 )

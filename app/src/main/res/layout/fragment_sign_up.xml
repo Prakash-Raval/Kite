@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="signUpData"
-            type="com.example.kite.signup.model.SignUpRequest" />
+            type="com.example.kite.signup.viewmodel.SignUpViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -102,11 +104,11 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edtFirstName"
                         style="@style/TextEditText"
-                        android:text="@{signUpData.email}"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="@string/first_name"
-                        android:inputType="text" />
+                        android:inputType="text"
+                        android:text="@={signUpData.signUPData.firstname}" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -135,7 +137,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="@string/last_name"
-                        android:inputType="text" />
+                        android:inputType="text"
+                        android:text="@={signUpData.signUPData.lastName}" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -164,7 +167,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="@string/email_address_small"
-                        android:inputType="textEmailAddress" />
+                        android:inputType="textEmailAddress"
+                        android:text="@={signUpData.signUPData.email}" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -193,7 +197,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="@string/mobile_number"
-                        android:inputType="phone" />
+                        android:inputType="phone"
+                        android:text="@={signUpData.signUPData.mobile}" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -251,7 +256,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="@string/password"
-                        android:inputType="textPassword" />
+                        android:inputType="textPassword"
+                        android:text="@={signUpData.signUPData.password}" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -280,7 +286,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="@string/confirm_password"
-                        android:inputType="textPassword" />
+                        android:inputType="textPassword"
+                        android:text="@={signUpData.signUPData.confirmPassword}" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -314,6 +321,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="@dimen/_20sdp"
+                    android:onClick="@{() -> signUpData.saveCustomer()}"
                     android:text="@string/submit"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/glEnd"

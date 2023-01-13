@@ -2,7 +2,9 @@ package com.example.kite
 
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
@@ -20,7 +22,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var pDrawerLayout: DrawerLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-       // window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+      /*  window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.transparent)
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.transparent)*/
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setUpNavigation()
     }
