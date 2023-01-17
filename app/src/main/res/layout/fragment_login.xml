@@ -100,7 +100,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edtLoginEmail"
                 style="@style/TextEditText"
-                android:text="@={loginData.loginData.email}"
+                android:text="@={loginData.loginData.customer_email}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/email"

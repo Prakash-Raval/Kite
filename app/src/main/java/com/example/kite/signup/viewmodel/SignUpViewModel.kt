@@ -24,9 +24,9 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
     val errorLiveData: LiveData<ErrorEvent<String>>
         get() = errorMessage
 
+
     fun saveCustomer() {
         Log.d("testdata", signUPData.Firstname)
-
         if (signUPData.Firstname.isEmpty()) {
             errorMessage.value = ErrorEvent("Please fill first name")
         } else if (signUPData.lastName.isEmpty()) {
@@ -40,7 +40,7 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
             errorMessage.value = ErrorEvent("Please enter valid Email")
         } else if (signUPData.mobile.isEmpty()) {
             errorMessage.value = ErrorEvent("Please enter Phone number")
-        } else if (signUPData.mobile < 10.toString()) {
+        } else if (signUPData.mobile <= 10.toString()) {
             errorMessage.value = ErrorEvent("Please valid phone number")
         } else if (signUPData.password.isEmpty()) {
             errorMessage.value = ErrorEvent("Please enter password")
@@ -76,14 +76,16 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
         try {
             val response = repository.setSignUp(requestBody)
             if (response.isSuccessful) {
+
                 signUpResult.postValue(response.body())
             } else {
                 // handle error
-                Log.d("TESTLOG1", response.body().toString())
+                errorMessage.value = ErrorEvent(response.message())
+                Log.d("TEST-LOG1", response.body().toString())
             }
         } catch (e: Exception) {
             // handle exception
-            Log.d("TESTLOG1", e.message.toString())
+            Log.d("TEST-LOG1", e.message.toString())
         }
     }
 

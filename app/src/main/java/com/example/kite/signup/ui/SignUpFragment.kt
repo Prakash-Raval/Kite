@@ -1,6 +1,6 @@
 package com.example.kite.signup.ui
 
-import android.graphics.Typeface
+import android.content.Context
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
@@ -8,7 +8,6 @@ import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
-import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +17,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.kite.R
 import com.example.kite.constants.Constants
 import com.example.kite.databinding.FragmentSignUpBinding
@@ -58,23 +58,40 @@ class SignUpFragment : Fragment() {
 
     private fun loadFragment() {
         binding.imgBack.setOnClickListener {
-            requireActivity().onBackPressed()
+            findNavController().navigateUp()
         }
     }
 
     private fun getSignUpData() {
+        //shared pref to store access token
+        val sharedPreference = activity?.getSharedPreferences("TOKEN_PREFERENCE", Context.MODE_PRIVATE)
+        val editor = sharedPreference?.edit()
+
+
+
         val signUpService =
             RetrofitHelper.getInstance(Constants.BASE_URL).create(ApiInterface::class.java)
         val repository = SignUpRepository(signUpService)
         viewModel =
             ViewModelProvider(this, SignUpVMFFactory(repository))[SignUpViewModel::class.java]
         binding.signUpData = viewModel
-
         binding.lifecycleOwner = this
         spannableText()
         viewModel.errorLiveData.observe(viewLifecycleOwner) {
             it.getContentIfNotHandled()?.let { it1 ->
                 Toast.makeText(requireContext(), it1, Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        viewModel.signUpLiveData.observe(viewLifecycleOwner) {
+            editor?.putString("token",it.data?.accessToken)
+            editor?.apply()
+            if (it.code == 200) {
+                val action =
+                    SignUpFragmentDirections.actionSignUpFragmentToOtpFragment()
+                findNavController().navigate(action)
+            } else {
+                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -86,8 +103,10 @@ class SignUpFragment : Fragment() {
             override fun updateDrawState(ds: TextPaint) {
                 ds.isUnderlineText = true
             }
-            override fun onClick(p0: View) {
 
+            override fun onClick(p0: View) {
+                val action = SignUpFragmentDirections.actionSignUpFragmentToPolicyFragment()
+                findNavController().navigate(action)
             }
         }
 
@@ -95,7 +114,10 @@ class SignUpFragment : Fragment() {
             override fun updateDrawState(ds: TextPaint) {
                 ds.isUnderlineText = true
             }
+
             override fun onClick(p0: View) {
+                val action = SignUpFragmentDirections.actionSignUpFragmentToTermsFragment()
+                findNavController().navigate(action)
             }
         }
 
@@ -116,13 +138,13 @@ class SignUpFragment : Fragment() {
             Spannable.SPAN_INCLUSIVE_INCLUSIVE
         )
         spannable.setSpan(
-            privacy,
+            terms,
             29,
             49,
             Spannable.SPAN_INCLUSIVE_INCLUSIVE
         )
         spannable.setSpan(
-            terms,
+            privacy,
             54,
             68,
             Spannable.SPAN_INCLUSIVE_INCLUSIVE

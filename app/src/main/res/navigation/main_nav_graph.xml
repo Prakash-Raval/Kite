@@ -47,5 +47,32 @@
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.example.kite.signup.ui.SignUpFragment"
-        android:label="SignUpFragment" />
+        android:label="SignUpFragment" >
+        <action
+            android:id="@+id/action_signUpFragment_to_otpFragment"
+            app:destination="@id/otpFragment" />
+        <action
+            android:id="@+id/action_signUpFragment_to_policyFragment"
+            app:destination="@id/policyFragment" />
+        <action
+            android:id="@+id/action_signUpFragment_to_termsFragment"
+            app:destination="@id/termsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/otpFragment"
+        android:name="com.example.kite.otpverification.ui.OtpFragment"
+        android:label="OtpFragment" >
+       <!-- <argument
+            android:name="userData"
+            app:argType="com.example.kite.signup.model.SignUpResponse2"
+            android:defaultValue="@null" />-->
+    </fragment>
+    <fragment
+        android:id="@+id/policyFragment"
+        android:name="com.example.kite.policy.PolicyFragment"
+        android:label="PolicyFragment" />
+    <fragment
+        android:id="@+id/termsFragment"
+        android:name="com.example.kite.policy.TermsFragment"
+        android:label="TermsFragment" />
 </navigation>

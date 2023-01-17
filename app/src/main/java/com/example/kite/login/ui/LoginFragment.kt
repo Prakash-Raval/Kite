@@ -47,8 +47,9 @@ class LoginFragment : Fragment() {
             findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
         }
         binding.imgBack.setOnClickListener {
-            requireActivity().onBackPressed()
+            //requireActivity().onBackPressed()
             //Navigation.findNavController(requireActivity(),R.id.welcomeFragment)
+            findNavController().navigateUp()
         }
     }
 

@@ -1,4 +1,4 @@
-package com.example.kite.otpvarification.model
+package com.example.kite.otpverification.model
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="otpData"
+            type="com.example.kite.otpverification.viewmodel.OtpViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".otpvarification.ui.OtpFragment">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/glStart"
@@ -80,6 +80,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_30sdp"
+            app:hintEnabled="false"
+            app:boxStrokeColor="@color/black"
             app:layout_constraintEnd_toStartOf="@id/glEnd"
             app:layout_constraintStart_toEndOf="@id/glStart"
             app:layout_constraintTop_toBottomOf="@id/txtGetOtp">
@@ -90,8 +92,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
+                android:textColorHint="#28282D"
                 android:hint="@string/type_code"
                 android:inputType="number"
+                android:text="@={otpData.otpData.otpCode}"
                 android:textSize="@dimen/_20sdp"
                 android:textStyle="bold" />
 
@@ -103,6 +107,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_30sdp"
+            android:onClick="@{()-> otpData.checkValidation()}"
             android:text="@string/confirm"
             app:layout_constraintEnd_toStartOf="@id/glEnd"
             app:layout_constraintStart_toEndOf="@id/glStart"

@@ -14,45 +14,52 @@ import com.example.kite.utils.ErrorEvent
 import kotlinx.coroutines.launch
 
 class LoginViewModel(private val repository: LoginRepository) : ViewModel() {
-    private val signUpResult = MutableLiveData<LoginResponse>()
-    val signUpLiveData: LiveData<LoginResponse>
-        get() = signUpResult
+    //setting up response data
+    private val loginResponse = MutableLiveData<LoginResponse>()
+    val loginLiveData: LiveData<LoginResponse>
+        get() = loginResponse
+
+    //for getting entered login data
     var loginData = LoginRequest()
+
+    //for showing error message
     private val errorMessage = MutableLiveData<ErrorEvent<String>>()
     val errorLiveData: LiveData<ErrorEvent<String>>
         get() = errorMessage
 
+    //checking validation
     fun checkValidation() {
-        if (loginData.email.isEmpty()) {
+        if (loginData.customer_email.isEmpty()) {
             errorMessage.value = ErrorEvent("Please enter email")
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(loginData.email).matches()) {
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(loginData.customer_email).matches()) {
             errorMessage.value = ErrorEvent("Please enter valid email")
-        } else if (loginData.email != signUpLiveData.value?.data?.customerEmail) {
-            errorMessage.value = ErrorEvent("Not Registered with us")
         } else if (loginData.password.isEmpty()) {
             errorMessage.value = ErrorEvent("Please enter password")
         } else if (!Constants.PASSWORD_PATTERN.matcher(loginData.password).matches()) {
             errorMessage.value = ErrorEvent("Please enter valid password")
-        } else if (loginData.password != signUpLiveData.value?.data?.password) {
-            errorMessage.value = ErrorEvent("Wrong Password")
         } else {
-            loginUser(LoginRequest(loginData.email, loginData.password))
+            //passing the data to request body
+            loginUser(LoginRequest(loginData.customer_email, loginData.password))
         }
     }
 
     private fun loginUser(loginRequest: LoginRequest) = viewModelScope.launch {
         try {
+            //setting up the response
             val response = repository.setLogin(loginRequest)
+            Log.d("Test_log 2", response.body().toString())
             if (response.isSuccessful) {
-                signUpResult.postValue(response.body())
-                Log.d("TESTLOG1", response.body().toString())
+                loginResponse.postValue(response.body())
+                errorMessage.value = ErrorEvent("Login successfully")
+                Log.d("TEST-LOG1", response.body().toString())
             } else {
                 // handle error
-                Log.d("TESTLOG1", response.body().toString())
+                errorMessage.value = ErrorEvent("Login Unsuccessfully")
+                Log.d("TEST-LOG2", response.body().toString())
             }
         } catch (e: Exception) {
             // handle exception
-            Log.d("TESTLOG1", e.message.toString())
+            Log.d("TEST-LOG3", e.message.toString())
         }
     }
 

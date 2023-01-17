@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.kite.R
 import com.example.kite.databinding.FragmentForgetPasswordBinding
 
@@ -28,7 +29,7 @@ class ForgetPasswordFragment : Fragment() {
 
     private fun loadFragment() {
         binding.imgBack.setOnClickListener {
-            requireActivity().onBackPressed()
+            findNavController().navigateUp()
         }
     }
 }

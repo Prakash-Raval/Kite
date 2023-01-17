@@ -9,6 +9,7 @@ object Constants {
     const val SIGNUP_URL = "customer/add_customer"
     const val OTP_URL = "customer/customer_verify_otp"
     const val FORGOT_PASSWORD_URL = "customer/forgot_password_customer"
+    const val THIRD_PARTY_LIST = "customer/list_third_parties"
     val PASSWORD_PATTERN: Pattern =
         Pattern.compile(
             "^" +
