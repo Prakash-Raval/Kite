@@ -26,6 +26,7 @@ class OtpViewModel(val repository: OtpRepository) :
         get() = errorMessage
 
     var otpData = OtpRequest()
+
     private lateinit var token: String
 
     fun otpCheck(token: String) {

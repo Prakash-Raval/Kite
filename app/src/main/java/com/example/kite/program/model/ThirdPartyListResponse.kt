@@ -3,7 +3,7 @@ package com.example.kite.program.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-data class ProgramListResponse(
+data class ThirdPartyListResponse(
     @JsonProperty("code")
     var code: Int? = null,
     @JsonProperty("data")

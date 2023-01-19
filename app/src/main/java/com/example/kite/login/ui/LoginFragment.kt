@@ -47,8 +47,6 @@ class LoginFragment : Fragment() {
             findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
         }
         binding.imgBack.setOnClickListener {
-            //requireActivity().onBackPressed()
-            //Navigation.findNavController(requireActivity(),R.id.welcomeFragment)
             findNavController().navigateUp()
         }
     }
@@ -67,7 +65,15 @@ class LoginFragment : Fragment() {
                 Toast.makeText(requireContext(), it1, Toast.LENGTH_SHORT).show()
             }
         }
+
+        viewModel.loginLiveData.observe(viewLifecycleOwner) {
+            if(it.code == 200){
+                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToSelectProgramFragment())
+            }
+            else
+            {
+                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
-
-
 }

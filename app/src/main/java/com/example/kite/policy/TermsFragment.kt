@@ -43,8 +43,9 @@ class TermsFragment : Fragment() {
                 settings.javaScriptEnabled = true
                 settings.setSupportZoom(true)
                 loadUrl("https://admin.kitemobilitydev.com/#/terms-condition?lang=english")
+                binding.progress.visibility = View.INVISIBLE
             }
-            binding.progress.visibility = View.INVISIBLE
+
         }
     }
 }

@@ -76,7 +76,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_16sdp"
                     android:text="@string/looks_like_it_s_your_first_time_here"
-                    android:textSize="@dimen/_20sdp"
+                    android:textSize="@dimen/_24sdp"
                     app:layout_constraintEnd_toStartOf="@id/glEnd"
                     app:layout_constraintStart_toEndOf="@id/glStart"
                     app:layout_constraintTop_toTopOf="parent"
@@ -117,7 +117,7 @@
                     style="@style/CapitalTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_16sdp"
                     android:text="@string/last_name"
                     app:layout_constraintStart_toEndOf="@id/glStart"
                     app:layout_constraintTop_toBottomOf="@id/txtSignUpFirstName" />
@@ -147,7 +147,7 @@
                     style="@style/CapitalTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_16sdp"
                     android:text="@string/email_address"
                     app:layout_constraintStart_toEndOf="@id/glStart"
                     app:layout_constraintTop_toBottomOf="@id/txtSignUpLastName" />
@@ -177,7 +177,7 @@
                     style="@style/CapitalTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_16sdp"
                     android:text="@string/mobile_number"
                     app:layout_constraintStart_toEndOf="@id/glStart"
                     app:layout_constraintTop_toBottomOf="@id/txtSignUpEmail" />
@@ -207,7 +207,7 @@
                     style="@style/CapitalTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_16sdp"
                     android:text="@string/country"
                     app:layout_constraintStart_toEndOf="@id/glStart"
                     app:layout_constraintTop_toBottomOf="@id/txtMobileNumber" />
@@ -217,7 +217,6 @@
                     style="@style/TextInputLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:padding="0dp"
                     app:layout_constraintEnd_toStartOf="@id/glEnd"
                     app:layout_constraintStart_toEndOf="@id/glStart"
                     app:layout_constraintTop_toBottomOf="@id/txtCountry">
@@ -237,7 +236,7 @@
                     style="@style/CapitalTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_16sdp"
                     android:text="@string/password"
                     app:layout_constraintStart_toEndOf="@id/glStart"
                     app:layout_constraintTop_toBottomOf="@id/txtCountryName" />
@@ -267,7 +266,7 @@
                     style="@style/CapitalTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_16sdp"
                     android:text="@string/confirm_password"
                     app:layout_constraintStart_toEndOf="@id/glStart"
                     app:layout_constraintTop_toBottomOf="@id/txtSignUpPassword" />

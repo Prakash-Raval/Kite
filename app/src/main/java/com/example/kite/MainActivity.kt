@@ -1,7 +1,6 @@
 package com.example.kite
 
 import android.os.Bundle
-import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -15,6 +14,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import com.example.kite.databinding.ActivityMainBinding
 
+
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -22,9 +22,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var pDrawerLayout: DrawerLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-      /*  window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.statusBarColor = ContextCompat.getColor(this, R.color.transparent)
-        window.navigationBarColor = ContextCompat.getColor(this, R.color.transparent)*/
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setUpNavigation()
     }
@@ -36,16 +33,19 @@ class MainActivity : AppCompatActivity() {
 //        appBarConfiguration =
 //            AppBarConfiguration(setOf(R.id.nav_home, R.id.nav_forecast), pDrawerLayout)
         pNavigationView.setupWithNavController(pNavController)
-//        pNavController.addOnDestinationChangedListener { _, destination, _ ->
-//            when (destination.id) {
-//                R.id.nav_home -> {
-//                    showDrawer()
-//
-//                }
-//                R.id.nav_forecast -> showDrawer()
-//                else -> hideDrawer()
-//            }
-//        }
+        pNavController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.splashFragment -> {
+                    window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+
+                }
+                else -> {
+
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+                }
+
+            }
+        }
     }
 
     private fun hideDrawer() {
@@ -60,10 +60,23 @@ class MainActivity : AppCompatActivity() {
 
         } else {
             pDrawerLayout.closeDrawer(GravityCompat.START)
+            statusBar()
         }
     }
 
     override fun onSupportNavigateUp(): Boolean {
         return pNavController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+
+    private fun statusBar() {
+        // window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        /*  window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+          window.statusBarColor = ContextCompat.getColor(this, R.color.transparent)
+          window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)*/
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        //window.statusBarColor = ContextCompat.getColor(this, R.color.white)
+        window.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.white_status_bar))
+
+    }
+
 }

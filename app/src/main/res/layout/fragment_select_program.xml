@@ -64,20 +64,24 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
+                    app:boxStrokeColor="@color/box_stroke_color"
                     app:hintEnabled="false"
                     app:layout_constraintEnd_toStartOf="@id/glEnd"
                     app:layout_constraintStart_toEndOf="@id/glStart"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edtLoginEmail"
+                        android:id="@+id/edtSearch"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/white"
-                        android:hint="@string/search"
-                        android:inputType="text"
+                        android:backgroundTint="@color/white"
                         android:drawableEnd="@drawable/ic_search"
-                        android:textCursorDrawable="@drawable/text_cursor_drawable" />
+                        android:hint="@string/search"
+                        android:imeOptions="actionSearch"
+                        android:inputType="text"
+                        android:textColorHint="@color/black"
+                        android:textCursorDrawable="@drawable/text_cursor_drawable"
+                        android:textStyle="bold" />
 
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -87,10 +91,10 @@
                     style="@style/BlackMediumCustomMaterialTextView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_16sdp"
                     android:text="@string/program_text"
                     android:textAlignment="center"
                     android:textSize="@dimen/_24sdp"
-                    android:layout_marginTop="@dimen/_16sdp"
                     app:layout_constraintEnd_toStartOf="@id/glEnd"
                     app:layout_constraintStart_toEndOf="@id/glStart"
                     app:layout_constraintTop_toBottomOf="@id/txtSearchBox"
@@ -100,13 +104,10 @@
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/vpProgram"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_400sdp"
-                    android:background="@color/black"
-                    app:layout_constraintTop_toBottomOf="@id/txtProgram">
-
-
-
-                </androidx.viewpager2.widget.ViewPager2>
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/txtProgram" />
 
 
                 <com.google.android.material.button.MaterialButton
@@ -116,13 +117,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="@dimen/_30sdp"
                     android:text="@string/confirm"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toStartOf="@id/glEnd"
                     app:layout_constraintStart_toEndOf="@id/glStart"
                     app:layout_constraintTop_toBottomOf="@id/vpProgram" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txtSearch"
-                    style="@style/BlackSmallCustomMaterialTextView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
@@ -131,8 +132,7 @@
                     android:text="@string/don_t_see_your_property_search_now"
                     android:textAlignment="center"
                     android:textColor="#28282D"
-                    android:textSize="@dimen/_10sdp"
-                    android:textStyle="normal"
+                    android:textSize="@dimen/_12sdp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/glEnd"
                     app:layout_constraintStart_toEndOf="@id/glStart"

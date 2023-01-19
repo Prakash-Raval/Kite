@@ -5,6 +5,8 @@ import com.example.kite.login.model.LoginRequest
 import com.example.kite.login.model.LoginResponse
 import com.example.kite.otpverification.model.OtpRequest
 import com.example.kite.otpverification.model.OtpResponse
+import com.example.kite.program.model.ThirdPartyListRequest
+import com.example.kite.program.model.ThirdPartyListResponse
 import com.example.kite.signup.model.SignUpResponse2
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -43,6 +45,6 @@ interface ApiInterface {
     suspend fun setLogin(@Body loginRequest: LoginRequest): Response<LoginResponse>
 
     @POST(Constants.THIRD_PARTY_LIST)
-    suspend fun setList()
+    suspend fun setList(@Body listRequest: ThirdPartyListRequest): Response<ThirdPartyListResponse>
 
 }

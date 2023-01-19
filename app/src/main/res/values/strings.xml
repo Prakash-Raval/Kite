@@ -38,6 +38,7 @@
     <string name="terms_and_conditions">Terms and Conditions</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="terms_and_service">Terms and Service</string>
+    <string name="map_coming_soon">Map Coming Soon</string>
 
     //String array
     <string-array name="country_list">

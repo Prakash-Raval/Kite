@@ -5,9 +5,9 @@
     android:id="@+id/textViewFeelings"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textStyle="bold"
     android:fontFamily="@font/avenir_light"
-    android:padding="@dimen/_10sdp"
+    android:paddingHorizontal="0dp"
+    android:paddingVertical="@dimen/_10sdp"
     android:textColor="@color/black"
     android:textSize="@dimen/_12sdp"
     tools:text="TextView" />

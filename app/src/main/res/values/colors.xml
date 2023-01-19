@@ -10,6 +10,7 @@
 
     //added colors
     <color name="bg_splash">#F15C60</color>
+    <color name="bg_main">#F15C60</color>
 
     //button
     <color name="bg_button">#F15C60</color>
@@ -20,5 +21,7 @@
     <color name="box_stroke_color">#231F20</color>
     <color name="cursor_color">#99231F20</color>
     <color name="transparent">@android:color/transparent</color>
+    //on boarding
+    <color name="bg_boarding">#DDE5E9</color>
 
 </resources>

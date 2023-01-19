@@ -6,14 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebViewClient
-import androidx.core.view.isNotEmpty
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.kite.R
 import com.example.kite.databinding.FragmentPolicyBinding
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class PolicyFragment : Fragment() {
@@ -30,7 +28,6 @@ class PolicyFragment : Fragment() {
             container,
             false
         )
-        binding.progress.visibility = View.VISIBLE
         loadData()
         binding.imgBack.setOnClickListener {
             findNavController().navigateUp()
@@ -40,15 +37,15 @@ class PolicyFragment : Fragment() {
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun loadData() {
-
-        lifecycleScope.launch{
+        lifecycleScope.launch {
             binding.wvPolicy.apply {
                 webViewClient = WebViewClient()
                 settings.javaScriptEnabled = true
                 settings.setSupportZoom(true)
                 loadUrl("https://admin.kitemobilitydev.com/#/privacy-policy?lang=english")
+
             }
-            binding.progress.visibility = View.INVISIBLE
+
         }
     }
 }

@@ -9,18 +9,18 @@
         android:id="@+id/splashFragment"
         android:name="com.example.kite.splash.SplashFragment"
         android:label="fragment_splash"
-        tools:layout="@layout/fragment_splash" >
+        tools:layout="@layout/fragment_splash">
         <action
             android:id="@+id/action_splashFragment_to_welcomeFragment"
             app:destination="@id/welcomeFragment"
             app:popUpTo="@+id/main_nav_graph"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/welcomeFragment"
         android:name="com.example.kite.intro.WelcomeFragment"
         android:label="fragment_welcome"
-        tools:layout="@layout/fragment_welcome" >
+        tools:layout="@layout/fragment_welcome">
         <action
             android:id="@+id/action_welcomeFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
@@ -32,13 +32,16 @@
         android:id="@+id/loginFragment"
         android:name="com.example.kite.login.ui.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_forgetPasswordFragment"
             app:destination="@id/forgetPasswordFragment" />
         <action
             android:id="@+id/action_loginFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_selectProgramFragment"
+            app:destination="@id/selectProgramFragment" />
     </fragment>
     <fragment
         android:id="@+id/forgetPasswordFragment"
@@ -47,7 +50,7 @@
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.example.kite.signup.ui.SignUpFragment"
-        android:label="SignUpFragment" >
+        android:label="SignUpFragment">
         <action
             android:id="@+id/action_signUpFragment_to_otpFragment"
             app:destination="@id/otpFragment" />
@@ -61,11 +64,8 @@
     <fragment
         android:id="@+id/otpFragment"
         android:name="com.example.kite.otpverification.ui.OtpFragment"
-        android:label="OtpFragment" >
-       <!-- <argument
-            android:name="userData"
-            app:argType="com.example.kite.signup.model.SignUpResponse2"
-            android:defaultValue="@null" />-->
+        android:label="OtpFragment">
+
     </fragment>
     <fragment
         android:id="@+id/policyFragment"
@@ -75,4 +75,8 @@
         android:id="@+id/termsFragment"
         android:name="com.example.kite.policy.TermsFragment"
         android:label="TermsFragment" />
+    <fragment
+        android:id="@+id/selectProgramFragment"
+        android:name="com.example.kite.program.SelectProgramFragment"
+        android:label="SelectProgramFragment" />
 </navigation>
