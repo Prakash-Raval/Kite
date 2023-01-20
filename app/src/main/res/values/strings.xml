@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Kite</string>
+    <string name="app_name" translatable="false">Kite</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="new_user_sign_up">New User? Sign Up</string>
     <string name="login_or_sign_up">Login or Sign Up</string>
@@ -16,29 +16,49 @@
     <string name="forget_password"><u>Forget Password?</u></string>
     <string name="don_t_have_an_account">Don\'t have an account</string>
     <string name="password_CAPS">PASSWORD</string>
-    <string name="sign_up">Sign Up</string>
-    <string name="looks_like_it_s_your_first_time_here">Looks like it\'s your first time here.</string>
-    <string name="first_name">First Name</string>
-    <string name="last_name">Last Name</string>
-    <string name="mobile_number">Mobile Number</string>
-    <string name="country">Country</string>
-    <string name="terms">I have read,and agree to the Terms and Conditions and Privacy Policy provided.</string>
-    <string name="confirm_password">Confirm Password</string>
-    <string name="select_your_program">Select Your Program</string>
+    <string name="sign_up" translatable="false">Sign Up</string>
+    <string name="looks_like_it_s_your_first_time_here" translatable="false">Looks like it\'s your first time here.</string>
+    <string name="first_name" translatable="false">First Name</string>
+    <string name="last_name" translatable="false">Last Name</string>
+    <string name="mobile_number" translatable="false">Mobile Number</string>
+    <string name="country" translatable="false">Country</string>
+    <string name="terms" translatable="false">I have read,and agree to the Terms and Conditions and Privacy Policy provided.</string>
+    <string name="confirm_password" translatable="false">Confirm Password</string>
+    <string name="select_your_program" translatable="false">Select Your Program</string>
     <string name="program_text">Let\'s get a better idea of where you are.</string>
-    <string name="email_address_small">Email Address</string>
-    <string name="confirm">Confirm</string>
-    <string name="don_t_see_your_property_search_now">Don\'t see your property? Search Now</string>
-    <string name="search">Search</string>
-    <string name="otp">OTP</string>
-    <string name="confirmation_code">Confirmation Code</string>
-    <string name="confirmation_text">We\'ve sent you a 4 digit confirmation code to 9999999999. Please enter it below to confirm your mobile number.</string>
-    <string name="type_code">Type Code</string>
-    <string name="send_agin_text">Haven\'t received the OTP? Send it again now</string>
-    <string name="terms_and_conditions">Terms and Conditions</string>
-    <string name="privacy_policy">Privacy Policy</string>
-    <string name="terms_and_service">Terms and Service</string>
-    <string name="map_coming_soon">Map Coming Soon</string>
+    <string name="email_address_small" translatable="false">Email Address</string>
+    <string name="confirm" translatable="false">Confirm</string>
+    <string name="don_t_see_your_property_search_now" translatable="false">Don\'t see your property? Search Now</string>
+    <string name="search" translatable="false">Search</string>
+    <string name="otp" translatable="false">OTP</string>
+    <string name="confirmation_code" translatable="false">Confirmation Code</string>
+    <string name="confirmation_text" translatable="false">We\'ve sent you a 4 digit confirmation code to 9999999999. Please enter it below to confirm your mobile number.</string>
+    <string name="type_code" translatable="false">Type Code</string>
+    <string name="send_agin_text" translatable="false">Haven\'t received the OTP? Send it again now</string>
+    <string name="terms_and_conditions" translatable="false">Terms and Conditions</string>
+    <string name="privacy_policy" translatable="false">Privacy Policy</string>
+    <string name="terms_and_service" translatable="false">Terms and Service</string>
+    <string name="map_coming_soon" translatable="false">Map Coming Soon</string>
+    <string name="help" translatable="false">Help</string>
+    <string name="start_your_next_trip" translatable="false">Start your next trip</string>
+    <string name="tap" translatable="false">Tap on a pickup point to navigate and book your next ride.</string>
+    <string name="ok" translatable="false">Ok</string>
+    <string name="wallet" translatable="false">Wallet</string>
+    <string name="ride_history" translatable="false">Ride History</string>
+    <string name="support" translatable="false">Support</string>
+    <string name="property_selection" translatable="false">Property Selection</string>
+    <string name="setting" translatable="false">Setting</string>
+    <string name="no_past_completed_booking_found" translatable="false">No past completed booking found</string>
+    <string name="change_password">Change Password</string>
+    <string name="current_password">Current Password</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_new_password">Confirm New Password</string>
+    <string name="select_payment">Select Payment</string>
+    <string name="your_card">Your Card</string>
+    <string name="save">Save</string>
+    <string name="add_card">Add Card</string>
+    <string name="no_cards_available">No Cards Available</string>
+    <string name="add_new_card">Add New Card</string>
 
     //String array
     <string-array name="country_list">

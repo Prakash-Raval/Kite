@@ -79,4 +79,8 @@
         android:id="@+id/selectProgramFragment"
         android:name="com.example.kite.program.SelectProgramFragment"
         android:label="SelectProgramFragment" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.kite.home.HomeFragment"
+        android:label="HomeFragment" />
 </navigation>

@@ -22,23 +22,39 @@ class LoginViewModel(private val repository: LoginRepository) : ViewModel() {
     //for getting entered login data
     var loginData = LoginRequest()
 
+    var isCheck = false
+
+    var errorData = MutableLiveData<ErrorModel>()
+    /*val error: LiveData<ErrorModel>
+        get() = errorData
+*/
+
     //for showing error message
-    private val errorMessage = MutableLiveData<ErrorEvent<String>>()
-    val errorLiveData: LiveData<ErrorEvent<String>>
-        get() = errorMessage
+     var errorMessage = MutableLiveData<ErrorEvent<ErrorModel>>()
+   /* val errorLiveData: LiveData<ErrorEvent<ErrorModel>>
+        get() = errorMessage*/
 
     //checking validation
     fun checkValidation() {
         if (loginData.customer_email.isEmpty()) {
-            errorMessage.value = ErrorEvent("Please enter email")
+            errorData.value?.errorMessage = "Please enter email"
+            errorData.value?.fromWhere = "Email"
+            errorMessage.value = ErrorEvent(ErrorModel("please enter Email","Email"))
         } else if (!Patterns.EMAIL_ADDRESS.matcher(loginData.customer_email).matches()) {
-            errorMessage.value = ErrorEvent("Please enter valid email")
+            errorData.value?.errorMessage = "Please enter valid email"
+            errorData.value?.fromWhere = "Email"
+           // errorMessage.value = ErrorEvent("Please enter valid email")
         } else if (loginData.password.isEmpty()) {
-            errorMessage.value = ErrorEvent("Please enter password")
+            errorData.value?.errorMessage = "Please enter password"
+            errorData.value?.fromWhere = "Password"
+            //errorMessage.value = ErrorEvent("Please enter password")
         } else if (!Constants.PASSWORD_PATTERN.matcher(loginData.password).matches()) {
-            errorMessage.value = ErrorEvent("Please enter valid password")
+            errorData.value?.errorMessage = "Please enter valid password"
+            errorData.value?.fromWhere = "Password"
+            //errorMessage.value = ErrorEvent("Please enter valid password")
         } else {
             //passing the data to request body
+            isCheck = true
             loginUser(LoginRequest(loginData.customer_email, loginData.password))
         }
     }
@@ -50,11 +66,11 @@ class LoginViewModel(private val repository: LoginRepository) : ViewModel() {
             Log.d("Test_log 2", response.body().toString())
             if (response.isSuccessful) {
                 loginResponse.postValue(response.body())
-                errorMessage.value = ErrorEvent("Login successfully")
+               // errorMessage.value = ErrorEvent("Login successfully")
                 Log.d("TEST-LOG1", response.body().toString())
             } else {
                 // handle error
-                errorMessage.value = ErrorEvent("Login Unsuccessfully")
+                //errorMessage.value = ErrorEvent("Login Unsuccessfully")
                 Log.d("TEST-LOG2", response.body().toString())
             }
         } catch (e: Exception) {

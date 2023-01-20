@@ -19,7 +19,80 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/_20sdp" />
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/_20sdp" />
+
+
+        <View
+            android:id="@+id/viewMenu"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:background="@drawable/bg_menu"
+            app:layout_constraintStart_toEndOf="@id/glStart"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_menu"
+            app:layout_constraintBottom_toBottomOf="@id/viewMenu"
+            app:layout_constraintEnd_toEndOf="@id/viewMenu"
+            app:layout_constraintStart_toStartOf="@id/viewMenu"
+            app:layout_constraintTop_toTopOf="@id/viewMenu" />
+
+        <View
+            android:id="@+id/viewHelp"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:background="@drawable/bg_rect_home"
+            app:layout_constraintEnd_toStartOf="@id/glEnd"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtHelp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/avenir_black"
+            android:text="@string/help"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@id/viewHelp"
+            app:layout_constraintEnd_toEndOf="@id/viewHelp"
+            app:layout_constraintStart_toStartOf="@id/viewHelp"
+            app:layout_constraintTop_toTopOf="@id/viewHelp" />
+
+
+        <View
+            android:id="@+id/viewGps"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:background="@drawable/bg_menu"
+            app:layout_constraintEnd_toStartOf="@id/glEnd"
+            app:layout_constraintTop_toBottomOf="@id/viewHelp" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgGps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_menu"
+            app:layout_constraintBottom_toBottomOf="@id/viewGps"
+            app:layout_constraintEnd_toEndOf="@id/viewGps"
+            app:layout_constraintStart_toStartOf="@id/viewGps"
+            app:layout_constraintTop_toTopOf="@id/viewGps" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

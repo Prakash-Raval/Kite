@@ -30,8 +30,8 @@ class MainActivity : AppCompatActivity() {
         pDrawerLayout = binding.drawerLayout
         val pNavigationView = binding.navView
         pNavController = findNavController(R.id.nav_host_fragment)
-//        appBarConfiguration =
-//            AppBarConfiguration(setOf(R.id.nav_home, R.id.nav_forecast), pDrawerLayout)
+        appBarConfiguration =
+            AppBarConfiguration(setOf(), pDrawerLayout)
         pNavigationView.setupWithNavController(pNavController)
         pNavController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
                     window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
 
                 }
+
                 else -> {
 
                     window.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)

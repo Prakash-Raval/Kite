@@ -1,10 +1,13 @@
 package com.example.kite.login.ui
 
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -60,12 +63,29 @@ class LoginFragment : Fragment() {
 
         binding.loginData = viewModel
         binding.lifecycleOwner = this
-        viewModel.errorLiveData.observe(viewLifecycleOwner) {
+        viewModel.errorMessage.observe(viewLifecycleOwner) {
             it.getContentIfNotHandled()?.let { it1 ->
-                Toast.makeText(requireContext(), it1, Toast.LENGTH_SHORT).show()
+                if(it1.fromWhere == "Email"){
+                    binding.txtLoginEmail.error = it1.errorMessage
+                    binding.txtEmail.setTextColor(ContextCompat.getColor(requireContext(),R.color.error_text))
+                }
+                //Toast.makeText(requireContext(), it1, Toast.LENGTH_SHORT).show()
             }
         }
 
+        //getting error message from error model
+       /* viewModel.error.observe(viewLifecycleOwner){
+            Log.d("ErrorMessage",it.toString())
+            if(it.fromWhere == "Email"){
+                binding.txtLoginEmail.error= it.errorMessage
+                Log.d("error from email",it.errorMessage)
+            }
+            else{
+                binding.txtLoginPassword.error = it.errorMessage
+            }
+        }*/
+
+        //checking login state
         viewModel.loginLiveData.observe(viewLifecycleOwner) {
             if(it.code == 200){
                 findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToSelectProgramFragment())

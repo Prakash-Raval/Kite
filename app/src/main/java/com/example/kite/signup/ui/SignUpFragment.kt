@@ -53,7 +53,7 @@ class SignUpFragment : Fragment() {
     private fun countryList() {
         val feelings = resources.getStringArray(R.array.country_list)
         binding.edtCountry.adapter =
-            activity?.let { ArrayAdapter(it, R.layout.dropdown_item, feelings) }
+            activity?.let { ArrayAdapter(it, R.layout.item_dropdown_spinner, feelings) }
     }
 
     private fun loadFragment() {
