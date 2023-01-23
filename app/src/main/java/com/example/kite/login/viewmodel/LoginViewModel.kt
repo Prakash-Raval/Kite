@@ -19,43 +19,33 @@ class LoginViewModel(private val repository: LoginRepository) : ViewModel() {
     val loginLiveData: LiveData<LoginResponse>
         get() = loginResponse
 
-    //for getting entered login data
+    //for getting entered login data for xml
     var loginData = LoginRequest()
 
-    var isCheck = false
-
-    var errorData = MutableLiveData<ErrorModel>()
-    /*val error: LiveData<ErrorModel>
-        get() = errorData
-*/
-
     //for showing error message
-     var errorMessage = MutableLiveData<ErrorEvent<ErrorModel>>()
-   /* val errorLiveData: LiveData<ErrorEvent<ErrorModel>>
-        get() = errorMessage*/
+    var errorMessage = MutableLiveData<ErrorEvent<ErrorModel>>()
+
 
     //checking validation
     fun checkValidation() {
-        if (loginData.customer_email.isEmpty()) {
-            errorData.value?.errorMessage = "Please enter email"
-            errorData.value?.fromWhere = "Email"
-            errorMessage.value = ErrorEvent(ErrorModel("please enter Email","Email"))
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(loginData.customer_email).matches()) {
-            errorData.value?.errorMessage = "Please enter valid email"
-            errorData.value?.fromWhere = "Email"
-           // errorMessage.value = ErrorEvent("Please enter valid email")
-        } else if (loginData.password.isEmpty()) {
-            errorData.value?.errorMessage = "Please enter password"
-            errorData.value?.fromWhere = "Password"
-            //errorMessage.value = ErrorEvent("Please enter password")
-        } else if (!Constants.PASSWORD_PATTERN.matcher(loginData.password).matches()) {
-            errorData.value?.errorMessage = "Please enter valid password"
-            errorData.value?.fromWhere = "Password"
-            //errorMessage.value = ErrorEvent("Please enter valid password")
-        } else {
-            //passing the data to request body
-            isCheck = true
-            loginUser(LoginRequest(loginData.customer_email, loginData.password))
+        when {
+            loginData.customer_email.isEmpty() -> {
+                errorMessage.value = ErrorEvent(ErrorModel("please enter Email", "Email"))
+            }
+            !Patterns.EMAIL_ADDRESS.matcher(loginData.customer_email).matches() -> {
+                errorMessage.value = ErrorEvent(ErrorModel("please enter valid Email", "Email"))
+            }
+            loginData.password.isEmpty() -> {
+                errorMessage.value = ErrorEvent(ErrorModel("please enter Password", "Password"))
+            }
+            !Constants.PASSWORD_PATTERN.matcher(loginData.password).matches() -> {
+                errorMessage.value =
+                    ErrorEvent(ErrorModel("Password minimum length should be 6", "Password"))
+            }
+            else -> {
+                //passing the data to request body
+                loginUser(LoginRequest(loginData.customer_email, loginData.password))
+            }
         }
     }
 
@@ -66,11 +56,9 @@ class LoginViewModel(private val repository: LoginRepository) : ViewModel() {
             Log.d("Test_log 2", response.body().toString())
             if (response.isSuccessful) {
                 loginResponse.postValue(response.body())
-               // errorMessage.value = ErrorEvent("Login successfully")
                 Log.d("TEST-LOG1", response.body().toString())
             } else {
                 // handle error
-                //errorMessage.value = ErrorEvent("Login Unsuccessfully")
                 Log.d("TEST-LOG2", response.body().toString())
             }
         } catch (e: Exception) {
@@ -79,4 +67,27 @@ class LoginViewModel(private val repository: LoginRepository) : ViewModel() {
         }
     }
 
+    //method for checking on email filed
+    //to show errors
+    fun onEmailTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+        if (s.isEmpty()) {
+            errorMessage.value = ErrorEvent(ErrorModel("please enter Email", "Email"))
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(s).matches()) {
+            errorMessage.value = ErrorEvent(ErrorModel("please enter Valid Email", "Email"))
+        } else {
+            errorMessage.value = ErrorEvent(ErrorModel("", "Email"))
+        }
+    }
+
+    //method for checking on password filed
+    //to show errors
+    fun onPasswordTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+        if (s.isEmpty()) {
+            errorMessage.value = ErrorEvent(ErrorModel("Please Enter Password", "Password"))
+        } else if (!Constants.PASSWORD_PATTERN.matcher(s).matches()) {
+            errorMessage.value = ErrorEvent(ErrorModel("Password Too Weak", "Password"))
+        } else {
+            errorMessage.value = ErrorEvent(ErrorModel("", "Password"))
+        }
+    }
 }

@@ -78,9 +78,45 @@
     <fragment
         android:id="@+id/selectProgramFragment"
         android:name="com.example.kite.program.SelectProgramFragment"
-        android:label="SelectProgramFragment" />
+        android:label="SelectProgramFragment">
+        <action
+            android:id="@+id/action_selectProgramFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.kite.home.HomeFragment"
-        android:label="HomeFragment" />
+        android:label="HomeFragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_supportFragment"
+            app:destination="@id/supportFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/supportFragment"
+        android:name="com.example.kite.support.SupportFragment"
+        android:label="SupportFragment" />
+    <fragment
+        android:id="@+id/addCardFragment"
+        android:name="com.example.kite.addcard.AddCardFragment"
+        android:label="AddCardFragment" />
+    <fragment
+        android:id="@+id/rideHistoryFragment"
+        android:name="com.example.kite.history.RideHistoryFragment"
+        android:label="RideHistoryFragment" />
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.example.kite.setting.SettingFragment"
+        android:label="SettingFragment" />
+    <fragment
+        android:id="@+id/selectPaymentFragment"
+        android:name="com.example.kite.selectpayment.SelectPaymentFragment"
+        android:label="SelectPaymentFragment" >
+        <action
+            android:id="@+id/action_selectPaymentFragment_to_addCardFragment"
+            app:destination="@id/addCardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.example.kite.notification.NotificationFragment"
+        android:label="NotificationFragment" />
 </navigation>

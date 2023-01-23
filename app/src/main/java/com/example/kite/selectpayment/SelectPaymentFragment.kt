@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.kite.R
 import com.example.kite.databinding.FragmentSelectPaymentBinding
 
@@ -24,8 +25,18 @@ class SelectPaymentFragment : Fragment() {
             container,
             false
         )
+        setUpNavigation()
         return binding.root
     }
 
+
+    private fun setUpNavigation() {
+        binding.txtAddCard.setOnClickListener {
+            findNavController().navigate(SelectPaymentFragmentDirections.actionSelectPaymentFragmentToAddCardFragment())
+        }
+        binding.imgBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
+    }
 
 }

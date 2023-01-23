@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.kite.R
 import com.example.kite.databinding.FragmentAddCardBinding
 
@@ -22,7 +23,14 @@ class AddCardFragment : Fragment() {
             container,
             false
         )
+        setNavigation()
         return binding.root
+    }
+
+    private fun setNavigation() {
+        binding.imgBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
 

@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-            <variable
-                name="loginData"
-                type="com.example.kite.login.viewmodel.LoginViewModel" />
+
+        <variable
+            name="loginData"
+            type="com.example.kite.login.viewmodel.LoginViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -100,11 +101,12 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edtLoginEmail"
                 style="@style/TextEditText"
-                android:text="@={loginData.loginData.customer_email}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/email"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:onTextChanged="@{loginData.onEmailTextChanged}"
+                android:text="@={loginData.loginData.customer_email}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -130,11 +132,12 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edtLoginPassword"
                 style="@style/TextEditText"
-                android:text="@={loginData.loginData.password}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/password"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:onTextChanged="@{loginData.onPasswordTextChanged}"
+                android:text="@={loginData.loginData.password}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -156,9 +159,9 @@
             android:id="@+id/btnLogin"
             style="@style/BlackCustomMaterialButton"
             android:layout_width="0dp"
-            android:onClick="@{ () -> loginData.checkValidation()}"
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/_30sdp"
+            android:onClick="@{ () -> loginData.checkValidation()}"
             android:text="@string/login"
             app:layout_constraintEnd_toStartOf="@id/glEnd"
             app:layout_constraintStart_toEndOf="@id/glStart"
@@ -173,9 +176,9 @@
             android:layout_marginTop="@dimen/_20sdp"
             android:fontFamily="@font/avenir_light"
             android:text="@string/don_t_have_an_account"
+            android:textSize="@dimen/_12sdp"
             android:textStyle="bold"
             app:fontFamily="@font/avenir_light"
-            android:textSize="@dimen/_12sdp"
             app:layout_constraintEnd_toStartOf="@id/glEnd"
             app:layout_constraintStart_toEndOf="@id/glStart"
             app:layout_constraintTop_toBottomOf="@id/btnLogin" />

@@ -3,7 +3,9 @@ package com.example.kite.program
 import android.content.Context
 import android.graphics.Typeface
 import android.os.Bundle
-import android.text.*
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
@@ -18,6 +20,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.ORIENTATION_HORIZONTAL
 import com.example.kite.R
@@ -55,18 +58,21 @@ class SelectProgramFragment : Fragment() {
         viewPagerStyle()
         spannableText()
         setUpTextWatcher()
-        //binding.vpProgram.animation =  getItemAnimator().setSupportsChangeAnimations(false)
-        //adding textWatcher for search view
-       // binding.edtSearch.addTextChangedListener(txtSearch)
-
+        navigate()
 
         list = ArrayList()
         adapter = ThirdPartyListAdapter(
             list, requireContext()
         )
         binding.vpProgram.adapter = adapter
-        //adapter.notifyItemChanged(binding.vpProgram.currentItem)
         return binding.root
+    }
+
+    //navigation
+    private fun navigate() {
+        binding.btnConfirm.setOnClickListener {
+            findNavController().navigate(SelectProgramFragmentDirections.actionSelectProgramFragmentToHomeFragment())
+        }
     }
 
     private fun getData() {
@@ -97,7 +103,6 @@ class SelectProgramFragment : Fragment() {
                 viewModel.getToken(token)
             }
         }
-
     }
 
     //style  for viewpager 2
@@ -163,39 +168,11 @@ class SelectProgramFragment : Fragment() {
         binding.txtSearch.text = spannable
     }
 
+    //filtering adapter list
     private fun setUpTextWatcher() {
         binding.edtSearch.onTextChanged {
-            adapter.filter.filter(it)        }
+            adapter.filter.filter(it)
+        }
     }
 
-    /*//searching text for third party listing
-    private val txtSearch = object : TextWatcher {
-        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            binding.edtSearch.setCompoundDrawables(
-                null,
-                null,
-                ContextCompat.getDrawable(requireContext(), R.drawable.ic_search),
-                null
-            )
-        }
-
-        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            binding.edtSearch.setCompoundDrawables(
-                null,
-                null,
-                ContextCompat.getDrawable(requireContext(), R.drawable.ic_close),
-                null
-            )
-            adapter.filter.filter(p0)
-        }
-
-        override fun afterTextChanged(p0: Editable?) {
-            binding.edtSearch.setCompoundDrawables(
-                null,
-                null,
-                ContextCompat.getDrawable(requireContext(), R.drawable.ic_close),
-                null
-            )
-        }
-    }*/
 }

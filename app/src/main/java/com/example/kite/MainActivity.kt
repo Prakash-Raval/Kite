@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setUpNavigation()
+        setNavigation()
     }
 
     private fun setUpNavigation() {
@@ -37,11 +38,14 @@ class MainActivity : AppCompatActivity() {
             when (destination.id) {
                 R.id.splashFragment -> {
                     window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
-
+                    hideDrawer()
                 }
-
+                R.id.homeFragment -> {
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+                    showDrawer()
+                }
                 else -> {
-
+                    hideDrawer()
                     window.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
                 }
 
@@ -49,11 +53,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //close drawer(unlock)
     private fun hideDrawer() {
         pDrawerLayout.closeDrawer(GravityCompat.START)
         pDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
     }
 
+    //open drawer (lock)
     private fun showDrawer() {
         pDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
         if (pDrawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -69,15 +75,41 @@ class MainActivity : AppCompatActivity() {
         return pNavController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
+    //changing color of status bar
     private fun statusBar() {
-        // window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-        /*  window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-          window.statusBarColor = ContextCompat.getColor(this, R.color.transparent)
-          window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)*/
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        //window.statusBarColor = ContextCompat.getColor(this, R.color.white)
         window.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.white_status_bar))
 
     }
 
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        if (pDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            pDrawerLayout.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
+        }
+    }
+
+    //managing navigation
+    private fun setNavigation() {
+        binding.menuContainer.txtCustomerSupport.setOnClickListener {
+            pNavController.navigate(R.id.supportFragment)
+        }
+        binding.menuContainer.txtCustomerWallet.setOnClickListener {
+            pNavController.navigate(R.id.selectPaymentFragment)
+        }
+        binding.menuContainer.txtCustomerSettings.setOnClickListener {
+            pNavController.navigate(R.id.settingFragment)
+        }
+        binding.menuContainer.txtCustomerRideHistory.setOnClickListener {
+            pNavController.navigate(R.id.rideHistoryFragment)
+        }
+        binding.menuContainer.txtCustomerPropertySelection.setOnClickListener {
+            pNavController.navigate(R.id.selectProgramFragment)
+        }
+        binding.menuContainer.txtUpdateNotification.setOnClickListener {
+            pNavController.navigate(R.id.notificationFragment)
+        }
+    }
 }

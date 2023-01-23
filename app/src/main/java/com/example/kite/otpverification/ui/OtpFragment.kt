@@ -25,7 +25,7 @@ class OtpFragment : Fragment() {
     private lateinit var binding: FragmentOtpBinding
     private lateinit var viewModel: OtpViewModel
 
-    //private val args : OtpFragmentArgs by navArgs()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

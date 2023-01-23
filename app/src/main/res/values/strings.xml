@@ -66,4 +66,18 @@
         <item>Canada</item>
     </string-array>
 
+    //login Strings
+    <string name="enter_email">Please enter email</string>
+    <string name="enter_password">Please enter password</string>
+    <string name="valid_email">Please enter valid email</string>
+    <string name="valid_password">Password minimum length should be 6</string>
+
+
+    <string name="english">English</string>
+    <string name="updates">Updates</string>
+    <string name="prakash">Prakash</string>
+    <string name="trip_taken_0">Trip taken : 0</string>
+    <string name="reservations">Reservati…</string>
+    <string name="notification">Notification</string>
+
 </resources>

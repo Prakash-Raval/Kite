@@ -7,15 +7,15 @@ import android.text.SpannableString
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
-import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.kite.R
 import com.example.kite.databinding.FragmentWelcomeBinding
 
@@ -31,7 +31,7 @@ class WelcomeFragment : Fragment() {
             container,
             false
         )
-
+        setBackground()
         // Inflate the layout for this fragment
         loadFragment()
         spannableText()
@@ -42,6 +42,15 @@ class WelcomeFragment : Fragment() {
         binding.btnLogin.setOnClickListener {
             findNavController().navigate(R.id.action_welcomeFragment_to_loginFragment)
         }
+    }
+
+    private fun setBackground() {
+        var requestOptions = RequestOptions()
+        requestOptions = requestOptions.transform().centerCrop()
+        Glide.with(requireContext())
+            .load(R.drawable.splash_back)
+            .apply(requestOptions)
+            .into(binding.splashBack)
     }
 
     private fun spannableText() {
@@ -76,3 +85,4 @@ class WelcomeFragment : Fragment() {
         binding.txtCreateAct.text = spannable
     }
 }
+

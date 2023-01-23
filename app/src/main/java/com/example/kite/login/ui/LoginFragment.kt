@@ -1,13 +1,10 @@
 package com.example.kite.login.ui
 
-import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -42,6 +39,7 @@ class LoginFragment : Fragment() {
         return binding.root
     }
 
+    //navigation from fragment
     private fun loadFragment() {
         binding.txtForgetPassword.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_forgetPasswordFragment)
@@ -54,6 +52,7 @@ class LoginFragment : Fragment() {
         }
     }
 
+    //getting data from api
     private fun getRetrofitData() {
         val loginService =
             RetrofitHelper.getInstance(Constants.BASE_URL).create(ApiInterface::class.java)
@@ -61,37 +60,29 @@ class LoginFragment : Fragment() {
         viewModel =
             ViewModelProvider(this, LoginVMFFactory(repository))[LoginViewModel::class.java]
 
+        //binding variable from xml
         binding.loginData = viewModel
         binding.lifecycleOwner = this
+
+        //getting error msg from view model and displaying it to related textInputLayout
         viewModel.errorMessage.observe(viewLifecycleOwner) {
             it.getContentIfNotHandled()?.let { it1 ->
-                if(it1.fromWhere == "Email"){
-                    binding.txtLoginEmail.error = it1.errorMessage
-                    binding.txtEmail.setTextColor(ContextCompat.getColor(requireContext(),R.color.error_text))
+                when (it1.fromWhere) {
+                    "Email" -> {
+                        binding.txtLoginEmail.error = it1.errorMessage
+                    }
+                    "Password" -> {
+                        binding.txtLoginPassword.error = it1.errorMessage
+                    }
                 }
-                //Toast.makeText(requireContext(), it1, Toast.LENGTH_SHORT).show()
             }
         }
 
-        //getting error message from error model
-       /* viewModel.error.observe(viewLifecycleOwner){
-            Log.d("ErrorMessage",it.toString())
-            if(it.fromWhere == "Email"){
-                binding.txtLoginEmail.error= it.errorMessage
-                Log.d("error from email",it.errorMessage)
-            }
-            else{
-                binding.txtLoginPassword.error = it.errorMessage
-            }
-        }*/
-
         //checking login state
         viewModel.loginLiveData.observe(viewLifecycleOwner) {
-            if(it.code == 200){
+            if (it.code == 200) {
                 findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToSelectProgramFragment())
-            }
-            else
-            {
+            } else {
                 Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
             }
         }

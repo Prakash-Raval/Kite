@@ -1,31 +1,202 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/glStart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="@dimen/_20sdp" />
+    <data>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/glEnd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="@dimen/_20sdp" />
+    </data>
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/imgCustomerProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_20sdp"
-        app:layout_constraintStart_toEndOf="@id/glStart"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/_6sdp">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/_30sdp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/_20sdp" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgCustomerProfile"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_40sdp"
+            android:src="@drawable/user"
+            app:layout_constraintEnd_toStartOf="@id/txtCustomerName"
+            app:layout_constraintStart_toEndOf="@id/glStart"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtCustomerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:fontFamily="@font/avenir_black"
+            android:text="@string/prakash"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_10sdp"
+            app:layout_constraintStart_toEndOf="@id/imgCustomerProfile"
+            app:layout_constraintTop_toTopOf="@id/imgCustomerProfile" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtCustomerTrip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:alpha="0.5"
+            android:text="@string/trip_taken_0"
+            android:textSize="@dimen/_10sdp"
+            app:layout_constraintBottom_toBottomOf="@id/imgCustomerProfile"
+            app:layout_constraintStart_toStartOf="@id/txtCustomerName"
+            app:layout_constraintTop_toTopOf="@id/txtCustomerName" />
+
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgKiteLogo"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:src="@drawable/kite_red_logo"
+            app:layout_constraintStart_toEndOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/imgCustomerProfile" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/txtCustomerReservation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            app:cardCornerRadius="@dimen/_20sdp"
+            app:cardElevation="0dp"
+            app:layout_constraintStart_toEndOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/imgKiteLogo"
+            app:strokeColor="@color/gray_text_color"
+            app:strokeWidth="@dimen/_1sdp">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/_15sdp"
+                android:paddingVertical="@dimen/_5sdp"
+                android:text="@string/reservations"
+                android:textSize="@dimen/_8sdp" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtCustomerWallet"
+            style="@style/DrawerTextview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_40sdp"
+            android:text="@string/wallet"
+            app:layout_constraintStart_toEndOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/txtCustomerReservation" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtCustomerRideHistory"
+            style="@style/DrawerTextview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="@string/ride_history"
+            app:layout_constraintStart_toEndOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/txtCustomerWallet" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtCustomerSupport"
+            style="@style/DrawerTextview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="@string/support"
+            app:layout_constraintStart_toEndOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/txtCustomerRideHistory" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtCustomerPropertySelection"
+            style="@style/DrawerTextview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="@string/property_selection"
+            app:layout_constraintStart_toEndOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/txtCustomerSupport" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtCustomerSettings"
+            style="@style/DrawerTextview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="@string/setting"
+            app:layout_constraintStart_toEndOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/txtCustomerPropertySelection" />
+
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgFlag"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:src="@drawable/canada_flag"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/glStart" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="@dimen/_1sdp"
+            android:layout_height="@dimen/_17sdp"
+            android:layout_margin="@dimen/_5sdp"
+            android:background="@drawable/bg_drawer_view"
+            app:layout_constraintBottom_toBottomOf="@id/imgFlag"
+            app:layout_constraintEnd_toStartOf="@id/txtCustomerLanguage"
+            app:layout_constraintStart_toEndOf="@id/imgFlag"
+            app:layout_constraintTop_toTopOf="@id/imgFlag" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtCustomerLanguage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:fontFamily="@font/avenir_regular"
+            android:text="@string/english"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@id/imgFlag"
+            app:layout_constraintStart_toEndOf="@id/view"
+            app:layout_constraintTop_toTopOf="@id/imgFlag" />
+
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgNotification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_30sdp"
+            android:src="@drawable/ic_notification"
+            app:layout_constraintBottom_toTopOf="@id/imgFlag"
+            app:layout_constraintStart_toEndOf="@id/glStart" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtUpdateNotification"
+            style="@style/DrawerTextview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:text="@string/updates"
+            app:layout_constraintBottom_toBottomOf="@id/imgNotification"
+            app:layout_constraintStart_toEndOf="@id/imgNotification"
+            app:layout_constraintTop_toTopOf="@id/imgNotification" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
