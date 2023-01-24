@@ -97,7 +97,7 @@
         android:label="SupportFragment" />
     <fragment
         android:id="@+id/addCardFragment"
-        android:name="com.example.kite.addcard.AddCardFragment"
+        android:name="com.example.kite.addcard.ui.AddCardFragment"
         android:label="AddCardFragment" />
     <fragment
         android:id="@+id/rideHistoryFragment"

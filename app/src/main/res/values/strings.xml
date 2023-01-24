@@ -79,5 +79,54 @@
     <string name="trip_taken_0">Trip taken : 0</string>
     <string name="reservations">Reservati…</string>
     <string name="notification">Notification</string>
+    <string name="let_s_add_a_card_to_get_you_moving">Let\'s add a card to get you moving</string>
+    <string name="card_holder_name">Card Holder Name</string>
+    <string name="card_number">Card Number</string>
+    <string name="card_hint">**** **** **** 1234</string>
+    <string name="expiry_date">Expiry Date</string>
+    <string name="cvv">CVV</string>
+    <string name="year">Year</string>
+    <string name="month">Month</string>
+    <string name="what_is_a_cvv">What is a CVV?</string>
+    <string name="cvv_explain">it\'s a 3 or 4 digit card Verification Code found on the back of your credit card</string>
+    <string name="got_it">Got it</string>
+
+
+    //
+    <string-array name="year_list">
+        <item>2023</item>
+        <item>2024</item>
+        <item>2025</item>
+        <item>2026</item>
+        <item>2027</item>
+        <item>2028</item>
+        <item>2029</item>
+        <item>2030</item>
+        <item>2031</item>
+        <item>2032</item>
+        <item>2033</item>
+        <item>2034</item>
+        <item>2035</item>
+        <item>2036</item>
+        <item>2037</item>
+        <item>2038</item>
+    </string-array>
+
+    //
+
+    <string-array name="month_list">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+    </string-array>
 
 </resources>

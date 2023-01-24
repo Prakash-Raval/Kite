@@ -10,6 +10,7 @@ object Constants {
     const val OTP_URL = "customer/customer_verify_otp"
     const val FORGOT_PASSWORD_URL = "customer/forgot_password_customer"
     const val THIRD_PARTY_LIST = "customer/list_third_parties"
+    const val ADD_CARD = "payment/add_card"
     val PASSWORD_PATTERN: Pattern =
         Pattern.compile(
             "^" +
@@ -19,5 +20,10 @@ object Constants {
                     ".{6,16}" +
                     "$"
         )
+
+    //add card layout
+    const val CVV = "CVV"
+    const val NAME = "CardHolderName"
+    const val NUMBER = "CardNumber"
 }
 

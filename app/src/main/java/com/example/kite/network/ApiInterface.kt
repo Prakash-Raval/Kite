@@ -1,5 +1,7 @@
 package com.example.kite.network
 
+import com.example.kite.addcard.model.AddCardRequest
+import com.example.kite.addcard.model.AddCardResponse
 import com.example.kite.constants.Constants
 import com.example.kite.login.model.LoginRequest
 import com.example.kite.login.model.LoginResponse
@@ -46,5 +48,8 @@ interface ApiInterface {
 
     @POST(Constants.THIRD_PARTY_LIST)
     suspend fun setList(@Body listRequest: ThirdPartyListRequest): Response<ThirdPartyListResponse>
+
+    @POST(Constants.ADD_CARD)
+    suspend fun addCard(@Body addCardRequest: AddCardRequest): Response<AddCardResponse>
 
 }

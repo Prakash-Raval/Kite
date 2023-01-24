@@ -30,6 +30,7 @@
     </style>
 
     <style name="TextEditText" parent="ThemeOverlay.Material3.TextInputEditText">
+
         <item name="android:paddingStart">0dp</item>
         <item name="android:paddingEnd">0dp</item>
         <item name="android:textCursorDrawable">@drawable/text_cursor_drawable</item>
@@ -41,6 +42,24 @@
         <item name="android:textSize">@dimen/_12sdp</item>
         <item name="android:backgroundTint">@color/white</item>
         <item name="hintTextColor">#2628282D</item>
+
+    </style>
+
+    //add card edit text style
+
+    <style name="CardTextEditText" parent="ThemeOverlay.Material3.TextInputEditText">
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">0dp</item>
+        <item name="android:textCursorDrawable">@drawable/text_cursor_drawable</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:textColorHint">#B328282D</item>
+        <item name="android:lines">1</item>
+        <item name="android:textStyle">bold</item>
+        <item name="fontFamily">@font/avenir_black</item>
+        <item name="android:textSize">@dimen/_12sdp</item>
+        <item name="android:backgroundTint">@color/white</item>
+        <item name="hintTextColor">#B328282D</item>
 
     </style>
 
@@ -101,6 +120,15 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/black</item>
+    </style>
+
+    //style for add card layout
+
+    <style name="CardCapitalTextView" parent="Widget.MaterialComponents.TextView">
+        <item name="fontFamily">@font/avenir_regular</item>
+        <item name="android:textSize">@dimen/_10sdp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
     </style>
 
 
