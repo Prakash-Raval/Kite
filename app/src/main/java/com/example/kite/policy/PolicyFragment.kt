@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.kite.R
+import com.example.kite.constants.Constants
 import com.example.kite.databinding.FragmentPolicyBinding
 import kotlinx.coroutines.launch
 
@@ -42,7 +43,7 @@ class PolicyFragment : Fragment() {
                 webViewClient = WebViewClient()
                 settings.javaScriptEnabled = true
                 settings.setSupportZoom(true)
-                loadUrl("https://admin.kitemobilitydev.com/#/privacy-policy?lang=english")
+                loadUrl(Constants.POLICY_URL)
 
             }
 

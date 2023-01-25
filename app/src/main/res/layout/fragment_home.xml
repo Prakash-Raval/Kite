@@ -67,7 +67,8 @@
             android:id="@+id/txtHelp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/avenir_black"
+            android:fontFamily="@font/avenir_light"
+            android:textStyle="bold"
             android:text="@string/help"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="@id/viewHelp"
@@ -94,7 +95,5 @@
             app:layout_constraintEnd_toEndOf="@id/viewGps"
             app:layout_constraintStart_toStartOf="@id/viewGps"
             app:layout_constraintTop_toTopOf="@id/viewGps" />
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

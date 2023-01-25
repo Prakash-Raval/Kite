@@ -36,4 +36,7 @@
     //drawer menu
     <color name="menu_item">#231F20</color>
 
+    //card
+    <color name="light_blue_card_back">#27AAE1</color>
+
 </resources>

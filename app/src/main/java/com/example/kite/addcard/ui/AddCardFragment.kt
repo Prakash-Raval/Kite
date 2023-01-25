@@ -98,7 +98,7 @@ class AddCardFragment : Fragment() {
     }
 
     //dialog to select expiry year
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "InflateParams")
     private fun selectYearDialog() {
         val builder = AlertDialog.Builder(requireContext())
         val view = layoutInflater.inflate(R.layout.dialog_date_picker, null)
@@ -123,6 +123,7 @@ class AddCardFragment : Fragment() {
     }
 
     //dialog to select expiry Month
+    @SuppressLint("InflateParams")
     private fun selectMonthDialog() {
         val builder = AlertDialog.Builder(requireContext())
         val view = layoutInflater.inflate(R.layout.dialog_date_picker, null)

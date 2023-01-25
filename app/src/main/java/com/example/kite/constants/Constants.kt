@@ -4,6 +4,9 @@ package com.example.kite.constants
 import java.util.regex.Pattern
 
 object Constants {
+    const val TERMS_URL: String = "https://admin.kitemobilitydev.com/#/terms-condition?lang=english"
+    const val POLICY_URL: String = "https://admin.kitemobilitydev.com/#/privacy-policy?lang=english"
+    const val SUPPORT_URL: String = "https://www.kitemobility.io/support?lang=eng"
     const val BASE_URL = "https://kiteapi.demo.brainvire.dev/"
     const val LOGIN_URL = "customer/login_customer"
     const val SIGNUP_URL = "customer/add_customer"

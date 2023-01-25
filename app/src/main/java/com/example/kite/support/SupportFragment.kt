@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.kite.R
+import com.example.kite.constants.Constants
 import com.example.kite.databinding.FragmentSupportBinding
 
 class SupportFragment : Fragment() {
@@ -44,7 +45,7 @@ class SupportFragment : Fragment() {
             webViewClient = WebViewClient()
             settings.javaScriptEnabled = true
             settings.setSupportZoom(true)
-            loadUrl("https://admin.kitemobilitydev.com/#/privacy-policy?lang=english")
+            loadUrl(Constants.SUPPORT_URL)
         }
     }
 }

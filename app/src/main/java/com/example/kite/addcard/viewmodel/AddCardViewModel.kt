@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.kite.addcard.model.AddCardRequest
 import com.example.kite.addcard.model.AddCardResponse
 import com.example.kite.addcard.repository.AddCardRepository
-import com.example.kite.constants.Constants
 import com.example.kite.login.viewmodel.ErrorModel
 import com.example.kite.utils.ErrorEvent
 import kotlinx.coroutines.launch
@@ -19,12 +18,20 @@ class AddCardViewModel(private val repository: AddCardRepository) : ViewModel() 
         get() = cardResult
     val cardRequest = AddCardRequest()
 
+
     private var errorMessage = MutableLiveData<ErrorEvent<ErrorModel>>()
-    fun validate() {
 
-    }
+    /* fun validate() {
+         if (cardRequest.cardName?.isEmpty() == true) {
+             errorMessage.value = ErrorEvent(ErrorModel("Name Required", Constants.NAME))
+         } else if (cardRequest.cardNumber?.isEmpty() == true) {
+             errorMessage.value = ErrorEvent(ErrorModel("Name Required", Constants.NUMBER))
+         } else if () {
+             errorMessage.value = ErrorEvent(ErrorModel("CVV Required", Constants.CVV))
+         }
+     }*/
 
-    //checking validation on cvv
+    /*//checking validation on cvv
     fun onCVVTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
         if (s.isEmpty()) {
             errorMessage.value = ErrorEvent(ErrorModel("CVV Required", Constants.CVV))
@@ -43,19 +50,14 @@ class AddCardViewModel(private val repository: AddCardRepository) : ViewModel() 
         } else {
             errorMessage.value = ErrorEvent(ErrorModel("", Constants.NAME))
         }
-    }
+    }*/
 
     //checking validations on card number
-    fun onNumberChanged(s: CharSequence) {
-        if (s.isEmpty()) {
-            errorMessage.value = ErrorEvent(ErrorModel("Number Required", Constants.NUMBER))
-        } else if (s.length != 16) {
-            errorMessage.value = ErrorEvent(ErrorModel("Enter valid card Number", Constants.NUMBER))
-        } else {
-            errorMessage.value = ErrorEvent(ErrorModel("", Constants.NUMBER))
+    fun onNumberChanged(s: CharSequence, start: Int, before: Int, counter: Int) {
 
-        }
+
     }
+
 
     init {
         viewModelScope.launch {

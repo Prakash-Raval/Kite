@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name" translatable="false">Kite</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="new_user_sign_up">New User? Sign Up</string>
@@ -42,7 +42,7 @@
     <string name="help" translatable="false">Help</string>
     <string name="start_your_next_trip" translatable="false">Start your next trip</string>
     <string name="tap" translatable="false">Tap on a pickup point to navigate and book your next ride.</string>
-    <string name="ok" translatable="false">Ok</string>
+    <string name="ok" translatable="false" tools:ignore="ButtonCase">Ok</string>
     <string name="wallet" translatable="false">Wallet</string>
     <string name="ride_history" translatable="false">Ride History</string>
     <string name="support" translatable="false">Support</string>
@@ -55,7 +55,7 @@
     <string name="confirm_new_password">Confirm New Password</string>
     <string name="select_payment">Select Payment</string>
     <string name="your_card">Your Card</string>
-    <string name="save">Save</string>
+    <string name="save">SAVE</string>
     <string name="add_card">Add Card</string>
     <string name="no_cards_available">No Cards Available</string>
     <string name="add_new_card">Add New Card</string>
@@ -90,43 +90,28 @@
     <string name="what_is_a_cvv">What is a CVV?</string>
     <string name="cvv_explain">it\'s a 3 or 4 digit card Verification Code found on the back of your credit card</string>
     <string name="got_it">Got it</string>
+    <string name="get_started">Get Started</string>
+    <string name="subscription_text">Subscriptions will automatically renew and your cedit card will be charged at the end of each period.</string>
+    <string name="become_a">BECOME A</string>
+    <string name="kite_runner">Kite Runner</string>
+    <string name="rate">$4.99/m</string>
+    <string name="schedule_weeks_in_advance">Schedule weeks in advance</string>
+    <string name="up_to_3_edits_each_trip">Up to 3 edits each trip</string>
+    <string name="reduced_cancellation_fees">Reduced cancellation fees</string>
+    <string name="change_contact">Change Contact</string>
+    <string name="verification_caps">VERIFICATION EXPIRY</string>
+    <string name="dash">-</string>
+    <string name="country_of_doc">Country of doc.</string>
+    <string name="otp_verify_text">Please enter phone number and we will send you OTP to verify.</string>
+    <string name="update_mobile_number">Update mobile number</string>
+    <string name="not_verified">Not Verified</string>
+    <string name="update">Update</string>
+    <string name="address">Address</string>
+    <string name="state_province">State/Province</string>
+    <string name="city">City</string>
+    <string name="zip_postal_code">Zip/Postal Code</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="delete_account">Delete Account</string>
 
-
-    //
-    <string-array name="year_list">
-        <item>2023</item>
-        <item>2024</item>
-        <item>2025</item>
-        <item>2026</item>
-        <item>2027</item>
-        <item>2028</item>
-        <item>2029</item>
-        <item>2030</item>
-        <item>2031</item>
-        <item>2032</item>
-        <item>2033</item>
-        <item>2034</item>
-        <item>2035</item>
-        <item>2036</item>
-        <item>2037</item>
-        <item>2038</item>
-    </string-array>
-
-    //
-
-    <string-array name="month_list">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-        <item>8</item>
-        <item>9</item>
-        <item>10</item>
-        <item>11</item>
-        <item>12</item>
-    </string-array>
 
 </resources>
