@@ -17,6 +17,7 @@ import com.example.kite.login.viewmodel.LoginVMFFactory
 import com.example.kite.login.viewmodel.LoginViewModel
 import com.example.kite.network.ApiInterface
 import com.example.kite.network.RetrofitHelper
+import com.example.kite.utils.PrefManager
 
 
 class LoginFragment : Fragment() {
@@ -33,6 +34,9 @@ class LoginFragment : Fragment() {
             container,
             false
         )
+        //pref
+        activity?.application?.let { PrefManager.with(it) }
+
         // Inflate the layout for this fragment
         loadFragment()
         getRetrofitData()
@@ -82,6 +86,7 @@ class LoginFragment : Fragment() {
         viewModel.loginLiveData.observe(viewLifecycleOwner) {
             if (it.code == 200) {
                 findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToSelectProgramFragment())
+                PrefManager.put(it, "LOGIN_RESPONSE")
             } else {
                 Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
             }

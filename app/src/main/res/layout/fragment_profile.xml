@@ -4,6 +4,9 @@
 
     <data>
 
+        <variable
+            name="viewProfile"
+            type="com.example.kite.profile.model.ViewProfileResponse.Data" />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -54,7 +57,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/first_name"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:text="@={viewProfile.customerFirstName}" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -84,7 +88,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/last_name"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:text="@={viewProfile.customerLastName}" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -114,7 +119,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/email_address_small"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="textEmailAddress"
+                    android:text="@={viewProfile.customerEmail}" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -144,8 +150,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:drawableEnd="@drawable/ic_edit"
+                    android:focusable="false"
                     android:hint="@string/mobile_number"
-                    android:inputType="phone" />
+                    android:inputType="phone"
+                    android:text="@={viewProfile.customerPhoneNumber}" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -175,7 +183,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/address"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:text="@{viewProfile.customerAddress.toString()}" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -219,7 +228,8 @@
                     android:drawablePadding="@dimen/_50sdp"
                     android:focusable="false"
                     android:hint="@string/country"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:text="@={viewProfile.country}" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -243,7 +253,8 @@
                     android:drawablePadding="@dimen/_40sdp"
                     android:focusable="false"
                     android:hint="@string/state_province"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:text="@{viewProfile.state.toString()}" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -286,7 +297,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/city"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:text="@{viewProfile.city.toString()}" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -307,7 +319,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/zip_postal_code"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:text="@{viewProfile.zipPostal.toString()}" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -337,8 +350,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:drawableEnd="@drawable/ic_edit"
+                    android:focusable="false"
                     android:hint="@string/password"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:text="@={viewProfile.password}" />
 
             </com.google.android.material.textfield.TextInputLayout>
 

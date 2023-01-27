@@ -2,11 +2,17 @@ package com.example.kite.network
 
 import com.example.kite.addcard.model.AddCardRequest
 import com.example.kite.addcard.model.AddCardResponse
+import com.example.kite.changepassword.model.ChangePasswordRequest
+import com.example.kite.changepassword.model.ChangePasswordResponse
 import com.example.kite.constants.Constants
+import com.example.kite.forgetpassword.model.ForgetPasswordResponse
+import com.example.kite.forgetpassword.model.ForgotPasswordRequest
 import com.example.kite.login.model.LoginRequest
 import com.example.kite.login.model.LoginResponse
 import com.example.kite.otpverification.model.OtpRequest
 import com.example.kite.otpverification.model.OtpResponse
+import com.example.kite.profile.model.ViewProfileRequest
+import com.example.kite.profile.model.ViewProfileResponse
 import com.example.kite.program.model.ThirdPartyListRequest
 import com.example.kite.program.model.ThirdPartyListResponse
 import com.example.kite.signup.model.SignUpResponse2
@@ -51,5 +57,14 @@ interface ApiInterface {
 
     @POST(Constants.ADD_CARD)
     suspend fun addCard(@Body addCardRequest: AddCardRequest): Response<AddCardResponse>
+
+    @POST(Constants.VIEW_PROFILE)
+    suspend fun viewProfile(@Body viewProfileRequest: ViewProfileRequest): Response<ViewProfileResponse>
+
+    @POST(Constants.FORGOT_PASSWORD_URL)
+    suspend fun forgotPassword(@Body request: ForgotPasswordRequest): Response<ForgetPasswordResponse>
+
+    @POST(Constants.CHANGE_PASSWORD)
+    suspend fun changePassword(@Body changePasswordRequest: ChangePasswordRequest): Response<ChangePasswordResponse>
 
 }

@@ -102,7 +102,7 @@
     <string name="verification_caps">VERIFICATION EXPIRY</string>
     <string name="dash">-</string>
     <string name="country_of_doc">Country of doc.</string>
-    <string name="otp_verify_text">Please enter phone number and we will send you OTP to verify.</string>
+    <string name="otp_verify_text">Please enter phone number and we will send you the OTP to verify.</string>
     <string name="update_mobile_number">Update mobile number</string>
     <string name="not_verified">Not Verified</string>
     <string name="update">Update</string>

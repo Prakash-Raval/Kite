@@ -1,6 +1,6 @@
 package com.example.kite.program
 
-import android.content.Context
+import android.annotation.SuppressLint
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Spannable
@@ -17,15 +17,16 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.ORIENTATION_HORIZONTAL
 import com.example.kite.R
+import com.example.kite.basefragment.BaseFragment
 import com.example.kite.constants.Constants
 import com.example.kite.databinding.FragmentSelectProgramBinding
+import com.example.kite.login.model.LoginResponse
 import com.example.kite.network.ApiInterface
 import com.example.kite.network.RetrofitHelper
 import com.example.kite.program.adapter.ThirdPartyListAdapter
@@ -33,12 +34,14 @@ import com.example.kite.program.model.ThirdPartyListResponse
 import com.example.kite.program.repository.ThirdPartyListRepository
 import com.example.kite.program.viewmodel.TPLViewModelFactory
 import com.example.kite.program.viewmodel.ThirdPartyListingViewModel
+import com.example.kite.utils.BaseResponse
+import com.example.kite.utils.PrefManager
 import com.example.kite.utils.onTextChanged
 import com.example.kite.utils.showKeyboard
 import kotlinx.coroutines.launch
 
 
-class SelectProgramFragment : Fragment() {
+class SelectProgramFragment : BaseFragment() {
     private lateinit var binding: FragmentSelectProgramBinding
     private lateinit var viewModel: ThirdPartyListingViewModel
     private lateinit var adapter: ThirdPartyListAdapter
@@ -75,6 +78,7 @@ class SelectProgramFragment : Fragment() {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun getData() {
         val thirdPartyService =
             RetrofitHelper.getInstance(Constants.BASE_URL).create(ApiInterface::class.java)
@@ -87,22 +91,31 @@ class SelectProgramFragment : Fragment() {
 
         // adding response data to list for viewpager
         viewModel.listLiveData.observe(viewLifecycleOwner) {
-            it.data?.let { it1 -> list.addAll(it1) }
-            adapter.notifyDataSetChanged()
-            Log.d("ListDataFromApi", list.toString())
+
+            when (it) {
+                is BaseResponse.Loading -> {
+                    showProgressDialog()
+                }
+                is BaseResponse.Error -> {
+                    hideProgressBar()
+                }
+                is BaseResponse.Success -> {
+                    hideProgressBar()
+                    it.data?.let { it1 -> it1.data?.let { it2 -> list.addAll(it2) } }
+                    adapter.notifyDataSetChanged()
+                    Log.d("ListDataFromApi", list.toString())
+                }
+            }
         }
 
         //getting access token for listing
-        val sharedPreference =
-            activity?.getSharedPreferences("TOKEN_PREFERENCE", Context.MODE_PRIVATE)
-        val editor = sharedPreference?.edit()
-        val token = sharedPreference?.getString("token", "")
-        editor?.apply()
+        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")
         lifecycleScope.launch {
             if (token != null) {
-                viewModel.getToken(token)
+                token.data?.accessToken?.let { viewModel.getToken(it) }
             }
         }
+
     }
 
     //style  for viewpager 2

@@ -45,7 +45,7 @@
     </fragment>
     <fragment
         android:id="@+id/forgetPasswordFragment"
-        android:name="com.example.kite.forgetpassword.ForgetPasswordFragment"
+        android:name="com.example.kite.forgetpassword.ui.ForgetPasswordFragment"
         android:label="ForgetPasswordFragment" />
     <fragment
         android:id="@+id/signUpFragment"
@@ -119,4 +119,31 @@
         android:id="@+id/notificationFragment"
         android:name="com.example.kite.notification.NotificationFragment"
         android:label="NotificationFragment" />
+    <fragment
+        android:id="@+id/changeContactFragment"
+        android:name="com.example.kite.changecontact.ChangeContactFragment"
+        android:label="ChangeContactFragment" />
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="com.example.kite.changepassword.ui.ChangePasswordFragment"
+        android:label="ChangePasswordFragment" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.kite.profile.ui.ProfileFragment"
+        android:label="ProfileFragment" >
+        <action
+            android:id="@+id/action_profileFragment_to_changeContactFragment"
+            app:destination="@id/changeContactFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_changePasswordFragment"
+            app:destination="@id/changePasswordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/verifyInfoFragment"
+        android:name="com.example.kite.verifiedinfo.VerifyInfoFragment"
+        android:label="VerifyInfoFragment" />
+    <fragment
+        android:id="@+id/subscriptionFragment"
+        android:name="com.example.kite.subscription.SubscriptionFragment"
+        android:label="SubscriptionFragment" />
 </navigation>

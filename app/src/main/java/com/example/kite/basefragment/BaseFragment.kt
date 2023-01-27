@@ -1,5 +1,6 @@
 package com.example.kite.basefragment
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,8 +10,9 @@ import androidx.fragment.app.Fragment
 import com.example.kite.R
 import com.example.kite.databinding.FragmentBaseBinding
 
-class BaseFragment : Fragment() {
+open class BaseFragment : Fragment() {
     private lateinit var binding: FragmentBaseBinding
+    private lateinit var mProgressDialog: Dialog
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -24,5 +26,17 @@ class BaseFragment : Fragment() {
         )
         return binding.root
     }
+
+    fun showProgressDialog() {
+        mProgressDialog = Dialog(requireContext())
+        mProgressDialog.setContentView(R.layout.dialog_progressbar)
+        mProgressDialog.setCancelable(false)
+        mProgressDialog.show()
+    }
+
+    fun hideProgressBar() {
+        mProgressDialog.dismiss()
+    }
+
 
 }

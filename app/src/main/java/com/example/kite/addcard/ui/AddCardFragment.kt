@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.NumberPicker
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -24,6 +25,7 @@ import com.example.kite.constants.Constants
 import com.example.kite.databinding.FragmentAddCardBinding
 import com.example.kite.network.ApiInterface
 import com.example.kite.network.RetrofitHelper
+import com.example.kite.utils.onTextChanged
 
 class AddCardFragment : Fragment() {
     private lateinit var binding: FragmentAddCardBinding
@@ -41,6 +43,7 @@ class AddCardFragment : Fragment() {
         )
         setNavigation()
         addCardData()
+        checkCardType()
         return binding.root
     }
 
@@ -146,7 +149,32 @@ class AddCardFragment : Fragment() {
             create()
             show()
         }
+    }
 
+    //checking entered card type
+    private fun checkCardType() {
+        binding.edtCardNumber.onTextChanged {
+            if (Constants.VISA.matcher(it).matches()) {
+                binding.visaCard.apply {
+                    strokeWidth = 5
+                    strokeColor = ContextCompat.getColor(context, R.color.bg_main)
+                }
+            } else if (Constants.MASTER.matcher(it).matches()) {
+                binding.masterCard.apply {
+                    strokeWidth = 5
+                    strokeColor = ContextCompat.getColor(context, R.color.bg_main)
+                }
+            } else {
+                binding.visaCard.apply {
+                    strokeWidth = 0
+                    strokeColor = ContextCompat.getColor(context, R.color.white)
+                }
+                binding.masterCard.apply {
+                    strokeWidth = 0
+                    strokeColor = ContextCompat.getColor(context, R.color.white)
+                }
+            }
+        }
     }
 
 

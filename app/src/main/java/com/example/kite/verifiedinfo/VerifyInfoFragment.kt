@@ -8,6 +8,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.kite.R
 import com.example.kite.databinding.FragmentVerifyInfoBinding
+import com.example.kite.login.model.LoginResponse
+import com.example.kite.utils.PrefManager
 
 class VerifyInfoFragment : Fragment() {
     private lateinit var binding: FragmentVerifyInfoBinding
@@ -22,6 +24,14 @@ class VerifyInfoFragment : Fragment() {
             container,
             false
         )
+        getCustomerData()
         return binding.root
+    }
+
+    //using shared pref to get user info
+    private fun getCustomerData() {
+        val customerData = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")
+        binding.txtVerifyName.text = customerData?.data?.customerFirstName
+
     }
 }
