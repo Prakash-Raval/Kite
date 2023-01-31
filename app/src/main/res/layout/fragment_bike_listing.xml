@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.example.kite.bikelisting.model.BikeListingResponse" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgTopToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_160sdp"
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            bind:image="@{model.Data.propertyImage}"
+            bind:placeholder="@{@drawable/ic_default_img}"
+            bind:src="@drawable/kite_red_logo" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:src="@drawable/ic_back_white"
+            app:layout_constraintStart_toEndOf="@id/glStart"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/_20sdp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/_20sdp" />
+
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgOpenMap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_20sdp"
+            app:layout_constraintBottom_toBottomOf="@id/imgTopToolbar"
+            app:layout_constraintEnd_toStartOf="@id/glEnd" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtListTitle"
+            style="@style/BlackMediumCustomMaterialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:text="@{model.Data.propertyName}"
+            android:textSize="@dimen/_20sdp"
+            app:layout_constraintStart_toEndOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/imgTopToolbar"
+            bind:text="BV Third Party" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtListAddress"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{model.Data.propertyAddress}"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintStart_toEndOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/txtListTitle"
+            bind:text="Test Address" />
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtRandom"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:text="@string/select_your_vehicle_type"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintStart_toEndOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/txtListAddress" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvListVehicleContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toStartOf="@id/glEnd"
+            app:layout_constraintStart_toEndOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/txtRandom"
+            tools:listitem="@layout/item_vehicle_listing" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnRideNow"
+            style="@style/BlackCustomMaterialButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:backgroundTint="@color/gray_text_color"
+            android:text="@string/ride_now"
+            app:layout_constraintEnd_toStartOf="@id/glEnd"
+            app:layout_constraintStart_toEndOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/rvListVehicleContainer" />
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtScheduleTrip"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:drawableEnd="@drawable/ic_calendar"
+            android:drawableTint="@color/gray_text_color"
+            android:text="@string/schedule_trip"
+            android:textColor="@color/gray_text_color"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/glEnd"
+            app:layout_constraintStart_toEndOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/btnRideNow" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

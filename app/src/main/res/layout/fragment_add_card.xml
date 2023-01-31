@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -12,22 +11,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".addcard.ui.AddCardFragment">
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/glStart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_begin="@dimen/_20sdp" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/glEnd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_end="@dimen/_20sdp" />
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/cardBar"
@@ -52,214 +37,264 @@
                 android:text="@string/add_card" />
         </com.google.android.material.appbar.MaterialToolbar>
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/txtMoving"
-            style="@style/BlackMediumCustomMaterialTextView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:layout_marginEnd="@dimen/_20sdp"
-            android:text="@string/let_s_add_a_card_to_get_you_moving"
-            android:textSize="@dimen/_22sdp"
-            app:layout_constraintEnd_toStartOf="@id/glEnd"
-            app:layout_constraintStart_toEndOf="@id/glStart"
-            app:layout_constraintTop_toBottomOf="@id/cardBar"
-            app:lineHeight="@dimen/_20sdp" />
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardBar">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/masterCard"
-            android:layout_width="@dimen/_60sdp"
-            android:layout_height="@dimen/_100sdp"
-            android:layout_marginTop="@dimen/_20sdp"
-            app:cardCornerRadius="@dimen/_30sdp"
-            app:cardElevation="@dimen/_8sdp"
-            app:layout_constraintStart_toEndOf="@id/glStart"
-            app:layout_constraintTop_toBottomOf="@id/txtMoving">
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:paddingHorizontal="@dimen/_10sdp"
-                android:src="@drawable/master_card" />
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/visaCard"
-            android:layout_width="@dimen/_60sdp"
-            android:layout_height="@dimen/_100sdp"
-            android:layout_marginStart="@dimen/_20sdp"
-            app:cardCornerRadius="@dimen/_30sdp"
-            app:cardElevation="@dimen/_8sdp"
-            app:layout_constraintBottom_toBottomOf="@id/masterCard"
-            app:layout_constraintStart_toEndOf="@id/masterCard"
-            app:layout_constraintTop_toTopOf="@id/masterCard">
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:paddingHorizontal="@dimen/_10sdp"
-                android:src="@drawable/visa_card" />
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/txtCardHolderName"
-            style="@style/CardCapitalTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_30sdp"
-            android:text="@string/card_holder_name"
-            app:layout_constraintStart_toEndOf="@id/glStart"
-            app:layout_constraintTop_toBottomOf="@id/visaCard" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilCardHolderName"
-            style="@style/TextInputLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toStartOf="@id/glEnd"
-            app:layout_constraintStart_toEndOf="@id/glStart"
-            app:layout_constraintTop_toBottomOf="@id/txtCardHolderName">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edtCardHolderName"
-                style="@style/CardTextEditText"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="@string/card_holder_name"
-                android:inputType="textPersonName" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/txtCardNumber"
-            style="@style/CardCapitalTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:text="@string/card_number"
-            app:layout_constraintStart_toEndOf="@id/glStart"
-            app:layout_constraintTop_toBottomOf="@id/tilCardHolderName" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilCardNumber"
-            style="@style/TextInputLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toStartOf="@id/glEnd"
-            app:layout_constraintStart_toEndOf="@id/glStart"
-            app:layout_constraintTop_toBottomOf="@id/txtCardNumber">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edtCardNumber"
-                style="@style/CardTextEditText"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="@string/card_hint"
-                android:inputType="number"
-                android:maxLength="16"
-                android:onTextChanged="@{addCardData.onNumberChanged}" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/txtCardExpiryDate"
-            style="@style/CardCapitalTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:text="@string/expiry_date"
-            app:layout_constraintStart_toEndOf="@id/glStart"
-            app:layout_constraintTop_toBottomOf="@id/tilCardNumber" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/txtCardCVV"
-            style="@style/CardCapitalTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_20sdp"
-            android:text="@string/cvv"
-            app:layout_constraintBottom_toBottomOf="@id/txtCardExpiryDate"
-            app:layout_constraintEnd_toStartOf="@id/imgError"
-            app:layout_constraintTop_toTopOf="@id/txtCardExpiryDate" />
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/imgError"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_error"
-            app:layout_constraintBottom_toBottomOf="@id/txtCardExpiryDate"
-            app:layout_constraintEnd_toStartOf="@id/glEnd"
-            app:layout_constraintTop_toTopOf="@id/txtCardExpiryDate" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilYear"
-            style="@style/TextInputLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:errorEnabled="false"
-            app:layout_constraintStart_toEndOf="@id/glStart"
-            app:layout_constraintTop_toBottomOf="@id/txtCardExpiryDate">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edtYear"
-                style="@style/CardTextEditText"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:drawableEnd="@drawable/ic_arrow_down"
-                android:drawablePadding="@dimen/_40sdp"
-                android:focusable="false"
-                android:hint="@string/year" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="match_parent">
 
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilMonth"
-            style="@style/TextInputLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginEnd="@dimen/_10sdp"
-            app:errorEnabled="false"
-            app:layout_constraintEnd_toStartOf="@id/tilCVV"
-            app:layout_constraintStart_toEndOf="@id/tilYear"
-            app:layout_constraintTop_toBottomOf="@id/txtCardExpiryDate">
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/glStart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="@dimen/_20sdp" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edtMonth"
-                style="@style/CardTextEditText"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:drawableEnd="@drawable/ic_arrow_down"
-                android:drawablePadding="@dimen/_40sdp"
-                android:focusable="false"
-                android:hint="@string/month" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/glEnd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_end="@dimen/_20sdp" />
 
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilCVV"
-            style="@style/TextInputLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toStartOf="@id/glEnd"
-            app:layout_constraintStart_toStartOf="@id/txtCardCVV"
-            app:layout_constraintTop_toBottomOf="@id/txtCardCVV">
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtMoving"
+                    style="@style/BlackMediumCustomMaterialTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:text="@string/let_s_add_a_card_to_get_you_moving"
+                    android:textSize="@dimen/_22sdp"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:lineHeight="@dimen/_20sdp" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edtCVV"
-                style="@style/CardTextEditText"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="@string/cvv"
-                android:inputType="number"
-                android:maxLength="4" />
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/masterCard"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="@dimen/_100sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    app:cardCornerRadius="@dimen/_30sdp"
+                    app:cardElevation="@dimen/_8sdp"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/txtMoving">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:paddingHorizontal="@dimen/_10sdp"
+                        android:src="@drawable/master_card" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/visaCard"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="@dimen/_100sdp"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    app:cardCornerRadius="@dimen/_30sdp"
+                    app:cardElevation="@dimen/_8sdp"
+                    app:layout_constraintBottom_toBottomOf="@id/masterCard"
+                    app:layout_constraintStart_toEndOf="@id/masterCard"
+                    app:layout_constraintTop_toTopOf="@id/masterCard">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:paddingHorizontal="@dimen/_10sdp"
+                        android:src="@drawable/visa_card" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtCardHolderName"
+                    style="@style/CardCapitalTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:text="@string/card_holder_name"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/visaCard" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilCardHolderName"
+                    style="@style/TextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/txtCardHolderName">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtCardHolderName"
+                        style="@style/CardTextEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="@string/card_holder_name"
+                        android:inputType="textPersonName" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtCardNumber"
+                    style="@style/CardCapitalTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="@string/card_number"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/tilCardHolderName" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilCardNumber"
+                    style="@style/TextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/txtCardNumber">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtCardNumber"
+                        style="@style/CardTextEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="@string/card_hint"
+                        android:inputType="number"
+                        android:maxLength="16"
+                         />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtCardExpiryDate"
+                    style="@style/CardCapitalTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="@string/expiry_date"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/tilCardNumber" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtCardCVV"
+                    style="@style/CardCapitalTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:text="@string/cvv"
+                    app:layout_constraintBottom_toBottomOf="@id/txtCardExpiryDate"
+                    app:layout_constraintEnd_toStartOf="@id/imgError"
+                    app:layout_constraintTop_toTopOf="@id/txtCardExpiryDate" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imgError"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_error"
+                    app:layout_constraintBottom_toBottomOf="@id/txtCardExpiryDate"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintTop_toTopOf="@id/txtCardExpiryDate" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilYear"
+                    style="@style/TextInputLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:errorEnabled="false"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/txtCardExpiryDate">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtYear"
+                        style="@style/CardTextEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:drawableEnd="@drawable/ic_arrow_down"
+                        android:drawablePadding="@dimen/_40sdp"
+                        android:focusable="false"
+                        android:hint="@string/year" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilMonth"
+                    style="@style/TextInputLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    app:errorEnabled="false"
+                    app:layout_constraintEnd_toStartOf="@id/tilCVV"
+                    app:layout_constraintStart_toEndOf="@id/tilYear"
+                    app:layout_constraintTop_toBottomOf="@id/txtCardExpiryDate">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtMonth"
+                        style="@style/CardTextEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:drawableEnd="@drawable/ic_arrow_down"
+                        android:drawablePadding="@dimen/_40sdp"
+                        android:focusable="false"
+                        android:hint="@string/month" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilCVV"
+                    style="@style/TextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toStartOf="@id/txtCardCVV"
+                    app:layout_constraintTop_toBottomOf="@id/txtCardCVV">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtCVV"
+                        style="@style/CardTextEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="@string/cvv"
+                        android:inputType="number"
+                        android:maxLength="4" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnPriority"
+                    style="@style/BlackCustomMaterialButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/make_this_card_priority"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/tilCVV" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAddCard"
+                    style="@style/BlackCustomMaterialButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/next"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintTop_toBottomOf="@id/btnPriority" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

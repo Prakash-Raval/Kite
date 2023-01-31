@@ -1,4 +1,4 @@
-package com.example.kite.utils
+package com.example.kite.extensions
 
 import android.annotation.SuppressLint
 import android.graphics.Color
@@ -18,6 +18,7 @@ inline fun View.snack(message: String, length: Int = Snackbar.LENGTH_LONG, f: Sn
 fun View.snackError(message: String, length: Int = Snackbar.LENGTH_LONG) {
     val snack = Snackbar.make(this, message, length)
     snack.setBackgroundTint(Color.RED)
+    snack.anchorView?.parent
     snack.show()
 }
 

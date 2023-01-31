@@ -12,5 +12,6 @@ data class ChangePasswordRequest(
     var new_password: String = "",
     @JsonProperty("old_password")
     var old_password: String = "",
-
+    @JsonProperty("confirm_password")
+    var confirm_password: String = ""
 )

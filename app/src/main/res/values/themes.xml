@@ -171,4 +171,17 @@
         <item name="android:textStyle">normal</item>
     </style>
 
+    //border textview
+
+    <style name="BorderTextView" parent="Widget.MaterialComponents.TextView">
+        <item name="android:paddingStart">@dimen/_15sdp</item>
+        <item name="android:paddingTop">@dimen/_5sdp</item>
+        <item name="android:textSize">@dimen/_9sdp</item>
+        <item name="alpha">0.5</item>
+        <item name="android:paddingEnd">@dimen/_15sdp</item>
+        <item name="android:paddingBottom">@dimen/_5sdp</item>
+        <item name="background">@drawable/bg_text_grey</item>
+
+    </style>
+
 </resources>

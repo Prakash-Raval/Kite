@@ -8,7 +8,7 @@ object Constants {
     const val TERMS_URL: String = "https://admin.kitemobilitydev.com/#/terms-condition?lang=english"
     const val POLICY_URL: String = "https://admin.kitemobilitydev.com/#/privacy-policy?lang=english"
     const val SUPPORT_URL: String = "https://www.kitemobility.io/support?lang=eng"
-    const val BASE_URL = "https://kiteapi.demo.brainvire.dev/"
+    const val BASE_URL = "https://api.kitemobilitydev.com"
 
     //CUSTOMER PROFILE
     const val LOGIN_URL = "customer/login_customer"
@@ -20,6 +20,10 @@ object Constants {
 
     //THIRD PARTY LISTING
     const val THIRD_PARTY_LIST = "customer/list_third_parties"
+
+    //customer listing
+    const val RESERVATION_LIST ="customer/list_reservations"
+    const val BIKE_LISTING = "customer/list_bikes"
 
     //CUSTOMER CARD DETAILS
     const val ADD_CARD = "payment/add_card"
@@ -37,9 +41,6 @@ object Constants {
                     "$"
         )
 
-    //add card layout
-    const val CVV = "CVV"
-    const val NAME = "CardHolderName"
-    const val NUMBER = "CardNumber"
+
 }
 

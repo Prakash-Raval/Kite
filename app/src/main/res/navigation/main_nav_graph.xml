@@ -146,4 +146,16 @@
         android:id="@+id/subscriptionFragment"
         android:name="com.example.kite.subscription.SubscriptionFragment"
         android:label="SubscriptionFragment" />
+    <fragment
+        android:id="@+id/reservationFragment"
+        android:name="com.example.kite.reservation.ReservationFragment"
+        android:label="ReservationFragment" >
+        <action
+            android:id="@+id/action_reservationFragment_to_bikeListingFragment"
+            app:destination="@id/bikeListingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bikeListingFragment"
+        android:name="com.example.kite.bikelisting.ui.BikeListingFragment"
+        android:label="BikeListingFragment" />
 </navigation>

@@ -2,6 +2,8 @@ package com.example.kite.network
 
 import com.example.kite.addcard.model.AddCardRequest
 import com.example.kite.addcard.model.AddCardResponse
+import com.example.kite.bikelisting.model.BikeListingRequest
+import com.example.kite.bikelisting.model.BikeListingResponse
 import com.example.kite.changepassword.model.ChangePasswordRequest
 import com.example.kite.changepassword.model.ChangePasswordResponse
 import com.example.kite.constants.Constants
@@ -15,6 +17,8 @@ import com.example.kite.profile.model.ViewProfileRequest
 import com.example.kite.profile.model.ViewProfileResponse
 import com.example.kite.program.model.ThirdPartyListRequest
 import com.example.kite.program.model.ThirdPartyListResponse
+import com.example.kite.reservation.model.ListReservationRequest
+import com.example.kite.reservation.model.ListReservationResponse
 import com.example.kite.signup.model.SignUpResponse2
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -64,7 +68,12 @@ interface ApiInterface {
     @POST(Constants.FORGOT_PASSWORD_URL)
     suspend fun forgotPassword(@Body request: ForgotPasswordRequest): Response<ForgetPasswordResponse>
 
+    @POST(Constants.RESERVATION_LIST)
+    suspend fun getReservationListing(@Body request: ListReservationRequest): Response<ListReservationResponse>
+
     @POST(Constants.CHANGE_PASSWORD)
     suspend fun changePassword(@Body changePasswordRequest: ChangePasswordRequest): Response<ChangePasswordResponse>
 
+    @POST(Constants.BIKE_LISTING)
+    suspend fun getBikeListing(@Body request: BikeListingRequest): Response<BikeListingResponse>
 }

@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.kite.changepassword.model.ChangePasswordRequest
 import com.example.kite.changepassword.model.ChangePasswordResponse
 import com.example.kite.changepassword.repository.ChangePasswordRepository
+import com.example.kite.constants.Constants
 import com.example.kite.utils.ErrorEvent
 import kotlinx.coroutines.launch
 
@@ -37,7 +38,11 @@ class ChangePasswordViewModel(val repository: ChangePasswordRepository) : ViewMo
             errorMessage.value = ErrorEvent("Please enter your current password")
         } else if (request.new_password.isEmpty()) {
             errorMessage.value = ErrorEvent("Please enter your new password")
-        }  else {
+        } else if (!Constants.PASSWORD_PATTERN.matcher(request.new_password).matches()) {
+            errorMessage.value = ErrorEvent("Password to Weak")
+        } else if (request.confirm_password != request.new_password) {
+            errorMessage.value = ErrorEvent("Password not match")
+        } else {
             callData(ChangePasswordRequest(token, request.new_password, request.old_password))
         }
     }

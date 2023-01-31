@@ -71,27 +71,17 @@
             app:layout_constraintStart_toEndOf="@id/glStart"
             app:layout_constraintTop_toBottomOf="@id/imgCustomerProfile" />
 
-        <com.google.android.material.card.MaterialCardView
+
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtCustomerReservation"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp"
-            app:cardCornerRadius="@dimen/_20sdp"
-            app:cardElevation="0dp"
+            style="@style/BorderTextView"
+            android:text="@string/reservations"
+            android:background="@drawable/bg_text_grey"
             app:layout_constraintStart_toEndOf="@id/glStart"
-            app:layout_constraintTop_toBottomOf="@id/imgKiteLogo"
-            app:strokeColor="@color/gray_text_color"
-            app:strokeWidth="@dimen/_1sdp">
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/_15sdp"
-                android:paddingVertical="@dimen/_5sdp"
-                android:text="@string/reservations"
-                android:textSize="@dimen/_8sdp" />
-
-        </com.google.android.material.card.MaterialCardView>
+            app:layout_constraintTop_toBottomOf="@id/imgKiteLogo"/>
 
 
         <com.google.android.material.textview.MaterialTextView

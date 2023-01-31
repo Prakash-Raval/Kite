@@ -96,6 +96,9 @@ class MainActivity : AppCompatActivity() {
         binding.menuContainer.txtCustomerSupport.setOnClickListener {
             pNavController.navigate(R.id.supportFragment)
         }
+        binding.menuContainer.txtCustomerReservation.setOnClickListener {
+            pNavController.navigate(R.id.reservationFragment)
+        }
         binding.menuContainer.txtCustomerWallet.setOnClickListener {
             pNavController.navigate(R.id.selectPaymentFragment)
         }

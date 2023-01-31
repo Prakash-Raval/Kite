@@ -112,6 +112,16 @@
     <string name="zip_postal_code">Zip/Postal Code</string>
     <string name="sign_out">Sign Out</string>
     <string name="delete_account">Delete Account</string>
+    <string name="make_this_card_priority">Make this Card Priority</string>
+    <string name="next">Next</string>
+    <string name="reservation">Reservation</string>
+    <string name="your_booking">Your Booking</string>
+    <string name="reservation_text">Looks like you don\'t have any reservations booked</string>
+    <string name="schedule_trip">Schedule Trip</string>
+    <string name="select_your_vehicle_type">Select your vehicle type</string>
+    <string name="rate_vehicle">$1/min</string>
+    <string name="available">Available</string>
+    <string name="ride_now">Ride Now</string>
 
 
 </resources>
