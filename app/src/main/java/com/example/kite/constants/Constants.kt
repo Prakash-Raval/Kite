@@ -4,7 +4,10 @@ package com.example.kite.constants
 import java.util.regex.Pattern
 
 object Constants {
+
+
     //URLS
+    const val RENTAL_AGREEMENT: String = "https://admin.kitemobilitydev.com/#/release-agreement/1Gj0mr5eI?lang=english"
     const val TERMS_URL: String = "https://admin.kitemobilitydev.com/#/terms-condition?lang=english"
     const val POLICY_URL: String = "https://admin.kitemobilitydev.com/#/privacy-policy?lang=english"
     const val SUPPORT_URL: String = "https://www.kitemobility.io/support?lang=eng"

@@ -47,9 +47,10 @@ class ReservationFragment : Fragment() {
     }
 
     private fun navigation() {
-        binding.imgBack.setOnClickListener {
+        binding.reservationBar.imgBack.setOnClickListener {
             findNavController().navigateUp()
         }
+        binding.reservationBar.txtToolbarHeader.setText(R.string.reservation)
         binding.btnScheduleTrip.setOnClickListener {
             findNavController().navigate(R.id.bikeListingFragment)
         }

@@ -122,6 +122,25 @@
     <string name="rate_vehicle">$1/min</string>
     <string name="available">Available</string>
     <string name="ride_now">Ride Now</string>
-
+    <string name="driver_licence">Driver Licence &amp; Waiver</string>
+    <string name="select_driver_s_licence_country">Select driver\'s licence country</string>
+    <string name="country_selector">Please choose the country that issued your driver\'s licence.</string>
+    <string name="canada">Canada</string>
+    <string name="united_states">United states</string>
+    <string name="continue_text">Continue</string>
+    <string name="info_string">Your information is stored securely and stays private.</string>
+    <string name="agreement_text"><![CDATA[I have read, and agree to the Rental Agreement & Waiver.]]></string>
+    <string name="need_help">Need Help</string>
+    <string name="help_detect_camera">Make sure you follow these tips to help the camera detect and scan your license.</string>
+    <string name="check_your_lighting">Check your lighting</string>
+    <string name="help_lighting">Make sure your lighting is not too bright or too dark. Try moving into a well-lit area.</string>
+    <string name="hold_steady">Hold steady</string>
+    <string name="help_hold">Take your time and hold your device steady to get a clear photo.</string>
+    <string name="get_every_frame">Get everything in frame</string>
+    <string name="help_frame">Place your license on a flat surface for best results.</string>
+    <string name="use_a_background">Use a dark background</string>
+    <string name="help_background">Hign contrast will help the camera to detect the edges of your license.</string>
+    <string name="retry">Retry</string>
+    <string name="rental_agreement">Rental Agreement</string>
 
 </resources>

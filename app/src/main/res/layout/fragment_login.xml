@@ -103,7 +103,7 @@
                 android:layout_height="match_parent"
                 android:hint="@string/email"
                 android:inputType="textEmailAddress"
-                android:onTextChanged="@{loginData.onEmailTextChanged}"
+                android:onTextChanged="@{loginData::onEmailTextChanged}"
                 android:text="@={loginData.loginData.customer_email}" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -134,7 +134,7 @@
                 android:layout_height="match_parent"
                 android:hint="@string/password"
                 android:inputType="textPassword"
-                android:onTextChanged="@{loginData.onPasswordTextChanged}"
+                android:onTextChanged="@{loginData::onPasswordTextChanged}"
                 android:text="@={loginData.loginData.password}" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -153,18 +153,20 @@
             app:layout_constraintStart_toEndOf="@id/glStart"
             app:layout_constraintTop_toBottomOf="@id/txtLoginPassword" />
 
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnLogin"
             style="@style/BlackCustomMaterialButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/_30sdp"
+            android:layout_marginTop="40dp"
             android:onClick="@{ () -> loginData.checkValidation()}"
             android:text="@string/login"
             app:layout_constraintEnd_toStartOf="@id/glEnd"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@id/glStart"
             app:layout_constraintTop_toBottomOf="@id/txtForgetPassword" />
-
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtAccountCreate"

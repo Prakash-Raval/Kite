@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.kite.R
 import com.example.kite.bikelisting.adapter.Adapter
 import com.example.kite.bikelisting.adapter.OnCellClicked
@@ -46,9 +47,16 @@ class BikeListingFragment : Fragment(), OnCellClicked {
             container,
             false
         )
+        setNavigation()
         setAdapter()
         getData()
         return binding.root
+    }
+
+    private fun setNavigation() {
+            binding.btnRideNow.setOnClickListener {
+                findNavController().navigate(BikeListingFragmentDirections.actionBikeListingFragmentToLicenceAgreementFragment())
+            }
     }
 
 
@@ -58,6 +66,7 @@ class BikeListingFragment : Fragment(), OnCellClicked {
         binding.rvListVehicleContainer.adapter = adapter
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @RequiresApi(Build.VERSION_CODES.O)
     private fun getData() {
         val service =
@@ -92,6 +101,7 @@ class BikeListingFragment : Fragment(), OnCellClicked {
 
 
     override fun isClicked(data: Int) {
+        binding.btnRideNow.isEnabled = true
         if (data != -1) {
             binding.btnRideNow.setBackgroundColor(
                 ContextCompat.getColor(
@@ -99,6 +109,8 @@ class BikeListingFragment : Fragment(), OnCellClicked {
                     R.color.black
                 )
             )
+            binding.btnRideNow.alpha = 1.0f
+            binding.txtScheduleTrip.alpha = 1.0f
             binding.txtScheduleTrip.setTextColor(
                 ContextCompat.getColor(
                     requireContext(),

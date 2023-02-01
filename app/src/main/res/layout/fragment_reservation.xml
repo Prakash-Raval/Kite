@@ -11,30 +11,36 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.appbar.MaterialToolbar
+        <!--
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/reservationBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/imgBack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_20sdp"
+                        android:src="@drawable/ic_back_black" />
+
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/BlackSmallCustomMaterialTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/reservation" />
+
+                </com.google.android.material.appbar.MaterialToolbar>
+        -->
+
+        <include
             android:id="@+id/reservationBar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/imgBack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:src="@drawable/ic_back_black" />
-
-
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/BlackSmallCustomMaterialTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/reservation" />
-
-        </com.google.android.material.appbar.MaterialToolbar>
+            layout="@layout/item_common_toolbar" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/glStart"
@@ -64,10 +70,11 @@
 
         <com.google.android.material.textview.MaterialTextView
             style="@style/BlackSmallCustomMaterialTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/reservation_text"
+            app:layout_constraintEnd_toStartOf="@id/glEnd"
             app:layout_constraintStart_toEndOf="@id/glStart"
             app:layout_constraintTop_toBottomOf="@id/txtBooking"
             app:lineHeight="@dimen/_20sdp" />

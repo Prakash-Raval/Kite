@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/_20sdp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/_20sdp" />
+
+        <include
+            android:id="@+id/inToolbarHelp"
+            layout="@layout/item_common_toolbar" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtHelpText"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/help_detect_camera"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintEnd_toStartOf="@id/glEnd"
+            app:layout_constraintStart_toEndOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/inToolbarHelp"
+            app:lineHeight="@dimen/_12sdp" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgSmallShield1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:src="@drawable/ic_small_shield"
+            app:layout_constraintStart_toEndOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/txtHelpText" />
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtHelpLighting"
+            style="@style/BlackToolbarTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:text="@string/check_your_lighting"
+            app:layout_constraintStart_toEndOf="@id/imgSmallShield1"
+            app:layout_constraintTop_toTopOf="@id/imgSmallShield1" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtHelpLighting1"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/help_lighting"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintEnd_toStartOf="@id/glEnd"
+            app:layout_constraintStart_toStartOf="@id/txtHelpLighting"
+            app:layout_constraintTop_toBottomOf="@id/txtHelpLighting"
+            app:lineHeight="@dimen/_12sdp" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgSmallShield2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:src="@drawable/ic_small_shield"
+            app:layout_constraintStart_toEndOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/txtHelpLighting1" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtHelpHold"
+            style="@style/BlackToolbarTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:text="@string/hold_steady"
+            app:layout_constraintStart_toEndOf="@id/imgSmallShield2"
+            app:layout_constraintTop_toTopOf="@id/imgSmallShield2" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtHelpHold1"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/help_hold"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintEnd_toStartOf="@id/glEnd"
+            app:layout_constraintStart_toStartOf="@id/txtHelpHold"
+            app:layout_constraintTop_toBottomOf="@id/txtHelpHold"
+            app:lineHeight="@dimen/_12sdp" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgSmallShield3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:src="@drawable/ic_small_shield"
+            app:layout_constraintStart_toEndOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/txtHelpHold1" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtHelpFrame"
+            style="@style/BlackToolbarTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:text="@string/get_every_frame"
+            app:layout_constraintStart_toEndOf="@id/imgSmallShield3"
+            app:layout_constraintTop_toTopOf="@id/imgSmallShield3" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtHelpFrame1"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/help_frame"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintEnd_toStartOf="@id/glEnd"
+            app:layout_constraintStart_toStartOf="@id/txtHelpFrame"
+            app:layout_constraintTop_toBottomOf="@id/txtHelpFrame"
+            app:lineHeight="@dimen/_12sdp" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgSmallShield4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:src="@drawable/ic_small_shield"
+            app:layout_constraintStart_toEndOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/txtHelpFrame1" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtHelpBackground"
+            style="@style/BlackToolbarTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:text="@string/use_a_background"
+            app:layout_constraintStart_toEndOf="@id/imgSmallShield4"
+            app:layout_constraintTop_toTopOf="@id/imgSmallShield4" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtHelpBackground1"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/help_background"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintEnd_toStartOf="@id/glEnd"
+            app:layout_constraintStart_toStartOf="@id/txtHelpBackground"
+            app:layout_constraintTop_toBottomOf="@id/txtHelpBackground"
+            app:lineHeight="@dimen/_12sdp" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLogin"
+            style="@style/BlackCustomMaterialButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_30sdp"
+            android:layout_marginTop="40dp"
+            android:text="@string/retry"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/glEnd"
+            app:layout_constraintStart_toEndOf="@id/glStart" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

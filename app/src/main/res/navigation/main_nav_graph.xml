@@ -157,5 +157,13 @@
     <fragment
         android:id="@+id/bikeListingFragment"
         android:name="com.example.kite.bikelisting.ui.BikeListingFragment"
-        android:label="BikeListingFragment" />
+        android:label="BikeListingFragment" >
+        <action
+            android:id="@+id/action_bikeListingFragment_to_licenceAgreementFragment"
+            app:destination="@id/licenceAgreementFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/licenceAgreementFragment"
+        android:name="com.example.kite.licenceagreement.LicenceAgreementFragment"
+        android:label="LicenceAgreementFragment" />
 </navigation>
