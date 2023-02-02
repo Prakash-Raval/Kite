@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'androidx.navigation.safeargs.kotlin'
 
+
 }
 
 android {
@@ -33,7 +34,7 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    buildFeatures{
+    buildFeatures {
         dataBinding = true
     }
 
@@ -57,11 +58,14 @@ dependencies {
     implementation 'com.intuit.sdp:sdp-android:1.1.0'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-jackson:2.9.0'
-   //glide
+    //glide
     implementation 'com.github.bumptech.glide:glide:4.14.2'
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
     implementation 'com.google.code.gson:gson:2.9.0'
 
-
+    //camera x
+    implementation 'androidx.camera:camera-camera2:1.2.1'
+    implementation 'androidx.camera:camera-lifecycle:1.2.1'
+    implementation 'androidx.camera:camera-view:1.2.1'
 
 }

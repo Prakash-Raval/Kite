@@ -86,10 +86,28 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.kite.home.HomeFragment"
-        android:label="HomeFragment" >
+        android:label="HomeFragment">
         <action
             android:id="@+id/action_homeFragment_to_supportFragment"
             app:destination="@id/supportFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_reservationFragment"
+            app:destination="@id/reservationFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_selectPaymentFragment"
+            app:destination="@id/selectPaymentFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_rideHistoryFragment"
+            app:destination="@id/rideHistoryFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_notificationFragment"
+            app:destination="@id/notificationFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_selectProgramFragment"
+            app:destination="@id/selectProgramFragment" />
     </fragment>
     <fragment
         android:id="@+id/supportFragment"
@@ -106,11 +124,21 @@
     <fragment
         android:id="@+id/settingFragment"
         android:name="com.example.kite.setting.SettingFragment"
-        android:label="SettingFragment" />
+        android:label="SettingFragment" >
+        <action
+            android:id="@+id/action_settingFragment_to_verifyInfoFragment"
+            app:destination="@id/verifyInfoFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_subscriptionFragment"
+            app:destination="@id/subscriptionFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
     <fragment
         android:id="@+id/selectPaymentFragment"
         android:name="com.example.kite.selectpayment.SelectPaymentFragment"
-        android:label="SelectPaymentFragment" >
+        android:label="SelectPaymentFragment">
         <action
             android:id="@+id/action_selectPaymentFragment_to_addCardFragment"
             app:destination="@id/addCardFragment" />
@@ -130,7 +158,7 @@
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.kite.profile.ui.ProfileFragment"
-        android:label="ProfileFragment" >
+        android:label="ProfileFragment">
         <action
             android:id="@+id/action_profileFragment_to_changeContactFragment"
             app:destination="@id/changeContactFragment" />
@@ -149,7 +177,7 @@
     <fragment
         android:id="@+id/reservationFragment"
         android:name="com.example.kite.reservation.ReservationFragment"
-        android:label="ReservationFragment" >
+        android:label="ReservationFragment">
         <action
             android:id="@+id/action_reservationFragment_to_bikeListingFragment"
             app:destination="@id/bikeListingFragment" />
@@ -157,7 +185,7 @@
     <fragment
         android:id="@+id/bikeListingFragment"
         android:name="com.example.kite.bikelisting.ui.BikeListingFragment"
-        android:label="BikeListingFragment" >
+        android:label="BikeListingFragment">
         <action
             android:id="@+id/action_bikeListingFragment_to_licenceAgreementFragment"
             app:destination="@id/licenceAgreementFragment" />
@@ -165,5 +193,35 @@
     <fragment
         android:id="@+id/licenceAgreementFragment"
         android:name="com.example.kite.licenceagreement.LicenceAgreementFragment"
-        android:label="LicenceAgreementFragment" />
+        android:label="LicenceAgreementFragment" >
+        <action
+            android:id="@+id/action_licenceAgreementFragment_to_scanLicenseFragment"
+            app:destination="@id/scanLicenseFragment" />
+        <action
+            android:id="@+id/action_licenceAgreementFragment_to_rentalAgreementFragment"
+            app:destination="@id/rentalAgreementFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/needHelpFragment"
+        android:name="com.example.kite.rentalagreement.help.NeedHelpFragment"
+        android:label="NeedHelpFragment" />
+    <fragment
+        android:id="@+id/scanLicenseFragment"
+        android:name="com.example.kite.scanlicense.ScanLicenseFragment"
+        android:label="ScanLicenseFragment" >
+        <action
+            android:id="@+id/action_scanLicenseFragment_to_needHelpFragment"
+            app:destination="@id/needHelpFragment" />
+        <action
+            android:id="@+id/action_scanLicenseFragment_to_driverLicenseEntryFragment"
+            app:destination="@id/driverLicenseEntryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/rentalAgreementFragment"
+        android:name="com.example.kite.rentalagreement.RentalAgreementFragment"
+        android:label="RentalAgreementFragment" />
+    <fragment
+        android:id="@+id/driverLicenseEntryFragment"
+        android:name="com.example.kite.driverlicenceentry.DriverLicenseEntryFragment"
+        android:label="DriverLicenseEntryFragment" />
 </navigation>

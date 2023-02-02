@@ -25,6 +25,9 @@ class NeedHelpFragment : Fragment() {
         binding.inToolbarHelp.imgBack.setOnClickListener {
             findNavController().navigateUp()
         }
+        binding.btnRetry.setOnClickListener {
+            findNavController().navigateUp()
+        }
         binding.inToolbarHelp.txtToolbarHeader.setText(R.string.need_help)
     }
 

@@ -7,7 +7,8 @@ object Constants {
 
 
     //URLS
-    const val RENTAL_AGREEMENT: String = "https://admin.kitemobilitydev.com/#/release-agreement/1Gj0mr5eI?lang=english"
+    const val RENTAL_AGREEMENT: String =
+        "https://admin.kitemobilitydev.com/#/release-agreement/1Gj0mr5eI?lang=english"
     const val TERMS_URL: String = "https://admin.kitemobilitydev.com/#/terms-condition?lang=english"
     const val POLICY_URL: String = "https://admin.kitemobilitydev.com/#/privacy-policy?lang=english"
     const val SUPPORT_URL: String = "https://www.kitemobility.io/support?lang=eng"
@@ -25,15 +26,15 @@ object Constants {
     const val THIRD_PARTY_LIST = "customer/list_third_parties"
 
     //customer listing
-    const val RESERVATION_LIST ="customer/list_reservations"
+    const val RESERVATION_LIST = "customer/list_reservations"
     const val BIKE_LISTING = "customer/list_bikes"
 
     //CUSTOMER CARD DETAILS
     const val ADD_CARD = "payment/add_card"
 
     //REGEX
-    val VISA : Pattern = Pattern.compile("^4[0-9]{6,}\$")
-    val MASTER : Pattern = Pattern.compile("^5[1-5][0-9]{5,}\$")
+    val VISA: Pattern = Pattern.compile("^4[0-9]{6,}\$")
+    val MASTER: Pattern = Pattern.compile("^5[1-5][0-9]{5,}\$")
     val PASSWORD_PATTERN: Pattern =
         Pattern.compile(
             "^" +
@@ -44,6 +45,7 @@ object Constants {
                     "$"
         )
 
-
+    //EXTRAS
+    const val REQUEST_IMAGE_CAPTURE = 1
 }
 

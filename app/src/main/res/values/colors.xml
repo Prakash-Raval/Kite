@@ -34,4 +34,6 @@
     //card
     <color name="light_blue_card_back">#27AAE1</color>
 
+    <color name="light_gray_status_color">#EAE8EE</color>
+
 </resources>

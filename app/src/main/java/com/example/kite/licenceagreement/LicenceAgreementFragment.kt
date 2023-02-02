@@ -24,6 +24,7 @@ class LicenceAgreementFragment : Fragment() {
             false
         )
         setupToolbar()
+        setUpNavigation()
         return binding.root
     }
 
@@ -34,4 +35,9 @@ class LicenceAgreementFragment : Fragment() {
         }
     }
 
+    private fun setUpNavigation() {
+        binding.btnContinue.setOnClickListener {
+            findNavController().navigate(LicenceAgreementFragmentDirections.actionLicenceAgreementFragmentToScanLicenseFragment())
+        }
+    }
 }

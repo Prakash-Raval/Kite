@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<vector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:height="28dp" android:width="42dp" android:viewportWidth="42" android:viewportHeight="28">
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:width="42dp"
+    android:height="28dp"
+    android:viewportWidth="42"
+    android:viewportHeight="28">
     <group>
-        <clip-path android:pathData="M0,0.0001l41.1159,0l0,27.9147l-41.1159,0z"/>
-        <path android:fillColor="#ffffff" android:pathData="M4.812,7.2184L36.3039,7.2184L36.3039,4.8121L4.812,4.8121L4.812,7.2184ZM36.3039,23.1022L18.9075,23.1022L7.3563,23.1022L4.812,23.1022L4.812,12.0307L36.3039,12.0307L36.3039,23.1022ZM37.0596,-0.0002L4.0563,-0.0002C1.8195,-0.0002 0,1.8196 0,4.0561L0,23.8582C0,26.095 1.8195,27.9148 4.0563,27.9148L4.9506,27.9148L19.8702,27.9148L37.0596,27.9148C39.2961,27.9148 41.1159,26.095 41.1159,23.8582L41.1159,4.0561C41.1159,1.8196 39.2961,-0.0002 37.0596,-0.0002L37.0596,-0.0002Z" android:strokeColor="#00000000" android:strokeWidth="1" android:fillType="1"/>
+        <clip-path android:pathData="M0,0.0001l41.1159,0l0,27.9147l-41.1159,0z"
+            tools:ignore="VectorRaster" />
+        <path
+            android:fillColor="#ffffff"
+            android:fillType="evenOdd"
+            android:pathData="M4.812,7.2184L36.3039,7.2184L36.3039,4.8121L4.812,4.8121L4.812,7.2184ZM36.3039,23.1022L18.9075,23.1022L7.3563,23.1022L4.812,23.1022L4.812,12.0307L36.3039,12.0307L36.3039,23.1022ZM37.0596,-0.0002L4.0563,-0.0002C1.8195,-0.0002 0,1.8196 0,4.0561L0,23.8582C0,26.095 1.8195,27.9148 4.0563,27.9148L4.9506,27.9148L19.8702,27.9148L37.0596,27.9148C39.2961,27.9148 41.1159,26.095 41.1159,23.8582L41.1159,4.0561C41.1159,1.8196 39.2961,-0.0002 37.0596,-0.0002L37.0596,-0.0002Z"
+            android:strokeWidth="1"
+            android:strokeColor="#00000000" />
     </group>
 </vector>
