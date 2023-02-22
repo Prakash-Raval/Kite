@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.kite.R
 import com.example.kite.databinding.FragmentChangeContactBinding
 
@@ -23,7 +24,15 @@ class ChangeContactFragment : Fragment() {
             container,
             false
         )
+        setUPToolbar()
         return binding.root
+    }
+
+    private fun setUPToolbar(){
+        binding.inContactBar.imgBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
+        binding.inContactBar.txtToolbarHeader.setText(R.string.change_contact)
     }
 
 }

@@ -31,16 +31,16 @@ class ChangePasswordFragment : Fragment() {
             LayoutInflater.from(context), R.layout.fragment_change_password, container, false
         )
         // Inflate the layout for this fragment
-        navigation()
         getApiData()
+        setUpToolBar()
         return binding.root
     }
 
-    //back navigation
-    private fun navigation() {
-        binding.imgBack.setOnClickListener {
+    private fun setUpToolBar() {
+        binding.inChangePasswordBar.imgBack.setOnClickListener {
             findNavController().navigateUp()
         }
+        binding.inChangePasswordBar.txtToolbarHeader.setText(R.string.change_password)
     }
 
     //getting data from user to change password

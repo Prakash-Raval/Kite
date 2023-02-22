@@ -88,9 +88,9 @@
 
             <com.google.android.material.textview.MaterialTextView
                 style="@style/BlackSmallCustomMaterialTextView"
-                android:background="#dee6ea"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/bg_card_gray"
                 android:drawableStart="@drawable/ic_lock"
                 android:drawablePadding="@dimen/_10sdp"
                 android:padding="@dimen/_8sdp"
@@ -112,6 +112,46 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/glEnd"
             app:layout_constraintStart_toEndOf="@id/glStart" />
+
+        <RadioGroup
+            android:id="@+id/rgCountrySelector"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_40sdp"
+            android:background="@drawable/pink_out_line"
+            android:checkedButton="@+id/rbCanada"
+            android:orientation="horizontal"
+            android:padding="@dimen/_5sdp"
+            app:layout_constraintEnd_toStartOf="@id/glEnd"
+            app:layout_constraintStart_toEndOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/txtChooseCountry">
+
+            <RadioButton
+                android:id="@+id/rbCanada"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/toggle_widget_background"
+                android:button="@null"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:fontFamily="@font/avenir_black"
+                android:text="@string/canada" />
+
+            <RadioButton
+                android:id="@+id/rbUnitedStates"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/toggle_widget_background"
+                android:button="@null"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:fontFamily="@font/avenir_black"
+                android:gravity="center"
+                android:text="@string/united_states" />
+
+        </RadioGroup>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -54,9 +54,12 @@ class BikeListingFragment : Fragment(), OnCellClicked {
     }
 
     private fun setNavigation() {
-            binding.btnRideNow.setOnClickListener {
-                findNavController().navigate(BikeListingFragmentDirections.actionBikeListingFragmentToLicenceAgreementFragment())
-            }
+        binding.imgBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
+        binding.btnRideNow.setOnClickListener {
+            findNavController().navigate(BikeListingFragmentDirections.actionBikeListingFragmentToLicenceAgreementFragment())
+        }
     }
 
 

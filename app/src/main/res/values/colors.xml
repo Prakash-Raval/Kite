@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
 
     //added colors
+
     <color name="bg_splash">#F15C60</color>
     <color name="bg_main">#F15C60</color>
     //button
@@ -26,6 +27,9 @@
     <color name="bg_card_gray">#F1F5F6</color>
     <color name="card_view_background">#979797</color>
 
+    <color name="radio_group_background">#26979797</color>
+
+
     //error
     <color name="error_text">#F40209</color>
 
@@ -35,5 +39,12 @@
     <color name="light_blue_card_back">#27AAE1</color>
 
     <color name="light_gray_status_color">#EAE8EE</color>
+    <color name="light_grey_card_back">
+        #E6E9EE
+    </color>
+
+    //
+    <color name="light_black_text_color">#28282D</color>
+    <color name="light_black_second">#231F20</color>
 
 </resources>

@@ -47,6 +47,7 @@ class AddCardFragment : Fragment() {
         return binding.root
     }
 
+
     //setting up the navigation
     private fun setNavigation() {
         binding.imgBack.setOnClickListener {
@@ -63,6 +64,23 @@ class AddCardFragment : Fragment() {
                 Toast.makeText(requireContext(), "Select Year First", Toast.LENGTH_SHORT).show()
             } else {
                 selectMonthDialog()
+            }
+        }
+        var isChecked = true
+        binding.btnPriority.setOnClickListener {
+            if (isChecked) {
+                isChecked = false
+                binding.btnPriority.alpha = 0.3f
+                binding.btnPriority.setCompoundDrawablesWithIntrinsicBounds(
+                    null,
+                    null,
+                    ContextCompat.getDrawable(requireContext(), R.drawable.ic_check),
+                    null
+                )
+            } else {
+                binding.btnPriority.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
+                isChecked = true
+                binding.btnPriority.alpha = 1.0f
             }
         }
     }
@@ -176,6 +194,5 @@ class AddCardFragment : Fragment() {
             }
         }
     }
-
 
 }

@@ -213,9 +213,11 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilCountry"
                 style="@style/TextInputLayout"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_12sdp"
                 app:errorEnabled="false"
+                app:layout_constraintEnd_toStartOf="@id/tilState"
                 app:layout_constraintStart_toEndOf="@id/glStart"
                 app:layout_constraintTop_toBottomOf="@id/txtCountry">
 
@@ -225,7 +227,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:drawableEnd="@drawable/ic_arrow_down"
-                    android:drawablePadding="@dimen/_50sdp"
                     android:focusable="false"
                     android:hint="@string/country"
                     android:inputType="text"
@@ -245,7 +246,7 @@
                 app:layout_constraintTop_toBottomOf="@id/txtState">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edtSate"
+                    android:id="@+id/edtState"
                     style="@style/TextEditText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

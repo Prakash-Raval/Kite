@@ -40,7 +40,15 @@ class LoginFragment : Fragment() {
         // Inflate the layout for this fragment
         loadFragment()
         getRetrofitData()
+        setUpToolBar()
         return binding.root
+    }
+
+    private fun setUpToolBar(){
+        binding.inLoginBar.imgBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
+        binding.inLoginBar.txtToolbarHeader.setText(R.string.login)
     }
 
     //navigation from fragment
@@ -50,9 +58,6 @@ class LoginFragment : Fragment() {
         }
         binding.txtAccountCreate.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
-        }
-        binding.imgBack.setOnClickListener {
-            findNavController().navigateUp()
         }
     }
 

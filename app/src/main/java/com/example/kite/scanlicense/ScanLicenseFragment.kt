@@ -15,14 +15,19 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.kite.R
 import com.example.kite.databinding.FragmentScanLicenseBinding
+import com.example.kite.utils.PrefManager
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+
 
 class ScanLicenseFragment : Fragment() {
 
@@ -31,7 +36,8 @@ class ScanLicenseFragment : Fragment() {
     private lateinit var cameraExecutor: ExecutorService
     private lateinit var outputDirectory: File
     private var count = 1
-    private var isCaptured : Boolean = false
+    private var lensFacing = CameraSelector.DEFAULT_BACK_CAMERA
+
 
     companion object {
         private const val TAG = "CameraXGFG"
@@ -76,33 +82,49 @@ class ScanLicenseFragment : Fragment() {
             when (count) {
                 1 -> {
                     takePhoto()
+                    binding.imgCapture.isClickable = false
+                    lifecycleScope.launch {
 
+                        delay(3000)
                         count++
                         binding.txtLicenseText.setText(R.string.select_license_back)
                         binding.imgLicense.setImageResource(R.drawable.ic_license_back)
-
+                        binding.imgCapture.isClickable = true
+                    }
 
                 }
                 2 -> {
+
                     takePhoto()
+                    binding.imgCapture.isClickable = false
+                    lifecycleScope.launch {
+                        delay(3000)
                         count++
                         binding.txtLicenseText.setText(R.string.take_user_selfie)
-                        binding.imgLicense.setImageResource(R.drawable.ic_license_back)
+                        binding.imgLicense.setImageResource(R.drawable.ic_selfie_icon)
+                        binding.imgCapture.isClickable = true
+                        lensFacing = CameraSelector.DEFAULT_FRONT_CAMERA
+                        startCamera()
+                    }
 
                 }
                 3 -> {
-                        takePhoto()
+                    takePhoto()
+                    binding.imgCapture.isClickable = false
+                    lifecycleScope.launch {
+                        delay(3000)
                         count = 1
                         findNavController().navigate(ScanLicenseFragmentDirections.actionScanLicenseFragmentToDriverLicenseEntryFragment())
+                        binding.imgCapture.isClickable = true
+
+                    }
                 }
                 else -> {
+                    binding.imgCapture.isClickable = true
                     binding.txtLicenseText.setText(R.string.select_license_id_front)
                     binding.imgLicense.setImageResource(R.drawable.ic_license_front)
                 }
-
             }
-
-
         }
     }
 
@@ -125,9 +147,25 @@ class ScanLicenseFragment : Fragment() {
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
                     val savedUri = Uri.fromFile(photoFile)
                     val msg = "Photo capture succeeded: $savedUri"
+                    savingUrl(count, savedUri.toString())
+
                     Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show()
                 }
             })
+    }
+
+    private fun savingUrl(count: Int, url: String) {
+        when (count) {
+            1 -> {
+                PrefManager.put(url, "LICENCE_FRONT")
+            }
+            2 -> {
+                PrefManager.put(url, "LICENCE_BACK")
+            }
+            3 -> {
+                PrefManager.put(url, "USER_IMAGE")
+            }
+        }
     }
 
     private fun getOutputDirectory(): File {
@@ -149,11 +187,11 @@ class ScanLicenseFragment : Fragment() {
                     it.setSurfaceProvider(binding.viewFinder.surfaceProvider)
                 }
             imageCapture = ImageCapture.Builder().build()
-            val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+
             try {
                 cameraProvider.unbindAll()
                 cameraProvider.bindToLifecycle(
-                    this, cameraSelector, preview, imageCapture
+                    this, lensFacing, preview, imageCapture
                 )
             } catch (exc: Exception) {
                 Log.e("MainActivity.TAG", "Use case binding failed", exc)
@@ -171,7 +209,7 @@ class ScanLicenseFragment : Fragment() {
     ) {
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
             if (allPermissionsGranted()) {
-                startCamera()
+              startCamera()
             } else {
                 Toast.makeText(
                     requireContext(), "Permissions not granted by the user.", Toast.LENGTH_SHORT
@@ -179,6 +217,7 @@ class ScanLicenseFragment : Fragment() {
             }
         }
     }
+
 
     override fun onDestroy() {
         super.onDestroy()

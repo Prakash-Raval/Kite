@@ -79,6 +79,7 @@
             android:layout_marginTop="@dimen/_20sdp"
             style="@style/BorderTextView"
             android:text="@string/reservations"
+            android:alpha="0.5"
             android:background="@drawable/bg_text_grey"
             app:layout_constraintStart_toEndOf="@id/glStart"
             app:layout_constraintTop_toBottomOf="@id/imgKiteLogo"/>

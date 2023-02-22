@@ -80,8 +80,8 @@
                 android:fontFamily="@font/avenir_regular"
                 android:text="@string/no_cards_available"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_20sdp"
-                android:textStyle="normal" />
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold" />
 
 
         </com.google.android.material.card.MaterialCardView>

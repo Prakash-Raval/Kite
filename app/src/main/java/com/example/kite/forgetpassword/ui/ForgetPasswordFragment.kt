@@ -31,15 +31,16 @@ class ForgetPasswordFragment : Fragment() {
             container,
             false
         )
-        loadFragment()
+        setUpToolBar()
         getApiData()
         return binding.root
     }
 
-    private fun loadFragment() {
-        binding.imgBack.setOnClickListener {
-            findNavController().navigateUp()
-        }
+    private fun setUpToolBar() {
+      binding.inForgotBar.imgBack.setOnClickListener {
+          findNavController().navigateUp()
+      }
+        binding.inForgotBar.txtToolbarHeader.setText(R.string.forget_password)
     }
 
     //getting api data

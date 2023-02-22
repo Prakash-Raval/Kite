@@ -13,6 +13,7 @@ import com.example.kite.login.model.LoginRequest
 import com.example.kite.login.model.LoginResponse
 import com.example.kite.otpverification.model.OtpRequest
 import com.example.kite.otpverification.model.OtpResponse
+import com.example.kite.countrylisting.CountryResponse
 import com.example.kite.profile.model.ViewProfileRequest
 import com.example.kite.profile.model.ViewProfileResponse
 import com.example.kite.program.model.ThirdPartyListRequest
@@ -20,9 +21,13 @@ import com.example.kite.program.model.ThirdPartyListResponse
 import com.example.kite.reservation.model.ListReservationRequest
 import com.example.kite.reservation.model.ListReservationResponse
 import com.example.kite.signup.model.SignUpResponse2
+import com.example.kite.statelisting.StateRequest
+import com.example.kite.statelisting.StateResponse
+import com.google.android.gms.common.api.ResolvableApiException
 import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 
@@ -76,4 +81,11 @@ interface ApiInterface {
 
     @POST(Constants.BIKE_LISTING)
     suspend fun getBikeListing(@Body request: BikeListingRequest): Response<BikeListingResponse>
+
+    @GET(Constants.COUNTRY_LIST)
+    suspend fun getCountryList() : Response<CountryResponse>
+
+    @POST(Constants.STATE_LIST)
+    suspend fun getStateList(@Body stateRequest: StateRequest) : Response<StateResponse>
+
 }

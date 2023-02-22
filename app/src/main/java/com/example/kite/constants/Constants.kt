@@ -32,6 +32,10 @@ object Constants {
     //CUSTOMER CARD DETAILS
     const val ADD_CARD = "payment/add_card"
 
+    //COUNTRY LISTING
+    const val COUNTRY_LIST = "country/country_list"
+    const val STATE_LIST = "country/state_list"
+
     //REGEX
     val VISA: Pattern = Pattern.compile("^4[0-9]{6,}\$")
     val MASTER: Pattern = Pattern.compile("^5[1-5][0-9]{5,}\$")

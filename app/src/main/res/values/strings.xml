@@ -129,7 +129,7 @@
     <string name="united_states">United states</string>
     <string name="continue_text">Continue</string>
     <string name="info_string">Your information is stored securely and stays private.</string>
-    <string name="agreement_text"><![CDATA[I have read, and agree to the Rental Agreement & Waiver.]]></string>
+    <string name="agreement_text">I have read, and agree to the Rental Agreement &amp; Waiver.</string>
     <string name="need_help">Need Help</string>
     <string name="help_detect_camera">Make sure you follow these tips to help the camera detect and scan your license.</string>
     <string name="check_your_lighting">Check your lighting</string>
@@ -147,5 +147,21 @@
     <string name="select_license_id_front">Select License ID Front</string>
     <string name="take_user_selfie">Take a Selfie</string>
     <string name="driver_license_entry">Driver License Entry</string>
+    <string name="license_success">Your License and Selfie have been successfully captured.</string>
+    <string name="enter_your_info_exactly_as_it_appears_on_your_license_so_we_can_verify_your_eligibility_to_drive">Enter your info exactly as it appears on your license so we can verify your eligibility to drive.</string>
+    <string name="license_number">License Number</string>
+    <string name="expiration_date">Expiration Date</string>
+    <string name="date_of_birth">Date Of Birth</string>
+    <string name="mm_dd_yyy">MM/DD/YYY</string>
+    <string name="save_continue"><![CDATA[Save & Continue]]></string>
+    <string name="qr_location">QR Location</string>
+    <string name="qr_location_text">On the driver\'s side of the vehicle, located on hte window, you\'ll find the vehicles QR code. Scan this code to get started.</string>
+    <string name="scan_qr_code">Scan QR Code</string>
+    <string name="let_s_get_you_ready">Let\'s get you ready</string>
+    <string name="dialog_qr_text">Located an available eCar in a designated kite space and scan QR code on the window to get started</string>
+    <string name="i_m_ready">I\'m Ready</string>
+    <string name="no_notifications_available">No notifications available</string>
+    <string name="select_country">Select Country</string>
+    <string name="select_state">Select State</string>
 
 </resources>
