@@ -15,6 +15,12 @@
             app:destination="@id/welcomeFragment"
             app:popUpTo="@+id/main_nav_graph"
             app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_splashFragment_to_selectProgramFragment"
+            app:destination="@id/selectProgramFragment"
+            app:popUpTo="@+id/main_nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/welcomeFragment"
@@ -41,7 +47,9 @@
             app:destination="@id/signUpFragment" />
         <action
             android:id="@+id/action_loginFragment_to_selectProgramFragment"
-            app:destination="@id/selectProgramFragment" />
+            app:destination="@id/selectProgramFragment"
+            app:popUpTo="@+id/main_nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/forgetPasswordFragment"
@@ -81,7 +89,9 @@
         android:label="SelectProgramFragment">
         <action
             android:id="@+id/action_selectProgramFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:popUpTo="@+id/main_nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
@@ -124,7 +134,14 @@
     <fragment
         android:id="@+id/settingFragment"
         android:name="com.example.kite.setting.SettingFragment"
-        android:label="SettingFragment" >
+        android:label="SettingFragment">
+
+        <action
+            android:id="@+id/action_settingFragment_to_welcomeFragment"
+            app:destination="@id/welcomeFragment"
+            app:popUpTo="@+id/main_nav_graph"
+            app:popUpToInclusive="true" />
+
         <action
             android:id="@+id/action_settingFragment_to_verifyInfoFragment"
             app:destination="@id/verifyInfoFragment" />
@@ -159,6 +176,7 @@
         android:id="@+id/profileFragment"
         android:name="com.example.kite.profile.ui.ProfileFragment"
         android:label="ProfileFragment">
+
         <action
             android:id="@+id/action_profileFragment_to_changeContactFragment"
             app:destination="@id/changeContactFragment" />
@@ -189,11 +207,14 @@
         <action
             android:id="@+id/action_bikeListingFragment_to_licenceAgreementFragment"
             app:destination="@id/licenceAgreementFragment" />
+        <action
+            android:id="@+id/action_bikeListingFragment_to_userAgreementFragment"
+            app:destination="@id/userAgreementFragment" />
     </fragment>
     <fragment
         android:id="@+id/licenceAgreementFragment"
         android:name="com.example.kite.licenceagreement.LicenceAgreementFragment"
-        android:label="LicenceAgreementFragment" >
+        android:label="LicenceAgreementFragment">
         <action
             android:id="@+id/action_licenceAgreementFragment_to_scanLicenseFragment"
             app:destination="@id/scanLicenseFragment" />
@@ -208,7 +229,7 @@
     <fragment
         android:id="@+id/scanLicenseFragment"
         android:name="com.example.kite.scanlicense.ScanLicenseFragment"
-        android:label="ScanLicenseFragment" >
+        android:label="ScanLicenseFragment">
         <action
             android:id="@+id/action_scanLicenseFragment_to_needHelpFragment"
             app:destination="@id/needHelpFragment" />
@@ -224,4 +245,22 @@
         android:id="@+id/driverLicenseEntryFragment"
         android:name="com.example.kite.driverlicenceentry.DriverLicenseEntryFragment"
         android:label="DriverLicenseEntryFragment" />
+    <fragment
+        android:id="@+id/userAgreementFragment"
+        android:name="com.example.kite.useragreement.UserAgreementFragment"
+        android:label="UserAgreementFragment">
+        <action
+            android:id="@+id/action_userAgreementFragment_to_termsFragment"
+            app:destination="@id/termsFragment" />
+        <action
+            android:id="@+id/action_userAgreementFragment_to_selectProgramFragment"
+            app:destination="@id/selectProgramFragment" />
+        <action
+            android:id="@+id/action_userAgreementFragment_to_guestPropertySelectionFragment"
+            app:destination="@id/guestPropertySelectionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/guestPropertySelectionFragment"
+        android:name="com.example.kite.guestpropertyselection.GuestPropertySelectionFragment"
+        android:label="GuestPropertySelectionFragment" />
 </navigation>

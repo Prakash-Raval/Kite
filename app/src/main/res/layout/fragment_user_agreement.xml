@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
     </data>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -13,6 +16,527 @@
             android:id="@+id/inUserAgreementBar"
             layout="@layout/item_common_toolbar" />
 
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/inUserAgreementBar">
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/glStart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="@dimen/_20sdp" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/glEnd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_end="@dimen/_20sdp" />
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtFirstTimeText"
+                    style="@style/BlackMediumCustomMaterialTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:text="@string/looks_like_it_s_your_first_time_here"
+                    android:textSize="@dimen/_24sdp"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:lineHeight="@dimen/_26sdp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtUserChooser"
+                    style="@style/BlackSmallCustomMaterialTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:text="@string/what_type_of_user_are_you"
+                    android:textSize="@dimen/_12sdp"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/txtFirstTimeText" />
+
+                <RadioGroup
+                    android:id="@+id/rgUserSelector"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:background="@drawable/pink_out_line"
+                    android:checkedButton="@+id/rbResident"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_5sdp"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/txtUserChooser">
+
+                    <RadioButton
+                        android:id="@+id/rbResident"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/toggle_widget_background"
+                        android:button="@null"
+                        android:fontFamily="@font/avenir_black"
+                        android:gravity="center"
+                        android:text="@string/resident"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <RadioButton
+                        android:id="@+id/rbGuest"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/toggle_widget_background"
+                        android:button="@null"
+                        android:fontFamily="@font/avenir_black"
+                        android:gravity="center"
+                        android:text="@string/guest"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+                </RadioGroup>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtUABirthDate"
+                    style="@style/CapitalTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:text="@string/date_of_birth"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/rgUserSelector" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilUABirthDate"
+                    style="@style/TextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/txtUABirthDate">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtUABirthDate"
+                        style="@style/TextEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:drawableEnd="@drawable/ic_arrow_down"
+                        android:focusable="false"
+                        android:hint="@string/dd_mm_yyyy"
+                        android:inputType="text" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtUAAddress"
+                    style="@style/CapitalTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:text="@string/address"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/tilUABirthDate" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilUAAddress"
+                    style="@style/TextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/txtUAAddress">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtUAAddress"
+                        style="@style/TextEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="@string/address"
+                        android:inputType="text" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtUACountry"
+                    style="@style/CapitalTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:text="@string/country"
+                    app:layout_constraintEnd_toStartOf="@id/txtUAState"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/tilUAAddress" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtUAState"
+                    style="@style/CapitalTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:text="@string/state_province"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/txtUACountry"
+                    app:layout_constraintTop_toBottomOf="@id/tilUAAddress" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilUACountry"
+                    style="@style/TextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_12sdp"
+                    app:errorEnabled="false"
+                    app:layout_constraintEnd_toStartOf="@id/tilUAState"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/txtUACountry">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtUACountry"
+                        style="@style/TextEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:drawableEnd="@drawable/ic_arrow_down"
+                        android:focusable="false"
+                        android:hint="@string/country"
+                        android:inputType="text" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilUAState"
+                    style="@style/TextInputLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:errorEnabled="false"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toStartOf="@id/txtUAState"
+                    app:layout_constraintTop_toBottomOf="@id/txtUAState">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtUAState"
+                        style="@style/TextEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:drawableEnd="@drawable/ic_arrow_down"
+                        android:drawablePadding="@dimen/_40sdp"
+                        android:focusable="false"
+                        android:hint="@string/state_province"
+                        android:inputType="text" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtUACity"
+                    style="@style/CapitalTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:text="@string/city"
+                    app:layout_constraintEnd_toStartOf="@id/txtUAState"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/tilUACountry" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtUAZipCode"
+                    style="@style/CapitalTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:text="@string/zip_postal_code"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/txtUACountry"
+                    app:layout_constraintTop_toBottomOf="@id/tilUAState" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilUACity"
+                    style="@style/TextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    app:errorEnabled="false"
+                    app:layout_constraintEnd_toStartOf="@id/tilUACode"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/txtUACity">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtUACity"
+                        style="@style/TextEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="@string/city"
+                        android:inputType="text" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilUACode"
+                    style="@style/TextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:errorEnabled="false"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/tilUACity"
+                    app:layout_constraintStart_toStartOf="@id/txtUAZipCode"
+                    app:layout_constraintTop_toBottomOf="@id/txtUAZipCode">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtUACode"
+                        style="@style/TextEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="@string/zip_postal_code"
+                        android:inputType="text" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <RadioButton
+                    android:id="@+id/rbAgeChecker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:buttonTint="@color/bg_main"
+                    android:clickable="false"
+                    android:fontFamily="@font/avenir_light"
+                    android:paddingHorizontal="@dimen/_16sdp"
+                    android:text="@string/i_am_over_23"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/tilUACity" />
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtUASign"
+                    style="@style/CapitalTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:text="@string/signature"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/rbAgeChecker" />
+
+                <com.github.gcacace.signaturepad.views.SignaturePad
+                    android:id="@+id/uaSignaturePad"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_100sdp"
+                    android:background="@color/signature_pad_color"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/txtUASign"
+                    app:penColor="@android:color/black" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imgUAClearPad"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    android:src="@drawable/ic_refresh"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintTop_toTopOf="@id/uaSignaturePad" />
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnUploadID"
+                    style="@style/CustomMaterialButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:text="@string/upload_photo_id"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/uaSignaturePad" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtPhotoIDDialog"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:text="@string/what_is_this"
+                    android:textColor="@color/bg_main"
+                    android:textSize="@dimen/_10sdp"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintTop_toBottomOf="@id/btnUploadID" />
+
+                <RadioButton
+                    android:id="@+id/rbUATerms"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:buttonTint="@color/bg_main"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/txtPhotoIDDialog" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtRentalText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/avenir_black"
+                    android:text="@string/i_have_read_and_accept_the_terms_and_conditions_provided"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10sdp"
+                    app:layout_constraintBottom_toBottomOf="@id/rbUATerms"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/rbUATerms"
+                    app:layout_constraintTop_toTopOf="@id/rbUATerms" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnUASubmit"
+                    style="@style/BlackCustomMaterialButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/_20sdp"
+                    android:alpha="0.2"
+                    android:clickable="false"
+                    android:text="@string/submit"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/txtRentalText" />
+
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/gpResident"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    app:constraint_referenced_ids="tilUACountry,txtUAState,txtUACountry,tilUAAddress,txtUAAddress,txtUABirthDate,tilUABirthDate,tilUAState,tilUACity,tilUACode,txtUACity,txtUAZipCode,txtUAState,txtUACountry,rbAgeChecker,txtUASign,imgUAClearPad,uaSignaturePad,rbUATerms,txtRentalText,btnUASubmit,btnUploadID,txtPhotoIDDialog" />
+
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/gpGuest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:constraint_referenced_ids="rvGuestProperty,btnChangeProperty,txtFitsText,txtHotel,txtHotel2,txtResidential,txtResidential2,txtOffice,txtOffice2" />
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvGuestProperty"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:clipToPadding="false"
+                    android:paddingStart="@dimen/_16sdp"
+                    android:paddingEnd="0dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rgUserSelector"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/item_guest_property_type" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnChangeProperty"
+                    style="@style/WhiteCustomMaterialButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:text="@string/change_property"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/rvGuestProperty" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtFitsText"
+                    style="@style/BlackMediumCustomMaterialTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:text="@string/not_sure_which_one_fits_you"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/btnChangeProperty"
+                    app:lineHeight="@dimen/_26sdp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtHotel"
+                    style="@style/BlackSmallCustomMaterialTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:drawableStart="@drawable/ic_hotel"
+                    android:drawablePadding="@dimen/_16sdp"
+                    android:text="@string/hotel_resort"
+                    android:textSize="@dimen/_12sdp"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/txtFitsText" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtHotel2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_35sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:text="@string/guest_hotel"
+                    android:textColor="@color/light_black_text_color"
+                    android:textSize="@dimen/_10sdp"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/txtHotel" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtResidential"
+                    style="@style/BlackSmallCustomMaterialTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:drawableStart="@drawable/ic_residential"
+                    android:drawablePadding="@dimen/_16sdp"
+                    android:text="@string/residential"
+                    android:textSize="@dimen/_12sdp"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/txtHotel2" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtResidential2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_35sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:text="@string/guest_residential"
+                    android:textColor="@color/light_black_text_color"
+                    android:textSize="@dimen/_10sdp"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/txtResidential" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtOffice"
+                    style="@style/BlackSmallCustomMaterialTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:drawableStart="@drawable/ic_commercial"
+                    android:drawablePadding="@dimen/_16sdp"
+                    android:text="@string/commercial_office"
+                    android:textSize="@dimen/_12sdp"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/txtResidential2" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtOffice2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_35sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:layout_marginBottom="@dimen/_16sdp"
+                    android:text="@string/guest_office"
+                    android:textColor="@color/light_black_text_color"
+                    android:textSize="@dimen/_10sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/txtOffice" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

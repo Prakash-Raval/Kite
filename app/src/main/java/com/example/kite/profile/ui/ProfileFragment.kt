@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,18 +25,21 @@ import com.example.kite.network.RetrofitHelper
 import com.example.kite.profile.repository.ViewProfileRepository
 import com.example.kite.profile.viewmodel.ViewProfileVMFactory
 import com.example.kite.profile.viewmodel.ViewProfileViewModel
-import com.example.kite.statelisting.StateListingAdapter
+import com.example.kite.setting.SettingFragmentDirections
+import com.example.kite.statelisting.*
 import com.example.kite.utils.PrefManager
 import kotlinx.coroutines.launch
 
 
-class ProfileFragment : Fragment(){
+class ProfileFragment : Fragment(), OnCellClickedCountry, OnCellClickedState {
 
     private lateinit var binding: FragmentProfileBinding
     private lateinit var viewModel: ViewProfileViewModel
     private lateinit var countryViewModel: CountryViewModel
+    private lateinit var stateViewModel: StateViewModel
     private lateinit var countryListingAdapter: CountryListingAdapter
     private lateinit var stateListingAdapter: StateListingAdapter
+    private lateinit var builder: AlertDialog
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -82,6 +86,9 @@ class ProfileFragment : Fragment(){
         binding.txtTerms.setOnClickListener {
             findNavController().navigate(R.id.termsFragment)
         }
+        binding.btnSignOut.setOnClickListener {
+            logout()
+        }
     }
 
     //opening change password and contact page
@@ -98,37 +105,38 @@ class ProfileFragment : Fragment(){
     //opening dialogs for country and state listing
     private fun setUpDialogs() {
         binding.edtCountry.setOnClickListener {
-            openDialogCountry()
+            openDialogCountry(binding.edtCountry.text.toString())
         }
         binding.edtState.setOnClickListener {
-            openDialogState()
+            openDialogState(binding.edtState.text.toString())
         }
 
     }
+
     //opening dialog for state list
     @SuppressLint("MissingInflatedId")
-    private fun openDialogState() {
-        val builder = AlertDialog.Builder(requireContext())
+    private fun openDialogState(mState: String) {
+        builder = AlertDialog.Builder(requireContext())
             .create()
         builder.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         val view = layoutInflater.inflate(R.layout.dialog_state_listing, null)
         builder.setView(view)
-        countryListingAdapter = CountryListingAdapter()
-
+        stateListingAdapter = StateListingAdapter(mState, this)
         val recycler = view.findViewById<RecyclerView>(R.id.rvStateList)
-        recycler.adapter = countryListingAdapter
-
+        recycler.adapter = stateListingAdapter
         builder.setCanceledOnTouchOutside(false)
         builder.show()
+        getStateData()
     }
+
     //opening dialog for country list
-    private fun openDialogCountry() {
-        val builder = AlertDialog.Builder(requireContext())
+    private fun openDialogCountry(mCountry: String) {
+        builder = AlertDialog.Builder(requireContext())
             .create()
         builder.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         val view = layoutInflater.inflate(R.layout.dialog_country_picker, null)
         builder.setView(view)
-        countryListingAdapter = CountryListingAdapter()
+        countryListingAdapter = CountryListingAdapter(this, mCountry)
 
         val recycler = view.findViewById<RecyclerView>(R.id.rvCountryList)
         recycler.adapter = countryListingAdapter
@@ -151,8 +159,42 @@ class ProfileFragment : Fragment(){
         countryViewModel.profileLiveData.observe(viewLifecycleOwner) {
             countryListingAdapter.setList(it.countryList as ArrayList<CountryResponse.Country>)
             countryListingAdapter.notifyDataSetChanged()
+
         }
     }
 
+    // getting country data from the api
+    @SuppressLint("NotifyDataSetChanged")
+    private fun getStateData() {
+        val service =
+            RetrofitHelper.getInstance(Constants.BASE_URL).create(ApiInterface::class.java)
+        val repository = StateRepository(service)
+        stateViewModel = ViewModelProvider(
+            this, StateVMFactory(repository)
+        )[StateViewModel::class.java]
+        stateViewModel.getStateList(StateRequest(binding.edtCountry.text.toString()))
+        stateViewModel.profileLiveData.observe(viewLifecycleOwner) {
+            Log.d("getStateData", "getStateData: ${it.stateList?.get(0)?.states}")
+            stateListingAdapter.setList(it.stateList?.getOrNull(0 )?.states as ArrayList<String?>)
 
+            stateListingAdapter.notifyDataSetChanged()
+
+        }
+    }
+
+    //country dialog click
+    override fun isClicked(data: String, position: Int) {
+        binding.edtCountry.setText(data)
+        builder.dismiss()
+    }
+
+    private fun logout() {
+        PrefManager.remove()
+        findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToWelcomeFragment())
+    }
+    //state dialog click
+    override fun isClickedState(data: String, position: Int) {
+        binding.edtState.setText(data)
+        builder.dismiss()
+    }
 }

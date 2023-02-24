@@ -18,6 +18,7 @@ class BikeListingViewModel(val repository: BikeListingRepository) : ViewModel() 
 
 
 
+
     fun getRequiredData(request: BikeListingRequest) {
         getList(request)
     }
@@ -35,6 +36,5 @@ class BikeListingViewModel(val repository: BikeListingRepository) : ViewModel() 
                 Log.d("", e.message.toString())
             }
         }
-
 
 }

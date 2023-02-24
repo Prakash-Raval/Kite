@@ -25,5 +25,9 @@ object PrefManager {
         return GsonBuilder().create().fromJson(value, T::class.java)
     }
 
+    fun remove(){
+        preferences.edit().clear().apply()
+    }
+
 
 }

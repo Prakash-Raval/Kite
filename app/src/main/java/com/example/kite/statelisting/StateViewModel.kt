@@ -9,17 +9,15 @@ import kotlinx.coroutines.launch
 
 class StateViewModel(val repository: StateRepository) : ViewModel() {
 
-  /*  private val profileResult = MutableLiveData<StateResponse>()
+    private val profileResult = MutableLiveData<StateResponse>()
     val profileLiveData: LiveData<StateResponse>
-        get() = profileResult*/
-
-
+        get() = profileResult
 
     fun getStateList(request: StateRequest) = viewModelScope.launch {
         try {
             val response = repository.getStateList(request)
             if (response.isSuccessful) {
-                //profileResult.postValue(response.body())
+                profileResult.postValue(response.body())
                 Log.d("TEST-LOG77", response.body().toString())
             } else {
                 // handle error

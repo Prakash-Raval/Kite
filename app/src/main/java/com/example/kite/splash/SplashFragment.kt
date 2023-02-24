@@ -10,6 +10,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.kite.R
 import com.example.kite.databinding.FragmentSplashBinding
+import com.example.kite.login.model.LoginResponse
+import com.example.kite.utils.PrefManager
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -36,8 +38,16 @@ class SplashFragment : Fragment() {
     }
 
     private fun loadFragment() {
-        val action = SplashFragmentDirections.actionSplashFragmentToWelcomeFragment()
-        findNavController().navigate(action)
-    }
+        activity?.application?.let { PrefManager.with(it) }
+        val shared = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")
+        //pref
 
+        if(shared?.data?.accessToken != null ){
+            findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToSelectProgramFragment())
+        }
+        else{
+            val action = SplashFragmentDirections.actionSplashFragmentToWelcomeFragment()
+            findNavController().navigate(action)
+        }
+    }
 }

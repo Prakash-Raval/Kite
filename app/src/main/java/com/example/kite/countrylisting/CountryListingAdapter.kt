@@ -6,24 +6,35 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kite.databinding.ItemCountryListBinding
 
-class CountryListingAdapter :
+class CountryListingAdapter(
+    private val onCellClickedCountry: OnCellClickedCountry,
+    private val mCountry: String
+) :
     RecyclerView.Adapter<CountryListingAdapter.ViewHolder>() {
 
     private lateinit var binding: ItemCountryListBinding
     private var list = ArrayList<CountryResponse.Country>()
-    var selectedItem = 0
+    var selectedItem = 1
 
     inner class ViewHolder(val binding: ItemCountryListBinding) :
         RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("NotifyDataSetChanged")
-        fun bind(position: Int) {
+        fun bind(position : Int) {
             binding.rbCountry.text = list[position].country.toString()
-            binding.rbCountry.setOnClickListener {
-                val select = selectedItem
-                selectedItem = position
-                notifyItemChanged(select)
-                notifyItemChanged(position)
+            if (mCountry.isNotEmpty()){
+                if (mCountry==list[position].country){
+                    selectedItem = position
+                }
             }
+            binding.rbCountry.setOnClickListener {
+                //val select = selectedItem
+                selectedItem = position
+                //notifyItemChanged(select)
+                notifyItemChanged(position)
+                onCellClickedCountry.isClicked(binding.rbCountry.text.toString(),position)
+                //notifyDataSetChanged()
+            }
+
         }
     }
 
@@ -56,6 +67,8 @@ class CountryListingAdapter :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(position)
-        holder.binding.rbCountry.isChecked = selectedItem == position
+        if(selectedItem == position){
+            holder.binding.rbCountry.isChecked = true
+        }
     }
 }

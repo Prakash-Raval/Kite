@@ -24,7 +24,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             bind:image="@{model.Data.propertyImage}"
-            bind:placeholder="@{@drawable/ic_default_img}"
+            bind:placeholder="@{@drawable/kite_red_logo}"
             bind:src="@drawable/kite_red_logo" />
 
         <com.google.android.material.imageview.ShapeableImageView
@@ -111,7 +111,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
-            android:alpha="0.5"
+            android:alpha="0.2"
             android:backgroundTint="@color/gray_text_color"
             android:enabled="false"
             android:text="@string/ride_now"
@@ -125,8 +125,9 @@
             style="@style/BlackSmallCustomMaterialTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:enabled="false"
             android:layout_marginTop="@dimen/_16sdp"
-            android:alpha="0.5"
+            android:alpha="0.2"
             android:drawableEnd="@drawable/ic_calendar"
             android:drawableTint="@color/gray_text_color"
             android:text="@string/schedule_trip"

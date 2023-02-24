@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/glStart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="@dimen/_20sdp" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/glEnd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_end="@dimen/_20sdp" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imgGTopToolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_160sdp"
+                    android:scaleType="fitXY"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/kite_red_logo" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imgGBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:src="@drawable/ic_back_white"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtGGuest"
+                    style="@style/BlackSmallCustomMaterialTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:text="@string/guest"
+                    android:textSize="@dimen/_12sdp"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/imgGTopToolbar" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtGPName"
+                    style="@style/BlackMediumCustomMaterialTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:text="@string/hotel_resort"
+                    android:textSize="@dimen/_20sdp"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/txtGGuest" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtGCodeText"
+                    style="@style/BlackSmallCustomMaterialTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:text="@string/let_s_start_with_your_code"
+                    android:textSize="@dimen/_12sdp"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/txtGPName" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilGAccessCode"
+                    style="@style/TextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/txtGCodeText">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtGAccessCode"
+                        style="@style/TextEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="@string/access_code"
+                        android:drawableEnd="@drawable/ic_error"
+                        android:inputType="number" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnGCode"
+                    style="@style/WhiteCustomMaterialButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:text="@string/i_don_t_have_a_code"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/tilGAccessCode" />
+
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/gpHotel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    app:constraint_referenced_ids="tilGAccessCode,btnGCode" />
+
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/gpResident"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    app:constraint_referenced_ids="txtGNext,txtGTelephone,tilGTelephone,tilGTelephone2" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtGTelephone"
+                    style="@style/CapitalTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:text="@string/primary_telephone_no"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/txtGCodeText" />
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilGTelephone"
+                    style="@style/TextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/txtGTelephone">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtGTelephone"
+                        style="@style/TextEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="@string/primary_telephone_no"
+                        android:inputType="text" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilGTelephone2"
+                    style="@style/TextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:errorEnabled="false"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/tilGTelephone">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtGTelephone2"
+                        style="@style/TextEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clickable="false"
+                        android:enabled="false"
+                        android:inputType="text" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtGNext"
+                    style="@style/BlackSmallCustomMaterialTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:text="@string/next_we_ll_need_a_little_info_on_you"
+                    android:textSize="@dimen/_12sdp"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/tilGTelephone2" />
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtGBirthDate"
+                    style="@style/CapitalTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:text="@string/date_of_birth"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/btnGCode" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilGBirthDate"
+                    style="@style/TextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/txtGBirthDate">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtGBirthDate"
+                        style="@style/TextEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:drawableEnd="@drawable/ic_arrow_down"
+                        android:focusable="false"
+                        android:hint="@string/dd_mm_yyyy"
+                        android:inputType="text" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtGAddress"
+                    style="@style/CapitalTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:text="@string/address"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/tilGBirthDate" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilGAddress"
+                    style="@style/TextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/txtGAddress">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtGAddress"
+                        style="@style/TextEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="@string/address"
+                        android:inputType="text" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtGCountry"
+                    style="@style/CapitalTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:text="@string/country"
+                    app:layout_constraintEnd_toStartOf="@id/txtGState"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/tilGAddress" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtGState"
+                    style="@style/CapitalTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:text="@string/state_province"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/txtGCountry"
+                    app:layout_constraintTop_toBottomOf="@id/tilGAddress" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilGCountry"
+                    style="@style/TextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_12sdp"
+                    app:errorEnabled="false"
+                    app:layout_constraintEnd_toStartOf="@id/tilGState"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/txtGCountry">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtGCountry"
+                        style="@style/TextEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:drawableEnd="@drawable/ic_arrow_down"
+                        android:focusable="false"
+                        android:hint="@string/country"
+                        android:inputType="text" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilGState"
+                    style="@style/TextInputLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:errorEnabled="false"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toStartOf="@id/txtGState"
+                    app:layout_constraintTop_toBottomOf="@id/txtGState">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtGState"
+                        style="@style/TextEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:drawableEnd="@drawable/ic_arrow_down"
+                        android:drawablePadding="@dimen/_40sdp"
+                        android:focusable="false"
+                        android:hint="@string/state_province"
+                        android:inputType="text" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtGCity"
+                    style="@style/CapitalTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:text="@string/city"
+                    app:layout_constraintEnd_toStartOf="@id/txtGState"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/tilGCountry" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtGZipCode"
+                    style="@style/CapitalTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:text="@string/zip_postal_code"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/txtGCountry"
+                    app:layout_constraintTop_toBottomOf="@id/tilGState" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilGCity"
+                    style="@style/TextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    app:errorEnabled="false"
+                    app:layout_constraintEnd_toStartOf="@id/tilGCode"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/txtGCity">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtGCity"
+                        style="@style/TextEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="@string/city"
+                        android:inputType="text" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilGCode"
+                    style="@style/TextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:errorEnabled="false"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/tilGCity"
+                    app:layout_constraintStart_toStartOf="@id/txtGZipCode"
+                    app:layout_constraintTop_toBottomOf="@id/txtGZipCode">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtGCode"
+                        style="@style/TextEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="@string/zip_postal_code"
+                        android:inputType="text" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <RadioButton
+                    android:id="@+id/rbGAgeChecker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:buttonTint="@color/bg_main"
+                    android:clickable="false"
+                    android:fontFamily="@font/avenir_light"
+                    android:paddingHorizontal="@dimen/_16sdp"
+                    android:text="@string/i_am_over_23"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/tilGCity" />
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtGSign"
+                    style="@style/CapitalTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:text="@string/signature"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/rbGAgeChecker" />
+
+                <com.github.gcacace.signaturepad.views.SignaturePad
+                    android:id="@+id/gSignaturePad"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_100sdp"
+                    android:background="@color/signature_pad_color"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/txtGSign"
+                    app:penColor="@android:color/black" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imgGClearPad"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    android:src="@drawable/ic_refresh"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintTop_toTopOf="@id/gSignaturePad" />
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnGUploadID"
+                    style="@style/CustomMaterialButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:text="@string/upload_photo_id"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/gSignaturePad" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtGPhotoIDDialog"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:text="@string/what_is_this"
+                    android:textColor="@color/bg_main"
+                    android:textSize="@dimen/_10sdp"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintTop_toBottomOf="@id/btnGUploadID" />
+
+                <RadioButton
+                    android:id="@+id/rbGTerms"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:buttonTint="@color/bg_main"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/txtGPhotoIDDialog" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtGRentalText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/avenir_black"
+                    android:text="@string/i_have_read_and_accept_the_terms_and_conditions_provided"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10sdp"
+                    app:layout_constraintBottom_toBottomOf="@id/rbGTerms"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/rbGTerms"
+                    app:layout_constraintTop_toTopOf="@id/rbGTerms" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnGSubmit"
+                    style="@style/BlackCustomMaterialButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/_20sdp"
+                    android:alpha="0.2"
+                    android:clickable="false"
+                    android:text="@string/submit"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/txtGRentalText" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

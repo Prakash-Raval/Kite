@@ -47,4 +47,7 @@
     <color name="light_black_text_color">#28282D</color>
     <color name="light_black_second">#231F20</color>
 
+    //signature pad
+    <color name="signature_pad_color">#64DDE5E9</color>
+
 </resources>

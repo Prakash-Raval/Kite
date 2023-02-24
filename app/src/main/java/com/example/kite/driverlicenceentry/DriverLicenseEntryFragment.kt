@@ -13,13 +13,8 @@ import com.example.kite.constants.Constants
 import com.example.kite.databinding.FragmentDriverLicenseEntryBinding
 import com.example.kite.utils.PrefManager
 import com.trulioo.normalizedapi.ApiCallback
-import com.trulioo.normalizedapi.ApiClient
 import com.trulioo.normalizedapi.ApiException
-import com.trulioo.normalizedapi.api.ConnectionApi
-import com.trulioo.normalizedapi.api.VerificationsApi
 import com.trulioo.normalizedapi.model.*
-import java.util.logging.Level
-import java.util.logging.Logger
 
 
 class DriverLicenseEntryFragment : Fragment() {
@@ -52,7 +47,7 @@ class DriverLicenseEntryFragment : Fragment() {
         }
     }
 
-    private fun setTrulioo() {
+    /*private fun setTrulioo() {
         //Set client here
         val apiClient = ApiClient()
         apiClient.setUsername("Kite_DocV_Sandbox_API")
@@ -125,7 +120,7 @@ class DriverLicenseEntryFragment : Fragment() {
                 //To change body of generated methods, choose Tools | Templates.
             }
         })
-    }
+    }*/
 
 
     private fun setTruliooData() {

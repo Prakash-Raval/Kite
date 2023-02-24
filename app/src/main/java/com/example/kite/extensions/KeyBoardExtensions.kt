@@ -1,4 +1,4 @@
-package com.example.kite.utils
+package com.example.kite.extensions
 
 import android.content.Context
 import android.view.View

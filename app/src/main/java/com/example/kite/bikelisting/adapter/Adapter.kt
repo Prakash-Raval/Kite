@@ -16,7 +16,6 @@ class Adapter(
 ) :
     RecyclerView.Adapter<Adapter.ViewHolder>() {
     private var list = ArrayList<BikeListingResponse.Data.VehicleDetail>()
-    private lateinit var binding: ItemVehicleListingBinding
     var selected = -1
 
     fun setList(list: ArrayList<BikeListingResponse.Data.VehicleDetail>) {
@@ -45,7 +44,7 @@ class Adapter(
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        binding =
+        val binding: ItemVehicleListingBinding   =
             ItemVehicleListingBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,

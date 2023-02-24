@@ -58,7 +58,7 @@ class BikeListingFragment : Fragment(), OnCellClicked {
             findNavController().navigateUp()
         }
         binding.btnRideNow.setOnClickListener {
-            findNavController().navigate(BikeListingFragmentDirections.actionBikeListingFragmentToLicenceAgreementFragment())
+            findNavController().navigate(BikeListingFragmentDirections.actionBikeListingFragmentToUserAgreementFragment())
         }
     }
 
@@ -102,27 +102,93 @@ class BikeListingFragment : Fragment(), OnCellClicked {
         )
     }
 
-
+    //interface for clicking item on recyclerview
     override fun isClicked(data: Int) {
-        binding.btnRideNow.isEnabled = true
+
+        val vehicleSlug = binding.model?.data?.vehicleDetails?.get(data)?.vehicleTypeSlug
+        val availableVehicle = binding.model?.data?.vehicleDetails?.get(data)?.availableVehicles
+
+
         if (data != -1) {
-            binding.btnRideNow.setBackgroundColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.black
-                )
-            )
-            binding.btnRideNow.alpha = 1.0f
-            binding.txtScheduleTrip.alpha = 1.0f
-            binding.txtScheduleTrip.setTextColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.black
-                )
-            )
-            binding.txtScheduleTrip.compoundDrawables[2]
-                .setTint(ContextCompat.getColor(requireContext(), R.color.black))
+
+            if (availableVehicle == 0) {
+                disableButton()
+                disableText()
+            }
+            when (vehicleSlug) {
+                "eScooter" -> {
+                    if (availableVehicle != null && availableVehicle > 0) {
+                        enableButton()
+                        disableText()
+                    }
+                }
+                "eCar" -> {
+                    if (availableVehicle != null && availableVehicle > 0) {
+                        enableButton()
+                        enableText()
+                    }
+                }
+                "eBike" -> {
+                    if (availableVehicle != null && availableVehicle > 0) {
+                        enableButton()
+                        disableText()
+                    }
+                }
+                else -> {
+
+                    disableButton()
+                    disableText()
+                }
+            }
+
+
         }
+    }
+
+
+    private fun enableButton() {
+        binding.btnRideNow.isEnabled = true
+        binding.btnRideNow.setBackgroundColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.black
+            )
+        )
+        binding.btnRideNow.alpha = 1.0f
+
+    }
+
+    private fun disableButton() {
+        binding.btnRideNow.isEnabled = false
+
+        binding.btnRideNow.alpha = 0.2f
+
+    }
+
+    private fun enableText() {
+        binding.txtScheduleTrip.isClickable = true
+        binding.txtScheduleTrip.alpha = 1.0f
+        binding.txtScheduleTrip.setTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.black
+            )
+        )
+        binding.txtScheduleTrip.compoundDrawables[2]
+            .setTint(ContextCompat.getColor(requireContext(), R.color.black))
+    }
+
+    private fun disableText() {
+        binding.txtScheduleTrip.isClickable = false
+        binding.txtScheduleTrip.alpha = 0.2f
+        binding.txtScheduleTrip.setTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.black
+            )
+        )
+        binding.txtScheduleTrip.compoundDrawables[2]
+            .setTint(ContextCompat.getColor(requireContext(), R.color.black))
     }
 
 }

@@ -163,5 +163,37 @@
     <string name="no_notifications_available">No notifications available</string>
     <string name="select_country">Select Country</string>
     <string name="select_state">Select State</string>
+    <string name="what_type_of_user_are_you">What type of user are you?</string>
+    <string name="resident">Resident</string>
+    <string name="guest">Guest</string>
+    <string name="dd_mm_yyyy">dd/mm/yyyy</string>
+    <string name="i_am_over_23">I am over 23?</string>
+    <string name="signature">Signature</string>
+    <string name="upload_photo_id">Upload Photo ID</string>
+    <string name="what_is_this"><u>What is this?</u></string>
+    <string name="i_have_read_and_accept_the_terms_and_conditions_provided">I have read and accept the Terms and Conditions provided.</string>
+    <string name="photo_id_text">To Ensure the safety of you and our riders , we require a valid Photo ID of primary profile, or the user guardian in order to get you moving.</string>
+    <string name="cancel">Cancel</string>
+    <string name="upload_id">Upload ID</string>
+    <string name="change_property">Change Property</string>
+    <string name="not_sure_which_one_fits_you">Not sure which one fits you.</string>
+    <string name="hotel_resort">Hotel/Resort</string>
+    <string name="guest_hotel">I am visiting a property that offers Kite Mobility as an amenity.</string>
+    <string name="residential">Residential</string>
+    <string name="guest_residential">I am visiting family or friends at their condo or residence, and would like to access the mobility amenity.</string>
+    <string name="commercial_office">Commercial/Office</string>
+    <string name="guest_office">My place of work, school or service belongs to a public building that offers Kite Mobility as an amenity.</string>
+    <string name="let_s_start_with_your_code">Let\'s start with your code</string>
+    <string name="access_code">Access Code</string>
+    <string name="i_don_t_have_a_code">I don\'t have a code</string>
+    <string name="residential_text">Let\'s begin with the residential telephone number. This will be used to cantact the primary resident, in order to approve your vehicle rental.</string>
+    <string name="primary_telephone_no">Primary Telephone No.</string>
+    <string name="next_we_ll_need_a_little_info_on_you">Next, we\'ll need a little info on you ;)</string>
+    <string name="no_code">No code?</string>
+    <string name="no_access_code_text">Please refer to your onboarding or contact your administration to request your access code.</string>
+    <string name="close">Close</string>
+    <string name="your_access_code">Your Access Code</string>
+    <string name="your_access_code_text">The access code is a four-digit code, unique to each property, and used to access the available vehicles. This code can be requested ffrom the visiting property or your organization admin.</string>
+    <string name="request_code">Request Code</string>
 
 </resources>

@@ -4,31 +4,38 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.kite.countrylisting.CountryResponse
+import com.example.kite.countrylisting.OnCellClickedCountry
 import com.example.kite.databinding.ItemCountryListBinding
 
-class StateListingAdapter :
+class StateListingAdapter(
+    private val mState: String,
+    private val onCellClickedState: OnCellClickedState
+) :
     RecyclerView.Adapter<StateListingAdapter.ViewHolder>() {
 
     private lateinit var binding: ItemCountryListBinding
-    private var list = ArrayList<StateResponse.State>()
-    var selectedItem = 0
+    private var list = ArrayList<String?>()
+    var selectedItem = -1
 
     inner class ViewHolder(val binding: ItemCountryListBinding) :
         RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("NotifyDataSetChanged")
         fun bind(position: Int) {
-            binding.rbCountry.text = list[position].country.toString()
+            binding.rbCountry.text = list[position]
+            if (mState.isNotEmpty()){
+                if (mState == list[position]){
+                    selectedItem = position
+                }
+            }
             binding.rbCountry.setOnClickListener {
-                val select = selectedItem
                 selectedItem = position
-                notifyItemChanged(select)
                 notifyItemChanged(position)
+                onCellClickedState.isClickedState(binding.rbCountry.text.toString(),position)
             }
         }
     }
 
-    fun setList(list: ArrayList<StateResponse.State>) {
+    fun setList(list: ArrayList<String?>) {
         this.list = list
     }
 

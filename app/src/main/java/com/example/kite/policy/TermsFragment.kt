@@ -29,7 +29,7 @@ class TermsFragment : Fragment() {
             false
         )
         loadData()
-        binding.progress.visibility = View.VISIBLE
+       // binding.progress.visibility = View.VISIBLE
         binding.imgBack.setOnClickListener {
             findNavController().navigateUp()
         }
@@ -44,7 +44,7 @@ class TermsFragment : Fragment() {
                 settings.javaScriptEnabled = true
                 settings.setSupportZoom(true)
                 loadUrl(Constants.TERMS_URL)
-                binding.progress.visibility = View.INVISIBLE
+                //binding.progress.visibility = View.INVISIBLE
             }
 
         }
