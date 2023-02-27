@@ -13,9 +13,9 @@
         android:background="@android:color/transparent">
 
         <com.google.android.material.card.MaterialCardView
-            android:layout_margin="@dimen/_16sdp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/_16sdp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

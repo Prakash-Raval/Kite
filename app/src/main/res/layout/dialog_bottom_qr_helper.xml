@@ -59,17 +59,17 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtQRText"
-            android:layout_width="0dp"
-            android:textAlignment="center"
             style="@style/BlackSmallCustomMaterialTextView"
-            android:textSize="@dimen/_12sdp"
-            android:fontFamily="@font/avenir_regular"
-            app:lineHeight="@dimen/_12sdp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/avenir_regular"
             android:text="@string/qr_location_text"
+            android:textAlignment="center"
+            android:textSize="@dimen/_12sdp"
             app:layout_constraintEnd_toStartOf="@id/glEnd"
             app:layout_constraintStart_toEndOf="@id/glStart"
-            app:layout_constraintTop_toBottomOf="@id/txtQRLocation" />
+            app:layout_constraintTop_toBottomOf="@id/txtQRLocation"
+            app:lineHeight="@dimen/_12sdp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnScanQRCode"
@@ -78,8 +78,8 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/_30sdp"
             android:layout_marginTop="40dp"
-            android:text="@string/scan_qr_code"
             android:padding="0dp"
+            android:text="@string/scan_qr_code"
             app:layout_constraintEnd_toStartOf="@id/glEnd"
             app:layout_constraintStart_toEndOf="@id/glStart"
             app:layout_constraintTop_toBottomOf="@id/txtQRText" />

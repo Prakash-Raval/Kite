@@ -15,7 +15,7 @@
 
         <include
             android:id="@+id/inLoginBar"
-            layout="@layout/item_common_toolbar"/>
+            layout="@layout/item_common_toolbar" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/glStart"

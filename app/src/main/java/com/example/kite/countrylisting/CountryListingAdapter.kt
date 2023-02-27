@@ -27,12 +27,10 @@ class CountryListingAdapter(
                 }
             }
             binding.rbCountry.setOnClickListener {
-                //val select = selectedItem
                 selectedItem = position
-                //notifyItemChanged(select)
                 notifyItemChanged(position)
                 onCellClickedCountry.isClicked(binding.rbCountry.text.toString(),position)
-                //notifyDataSetChanged()
+
             }
 
         }

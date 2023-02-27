@@ -30,13 +30,13 @@ class LoginViewModel(private val repository: LoginRepository) : ViewModel() {
     fun checkValidation() {
         when {
             loginData.customer_email.isEmpty() -> {
-                errorMessage.value = ErrorEvent(ErrorModel("please enter Email", "Email"))
+                errorMessage.value = ErrorEvent(ErrorModel("Please enter email", "Email"))
             }
             !Patterns.EMAIL_ADDRESS.matcher(loginData.customer_email).matches() -> {
-                errorMessage.value = ErrorEvent(ErrorModel("please enter valid Email", "Email"))
+                errorMessage.value = ErrorEvent(ErrorModel("Please enter valid email", "Email"))
             }
             loginData.password.isEmpty() -> {
-                errorMessage.value = ErrorEvent(ErrorModel("please enter Password", "Password"))
+                errorMessage.value = ErrorEvent(ErrorModel("Please enter password", "Password"))
             }
             !Constants.PASSWORD_PATTERN.matcher(loginData.password).matches() -> {
                 errorMessage.value =
@@ -71,9 +71,9 @@ class LoginViewModel(private val repository: LoginRepository) : ViewModel() {
     //to show errors
     fun onEmailTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
         if (s.isEmpty()) {
-            errorMessage.value = ErrorEvent(ErrorModel("please enter Email", "Email"))
+            errorMessage.value = ErrorEvent(ErrorModel("Please enter email", "Email"))
         } else if (!Patterns.EMAIL_ADDRESS.matcher(s).matches()) {
-            errorMessage.value = ErrorEvent(ErrorModel("please enter Valid Email", "Email"))
+            errorMessage.value = ErrorEvent(ErrorModel("Please enter valid email", "Email"))
         } else {
             errorMessage.value = ErrorEvent(ErrorModel("", "Email"))
         }
@@ -83,9 +83,9 @@ class LoginViewModel(private val repository: LoginRepository) : ViewModel() {
     //to show errors
     fun onPasswordTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
         if (s.isEmpty()) {
-            errorMessage.value = ErrorEvent(ErrorModel("Please Enter Password", "Password"))
+            errorMessage.value = ErrorEvent(ErrorModel("Please enter password", "Password"))
         } else if (!Constants.PASSWORD_PATTERN.matcher(s).matches()) {
-            errorMessage.value = ErrorEvent(ErrorModel("Password Too Weak", "Password"))
+            errorMessage.value = ErrorEvent(ErrorModel("Password minimum length should be 6", "Password"))
         } else {
             errorMessage.value = ErrorEvent(ErrorModel("", "Password"))
         }

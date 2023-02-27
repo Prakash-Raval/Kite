@@ -238,7 +238,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilState"
                 style="@style/TextInputLayout"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:errorEnabled="false"
                 app:layout_constraintEnd_toStartOf="@id/glEnd"
@@ -251,7 +251,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:drawableEnd="@drawable/ic_arrow_down"
-                    android:drawablePadding="@dimen/_40sdp"
                     android:focusable="false"
                     android:hint="@string/state_province"
                     android:inputType="text"

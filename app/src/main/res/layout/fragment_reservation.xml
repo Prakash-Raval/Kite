@@ -71,10 +71,10 @@
         <com.google.android.material.textview.MaterialTextView
             style="@style/BlackSmallCustomMaterialTextView"
             android:layout_width="0dp"
-            android:textSize="@dimen/_14sdp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/reservation_text"
+            android:textSize="@dimen/_14sdp"
             app:layout_constraintEnd_toStartOf="@id/glEnd"
             app:layout_constraintStart_toEndOf="@id/glStart"
             app:layout_constraintTop_toBottomOf="@id/txtBooking"

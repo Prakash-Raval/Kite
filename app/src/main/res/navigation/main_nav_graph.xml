@@ -250,6 +250,9 @@
         android:name="com.example.kite.useragreement.UserAgreementFragment"
         android:label="UserAgreementFragment">
         <action
+            android:id="@+id/action_userAgreementFragment_to_licenceAgreementFragment"
+            app:destination="@id/licenceAgreementFragment" />
+        <action
             android:id="@+id/action_userAgreementFragment_to_termsFragment"
             app:destination="@id/termsFragment" />
         <action

@@ -73,8 +73,6 @@
             android:background="@drawable/bg_rect_camera" />
 
 
-
-
     </FrameLayout>
 
 </layout>

@@ -1,26 +1,36 @@
 package com.example.kite.useragreement
 
+import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Activity
+import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -32,22 +42,52 @@ import com.example.kite.bikelisting.adapter.OnCellClicked
 import com.example.kite.constants.Constants
 import com.example.kite.countrylisting.*
 import com.example.kite.databinding.FragmentUserAgreementBinding
+import com.example.kite.extensions.setLocalImage
 import com.example.kite.network.ApiInterface
 import com.example.kite.network.RetrofitHelper
+import com.example.kite.statelisting.*
 import com.example.kite.useragreement.adapter.UserAgreementAdapter
 import com.example.kite.useragreement.model.GuestModel
-import com.github.dhaval2404.imagepicker.ImagePicker
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class UserAgreementFragment : Fragment(), OnCellClicked, OnCellClickedCountry {
+class UserAgreementFragment : Fragment(), OnCellClicked, OnCellClickedCountry, OnCellClickedState {
     private lateinit var binding: FragmentUserAgreementBinding
     private lateinit var adapter: UserAgreementAdapter
     private var myDialog: DatePickerDialog? = null
     private lateinit var countryViewModel: CountryViewModel
     private lateinit var countryListingAdapter: CountryListingAdapter
+    private lateinit var stateViewModel: StateViewModel
+    private lateinit var stateListingAdapter: StateListingAdapter
     private lateinit var builder: AlertDialog
+    private val PERMISSION_REQUEST_CODE = 200
+    private var profileImagePath: String? = null
+
+
+    private val getContent =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            uri?.let { imageUri ->
+                // Suppose you have an ImageView that should contain the image:
+                binding.imgUPloadID1.visibility = View.VISIBLE
+                binding.imgUPloadID1.setLocalImage(imageUri, false)
+                profileImagePath = getFileFromUri(imageUri).absolutePath
+
+            }
+        }
+
+    private val startForResult = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result: ActivityResult ->
+        if (result.resultCode == RESULT_OK) {
+            //  you will get result here in result.data
+            binding.imgUPloadID1.visibility = View.VISIBLE
+            binding.imgUPloadID1.setImageBitmap(result.data?.extras?.get("data") as Bitmap)
+
+        }
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,7 +99,6 @@ class UserAgreementFragment : Fragment(), OnCellClicked, OnCellClickedCountry {
             container,
             false
         )
-        countryListingAdapter = CountryListingAdapter(this, "")
         setUpToolBar()
         setUPSignaturePad()
         setSpannableText()
@@ -68,10 +107,11 @@ class UserAgreementFragment : Fragment(), OnCellClicked, OnCellClickedCountry {
         changeLayout()
         setUPAdapter()
         setupNavigation()
-        getCountryData()
         uploadPhotoID()
+        enableNavigation()
         return binding.root
     }
+
 
     //setting up the toolbar
     private fun setUpToolBar() {
@@ -125,7 +165,10 @@ class UserAgreementFragment : Fragment(), OnCellClicked, OnCellClickedCountry {
             openDialog()
         }
         binding.edtUACountry.setOnClickListener {
-            openDialogCountry()
+            openDialogCountry(binding.edtUACountry.text.toString())
+        }
+        binding.edtUAState.setOnClickListener {
+            openDialogState(binding.edtUAState.text.toString())
         }
     }
 
@@ -220,6 +263,9 @@ class UserAgreementFragment : Fragment(), OnCellClicked, OnCellClickedCountry {
         binding.btnChangeProperty.setOnClickListener {
             findNavController().navigate(UserAgreementFragmentDirections.actionUserAgreementFragmentToSelectProgramFragment())
         }
+        binding.btnUASubmit.setOnClickListener {
+            findNavController().navigate(UserAgreementFragmentDirections.actionUserAgreementFragmentToLicenceAgreementFragment())
+        }
     }
 
     //fun for recycler view click event
@@ -230,19 +276,40 @@ class UserAgreementFragment : Fragment(), OnCellClicked, OnCellClickedCountry {
             R.id.action_userAgreementFragment_to_guestPropertySelectionFragment,
             bundle
         )
+
+    }
+
+    private fun enableNavigation() {
+        val args = this.arguments
+        Log.d("TS-ARGS", "${args?.getString("VehicleSlug")}")
+        if (args != null) {
+
+            when (args.getString("VehicleSlug")) {
+                "eCar" -> {
+                    binding.btnUASubmit.isClickable = true
+                    binding.btnUASubmit.alpha = 1.0f
+                }
+                else -> {
+                    binding.btnUASubmit.isClickable = false
+                    binding.btnUASubmit.alpha = 0.5f
+
+                }
+            }
+        }
     }
 
     //opening dialog for country list
-    private fun openDialogCountry() {
+    private fun openDialogCountry(mCountry: String) {
         builder = AlertDialog.Builder(requireContext()).create()
         builder.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         val view = layoutInflater.inflate(R.layout.dialog_country_picker, null)
         builder.setView(view)
-
+        countryListingAdapter = CountryListingAdapter(this, mCountry)
         val recycler = view.findViewById<RecyclerView>(R.id.rvCountryList)
         recycler.adapter = countryListingAdapter
         builder.setCanceledOnTouchOutside(false)
         builder.show()
+        getCountryData()
 
     }
 
@@ -262,42 +329,158 @@ class UserAgreementFragment : Fragment(), OnCellClicked, OnCellClickedCountry {
         }
     }
 
+
     override fun isClicked(data: String, position: Int) {
         binding.edtUACountry.setText(data)
+        binding.edtUAState.setText("")
         builder.dismiss()
     }
 
     //uploading photo id
     private fun uploadPhotoID() {
-
         binding.btnUploadID.setOnClickListener {
-          /*  ImagePicker.with(this)
-                .crop()                    //Crop image(Optional), Check Customization for more option
-                .compress(1024)    //Final image size will be less than 1 MB(Optional)
-                .maxResultSize(
-                    1080,
-                    1080
-                )    //Final image resolution will be less than 1080 x 1080(Optional)
-                .start(101)*/
+            cameraDialog()
+        }
+    }
 
-            /*resultLauncher.launch()*/
-/*
-            var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                if (result.resultCode == Activity.RESULT_OK) {
-                    // There are no request codes
-                    val data: Intent? = result.data
-
-                }
-            }
-*/
-
-
+    private fun getFileFromUri(uri: Uri): File {
+        val storageDir: File? =
+            requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val file =
+            File.createTempFile("Img_", ".png", storageDir)
+        file.outputStream().use {
+            val inputStream = requireContext().contentResolver.openInputStream(uri)
+            inputStream?.copyTo(it)
+            inputStream?.close()
         }
 
+        return file
+    }
+
+    // getting country data from the api
+    @SuppressLint("NotifyDataSetChanged")
+    private fun getStateData() {
+        val service =
+            RetrofitHelper.getInstance(Constants.BASE_URL).create(ApiInterface::class.java)
+        val repository = StateRepository(service)
+        stateViewModel = ViewModelProvider(
+            this, StateVMFactory(repository)
+        )[StateViewModel::class.java]
+        stateViewModel.getStateList(StateRequest(binding.edtUACountry.text.toString()))
+        stateViewModel.profileLiveData.observe(viewLifecycleOwner) {
+            Log.d("getStateData", "getStateData: ${it.stateList?.get(0)?.states}")
+            stateListingAdapter.setList(it.stateList?.getOrNull(0)?.states as ArrayList<String?>)
+
+            stateListingAdapter.notifyDataSetChanged()
+
+        }
+    }
+
+    //opening dialog for state list
+    @SuppressLint("MissingInflatedId")
+    private fun openDialogState(mState: String) {
+        builder = AlertDialog.Builder(requireContext())
+            .create()
+        builder.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val view = layoutInflater.inflate(R.layout.dialog_state_listing, null)
+        builder.setView(view)
+        stateListingAdapter = StateListingAdapter(mState, this)
+        val recycler = view.findViewById<RecyclerView>(R.id.rvStateList)
+        recycler.adapter = stateListingAdapter
+        builder.setCanceledOnTouchOutside(false)
+        builder.show()
+        getStateData()
+    }
+
+    @SuppressLint("MissingInflatedId")
+    private fun cameraDialog() {
+        builder = AlertDialog.Builder(requireContext())
+            .create()
+        builder.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val view = layoutInflater.inflate(R.layout.dialog_camera, null)
+        val camera = view.findViewById<TextView>(R.id.txtDCamera)
+        val gallery = view.findViewById<TextView>(R.id.txtDGallery)
+
+        camera.setOnClickListener {
+            checkPermission()
+            builder.dismiss()
+        }
+        gallery.setOnClickListener {
+            getContent.launch("image/*")
+            builder.dismiss()
+        }
+        builder.setView(view)
+        builder.setCanceledOnTouchOutside(false)
+        builder.show()
+    }
+
+    private fun checkPermission(): Boolean {
+        val cameraPermission = ContextCompat.checkSelfPermission(
+            requireActivity(),
+            Manifest.permission.CAMERA
+        )
+        if (cameraPermission != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(
+                arrayOf(Manifest.permission.CAMERA),
+                PERMISSION_REQUEST_CODE
+            )
+            return false
+        } else {
+            imageTakeFromCamera()
+        }
+        return true
+    }
+
+    private fun showMessageOKCancel(okListener: DialogInterface.OnClickListener) {
+        AlertDialog.Builder(requireContext())
+            .setMessage("You need to allow access permissions")
+            .setPositiveButton("OK", okListener)
+            .setNegativeButton("Cancel", null)
+            .create()
+            .show()
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                imageTakeFromCamera()
+
+            } else {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(
+                            requireActivity(),
+                            Manifest.permission.CAMERA
+                        )
+                    ) {
+                        showMessageOKCancel { _, _ ->
+
+                        }
+                    } else {
+                        showMessageOKCancel { _, _ ->
+
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun imageTakeFromCamera() {
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        startForResult.launch(intent)
     }
 
 
-
+    override fun isClickedState(data: String, position: Int) {
+        binding.edtUAState.setText(data)
+        builder.dismiss()
+    }
 
 
 }

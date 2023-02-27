@@ -34,6 +34,7 @@ class BikeListingFragment : Fragment(), OnCellClicked {
     private lateinit var binding: FragmentBikeListingBinding
     private lateinit var viewModel: BikeListingViewModel
     private lateinit var adapter: Adapter
+    val bundle = Bundle()
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -58,7 +59,10 @@ class BikeListingFragment : Fragment(), OnCellClicked {
             findNavController().navigateUp()
         }
         binding.btnRideNow.setOnClickListener {
-            findNavController().navigate(BikeListingFragmentDirections.actionBikeListingFragmentToUserAgreementFragment())
+            findNavController().navigate(
+                R.id.action_bikeListingFragment_to_userAgreementFragment,
+                bundle
+            )
         }
     }
 
@@ -116,22 +120,26 @@ class BikeListingFragment : Fragment(), OnCellClicked {
                 disableText()
             }
             when (vehicleSlug) {
+
                 "eScooter" -> {
                     if (availableVehicle != null && availableVehicle > 0) {
                         enableButton()
                         disableText()
+                        bundle.putString("VehicleSlug", vehicleSlug)
                     }
                 }
                 "eCar" -> {
                     if (availableVehicle != null && availableVehicle > 0) {
                         enableButton()
                         enableText()
+                        bundle.putString("VehicleSlug", vehicleSlug)
                     }
                 }
                 "eBike" -> {
                     if (availableVehicle != null && availableVehicle > 0) {
                         enableButton()
                         disableText()
+                        bundle.putString("VehicleSlug", vehicleSlug)
                     }
                 }
                 else -> {
@@ -144,7 +152,6 @@ class BikeListingFragment : Fragment(), OnCellClicked {
 
         }
     }
-
 
     private fun enableButton() {
         binding.btnRideNow.isEnabled = true
@@ -190,5 +197,4 @@ class BikeListingFragment : Fragment(), OnCellClicked {
         binding.txtScheduleTrip.compoundDrawables[2]
             .setTint(ContextCompat.getColor(requireContext(), R.color.black))
     }
-
 }

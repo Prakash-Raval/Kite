@@ -14,9 +14,9 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/splashBack"
-            tools:src="@drawable/splash_back"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            tools:src="@drawable/splash_back" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/glStart"

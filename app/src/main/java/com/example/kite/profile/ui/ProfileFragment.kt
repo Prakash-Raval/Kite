@@ -67,7 +67,7 @@ class ProfileFragment : Fragment(), OnCellClickedCountry, OnCellClickedState {
         viewModel.profileLiveData.observe(viewLifecycleOwner) {
             binding.viewProfile = it.data
         }
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
 
         //giving access token to get particular user
         val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")
@@ -185,6 +185,7 @@ class ProfileFragment : Fragment(), OnCellClickedCountry, OnCellClickedState {
     //country dialog click
     override fun isClicked(data: String, position: Int) {
         binding.edtCountry.setText(data)
+        binding.edtState.setText("")
         builder.dismiss()
     }
 

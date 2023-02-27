@@ -44,13 +44,13 @@
                 android:layout_marginHorizontal="@dimen/_30sdp"
                 android:layout_marginTop="@dimen/_16sdp"
                 android:fontFamily="@font/avenir_black"
-                app:lineHeight="@dimen/_12sdp"
                 android:gravity="center"
                 android:text="@string/photo_id_text"
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/txtUAUploadId" />
+                app:layout_constraintTop_toBottomOf="@id/txtUAUploadId"
+                app:lineHeight="@dimen/_12sdp" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/txtUACancel"
@@ -70,8 +70,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_20sdp"
-                android:text="@string/upload_id"
                 android:layout_marginBottom="@dimen/_20sdp"
+                android:text="@string/upload_id"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/txtUACancel"

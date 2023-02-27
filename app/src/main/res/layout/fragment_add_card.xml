@@ -170,8 +170,7 @@
                         android:layout_height="match_parent"
                         android:hint="@string/card_hint"
                         android:inputType="number"
-                        android:maxLength="16"
-                         />
+                        android:maxLength="16" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 

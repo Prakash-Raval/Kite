@@ -13,17 +13,17 @@
 
         <RadioButton
             android:id="@+id/rbCountry"
-            android:buttonTint="@color/bg_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:buttonTint="@color/bg_main"
             android:fontFamily="@font/avenir_black"
             android:paddingHorizontal="@dimen/_16sdp"
-            tools:text="United states"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginBottom="@dimen/_5sdp"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            tools:text="United states" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

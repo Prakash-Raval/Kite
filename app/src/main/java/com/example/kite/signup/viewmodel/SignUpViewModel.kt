@@ -32,14 +32,14 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
         } else if (signUPData.lastName.isEmpty()) {
             errorMessage.value = ErrorEvent("Please fill last name")
         } else if (signUPData.email.isEmpty()) {
-            errorMessage.value = ErrorEvent("Please enter Email")
+            errorMessage.value = ErrorEvent("Please enter email")
         } else if (!signUPData.email.let {
                 Patterns.EMAIL_ADDRESS.matcher(it).matches()
             }
         ) {
-            errorMessage.value = ErrorEvent("Please enter valid Email")
+            errorMessage.value = ErrorEvent("Please enter valid email")
         } else if (signUPData.mobile.isEmpty()) {
-            errorMessage.value = ErrorEvent("Please enter Phone number")
+            errorMessage.value = ErrorEvent("Please enter phone number")
         } else if (signUPData.mobile <= 10.toString()) {
             errorMessage.value = ErrorEvent("Please valid phone number")
         } else if (signUPData.password.isEmpty()) {
@@ -47,7 +47,7 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
         } else if (!signUPData.password.let {
                 Constants.PASSWORD_PATTERN.matcher(it).matches()
             }) {
-            errorMessage.value = ErrorEvent("Please enter valid Password")
+            errorMessage.value = ErrorEvent("Please enter valid password")
         } else if (signUPData.confirmPassword != signUPData.password) {
             errorMessage.value = ErrorEvent("confirm password should match to password")
         } else {

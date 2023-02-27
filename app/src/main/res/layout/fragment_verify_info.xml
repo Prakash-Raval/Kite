@@ -61,11 +61,11 @@
                     android:layout_marginStart="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:fontFamily="@font/avenir_black"
-                    tools:text="Prakash"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_24sdp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/txtVerifyStatus" />
+                    app:layout_constraintTop_toBottomOf="@id/txtVerifyStatus"
+                    tools:text="Prakash" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnSignUp"

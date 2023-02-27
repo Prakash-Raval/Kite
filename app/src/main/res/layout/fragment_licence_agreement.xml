@@ -132,11 +132,11 @@
                 android:layout_weight="1"
                 android:background="@drawable/toggle_widget_background"
                 android:button="@null"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:textStyle="bold"
                 android:fontFamily="@font/avenir_black"
-                android:text="@string/canada" />
+                android:gravity="center"
+                android:text="@string/canada"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
 
             <RadioButton
                 android:id="@+id/rbUnitedStates"
@@ -145,11 +145,11 @@
                 android:layout_weight="1"
                 android:background="@drawable/toggle_widget_background"
                 android:button="@null"
-                android:textColor="@color/black"
-                android:textStyle="bold"
                 android:fontFamily="@font/avenir_black"
                 android:gravity="center"
-                android:text="@string/united_states" />
+                android:text="@string/united_states"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
 
         </RadioGroup>
 

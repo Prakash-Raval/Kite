@@ -216,7 +216,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilUAState"
                     style="@style/TextInputLayout"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:errorEnabled="false"
                     app:layout_constraintEnd_toStartOf="@id/glEnd"
@@ -229,7 +229,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:drawableEnd="@drawable/ic_arrow_down"
-                        android:drawablePadding="@dimen/_40sdp"
                         android:focusable="false"
                         android:hint="@string/state_province"
                         android:inputType="text" />
@@ -356,6 +355,16 @@
                     app:layout_constraintStart_toEndOf="@id/glStart"
                     app:layout_constraintTop_toBottomOf="@id/uaSignaturePad" />
 
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imgUPloadID1"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="@dimen/_60sdp"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:visibility="invisible"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/btnUploadID"
+                    tools:src="@drawable/ic_error" />
+
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txtPhotoIDDialog"
                     android:layout_width="wrap_content"
@@ -374,7 +383,7 @@
                     android:layout_marginTop="@dimen/_20sdp"
                     android:buttonTint="@color/bg_main"
                     app:layout_constraintStart_toEndOf="@id/glStart"
-                    app:layout_constraintTop_toBottomOf="@id/txtPhotoIDDialog" />
+                    app:layout_constraintTop_toBottomOf="@id/imgUPloadID1" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txtRentalText"
@@ -422,12 +431,12 @@
                     android:id="@+id/rvGuestProperty"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintEnd_toEndOf="parent"
                     android:clipToPadding="false"
+                    android:orientation="horizontal"
                     android:paddingStart="@dimen/_16sdp"
                     android:paddingEnd="0dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/rgUserSelector"
                     tools:itemCount="3"

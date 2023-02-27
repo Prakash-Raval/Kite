@@ -11,16 +11,15 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        >
+        android:background="@android:color/transparent">
 
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:cardCornerRadius="@dimen/_20sdp"
             android:layout_marginHorizontal="@dimen/_40sdp"
             android:layout_marginVertical="@dimen/_20sdp"
+            app:cardCornerRadius="@dimen/_20sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -84,8 +83,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_8sdp"
                     android:gravity="center"
-                    android:textSize="@dimen/_14sdp"
                     android:text="@string/tap"
+                    android:textSize="@dimen/_14sdp"
                     app:layout_constraintEnd_toStartOf="@id/glEnd"
                     app:layout_constraintStart_toEndOf="@id/glStart"
                     app:layout_constraintTop_toBottomOf="@id/txtStart"
@@ -99,8 +98,8 @@
                     android:layout_marginStart="@dimen/_30sdp"
                     android:layout_marginTop="@dimen/_20sdp"
                     android:layout_marginEnd="@dimen/_30sdp"
-                    android:text="@string/ok"
                     android:layout_marginBottom="@dimen/_20sdp"
+                    android:text="@string/ok"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/txtStart"
                     app:layout_constraintStart_toStartOf="@id/txtStart"

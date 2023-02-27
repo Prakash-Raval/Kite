@@ -103,12 +103,11 @@
                         style="@style/TextEditText"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:hint="@string/access_code"
                         android:drawableEnd="@drawable/ic_error"
+                        android:hint="@string/access_code"
                         android:inputType="number" />
 
                 </com.google.android.material.textfield.TextInputLayout>
-
 
 
                 <com.google.android.material.button.MaterialButton

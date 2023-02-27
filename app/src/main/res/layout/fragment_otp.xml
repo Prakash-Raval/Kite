@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="otpData"
             type="com.example.kite.otpverification.viewmodel.OtpViewModel" />
@@ -80,8 +81,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_30sdp"
-            app:hintEnabled="false"
             app:boxStrokeColor="@color/black"
+            app:hintEnabled="false"
             app:layout_constraintEnd_toStartOf="@id/glEnd"
             app:layout_constraintStart_toEndOf="@id/glStart"
             app:layout_constraintTop_toBottomOf="@id/txtGetOtp">
@@ -92,10 +93,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:textColorHint="#28282D"
                 android:hint="@string/type_code"
                 android:inputType="number"
                 android:text="@={otpData.otpData.otpCode}"
+                android:textColorHint="#28282D"
                 android:textSize="@dimen/_20sdp"
                 android:textStyle="bold" />
 

@@ -47,7 +47,7 @@
     <string name="ride_history" translatable="false">Ride History</string>
     <string name="support" translatable="false">Support</string>
     <string name="property_selection" translatable="false">Property Selection</string>
-    <string name="setting" translatable="false">Setting</string>
+    <string name="setting" translatable="false">Settings</string>
     <string name="no_past_completed_booking_found" translatable="false">No past completed booking found</string>
     <string name="change_password">Change Password</string>
     <string name="current_password">Current Password</string>
@@ -77,7 +77,7 @@
     <string name="updates">Updates</string>
     <string name="prakash">Prakash</string>
     <string name="trip_taken_0">Trip taken : 0</string>
-    <string name="reservations">Reservati…</string>
+    <string name="reservations">Reservations</string>
     <string name="notification">Notification</string>
     <string name="let_s_add_a_card_to_get_you_moving">Let\'s add a card to get you moving</string>
     <string name="card_holder_name">Card Holder Name</string>
@@ -195,5 +195,7 @@
     <string name="your_access_code">Your Access Code</string>
     <string name="your_access_code_text">The access code is a four-digit code, unique to each property, and used to access the available vehicles. This code can be requested ffrom the visiting property or your organization admin.</string>
     <string name="request_code">Request Code</string>
+    <string name="take_a_picture">Take a Picture</string>
+    <string name="choose_from_gallery">Choose From Gallery</string>
 
 </resources>
