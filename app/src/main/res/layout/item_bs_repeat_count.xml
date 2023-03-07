@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_card_grey_top_radius">
+
+        <View
+            android:id="@+id/viewBS"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_2sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:alpha="0.6"
+            android:background="@drawable/bg_text_grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgBSClose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_20sdp"
+            android:src="@drawable/ic_close"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtBSRepeat"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:text="@string/repeat"
+            android:textSize="@dimen/_16sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/viewBS" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtBSText"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:text="@string/repeat_bottom_sheet_text"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/txtBSRepeat"
+            app:layout_constraintTop_toBottomOf="@id/txtBSRepeat" />
+
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgBSRemove"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:src="@drawable/ic_remove_black"
+            app:layout_constraintEnd_toStartOf="@id/txtBSCounter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtBSText" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtBSCounter"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/_0"
+            app:layout_constraintBottom_toBottomOf="@id/imgBSRemove"
+            app:layout_constraintEnd_toStartOf="@id/imgBSAdd"
+            app:layout_constraintStart_toEndOf="@id/imgBSRemove"
+            app:layout_constraintTop_toTopOf="@id/imgBSRemove" />
+
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgBSAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add_black"
+            app:layout_constraintBottom_toBottomOf="@id/imgBSRemove"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/txtBSCounter"
+            app:layout_constraintTop_toTopOf="@id/imgBSRemove" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnBSSave"
+            style="@style/GreyCustomMaterialButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_marginVertical="@dimen/_30sdp"
+            android:text="@string/save"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtBSCounter" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

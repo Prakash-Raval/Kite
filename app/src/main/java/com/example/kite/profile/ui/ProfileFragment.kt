@@ -186,7 +186,7 @@ class ProfileFragment : Fragment(), OnCellClickedCountry, OnCellClickedState {
     override fun isClicked(data: String, position: Int) {
         binding.edtCountry.setText(data)
         binding.edtState.setText("")
-        builder.dismiss()
+       builder.dismiss()
     }
 
     private fun logout() {

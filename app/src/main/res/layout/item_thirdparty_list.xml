@@ -62,5 +62,6 @@
             android:textSize="@dimen/_8sdp"
             app:layout_constraintTop_toBottomOf="@id/txtListTitle"
             tools:text="Ahmedabad" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

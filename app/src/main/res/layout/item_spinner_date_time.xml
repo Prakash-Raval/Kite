@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <TextView
+        android:id="@+id/exTwoDayText"
+        style="@style/BlackSmallCustomMaterialTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingVertical="@dimen/_8sdp"
+        android:paddingStart="@dimen/_8sdp"
+        android:paddingEnd="@dimen/_2sdp"
+        android:textSize="@dimen/_12sdp"
+        tools:text="Select Item" />
+</layout>

@@ -50,4 +50,6 @@
     //signature pad
     <color name="signature_pad_color">#64DDE5E9</color>
 
+    <color name="schedule_card_gray">#F1F5F6</color>
+
 </resources>

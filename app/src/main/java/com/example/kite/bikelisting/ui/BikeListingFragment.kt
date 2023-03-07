@@ -35,6 +35,7 @@ class BikeListingFragment : Fragment(), OnCellClicked {
     private lateinit var viewModel: BikeListingViewModel
     private lateinit var adapter: Adapter
     val bundle = Bundle()
+    val vehicleDetails = Bundle()
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -58,10 +59,18 @@ class BikeListingFragment : Fragment(), OnCellClicked {
         binding.imgBack.setOnClickListener {
             findNavController().navigateUp()
         }
+
         binding.btnRideNow.setOnClickListener {
             findNavController().navigate(
-                R.id.action_bikeListingFragment_to_userAgreementFragment,
+                R.id.action_bikeListingFragment_to_scanQRCodeFragment,
                 bundle
+            )
+        }
+
+        binding.txtScheduleTrip.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_bikeListingFragment_to_scheduleTripFragment,
+                vehicleDetails
             )
         }
     }
@@ -87,6 +96,8 @@ class BikeListingFragment : Fragment(), OnCellClicked {
             binding.model = it
             adapter.setList(it.data?.vehicleDetails as ArrayList<BikeListingResponse.Data.VehicleDetail>)
             adapter.notifyDataSetChanged()
+
+            PrefManager.put(it?.data?.vehicleDetails, "VEHICLE_RESPONSE")
         }
         binding.lifecycleOwner = viewLifecycleOwner
 
@@ -108,9 +119,15 @@ class BikeListingFragment : Fragment(), OnCellClicked {
 
     //interface for clicking item on recyclerview
     override fun isClicked(data: Int) {
+        val bind = binding.model?.data?.vehicleDetails?.get(data)
+        val vehicleSlug = bind?.vehicleTypeSlug
+        val availableVehicle = bind?.availableVehicles
 
-        val vehicleSlug = binding.model?.data?.vehicleDetails?.get(data)?.vehicleTypeSlug
-        val availableVehicle = binding.model?.data?.vehicleDetails?.get(data)?.availableVehicles
+        val modelName = bind?.vehicleType
+        val modelImage = bind?.vehicleTypeImage
+
+        val vehicleTypeID = bind?.vehicleTypeId
+        val manufacturerID = bind?.manufacturerId
 
 
         if (data != -1) {
@@ -125,7 +142,13 @@ class BikeListingFragment : Fragment(), OnCellClicked {
                     if (availableVehicle != null && availableVehicle > 0) {
                         enableButton()
                         disableText()
+
                         bundle.putString("VehicleSlug", vehicleSlug)
+                        vehicleDetails.putString("ModelName", modelName)
+                        vehicleDetails.putString("ModelImage", modelImage)
+
+                        vehicleDetails.putString("vehicleTypeID", vehicleTypeID.toString())
+                        vehicleDetails.putString("ManufacturerID", manufacturerID.toString())
                     }
                 }
                 "eCar" -> {
@@ -133,6 +156,10 @@ class BikeListingFragment : Fragment(), OnCellClicked {
                         enableButton()
                         enableText()
                         bundle.putString("VehicleSlug", vehicleSlug)
+                        vehicleDetails.putString("ModelName", modelName)
+                        vehicleDetails.putString("ModelImage", modelImage)
+                        vehicleDetails.putString("vehicleTypeID", vehicleTypeID.toString())
+                        vehicleDetails.putString("ManufacturerID", manufacturerID.toString())
                     }
                 }
                 "eBike" -> {
@@ -140,6 +167,10 @@ class BikeListingFragment : Fragment(), OnCellClicked {
                         enableButton()
                         disableText()
                         bundle.putString("VehicleSlug", vehicleSlug)
+                        vehicleDetails.putString("ModelName", modelName)
+                        vehicleDetails.putString("ModelImage", modelImage)
+                        vehicleDetails.putString("vehicleTypeID", vehicleTypeID.toString())
+                        vehicleDetails.putString("ManufacturerID", manufacturerID.toString())
                     }
                 }
                 else -> {
@@ -167,7 +198,6 @@ class BikeListingFragment : Fragment(), OnCellClicked {
 
     private fun disableButton() {
         binding.btnRideNow.isEnabled = false
-
         binding.btnRideNow.alpha = 0.2f
 
     }

@@ -32,6 +32,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider.getUriForFile
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -76,6 +77,7 @@ class UserAgreementFragment : Fragment(), OnCellClicked, OnCellClickedCountry, O
 
             }
         }
+
 
     private val startForResult = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -484,4 +486,6 @@ class UserAgreementFragment : Fragment(), OnCellClicked, OnCellClickedCountry, O
 
 
 }
+
+
 

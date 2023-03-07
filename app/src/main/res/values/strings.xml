@@ -197,5 +197,32 @@
     <string name="request_code">Request Code</string>
     <string name="take_a_picture">Take a Picture</string>
     <string name="choose_from_gallery">Choose From Gallery</string>
+    <string name="schedule_trip_text">Select your date, pickup time and trip duration to schedule your trip.</string>
+    <string name="schedule_a_trip">Schedule a Trip</string>
+    <string name="vehicle">Vehicle</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+    <string name="select_your_duration">Select your duration</string>
+    <string name="repeat">Repeat</string>
+    <string name="_0">0</string>
+    <string name="the_short_trip">The Short Trip</string>
+    <string name="_1_hr">1 hr</string>
+    <string name="_27_99">$27.99</string>
+    <string name="repeat_bottom_sheet_text">Same trip tomorrow? Repeat makes booking with kite easy.</string>
+    <string name="sun">SUN</string>
+    <string name="mon">MON</string>
+    <string name="tue">TUE</string>
+    <string name="wed">WED</string>
+    <string name="thu">THU</string>
+    <string name="fri">FRI</string>
+    <string name="sat">SAT</string>
+    <string name="set">Set</string>
+    <string name="region">Region</string>
+    <string name="timezone">Timezone</string>
+    <string name="promo_code">Promo Code</string>
+    <string name="enter_promo_code">Enter Promo Code</string>
+    <string name="your_pickup_time">Your Pickup Time</string>
+    <string name="unlock_vehicle">Unlock Vehicle</string>
+    <string name="enter_access_code">Enter Access code</string>
 
 </resources>

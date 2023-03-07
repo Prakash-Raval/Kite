@@ -67,8 +67,6 @@ class SignUpFragment : Fragment() {
         val sharedPreference = activity?.getSharedPreferences("TOKEN_PREFERENCE", Context.MODE_PRIVATE)
         val editor = sharedPreference?.edit()
 
-
-
         val signUpService =
             RetrofitHelper.getInstance(Constants.BASE_URL).create(ApiInterface::class.java)
         val repository = SignUpRepository(signUpService)

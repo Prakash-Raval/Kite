@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="scheduleTripData"
+            type="com.example.kite.scheduletrip.model.ScheduleTripResponse.Data.TripDuration" />
+
+    <variable
+        name="scheduleTripTime"
+        type="com.example.kite.scheduletrip.model.ScheduleTimeDuration" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_10sdp">
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clScheduleTrip"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/schedule_card_gray">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imgProperty"
+                    android:layout_width="@dimen/_110sdp"
+                    android:layout_height="@dimen/_90sdp"
+                    android:scaleType="fitXY"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    bind:image="@{scheduleTripData.image}"
+                    bind:placeholder="@{@drawable/guest_hotel_selection_copy}"
+                    bind:src="@drawable/guest_hotel_selection_copy" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imgTimeDuration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginBottom="@dimen/_8sdp"
+                    bind:src="@drawable/one_hour_duration"
+                    app:layout_constraintBottom_toBottomOf="@id/imgProperty"
+                    app:layout_constraintStart_toStartOf="@id/imgProperty" />
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtTripDesc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:fontFamily="@font/avenir_black"
+                    android:text="@{scheduleTripData.title}"
+                    android:textSize="@dimen/_10sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imgProperty"
+                    bind:text="@string/the_short_trip" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtTripHours"
+                    style="@style/BlackSmallCustomMaterialTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginBottom="@dimen/_8sdp"
+                    android:text="@{scheduleTripData.duration}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/txtTripDesc"
+                    app:layout_constraintTop_toBottomOf="@id/txtTripDesc"
+                    bind:text="@string/_1_hr" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtTripPricing"
+                    style="@style/BlackSmallCustomMaterialTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    android:text="@{`$` + scheduleTripData.price}"
+                    android:textSize="@dimen/_10sdp"
+                    app:layout_constraintBottom_toBottomOf="@id/txtTripHours"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/txtTripHours"
+                    bind:text="@string/_27_99" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

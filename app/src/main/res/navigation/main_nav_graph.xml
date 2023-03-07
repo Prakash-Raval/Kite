@@ -207,9 +207,18 @@
         <action
             android:id="@+id/action_bikeListingFragment_to_licenceAgreementFragment"
             app:destination="@id/licenceAgreementFragment" />
+
+        <action
+            android:id="@+id/action_bikeListingFragment_to_scheduleTripFragment"
+            app:destination="@id/scheduleTripFragment" />
+
         <action
             android:id="@+id/action_bikeListingFragment_to_userAgreementFragment"
             app:destination="@id/userAgreementFragment" />
+
+        <action
+            android:id="@+id/action_bikeListingFragment_to_scanQRCodeFragment"
+            app:destination="@id/scanQRCodeFragment" />
     </fragment>
     <fragment
         android:id="@+id/licenceAgreementFragment"
@@ -266,4 +275,36 @@
         android:id="@+id/guestPropertySelectionFragment"
         android:name="com.example.kite.guestpropertyselection.GuestPropertySelectionFragment"
         android:label="GuestPropertySelectionFragment" />
+    <fragment
+        android:id="@+id/scanQRCodeFragment"
+        android:name="com.example.kite.scanqr.ScanQRCodeFragment"
+        android:label="ScanQRCodeFragment">
+
+        <action
+            android:id="@+id/action_scanQRCodeFragment_to_enterQRCodeFragment"
+            app:destination="@id/enterQRCodeFragment"
+            app:enterAnim="@anim/slide_in_bottom"
+            app:popExitAnim="@anim/slide_out_top" />
+    </fragment>
+    <fragment
+        android:id="@+id/scheduleTripFragment"
+        android:name="com.example.kite.scheduletrip.ScheduleTripFragment"
+        android:label="ScheduleTripFragment">
+
+
+    </fragment>
+    <!--<dialog
+        android:id="@+id/dateAndTimeFragment"
+        android:name="com.example.kite.dateandtime.ui.DateAndTimeFragment"
+        android:label="DateAndTimeFragment">
+
+        <argument
+            android:name="scheduleTripRes"
+            app:argType="com.example.kite.scheduletrip.model.ScheduleTripResponse" />
+    </dialog>-->
+
+    <fragment
+        android:id="@+id/enterQRCodeFragment"
+        android:name="com.example.kite.scanqr.bottomsheet.EnterQRCodeFragment"
+        android:label="EnterQRCodeFragment" />
 </navigation>

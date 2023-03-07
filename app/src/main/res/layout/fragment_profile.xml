@@ -352,7 +352,7 @@
                     android:drawableEnd="@drawable/ic_edit"
                     android:focusable="false"
                     android:hint="@string/password"
-                    android:inputType="textPassword"
+                    android:inputType="text"
                     android:text="@={viewProfile.password}" />
 
             </com.google.android.material.textfield.TextInputLayout>

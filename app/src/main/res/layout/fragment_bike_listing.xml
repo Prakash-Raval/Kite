@@ -129,7 +129,6 @@
             android:alpha="0.2"
             android:drawableEnd="@drawable/ic_calendar"
             android:drawableTint="@color/gray_text_color"
-            android:enabled="false"
             android:text="@string/schedule_trip"
             android:textColor="@color/gray_text_color"
             android:textSize="@dimen/_12sdp"

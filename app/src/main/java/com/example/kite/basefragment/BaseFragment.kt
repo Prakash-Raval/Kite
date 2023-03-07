@@ -13,6 +13,7 @@ import com.example.kite.databinding.FragmentBaseBinding
 open class BaseFragment : Fragment() {
     private lateinit var binding: FragmentBaseBinding
     private lateinit var mProgressDialog: Dialog
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

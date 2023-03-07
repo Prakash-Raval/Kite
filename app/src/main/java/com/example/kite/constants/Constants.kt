@@ -36,6 +36,11 @@ object Constants {
     const val COUNTRY_LIST = "country/country_list"
     const val STATE_LIST = "country/state_list"
 
+    //schedule trip
+    const val SCHEDULE_TRIP = "customer/view_vehicle_reservation_pricing_details"
+    const val TIME_SLOT = "customer/get_reservation_time_slots"
+    const val PROMO_CODE = "customer/validate_promo_code"
+
     //REGEX
     val VISA: Pattern = Pattern.compile("^4[0-9]{6,}\$")
     val MASTER: Pattern = Pattern.compile("^5[1-5][0-9]{5,}\$")

@@ -17,7 +17,7 @@ data class BikeListingRequest(
     @JsonProperty("radius")
     var radius: Long? = 100000000000000000,
     @JsonProperty("third_party_id")
-    var third_party_id: String? = "1Gj0mr5eI",
+    var third_party_id: String? = "i5sejdPiR",
     @JsonProperty("time_zone")
     var time_zone: String? = "Asia/Kolkata"
 

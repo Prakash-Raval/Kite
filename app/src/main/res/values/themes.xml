@@ -16,7 +16,6 @@
         <item name="android:statusBarColor">@color/light_gray_status_color</item>
 
 
-
         <!-- Customize your theme here. -->
     </style>
 
@@ -157,6 +156,19 @@
         <item name="android:textColor">@color/black</item>
         <item name="cornerRadius">@dimen/_50sdp</item>
         <item name="android:padding">@dimen/_12sdp</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="fontFamily">@font/avenir_black</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="strokeColor">@color/black</item>
+        <item name="strokeWidth">@dimen/_1sdp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="GreyCustomMaterialButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:backgroundTint">#DDE5E9</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="cornerRadius">@dimen/_50sdp</item>
+        <item name="android:padding">@dimen/_12sdp</item>
         <item name="fontFamily">@font/avenir_regular</item>
         <item name="android:textAllCaps">false</item>
         <item name="strokeColor">@color/black</item>
@@ -190,7 +202,7 @@
         <item name="android:paddingEnd">@dimen/_15sdp</item>
         <item name="android:paddingBottom">@dimen/_5sdp</item>
         <item name="background">@drawable/bg_text_grey</item>
-
     </style>
+
 
 </resources>

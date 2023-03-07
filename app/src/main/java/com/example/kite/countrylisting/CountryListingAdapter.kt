@@ -65,8 +65,6 @@ class CountryListingAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(position)
-        if(selectedItem == position){
-            holder.binding.rbCountry.isChecked = true
-        }
+        holder.binding.rbCountry.isChecked = selectedItem == position
     }
 }
