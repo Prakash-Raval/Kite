@@ -47,16 +47,12 @@ class ScheduleTripFragment : Fragment() {
 
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
 
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(
-            LayoutInflater.from(context),
-            R.layout.fragment_schedule_trip,
-            container,
-            false
+            LayoutInflater.from(context), R.layout.fragment_schedule_trip, container, false
         )
         setUPToolbar()
         setUPAdapter()
@@ -77,11 +73,10 @@ class ScheduleTripFragment : Fragment() {
             binding.txtSTDateSelect.visibility = View.VISIBLE
         }
 
-        if(selectedTime == ""){
+        if (selectedTime == "") {
             binding.imgDownTime.visibility = View.VISIBLE
             binding.txtSTTimeSelected.visibility = View.GONE
-        }
-        else{
+        } else {
             binding.imgDownTime.visibility = View.GONE
             binding.txtSTTimeSelected.visibility = View.VISIBLE
             binding.txtSTTimeSelected.text = selectedTime
@@ -98,24 +93,24 @@ class ScheduleTripFragment : Fragment() {
         }
 
         binding.imgDownDate.setOnClickListener {
-           /* findNavController().navigate(
-                ScheduleTripFragmentDirections.actionScheduleTripFragmentToDateAndTimeFragment(
-                )
-            )*/
+            /* findNavController().navigate(
+                 ScheduleTripFragmentDirections.actionScheduleTripFragmentToDateAndTimeFragment(
+                 )
+             )*/
             val dialog = DateAndTimeFragment(requireContext())
-            dialog.show()
+            dialog.show(requireActivity().supportFragmentManager, "")
         }
         binding.imgDownTime.setOnClickListener {
             if (binding.txtSTDateSelect.isVisible) {
                 val dialog = DateAndTimeFragment(requireContext())
-                dialog.show()
+                dialog.show(requireActivity().supportFragmentManager, "")
             } else {
                 Toast.makeText(requireContext(), "Please select date", Toast.LENGTH_SHORT).show()
             }
         }
         binding.txtSTDateSelect.setOnClickListener {
             val dialog = DateAndTimeFragment(requireContext())
-            dialog.show()
+            dialog.show(requireActivity().supportFragmentManager, "")
         }
 
         binding.txtSTTimeSelected.setOnClickListener {
@@ -126,7 +121,7 @@ class ScheduleTripFragment : Fragment() {
                     )
                 )*/
                 val dialog = DateAndTimeFragment(requireContext())
-                dialog.show()
+                dialog.show(requireActivity().supportFragmentManager, "")
             } else {
                 Toast.makeText(requireContext(), "Please select date", Toast.LENGTH_SHORT).show()
             }
@@ -138,17 +133,14 @@ class ScheduleTripFragment : Fragment() {
         val modelName = args?.getString("ModelName")
         val modelImage = args?.getString("ModelImage")
         binding.txtSTVehicleName.text = modelName
-        Glide.with(requireContext())
-            .load(modelImage)
-            .into(binding.imgVehicleImage)
+        Glide.with(requireContext()).load(modelImage).into(binding.imgVehicleImage)
 
     }
 
     private fun setCounter() {
         binding.txtCountRepeat.text = count.toString()
         binding.imgRepeatRemove.setOnClickListener {
-            if (count != 0)
-                count--
+            if (count != 0) count--
             binding.txtCountRepeat.text = count.toString()
         }
         binding.imgRepeatADD.setOnClickListener {
@@ -179,8 +171,7 @@ class ScheduleTripFragment : Fragment() {
         }
 
         view.findViewById<ImageView>(R.id.imgBSRemove).setOnClickListener {
-            if (count != 0)
-                count--
+            if (count != 0) count--
             countTextView.text = count.toString()
         }
 
@@ -216,8 +207,7 @@ class ScheduleTripFragment : Fragment() {
             if (it.code == 200) {
                 bundle = it
                 scheduleTripAdapter.setList(
-                    it.data?.tripDuration as ArrayList<ScheduleTripResponse.Data.TripDuration>,
-                    list
+                    it.data?.tripDuration as ArrayList<ScheduleTripResponse.Data.TripDuration>, list
                 )
                 myResponse = it
                 scheduleTripAdapter.notifyDataSetChanged()
