@@ -2,18 +2,17 @@ package com.example.kite.dateandtime.ui
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
+import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.FrameLayout
 import android.widget.Toast
-import androidx.annotation.RequiresApi
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.window.layout.WindowMetrics
+import androidx.window.layout.WindowMetricsCalculator
 import com.example.kite.MainActivity
 import com.example.kite.R
 import com.example.kite.constants.Constants
@@ -35,6 +34,7 @@ import com.example.kite.scheduletrip.ScheduleTripFragment
 import com.example.kite.utils.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.kizitonwose.calendar.core.CalendarDay
 import com.kizitonwose.calendar.core.CalendarMonth
 import com.kizitonwose.calendar.core.DayPosition
@@ -49,7 +49,7 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 
-class DateAndTimeFragment(val context1: Context) : BottomSheetDialog(context1) {
+class DateAndTimeFragment(val context1: Context) : BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentDateAndTimeBinding
 
@@ -61,22 +61,15 @@ class DateAndTimeFragment(val context1: Context) : BottomSheetDialog(context1) {
 
     private var selectedTime = ""
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private val today = LocalDate.now()
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private var selectedDate: LocalDate? = today
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.inflate(
-            LayoutInflater.from(context),
-            R.layout.fragment_date_and_time,
-            null,
-            false
-        )
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        dialog?.setOnShowListener {
+            setupFullHeight(it as BottomSheetDialog)
+        }
         manageLayoutVisibility()
         val daysOfWeek = daysOfWeek()
         configureBinders()
@@ -87,10 +80,37 @@ class DateAndTimeFragment(val context1: Context) : BottomSheetDialog(context1) {
         )
         setUpSpinnerData()
         setUpNavigate()
-      /*  val behavior = BottomSheetBehavior.from(binding.root as CoordinatorLayout)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
+        binding = DataBindingUtil.inflate(
+            LayoutInflater.from(context), R.layout.fragment_date_and_time, null, false
+        )
+        return binding.root
+    }
+
+    private fun setupFullHeight(bottomSheetDialog: BottomSheetDialog) {
+        val bottomSheet: FrameLayout =
+            bottomSheetDialog.findViewById(com.google.android.material.R.id.design_bottom_sheet)!!
+        val behavior: BottomSheetBehavior<View> = BottomSheetBehavior.from(bottomSheet)
+        val layoutParams = bottomSheet.layoutParams
+        val windowHeight = getWindowHeight()
+        if (layoutParams != null) {
+            layoutParams.height = windowHeight
+        }
+        bottomSheet.layoutParams = layoutParams
         behavior.state = BottomSheetBehavior.STATE_EXPANDED
-        behavior.peekHeight = context1.resources.displayMetrics.heightPixels*/
-        setContentView(binding.root)
+        behavior.skipCollapsed = true
+    }
+
+    private fun getWindowHeight(): Int {
+        val windowMetrics: WindowMetrics =
+            WindowMetricsCalculator.getOrCreate().computeCurrentWindowMetrics(
+                requireActivity()
+            )
+        return windowMetrics.bounds.height()
     }
 
     /* override fun onStart() {
@@ -134,7 +154,7 @@ class DateAndTimeFragment(val context1: Context) : BottomSheetDialog(context1) {
     private fun configureBinders() {
         val calendarView = binding.exTwoCalendar
 
-        @RequiresApi(Build.VERSION_CODES.O)
+
         class DayViewContainer(view: View) : ViewContainer(view) {
             // Will be set when this container is bound. See the dayBinder.
             lateinit var day: CalendarDay
@@ -155,9 +175,7 @@ class DateAndTimeFragment(val context1: Context) : BottomSheetDialog(context1) {
                             val oldDate = selectedDate
                             selectedDate = day.date
                             Toast.makeText(
-                                context1,
-                                "Date :$selectedDate",
-                                Toast.LENGTH_SHORT
+                                context1, "Date :$selectedDate", Toast.LENGTH_SHORT
                             ).show()
 
                             calendarView.notifyDateChanged(day.date)
@@ -170,10 +188,10 @@ class DateAndTimeFragment(val context1: Context) : BottomSheetDialog(context1) {
         }
 
         calendarView.dayBinder = object : MonthDayBinder<DayViewContainer> {
-            @RequiresApi(Build.VERSION_CODES.O)
+
             override fun create(view: View) = DayViewContainer(view)
 
-            @RequiresApi(Build.VERSION_CODES.O)
+
             override fun bind(container: DayViewContainer, data: CalendarDay) {
                 container.day = data
                 val textView = container.textView
@@ -204,19 +222,17 @@ class DateAndTimeFragment(val context1: Context) : BottomSheetDialog(context1) {
         class MonthViewContainer(view: View) : ViewContainer(view) {
             val textView = ItemCalendarHeaderBinding.bind(view).exTwoHeaderText
         }
-        calendarView.monthHeaderBinder =
-            object : MonthHeaderFooterBinder<MonthViewContainer> {
-                override fun create(view: View) = MonthViewContainer(view)
+        calendarView.monthHeaderBinder = object : MonthHeaderFooterBinder<MonthViewContainer> {
+            override fun create(view: View) = MonthViewContainer(view)
 
-                @RequiresApi(Build.VERSION_CODES.O)
-                override fun bind(container: MonthViewContainer, data: CalendarMonth) {
-                    container.textView.text = data.yearMonth.displayText()
-                }
+
+            override fun bind(container: MonthViewContainer, data: CalendarMonth) {
+                container.textView.text = data.yearMonth.displayText()
             }
+        }
     }
 
     //managing date and time layout visibility
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun manageLayoutVisibility() {
         binding.txtDTDate.setOnClickListener {
             binding.nsTimeData.visibility = View.GONE
@@ -238,7 +254,6 @@ class DateAndTimeFragment(val context1: Context) : BottomSheetDialog(context1) {
     }
 
     //navigation
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun setUpNavigate() {
         val bundle = Bundle()
         bundle.putString("DateSelected", selectedDate.toString())
@@ -267,7 +282,6 @@ class DateAndTimeFragment(val context1: Context) : BottomSheetDialog(context1) {
     }
 
     //setting up spinner data
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun setUpSpinnerData() {
         /* val args: DateAndTimeFragmentArgs by navArgs()
          val user: ScheduleTripResponse = args.scheduleTripRes*/
@@ -280,9 +294,7 @@ class DateAndTimeFragment(val context1: Context) : BottomSheetDialog(context1) {
         }
 
         val arrayAdapter = ArrayAdapter(
-            context,
-            R.layout.item_spinner_date_time,
-            list
+            requireContext(), R.layout.item_spinner_date_time, list
         )
 
         binding.spinnerDTRegion.adapter = arrayAdapter
@@ -295,10 +307,7 @@ class DateAndTimeFragment(val context1: Context) : BottomSheetDialog(context1) {
                 }
 
                 override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
+                    parent: AdapterView<*>?, view: View?, position: Int, id: Long
                 ) {
                     user.data?.timezoneArr?.forEach { it ->
                         if (binding.spinnerDTRegion.selectedItem.toString() == it?.timeZone) {
@@ -317,14 +326,12 @@ class DateAndTimeFragment(val context1: Context) : BottomSheetDialog(context1) {
 
     //calling api data
     @SuppressLint("NotifyDataSetChanged")
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun getTimeSlotData() {
         val service =
             RetrofitHelper.getInstance(Constants.BASE_URL).create(ApiInterface::class.java)
         val repository = TimeSlotRepository(service)
         viewModel = ViewModelProvider(
-            context1 as ScheduleTripFragment,
-            TSVMFactory(repository)
+            context1 as ScheduleTripFragment, TSVMFactory(repository)
         )[TimeSlotViewModel::class.java]
 
         //passing data to request class
@@ -368,7 +375,7 @@ class DateAndTimeFragment(val context1: Context) : BottomSheetDialog(context1) {
 
     //setting data to time slot recycler view header
     @SuppressLint("NotifyDataSetChanged")
-    @RequiresApi(Build.VERSION_CODES.O)
+
     fun setHeaderData() {
         if (LocalDate.parse(selectedDate.toString()).equals(today)) {
 
@@ -413,9 +420,7 @@ class DateAndTimeFragment(val context1: Context) : BottomSheetDialog(context1) {
     private fun setUPTimeSlotsAdapter() {
         adapter = DateAndTimeAdapter(context1, object : OnCellClicked {
             override fun onClick(
-                position1: Int,
-                data: TimeSlotResponse.Data.AllTimeSlot,
-                timeValue: String
+                position1: Int, data: TimeSlotResponse.Data.AllTimeSlot, timeValue: String
             ) {
                 ScheduleTripFragment().selectedTime = data.time.toString()
                 ScheduleTripFragment().selectedDate = data.date.toString()

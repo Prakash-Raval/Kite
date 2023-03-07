@@ -1,11 +1,9 @@
 package com.example.kite.reservation
 
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -29,17 +27,12 @@ class ReservationFragment : Fragment() {
     private lateinit var binding: FragmentReservationBinding
     private lateinit var viewModel: ListReservationViewModel
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(
-            LayoutInflater.from(context),
-            R.layout.fragment_reservation,
-            container,
-            false
+            LayoutInflater.from(context), R.layout.fragment_reservation, container, false
         )
         getData()
         navigation()
@@ -57,7 +50,6 @@ class ReservationFragment : Fragment() {
     }
 
     //getting api data
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun getData() {
         val service =
             RetrofitHelper.getInstance(Constants.BASE_URL).create(ApiInterface::class.java)
