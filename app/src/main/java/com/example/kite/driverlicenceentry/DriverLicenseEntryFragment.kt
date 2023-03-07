@@ -49,7 +49,7 @@ class DriverLicenseEntryFragment : Fragment() {
 
     /*private fun setTrulioo() {
         //Set client here
-        val apiClient = ApiClient()
+        val apiClient = com.example.kite.base.network.ApiClient()
         apiClient.setUsername("Kite_DocV_Sandbox_API")
         apiClient.setPassword("Brain@2022#")
         //apiClient.setVerifyingSsl(false); Ignore ssl error if needed

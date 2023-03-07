@@ -31,7 +31,6 @@ class ScanQRCodeFragment : Fragment() {
             false
         )
 
-
         initCodeScanner()
         setUPToolBar()
         setUPNavigation()
@@ -83,9 +82,11 @@ class ScanQRCodeFragment : Fragment() {
     //navigation buttons
     private fun setUPNavigation() {
         //enter qr code bottom sheet
+
         binding.imgQREntry.setOnClickListener {
             findNavController().navigate(R.id.action_scanQRCodeFragment_to_enterQRCodeFragment)
         }
+
         //flash light
         binding.imgQrFlash.setOnClickListener {
             codeScanner.isFlashEnabled = !codeScanner.isFlashEnabled
