@@ -292,19 +292,26 @@
         android:label="ScheduleTripFragment">
 
 
+        <action
+            android:id="@+id/action_scheduleTripFragment_to_dateAndTimeFragment2"
+            app:destination="@id/dateAndTimeFragment2" />
     </fragment>
-    <!--<dialog
-        android:id="@+id/dateAndTimeFragment"
+
+
+    <dialog
+        android:id="@+id/dateAndTimeFragment2"
         android:name="com.example.kite.dateandtime.ui.DateAndTimeFragment"
         android:label="DateAndTimeFragment">
 
-        <argument
+    <!--    <argument
             android:name="scheduleTripRes"
-            app:argType="com.example.kite.scheduletrip.model.ScheduleTripResponse" />
-    </dialog>-->
+            app:argType="com.example.kite.scheduletrip.model.ScheduleTripResponse" />-->
+
+    </dialog>
 
     <fragment
         android:id="@+id/enterQRCodeFragment"
         android:name="com.example.kite.scanqr.bottomsheet.EnterQRCodeFragment"
         android:label="EnterQRCodeFragment" />
+
 </navigation>

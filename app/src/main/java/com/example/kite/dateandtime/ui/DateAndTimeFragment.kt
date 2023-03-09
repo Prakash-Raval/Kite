@@ -1,14 +1,17 @@
 package com.example.kite.dateandtime.ui
 
-import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.FrameLayout
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.window.layout.WindowMetrics
@@ -20,6 +23,7 @@ import com.example.kite.databinding.FragmentDateAndTimeBinding
 import com.example.kite.databinding.ItemCalendarDayBinding
 import com.example.kite.databinding.ItemCalendarHeaderBinding
 import com.example.kite.dateandtime.adapter.DateAndTimeAdapter
+import com.example.kite.dateandtime.listner.GetDateAndTime
 import com.example.kite.dateandtime.listner.OnCellClicked
 import com.example.kite.dateandtime.model.HeaderModel
 import com.example.kite.dateandtime.model.TimeSlotRequest
@@ -30,7 +34,7 @@ import com.example.kite.dateandtime.viewmodel.TimeSlotViewModel
 import com.example.kite.login.model.LoginResponse
 import com.example.kite.network.ApiInterface
 import com.example.kite.network.RetrofitHelper
-import com.example.kite.scheduletrip.ScheduleTripFragment
+import com.example.kite.scheduletrip.model.ScheduleTripResponse
 import com.example.kite.utils.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -49,7 +53,8 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 
-class DateAndTimeFragment(val context1: Context) : BottomSheetDialogFragment() {
+class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndTime) :
+    BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentDateAndTimeBinding
 
@@ -59,12 +64,17 @@ class DateAndTimeFragment(val context1: Context) : BottomSheetDialogFragment() {
     var list = ArrayList<TimeSlotResponse.Data.AllTimeSlot>()
     private val sections = ArrayList<HeaderModel>()
 
-    private var selectedTime = ""
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private val today = LocalDate.now()
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private var selectedDate: LocalDate? = today
 
+    private var timeZone: String = ""
+
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dialog?.setOnShowListener {
@@ -82,6 +92,7 @@ class DateAndTimeFragment(val context1: Context) : BottomSheetDialogFragment() {
         setUpNavigate()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -91,6 +102,8 @@ class DateAndTimeFragment(val context1: Context) : BottomSheetDialogFragment() {
         return binding.root
     }
 
+
+    @RequiresApi(Build.VERSION_CODES.R)
     private fun setupFullHeight(bottomSheetDialog: BottomSheetDialog) {
         val bottomSheet: FrameLayout =
             bottomSheetDialog.findViewById(com.google.android.material.R.id.design_bottom_sheet)!!
@@ -105,6 +118,7 @@ class DateAndTimeFragment(val context1: Context) : BottomSheetDialogFragment() {
         behavior.skipCollapsed = true
     }
 
+    @RequiresApi(Build.VERSION_CODES.R)
     private fun getWindowHeight(): Int {
         val windowMetrics: WindowMetrics =
             WindowMetricsCalculator.getOrCreate().computeCurrentWindowMetrics(
@@ -113,48 +127,13 @@ class DateAndTimeFragment(val context1: Context) : BottomSheetDialogFragment() {
         return windowMetrics.bounds.height()
     }
 
-    /* override fun onStart() {
-         super.onStart()
-         dialog?.also {
-             val bottomSheet = dialog.findViewById<View>()
-             bottomSheet.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
-             val behavior = BottomSheetBehavior.from<View>(bottomSheet)
-             behavior.peekHeight = resources.displayMetrics.heightPixels //replace to whatever you want
-             view?.requestLayout()
-         }
-     }*/
-
-    /* @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-     fun onCreateView(
-         inflater: LayoutInflater, container: ViewGroup?,
-         savedInstanceState: Bundle?
-     ): View {
-         // Inflate the layout for this fragment
-
-         return binding.root
-     }*/
-
-    /* override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-         val bottomSheetDialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
-         bottomSheetDialog.setOnShowListener { dialog: DialogInterface ->
-             val dialogc = dialog as BottomSheetDialog
-             // When using AndroidX the resource can be found at com.google.android.material.R.id.design_bottom_sheet
-             val bottomSheet : FrameLayout? =
-                 dialogc.findViewById(com.google.android.material.R.id.design_bottom_sheet)
-             val bottomSheetBehavior: BottomSheetBehavior<*> =
-                 BottomSheetBehavior.from(bottomSheet)
-             bottomSheetBehavior.peekHeight = Resources.getSystem().displayMetrics.heightPixels
-             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED)
-         }
-         return bottomSheetDialog
-     }*/
-
 
     //calender view data
     private fun configureBinders() {
         val calendarView = binding.exTwoCalendar
 
 
+        @RequiresApi(Build.VERSION_CODES.O)
         class DayViewContainer(view: View) : ViewContainer(view) {
             // Will be set when this container is bound. See the dayBinder.
             lateinit var day: CalendarDay
@@ -189,9 +168,11 @@ class DateAndTimeFragment(val context1: Context) : BottomSheetDialogFragment() {
 
         calendarView.dayBinder = object : MonthDayBinder<DayViewContainer> {
 
+            @RequiresApi(Build.VERSION_CODES.O)
             override fun create(view: View) = DayViewContainer(view)
 
 
+            @RequiresApi(Build.VERSION_CODES.O)
             override fun bind(container: DayViewContainer, data: CalendarDay) {
                 container.day = data
                 val textView = container.textView
@@ -201,15 +182,15 @@ class DateAndTimeFragment(val context1: Context) : BottomSheetDialogFragment() {
                     textView.makeVisible()
                     when (data.date) {
                         selectedDate -> {
-                            textView.setTextColorRes(com.example.kite.R.color.white)
-                            textView.setBackgroundResource(com.example.kite.R.drawable.bg_calender_red)
+                            textView.setTextColorRes(R.color.white)
+                            textView.setBackgroundResource(R.drawable.bg_calender_red)
                         }
                         today -> {
-                            textView.setTextColorRes(com.example.kite.R.color.bg_main)
+                            textView.setTextColorRes(R.color.bg_main)
                             textView.background = null
                         }
                         else -> {
-                            textView.setTextColorRes(com.example.kite.R.color.black)
+                            textView.setTextColorRes(R.color.black)
                             textView.background = null
                         }
                     }
@@ -233,6 +214,7 @@ class DateAndTimeFragment(val context1: Context) : BottomSheetDialogFragment() {
     }
 
     //managing date and time layout visibility
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun manageLayoutVisibility() {
         binding.txtDTDate.setOnClickListener {
             binding.nsTimeData.visibility = View.GONE
@@ -254,42 +236,55 @@ class DateAndTimeFragment(val context1: Context) : BottomSheetDialogFragment() {
     }
 
     //navigation
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun setUpNavigate() {
-        val bundle = Bundle()
-        bundle.putString("DateSelected", selectedDate.toString())
-        bundle.putString("TimeSelected", selectedTime)
         binding.btnDTSet.setOnClickListener {
             if (binding.spinnerDTRegion.selectedItem.toString() == "Select Region") {
                 Toast.makeText(context1, "Please select region", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(
-                    context1,
-                    "Time : " + selectedTime + "Date : " + selectedDate.toString(),
-                    Toast.LENGTH_LONG
-                ).show()
-
-
+                //navigate back to schedule fragment
+                getDateAndTime.getDate(
+                    selectedDate.toString(),
+                    "",
+                    timeZone
+                )
+                dialog?.dismiss()
             }
         }
 
         binding.btnDTSetTime.setOnClickListener {
-            Toast.makeText(
-                context1,
-                "Time : " + selectedTime + "Date : " + selectedDate.toString(),
-                Toast.LENGTH_LONG
-            ).show()
+            dialog?.dismiss()
+        }
+
+        binding.imgDTClose.setOnClickListener {
+            dialog?.dismiss()
         }
     }
 
     //setting up spinner data
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun setUpSpinnerData() {
-        /* val args: DateAndTimeFragmentArgs by navArgs()
-         val user: ScheduleTripResponse = args.scheduleTripRes*/
-        val user = ScheduleTripFragment().myResponse
+        val args = this.arguments
+        val user = args?.getParcelable<ScheduleTripResponse>("ScheduleResponse")
+
+        //setting up date
+        val date = args?.getString("ScheduleDate")
+        val time = args?.getString("ScheduleTime")
+        val timeZone2 = args?.getString("ScheduleTimezone")
+        Log.d("Heheheh", date.toString())
+        Log.d("Heheheh", time.toString())
+        Log.d("Heheheh", timeZone2.toString())
+        if (date != null)
+            selectedDate = if (date == "") {
+                today
+            } else {
+                LocalDate.parse(date)
+            }
+
 
         val list = ArrayList<String>()
         list.add(0, "Select Region")
-        user.data?.timezoneArr?.forEach { it ->
+        user?.data?.timezoneArr?.forEach { it ->
             it?.timeZone?.let { it1 -> list.add(it1) }
         }
 
@@ -299,24 +294,39 @@ class DateAndTimeFragment(val context1: Context) : BottomSheetDialogFragment() {
 
         binding.spinnerDTRegion.adapter = arrayAdapter
 
+        if (timeZone2 != null) {
+            if ( list.size > 0 && timeZone2.isNotEmpty())
+                binding.spinnerDTRegion.setSelection(timeZone2.toInt())
+        }
+
         //spinner data selected
         binding.spinnerDTRegion.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onNothingSelected(parent: AdapterView<*>?) {
-                    binding.txtDTSelectTimezone.setText(R.string.timezone)
+
                 }
 
                 override fun onItemSelected(
-                    parent: AdapterView<*>?, view: View?, position: Int, id: Long
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
                 ) {
-                    user.data?.timezoneArr?.forEach { it ->
+
+
+                    timeZone = position.toString()
+                    Log.d("TimeZone", "onClick: $timeZone")
+
+                    user?.data?.timezoneArr?.forEach { it ->
                         if (binding.spinnerDTRegion.selectedItem.toString() == it?.timeZone) {
                             if (position == 0) {
                                 binding.txtDTSelectTimezone.setText(R.string.timezone)
                             } else {
                                 binding.txtDTSelectTimezone.text = it.title
                             }
+
                         }
+
                     }
                 }
 
@@ -325,16 +335,16 @@ class DateAndTimeFragment(val context1: Context) : BottomSheetDialogFragment() {
 
 
     //calling api data
-    @SuppressLint("NotifyDataSetChanged")
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun getTimeSlotData() {
         val service =
             RetrofitHelper.getInstance(Constants.BASE_URL).create(ApiInterface::class.java)
         val repository = TimeSlotRepository(service)
         viewModel = ViewModelProvider(
-            context1 as ScheduleTripFragment, TSVMFactory(repository)
+            requireActivity(), TSVMFactory(repository)
         )[TimeSlotViewModel::class.java]
 
-        //passing data to request class
+        //collecting data for passing in to request class
         val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.accessToken
         val timeZone = binding.spinnerDTRegion.selectedItem.toString()
         val sharedPreference =
@@ -352,7 +362,7 @@ class DateAndTimeFragment(val context1: Context) : BottomSheetDialogFragment() {
             "00:00:00"
         }
 
-
+        //passing data to request class
         viewModel.getRequiredData(
             TimeSlotRequest(
                 access_token = token,
@@ -364,7 +374,7 @@ class DateAndTimeFragment(val context1: Context) : BottomSheetDialogFragment() {
             )
         )
 
-        viewModel.timeSlotLD.observe(context1.viewLifecycleOwner) {
+        viewModel.timeSlotLD.observe(this.viewLifecycleOwner) {
             if (it.code == 200) {
                 sections.clear()
                 list = it.data?.allTimeSlots as ArrayList<TimeSlotResponse.Data.AllTimeSlot>
@@ -374,8 +384,7 @@ class DateAndTimeFragment(val context1: Context) : BottomSheetDialogFragment() {
     }
 
     //setting data to time slot recycler view header
-    @SuppressLint("NotifyDataSetChanged")
-
+    @RequiresApi(Build.VERSION_CODES.O)
     fun setHeaderData() {
         if (LocalDate.parse(selectedDate.toString()).equals(today)) {
 
@@ -412,8 +421,6 @@ class DateAndTimeFragment(val context1: Context) : BottomSheetDialogFragment() {
                 )
             )
         }
-        Toast.makeText(context1, "SSSS " + sections.size, Toast.LENGTH_SHORT).show()
-        Log.i("TAG", "setHeaderData: $sections")
         setUPTimeSlotsAdapter()
     }
 
@@ -422,9 +429,22 @@ class DateAndTimeFragment(val context1: Context) : BottomSheetDialogFragment() {
             override fun onClick(
                 position1: Int, data: TimeSlotResponse.Data.AllTimeSlot, timeValue: String
             ) {
-                ScheduleTripFragment().selectedTime = data.time.toString()
-                ScheduleTripFragment().selectedDate = data.date.toString()
+                //passing data to previous fragment (ScheduleTripFragment)
+                getDateAndTime.getDate(
+                    data.date.toString(),
+                    timeValue,
+                    timeZone
+                )
 
+                Log.d("TimeZone", "onClick: $timeZone")
+
+                //checking adapter position for header data
+                /*
+                * if position 0
+                *   header will be null or empty
+                * if position 1
+                *   header will contain next date string
+                * */
                 if (data.position == 0) {
                     adapter.notifyItemChanged(1)
                 } else {
@@ -436,28 +456,5 @@ class DateAndTimeFragment(val context1: Context) : BottomSheetDialogFragment() {
         binding.rvTimeSlotContainer.adapter = adapter
     }
 
-    /* private lateinit var mBehavior: BottomSheetBehavior<FrameLayout>
 
-     override fun setContentView(view: View) {
-         super.setContentView(view)
-         val bottomSheet =
-             window?.decorView?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) as FrameLayout
-         mBehavior = BottomSheetBehavior.from(bottomSheet)
-         mBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-     }
-
-     override fun onStart() {
-         super.onStart()
-         mBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-     }*/
-
-
-    /*override fun onClick(
-        position1: Int,
-        data: TimeSlotResponse.Data.AllTimeSlot,
-        timeValue: String
-    ) {
-        selectedTime = timeValue
-    }
-*/
 }

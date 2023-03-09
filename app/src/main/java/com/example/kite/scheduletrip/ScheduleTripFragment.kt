@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide
 import com.example.kite.R
 import com.example.kite.constants.Constants
 import com.example.kite.databinding.FragmentScheduleTripBinding
+import com.example.kite.dateandtime.listner.GetDateAndTime
 import com.example.kite.dateandtime.ui.DateAndTimeFragment
 import com.example.kite.login.model.LoginResponse
 import com.example.kite.network.ApiInterface
@@ -34,16 +35,16 @@ import com.example.kite.utils.PrefManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
 
-class ScheduleTripFragment : Fragment() {
+class ScheduleTripFragment : Fragment(), GetDateAndTime {
     private lateinit var binding: FragmentScheduleTripBinding
     private lateinit var viewModel: ScheduleTripViewModel
     private lateinit var scheduleTripAdapter: ScheduleTripAdapter
     var list = ArrayList<ScheduleTimeDuration>()
     private var count = 0
-    private lateinit var bundle: ScheduleTripResponse
+    val bundle2 = Bundle()
     var selectedDate: String = ""
     var selectedTime: String = ""
-    var myResponse = ScheduleTripResponse()
+    var selectedTimeZone = " "
 
 
     override fun onCreateView(
@@ -59,9 +60,10 @@ class ScheduleTripFragment : Fragment() {
         getApiData()
         setData()
         setCounter()
-        setDateAndTime()
+
         return binding.root
     }
+
 
     private fun setDateAndTime() {
         if (selectedDate == "") {
@@ -93,34 +95,30 @@ class ScheduleTripFragment : Fragment() {
         }
 
         binding.imgDownDate.setOnClickListener {
-            /* findNavController().navigate(
-                 ScheduleTripFragmentDirections.actionScheduleTripFragmentToDateAndTimeFragment(
-                 )
-             )*/
-            val dialog = DateAndTimeFragment(requireContext())
+            val dialog = DateAndTimeFragment(requireContext(), this)
+            dialog.arguments = bundle2
+            Log.d("TAG113", "setUPToolbar: $bundle2")
             dialog.show(requireActivity().supportFragmentManager, "")
         }
-        binding.imgDownTime.setOnClickListener {
-            if (binding.txtSTDateSelect.isVisible) {
-                val dialog = DateAndTimeFragment(requireContext())
-                dialog.show(requireActivity().supportFragmentManager, "")
-            } else {
-                Toast.makeText(requireContext(), "Please select date", Toast.LENGTH_SHORT).show()
-            }
-        }
+
         binding.txtSTDateSelect.setOnClickListener {
-            val dialog = DateAndTimeFragment(requireContext())
+            val dialog = DateAndTimeFragment(requireContext(), this)
+            dialog.arguments = bundle2
+            Log.d("TAG112", "setUPToolbar: $bundle2")
             dialog.show(requireActivity().supportFragmentManager, "")
         }
 
         binding.txtSTTimeSelected.setOnClickListener {
             if (binding.txtSTDateSelect.isVisible) {
-                /*findNavController().navigate(
-                    ScheduleTripFragmentDirections.actionScheduleTripFragmentToDateAndTimeFragment(
-                        bundle
-                    )
-                )*/
-                val dialog = DateAndTimeFragment(requireContext())
+                val dialog = DateAndTimeFragment(requireContext(), this)
+                dialog.show(requireActivity().supportFragmentManager, "")
+            } else {
+                Toast.makeText(requireContext(), "Please select date", Toast.LENGTH_SHORT).show()
+            }
+        }
+        binding.imgDownTime.setOnClickListener {
+            if (binding.txtSTDateSelect.isVisible) {
+                val dialog = DateAndTimeFragment(requireContext(), this)
                 dialog.show(requireActivity().supportFragmentManager, "")
             } else {
                 Toast.makeText(requireContext(), "Please select date", Toast.LENGTH_SHORT).show()
@@ -205,12 +203,17 @@ class ScheduleTripFragment : Fragment() {
         viewModel.scheduleTripLD.observe(viewLifecycleOwner) {
             Log.d("SCHEDULE-TRIP-RESPONSE", it.toString())
             if (it.code == 200) {
-                bundle = it
+                //passing data to bundle
+
+                bundle2.putParcelable("ScheduleResponse", it)
+
+
+                //array adapter list
                 scheduleTripAdapter.setList(
                     it.data?.tripDuration as ArrayList<ScheduleTripResponse.Data.TripDuration>, list
                 )
-                myResponse = it
                 scheduleTripAdapter.notifyDataSetChanged()
+
             } else {
                 Toast.makeText(requireContext(), "${it.message}", Toast.LENGTH_SHORT).show()
             }
@@ -236,6 +239,17 @@ class ScheduleTripFragment : Fragment() {
                 manufacturer_id = manufacturerID
             )
         )
+    }
+
+    override fun getDate(date: String, time: String, timeZone: String) {
+        selectedDate = date
+        selectedTime = time
+        selectedTimeZone = timeZone
+
+        bundle2.putString("ScheduleDate", selectedDate)
+        bundle2.putString("ScheduleTime", selectedTime)
+        bundle2.putString("ScheduleTimezone",selectedTimeZone)
+        setDateAndTime()
     }
 
 }

@@ -32,7 +32,11 @@ class DayAdapter(val context: Context, val lis: OnCellClicked) :
             binding.timeSlot = list[position].time?.let { convertTo12Hours(it) }
             binding.root.setOnClickListener {
                 selected = position
-                list[position].time?.let { it1 -> lis.onClick(position, list[position], it1) }
+                list[position].time?.let { it1 -> convertTo12Hours(it1)?.let { it2 ->
+                    lis.onClick(position, list[position],
+                        it2
+                    )
+                } }
                 notifyItemChanged(selected)
                 notifyDataSetChanged()
                 Toast.makeText(context, "hello : $position", Toast.LENGTH_SHORT).show()
@@ -72,7 +76,7 @@ class DayAdapter(val context: Context, val lis: OnCellClicked) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(position)
-        /*if (list[position].available == false) {
+        if (list[position].available == false) {
             holder.binding.txtTSTime.isClickable = false
             holder.binding.txtTSTime.apply {
                 background =
@@ -81,7 +85,6 @@ class DayAdapter(val context: Context, val lis: OnCellClicked) :
             }
         }
 
-        holder.binding.txtTSTime.isClickable = true*/
         if (selected == position) {
             holder.binding.txtTSTime.apply {
                 setTextColor(

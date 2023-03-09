@@ -7,310 +7,313 @@
 
     </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:nestedScrollingEnabled="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:clickable="true"
-            android:focusable="true"
-            android:orientation="vertical">
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glStart1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/_20sdp" />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/glStart1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_begin="@dimen/_20sdp" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glEnd1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/_20sdp" />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/glEnd1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_end="@dimen/_20sdp" />
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgDTClose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:alpha="0.6"
+            android:src="@drawable/ic_close"
+            app:layout_constraintEnd_toStartOf="@id/glEnd1"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/imgDTClose"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:alpha="0.6"
-                android:src="@drawable/ic_close"
-                app:layout_constraintEnd_toStartOf="@id/glEnd1"
-                app:layout_constraintTop_toTopOf="parent" />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtDTDate"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/date"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintStart_toEndOf="@id/glStart1"
+            app:layout_constraintTop_toBottomOf="@id/imgDTClose" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtDTTime"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:alpha="0.3"
+            android:text="@string/time"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintStart_toEndOf="@id/txtDTDate"
+            app:layout_constraintTop_toBottomOf="@id/imgDTClose" />
+
+        <LinearLayout
+            android:id="@+id/llDayContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:alpha="0.2"
+            android:orientation="horizontal"
+            android:paddingVertical="@dimen/_8sdp"
+            android:weightSum="7"
+            app:layout_constraintEnd_toStartOf="@id/glEnd1"
+            app:layout_constraintStart_toEndOf="@id/glStart1"
+            app:layout_constraintTop_toBottomOf="@id/txtDTDate">
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/txtDTDate"
+                android:id="@+id/legendText1"
                 style="@style/BlackSmallCustomMaterialTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/date"
-                android:textSize="@dimen/_12sdp"
-                app:layout_constraintStart_toEndOf="@id/glStart1"
-                app:layout_constraintTop_toBottomOf="@id/imgDTClose" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/txtDTTime"
-                style="@style/BlackSmallCustomMaterialTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_16sdp"
-                android:alpha="0.3"
-                android:text="@string/time"
-                android:textSize="@dimen/_12sdp"
-                app:layout_constraintStart_toEndOf="@id/txtDTDate"
-                app:layout_constraintTop_toBottomOf="@id/imgDTClose" />
-
-            <LinearLayout
-                android:id="@+id/llDayContainer"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:alpha="0.2"
-                android:orientation="horizontal"
-                android:paddingVertical="@dimen/_8sdp"
-                android:weightSum="7"
-                app:layout_constraintEnd_toStartOf="@id/glEnd1"
-                app:layout_constraintStart_toEndOf="@id/glStart1"
-                app:layout_constraintTop_toBottomOf="@id/txtDTDate">
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/sun"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_8sdp" />
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/legendText1"
-                    style="@style/BlackSmallCustomMaterialTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/sun"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_8sdp" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/legendText2"
-                    style="@style/BlackSmallCustomMaterialTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/mon"
-                    android:textSize="@dimen/_8sdp" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/legendText3"
-                    style="@style/BlackSmallCustomMaterialTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/tue"
-                    android:textSize="@dimen/_8sdp" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/legendText4"
-                    style="@style/BlackSmallCustomMaterialTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/wed"
-                    android:textSize="@dimen/_8sdp" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/legendText5"
-                    style="@style/BlackSmallCustomMaterialTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/thu"
-                    android:textSize="@dimen/_8sdp" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/legendText6"
-                    style="@style/BlackSmallCustomMaterialTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/fri"
-                    android:textSize="@dimen/_8sdp" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/legendText7"
-                    style="@style/BlackSmallCustomMaterialTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/sat"
-                    android:textSize="@dimen/_8sdp" />
-
-            </LinearLayout>
-
-            <androidx.core.widget.NestedScrollView
-                android:id="@+id/nsDateData"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/glEnd1"
-                app:layout_constraintStart_toEndOf="@id/glStart1"
-                app:layout_constraintTop_toBottomOf="@id/llDayContainer">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/clDateData"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <androidx.constraintlayout.widget.Guideline
-                        android:id="@+id/glStart"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        app:layout_constraintGuide_begin="@dimen/_20sdp" />
-
-                    <androidx.constraintlayout.widget.Guideline
-                        android:id="@+id/glEnd"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        app:layout_constraintGuide_end="@dimen/_20sdp" />
-
-                    <com.kizitonwose.calendar.view.CalendarView
-                        android:id="@+id/exTwoCalendar"
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/_300sdp"
-                        app:cv_dayViewResource="@layout/item_calendar_day"
-                        app:cv_monthHeaderResource="@layout/item_calendar_header"
-                        app:cv_orientation="vertical"
-                        app:cv_scrollPaged="false"
-                        app:layout_constraintBottom_toTopOf="@id/viewDT1"
-                        app:layout_constraintEnd_toStartOf="@id/glEnd"
-                        app:layout_constraintStart_toEndOf="@id/glStart"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <View
-                        android:id="@+id/viewDT1"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1sdp"
-                        android:layout_marginHorizontal="@dimen/_20sdp"
-                        android:alpha="0.2"
-                        android:background="@color/black"
-                        app:layout_constraintBottom_toTopOf="@id/txtDTRegion"
-                        app:layout_constraintTop_toBottomOf="@id/exTwoCalendar" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/txtDTRegion"
-                        style="@style/BlackSmallCustomMaterialTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_8sdp"
-                        android:text="@string/region"
-                        android:textSize="@dimen/_12sdp"
-                        app:layout_constraintStart_toEndOf="@id/glStart"
-                        app:layout_constraintTop_toBottomOf="@id/viewDT1" />
-
-                    <androidx.appcompat.widget.AppCompatSpinner
-                        android:id="@+id/spinnerDTRegion"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:alpha="0.4"
-                        android:gravity="end"
-                        android:overlapAnchor="false"
-                        android:scrollbars="none"
-                        app:layout_constraintBottom_toBottomOf="@id/txtDTRegion"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/txtDTRegion"
-                        tools:listitem="@layout/item_spinner_date_time" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/txtDTTimezone"
-                        style="@style/BlackSmallCustomMaterialTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_8sdp"
-                        android:text="@string/timezone"
-                        android:textSize="@dimen/_12sdp"
-                        app:layout_constraintStart_toEndOf="@id/glStart"
-                        app:layout_constraintTop_toBottomOf="@id/txtDTRegion" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/txtDTSelectTimezone"
-                        style="@style/BlackSmallCustomMaterialTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:alpha="0.4"
-                        android:text="@string/timezone"
-                        android:textSize="@dimen/_12sdp"
-                        app:layout_constraintBottom_toBottomOf="@id/txtDTTimezone"
-                        app:layout_constraintEnd_toStartOf="@id/glEnd"
-                        app:layout_constraintTop_toTopOf="@id/txtDTTimezone" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/txtDTPromoCode"
-                        style="@style/CapitalTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_26sdp"
-                        android:text="@string/promo_code"
-                        app:layout_constraintStart_toEndOf="@id/glStart"
-                        app:layout_constraintTop_toBottomOf="@id/txtDTTimezone" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/tilDTPromoCode"
-                        style="@style/TextInputLayout"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        app:errorEnabled="false"
-                        app:layout_constraintBottom_toTopOf="@id/btnDTSet"
-                        app:layout_constraintEnd_toStartOf="@id/glEnd"
-                        app:layout_constraintStart_toEndOf="@id/glStart"
-                        app:layout_constraintTop_toBottomOf="@id/txtDTPromoCode">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/edtDTPromoCode"
-                            style="@style/TextEditText"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:hint="@string/enter_promo_code"
-                            android:inputType="text" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnDTSet"
-                        style="@style/BlackCustomMaterialButton"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginVertical="@dimen/_40sdp"
-                        android:layout_marginTop="40dp"
-                        android:text="@string/set"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/glEnd"
-                        app:layout_constraintStart_toEndOf="@id/glStart"
-                        app:layout_constraintTop_toBottomOf="@id/tilDTPromoCode" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            </androidx.core.widget.NestedScrollView>
-
-            <androidx.constraintlayout.widget.Group
-                android:id="@+id/gpDTDate"
-                android:layout_width="wrap_content"
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/legendText2"
+                style="@style/BlackSmallCustomMaterialTextView"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:visibility="visible"
-                app:constraint_referenced_ids="llDayContainer,nsDateData" />
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/mon"
+                android:textSize="@dimen/_8sdp" />
 
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/legendText3"
+                style="@style/BlackSmallCustomMaterialTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/tue"
+                android:textSize="@dimen/_8sdp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/legendText4"
+                style="@style/BlackSmallCustomMaterialTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/wed"
+                android:textSize="@dimen/_8sdp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/legendText5"
+                style="@style/BlackSmallCustomMaterialTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/thu"
+                android:textSize="@dimen/_8sdp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/legendText6"
+                style="@style/BlackSmallCustomMaterialTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/fri"
+                android:textSize="@dimen/_8sdp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/legendText7"
+                style="@style/BlackSmallCustomMaterialTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/sat"
+                android:textSize="@dimen/_8sdp" />
+
+        </LinearLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nsDateData"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/glEnd1"
+            app:layout_constraintStart_toEndOf="@id/glStart1"
+            app:layout_constraintTop_toBottomOf="@id/llDayContainer">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/nsTimeData"
+                android:id="@+id/clDateData"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/txtDTDate">
+                android:layout_height="match_parent">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/glStart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="@dimen/_20sdp" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/glEnd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_end="@dimen/_20sdp" />
+
+                <com.kizitonwose.calendar.view.CalendarView
+                    android:id="@+id/exTwoCalendar"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_300sdp"
+                    app:cv_dayViewResource="@layout/item_calendar_day"
+                    app:cv_monthHeaderResource="@layout/item_calendar_header"
+                    app:cv_orientation="vertical"
+                    app:cv_scrollPaged="false"
+                    app:layout_constraintBottom_toTopOf="@id/viewDT1"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/viewDT1"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_marginHorizontal="@dimen/_20sdp"
+                    android:alpha="0.2"
+                    android:background="@color/black"
+                    app:layout_constraintBottom_toTopOf="@id/txtDTRegion"
+                    app:layout_constraintTop_toBottomOf="@id/exTwoCalendar" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtDTRegion"
+                    style="@style/BlackSmallCustomMaterialTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:text="@string/region"
+                    android:textSize="@dimen/_12sdp"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/viewDT1" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spinnerDTRegion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.4"
+                    android:gravity="end"
+                    android:overlapAnchor="false"
+                    android:scrollbars="none"
+                    app:layout_constraintBottom_toBottomOf="@id/txtDTRegion"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/txtDTRegion"
+                    tools:listitem="@layout/item_spinner_date_time" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtDTTimezone"
+                    style="@style/BlackSmallCustomMaterialTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:text="@string/timezone"
+                    android:textSize="@dimen/_12sdp"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/txtDTRegion" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtDTSelectTimezone"
+                    style="@style/BlackSmallCustomMaterialTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.4"
+                    android:text="@string/timezone"
+                    android:textSize="@dimen/_12sdp"
+                    app:layout_constraintBottom_toBottomOf="@id/txtDTTimezone"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintTop_toTopOf="@id/txtDTTimezone" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtDTPromoCode"
+                    style="@style/CapitalTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_26sdp"
+                    android:text="@string/promo_code"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/txtDTTimezone" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilDTPromoCode"
+                    style="@style/TextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:errorEnabled="false"
+                    app:layout_constraintBottom_toTopOf="@id/btnDTSet"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/txtDTPromoCode">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtDTPromoCode"
+                        style="@style/TextEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="@string/enter_promo_code"
+                        android:inputType="text" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnDTSet"
+                    style="@style/BlackCustomMaterialButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/_40sdp"
+                    android:layout_marginTop="40dp"
+                    android:text="@string/set"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/tilDTPromoCode" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.core.widget.NestedScrollView>
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/gpDTDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:constraint_referenced_ids="llDayContainer,nsDateData" />
+
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nsTimeData"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtDTDate">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txtDTPick"
@@ -328,11 +331,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginHorizontal="@dimen/_20sdp"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:layout_marginBottom="@dimen/_8sdp"
+                    android:layout_marginVertical="@dimen/_8sdp"
                     android:orientation="vertical"
-                    android:paddingStart="0dp"
-                    android:paddingEnd="0dp"
+                    android:paddingHorizontal="0dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toTopOf="@+id/viewDT2"
                     app:layout_constraintTop_toBottomOf="@id/txtDTPick"
@@ -364,7 +365,8 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
