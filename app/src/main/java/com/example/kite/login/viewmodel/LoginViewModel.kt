@@ -85,7 +85,8 @@ class LoginViewModel(private val repository: LoginRepository) : ViewModel() {
         if (s.isEmpty()) {
             errorMessage.value = ErrorEvent(ErrorModel("Please enter password", "Password"))
         } else if (!Constants.PASSWORD_PATTERN.matcher(s).matches()) {
-            errorMessage.value = ErrorEvent(ErrorModel("Password minimum length should be 6", "Password"))
+            errorMessage.value =
+                ErrorEvent(ErrorModel("Password minimum length should be 6", "Password"))
         } else {
             errorMessage.value = ErrorEvent(ErrorModel("", "Password"))
         }

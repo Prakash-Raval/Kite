@@ -125,7 +125,7 @@ class BikeListingFragment : Fragment(), OnCellClicked {
 
         val modelName = bind?.vehicleType
         val modelImage = bind?.vehicleTypeImage
-
+        val repeatCount = bind?.repeatDaysCount
         val vehicleTypeID = bind?.vehicleTypeId
         val manufacturerID = bind?.manufacturerId
 
@@ -146,6 +146,7 @@ class BikeListingFragment : Fragment(), OnCellClicked {
                         bundle.putString("VehicleSlug", vehicleSlug)
                         vehicleDetails.putString("ModelName", modelName)
                         vehicleDetails.putString("ModelImage", modelImage)
+                        vehicleDetails.putString("RepeatCount", repeatCount.toString())
 
                         vehicleDetails.putString("vehicleTypeID", vehicleTypeID.toString())
                         vehicleDetails.putString("ManufacturerID", manufacturerID.toString())
@@ -158,6 +159,7 @@ class BikeListingFragment : Fragment(), OnCellClicked {
                         bundle.putString("VehicleSlug", vehicleSlug)
                         vehicleDetails.putString("ModelName", modelName)
                         vehicleDetails.putString("ModelImage", modelImage)
+                        vehicleDetails.putString("RepeatCount", repeatCount.toString())
                         vehicleDetails.putString("vehicleTypeID", vehicleTypeID.toString())
                         vehicleDetails.putString("ManufacturerID", manufacturerID.toString())
                     }
@@ -166,6 +168,7 @@ class BikeListingFragment : Fragment(), OnCellClicked {
                     if (availableVehicle != null && availableVehicle > 0) {
                         enableButton()
                         disableText()
+                        vehicleDetails.putString("RepeatCount", repeatCount.toString())
                         bundle.putString("VehicleSlug", vehicleSlug)
                         vehicleDetails.putString("ModelName", modelName)
                         vehicleDetails.putString("ModelImage", modelImage)
@@ -174,7 +177,6 @@ class BikeListingFragment : Fragment(), OnCellClicked {
                     }
                 }
                 else -> {
-
                     disableButton()
                     disableText()
                 }

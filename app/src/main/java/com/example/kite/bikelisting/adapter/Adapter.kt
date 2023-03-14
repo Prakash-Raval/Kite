@@ -44,7 +44,7 @@ class Adapter(
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: ItemVehicleListingBinding   =
+        val binding: ItemVehicleListingBinding =
             ItemVehicleListingBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,

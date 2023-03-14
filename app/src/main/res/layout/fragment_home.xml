@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
 
     <data>
 
+        <variable
+            name="viewTrip"
+            type="com.example.kite.reservation.model.ListReservationResponse.ReservationData" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -95,6 +99,115 @@
             app:layout_constraintEnd_toEndOf="@id/viewGps"
             app:layout_constraintStart_toStartOf="@id/viewGps"
             app:layout_constraintTop_toTopOf="@id/viewGps" />
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardViewTripContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:visibility="visible"
+            app:cardCornerRadius="@dimen/_20sdp"
+            app:cardElevation="@dimen/_8sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtHUpComing"
+                    style="@style/BlackSmallCustomMaterialTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:gravity="center"
+                    android:text="@string/upcoming_reservation"
+                    android:textSize="@dimen/_12sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imgHCar"
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/txtHUpComing"
+                    bind:image="@{viewTrip.vehicleTypeImage}"
+                    bind:placeholder="@{@drawable/kite_red_logo}"
+                    bind:src="@drawable/ic_tesla_one" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtHVehicleSlug"
+                    style="@style/BlackSmallCustomMaterialTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_8sdp"
+                    android:text="@{viewTrip.vehicleType}"
+                    android:textSize="@dimen/_10sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/imgHCar"
+                    app:layout_constraintStart_toStartOf="@id/imgHCar"
+                    app:layout_constraintTop_toBottomOf="@id/imgHCar"
+                    bind:text="Model 3" />
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtHThirdPartyNAME"
+                    style="@style/BlackSmallCustomMaterialTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:text="@{viewTrip.thirdPartyName}"
+                    android:textSize="@dimen/_10sdp"
+                    android:textStyle="normal"
+                    app:layout_constraintStart_toEndOf="@id/imgHCar"
+                    app:layout_constraintTop_toTopOf="@id/imgHCar"
+                    bind:text="Amal Bike Service" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtHTime"
+                    style="@style/BlackSmallCustomMaterialTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewTrip.scheduleTime}"
+                    android:textSize="@dimen/_12sdp"
+                    app:layout_constraintStart_toStartOf="@id/txtHThirdPartyNAME"
+                    app:layout_constraintTop_toBottomOf="@id/txtHThirdPartyNAME"
+                    bind:text=" 02:00 AM" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtHDate"
+                    style="@style/BlackSmallCustomMaterialTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.5"
+                    android:text="@{viewTrip.scheduleDate}"
+                    android:textSize="@dimen/_10sdp"
+                    app:layout_constraintStart_toStartOf="@id/txtHThirdPartyNAME"
+                    app:layout_constraintTop_toBottomOf="@id/txtHTime"
+                    bind:text="Sat Mar 11" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnHView"
+                    style="@style/RedCustomMaterialButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_8sdp"
+                    android:text="@string/view"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

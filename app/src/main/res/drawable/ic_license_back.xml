@@ -6,7 +6,8 @@
     android:viewportWidth="42"
     android:viewportHeight="28">
     <group>
-        <clip-path android:pathData="M0,0.0001l41.1159,0l0,27.9147l-41.1159,0z"
+        <clip-path
+            android:pathData="M0,0.0001l41.1159,0l0,27.9147l-41.1159,0z"
             tools:ignore="VectorRaster" />
         <path
             android:fillColor="#ffffff"

@@ -37,9 +37,9 @@ class ForgetPasswordFragment : Fragment() {
     }
 
     private fun setUpToolBar() {
-      binding.inForgotBar.imgBack.setOnClickListener {
-          findNavController().navigateUp()
-      }
+        binding.inForgotBar.imgBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
         binding.inForgotBar.txtToolbarHeader.setText(R.string.forget_password)
     }
 

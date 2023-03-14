@@ -11,33 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!--
-                <com.google.android.material.appbar.MaterialToolbar
-                    android:id="@+id/reservationBar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/imgBack"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_20sdp"
-                        android:src="@drawable/ic_back_black" />
-
-
-                    <com.google.android.material.textview.MaterialTextView
-                        style="@style/BlackSmallCustomMaterialTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="@string/reservation" />
-
-                </com.google.android.material.appbar.MaterialToolbar>
-        -->
-
         <include
             android:id="@+id/reservationBar"
             layout="@layout/item_common_toolbar" />
@@ -69,6 +42,7 @@
             tools:text="Your Booking" />
 
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtBooking1"
             style="@style/BlackSmallCustomMaterialTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -80,6 +54,20 @@
             app:layout_constraintTop_toBottomOf="@id/txtBooking"
             app:lineHeight="@dimen/_20sdp" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvReservationData"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:orientation="vertical"
+            tools:itemCount="3"
+            tools:listitem="@layout/item_reservation_recycyler"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/btnScheduleTrip"
+            app:layout_constraintEnd_toStartOf="@id/glEnd"
+            app:layout_constraintStart_toEndOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/txtBooking" />
+
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnScheduleTrip"
@@ -88,6 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/_30sdp"
             android:text="@string/schedule_trip"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/glEnd"
             app:layout_constraintStart_toEndOf="@id/glStart" />

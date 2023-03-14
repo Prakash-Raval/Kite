@@ -1,14 +1,9 @@
-package com.appname.structure.utils
+package com.example.kite.base.utils
 
 import android.text.TextUtils
 import android.util.Patterns
 import java.util.regex.Pattern
 
-/**
- * Created by rajanbhavsar on 20/11/19, 1:55 PM
- * Package Name : com.appname.structure.utils
- * Project Name : BrainvireStructure
- */
 
 object Validation {
 

@@ -1,6 +1,5 @@
 package com.example.kite.otpverification.model
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 
@@ -13,11 +12,9 @@ data class OtpRequest(
     var lang: String? = "0",
     @get: JsonProperty("access_token")
     @param: JsonProperty("access_token")
-//    @JsonProperty("access_token")
     var accessToken: String? = "",
     @get:JsonProperty("otp_code")
     @param:JsonProperty("otp_code")
-//    @JsonProperty("otp_code")
     var otpCode: String? = ""
 )
 

@@ -1,10 +1,6 @@
 package com.example.kite.base.network.client
 
-import MyPreference
-import com.appname.structure.utils.DebugLog
-import com.appname.structure.utils.Validation
-import com.example.kite.base.utils.PrefKey
-import com.example.kite.base.utils.Utils
+import com.example.kite.base.utils.*
 import com.google.gson.JsonObject
 
 
@@ -74,7 +70,7 @@ object HttpCommonMethod {
      * get UUID of User
      */
     /*fun getUUID(mContext: Context): String? {
-        return MyPreference.getValueString(mContext, com.example.kite.base.utils.PrefKey.USER_UUID, "")
+        return com.example.kite.base.utils.MyPreference.getValueString(mContext, com.example.kite.base.utils.PrefKey.USER_UUID, "")
     }*/
 
 

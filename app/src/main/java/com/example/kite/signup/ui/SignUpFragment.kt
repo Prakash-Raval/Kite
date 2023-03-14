@@ -64,7 +64,8 @@ class SignUpFragment : Fragment() {
 
     private fun getSignUpData() {
         //shared pref to store access token
-        val sharedPreference = activity?.getSharedPreferences("TOKEN_PREFERENCE", Context.MODE_PRIVATE)
+        val sharedPreference =
+            activity?.getSharedPreferences("TOKEN_PREFERENCE", Context.MODE_PRIVATE)
         val editor = sharedPreference?.edit()
 
         val signUpService =
@@ -82,7 +83,7 @@ class SignUpFragment : Fragment() {
         }
 
         viewModel.signUpLiveData.observe(viewLifecycleOwner) {
-            editor?.putString("token",it.data?.accessToken)
+            editor?.putString("token", it.data?.accessToken)
             editor?.apply()
             if (it.code == 200) {
                 val action =

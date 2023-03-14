@@ -1,10 +1,10 @@
 package com.example.kite.base.network
 
 import HttpHandleIntercept
-import com.appname.structure.utils.DebugLog
 import com.example.kite.BuildConfig
+import com.example.kite.base.network.client.Api
+import com.example.kite.base.utils.DebugLog
 import com.example.kite.constants.Constants
-import com.example.kite.network.ApiInterface
 import com.google.gson.JsonIOException
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -28,7 +28,7 @@ class ApiClient {
 
         private var okHttpClient: OkHttpClient? = null
         var retrofits: Retrofit? = null
-        var myApiInterface: ApiInterface? = null
+        var myApiInterface: Api? = null
 
 
         /**
@@ -37,7 +37,7 @@ class ApiClient {
         fun initRetrofit() {
             if (retrofits == null) {
                 retrofits = getRetrofit()
-                myApiInterface = retrofits?.create(ApiInterface::class.java)!!
+                myApiInterface = retrofits?.create(Api::class.java)!!
             }
         }
 
@@ -45,12 +45,12 @@ class ApiClient {
          * Return API interface
          *
          */
-        fun getApiInterface(): ApiInterface {
+        fun getApiInterface(): Api {
             if (myApiInterface != null) {
                 return myApiInterface!!
             }
-            myApiInterface = retrofits?.create(ApiInterface::class.java)!!
-            return myApiInterface as ApiInterface
+            myApiInterface = retrofits?.create(Api::class.java)!!
+            return myApiInterface as Api
         }
 
         /**

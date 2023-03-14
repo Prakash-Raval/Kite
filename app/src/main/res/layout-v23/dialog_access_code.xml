@@ -44,13 +44,13 @@
                 android:layout_marginHorizontal="@dimen/_30sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:fontFamily="@font/avenir_regular"
-                app:lineHeight="@dimen/_12sdp"
                 android:gravity="center"
                 android:text="@string/your_access_code_text"
                 android:textColor="@color/light_black_text_color"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/txtGUploadId" />
+                app:layout_constraintTop_toBottomOf="@id/txtGUploadId"
+                app:lineHeight="@dimen/_12sdp" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/txtGCancel"
@@ -70,8 +70,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_20sdp"
-                android:text="@string/request_code"
                 android:layout_marginBottom="@dimen/_20sdp"
+                android:text="@string/request_code"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/txtGCancel"

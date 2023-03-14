@@ -21,8 +21,9 @@ open class BaseRepository {
     /**
      * This is the Base suspended method which is used for making the call of an Api and
      * Manage the Response with response code to display specific response message or code.
-     * @param call ApiInterface method defination to make a call and get response from generic Area.
+     * @param call ApiInterface method definition to make a call and get response from generic Area.
      */
+
     suspend fun <T : Any> makeAPICall(call: suspend () -> Response<ResponseData<T>>):
             ResponseHandler<ResponseData<T>?> {
         try {
@@ -31,10 +32,10 @@ open class BaseRepository {
                 response.code() == 200 -> return ResponseHandler.OnSuccessResponse(response.body())
                 response.code() == 401 -> {
                     val body = response.errorBody()
-                    var message: String = ""
+                    val message: String
                     val bodyString = body?.string()
                     val responseWrapper =
-                        Gson().fromJson<ErrorWrapper>(bodyString, ErrorWrapper::class.java)
+                        Gson().fromJson(bodyString, ErrorWrapper::class.java)
                     message = if (responseWrapper.meta?.status_code == 401) {
                         if (responseWrapper.errors != null) {
                             HttpCommonMethod.getErrorMessage(responseWrapper.errors)
@@ -52,10 +53,10 @@ open class BaseRepository {
                 }
                 response.code() == 422 -> {
                     val body = response.errorBody()
-                    var message: String = ""
+                    val message: String
                     val bodyString = body?.string()
                     val responseWrapper =
-                        Gson().fromJson<ErrorWrapper>(bodyString, ErrorWrapper::class.java)
+                        Gson().fromJson(bodyString, ErrorWrapper::class.java)
                     message = if (responseWrapper.meta?.status_code == 422) {
                         if (responseWrapper.errors != null) {
                             HttpCommonMethod.getErrorMessage(responseWrapper.errors)
@@ -73,10 +74,10 @@ open class BaseRepository {
                 }
                 else -> {
                     val body = response.errorBody()
-                    var message = ""
+                    val message: String
                     val bodyString = body?.string()
                     val responseWrapper =
-                        Gson().fromJson<ErrorWrapper>(bodyString, ErrorWrapper::class.java)
+                        Gson().fromJson(bodyString, ErrorWrapper::class.java)
                     message = if (responseWrapper.meta?.status_code == 422) {
                         if (responseWrapper.errors != null) {
                             HttpCommonMethod.getErrorMessage(responseWrapper.errors)
@@ -86,14 +87,14 @@ open class BaseRepository {
                     } else {
                         responseWrapper.meta?.message.toString()
                     }
-                    if (message.isNullOrEmpty()) {
-                        return ResponseHandler.OnFailed(
+                    return if (message.isEmpty()) {
+                        ResponseHandler.OnFailed(
                             HttpErrorCode.EMPTY_RESPONSE.code,
                             message,
                             responseWrapper.meta?.message_code.toString()
                         )
                     } else {
-                        return ResponseHandler.OnFailed(
+                        ResponseHandler.OnFailed(
                             HttpErrorCode.NOT_DEFINED.code,
                             message,
                             responseWrapper.meta?.message_code.toString()
@@ -113,22 +114,7 @@ open class BaseRepository {
             } else {
                 ResponseHandler.OnFailed(HttpErrorCode.NOT_DEFINED.code, "", "")
             }
-            /* if (e is CancellationException) {
-                 return com.example.kite.base.network.client.ResponseHandler.OnFailed(com.example.kite.base.network.model.HttpErrorCode.NO_CONNECTION.code, "")
-             } else {
-                 return if (e is SocketTimeoutException ||
-                     e is UnknownHostException ||
-                     e is IOException ||
-                     e is NetworkErrorException ||
-                     e is ConnectionShutdownException
-                 ) {
-                     com.example.kite.base.network.client.ResponseHandler.OnFailed(com.example.kite.base.network.model.HttpErrorCode.NO_CONNECTION.code, "")
-                 } else {
-                     com.example.kite.base.network.client.ResponseHandler.OnFailed(com.example.kite.base.network.model.HttpErrorCode.NOT_DEFINED.code, "")
-                 }
-             }*/
         }
-
 
     }
 
@@ -223,7 +209,7 @@ open class BaseRepository {
                 ResponseHandler.OnFailed(HttpErrorCode.NOT_DEFINED.code, "", "")
             }
             /* if (e is CancellationException) {
-                 return com.example.kite.base.network.client.ResponseHandler.OnFailed(com.example.kite.base.network.model.HttpErrorCode.NO_CONNECTION.code, "")
+                 return ResponseHandler.OnFailed(HttpErrorCode.NO_CONNECTION.code, "")
              } else {
                  return if (e is SocketTimeoutException ||
                      e is UnknownHostException ||
@@ -231,9 +217,9 @@ open class BaseRepository {
                      e is NetworkErrorException ||
                      e is ConnectionShutdownException
                  ) {
-                     com.example.kite.base.network.client.ResponseHandler.OnFailed(com.example.kite.base.network.model.HttpErrorCode.NO_CONNECTION.code, "")
+                     ResponseHandler.OnFailed(HttpErrorCode.NO_CONNECTION.code, "")
                  } else {
-                     com.example.kite.base.network.client.ResponseHandler.OnFailed(com.example.kite.base.network.model.HttpErrorCode.NOT_DEFINED.code, "")
+                     ResponseHandler.OnFailed(HttpErrorCode.NOT_DEFINED.code, "")
                  }
              }*/
         }

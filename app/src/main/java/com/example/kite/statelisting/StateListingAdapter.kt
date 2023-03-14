@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.kite.countrylisting.OnCellClickedCountry
 import com.example.kite.databinding.ItemCountryListBinding
 
 class StateListingAdapter(
@@ -22,15 +21,15 @@ class StateListingAdapter(
         @SuppressLint("NotifyDataSetChanged")
         fun bind(position: Int) {
             binding.rbCountry.text = list[position]
-            if (mState.isNotEmpty()){
-                if (mState == list[position]){
+            if (mState.isNotEmpty()) {
+                if (mState == list[position]) {
                     selectedItem = position
                 }
             }
             binding.rbCountry.setOnClickListener {
                 selectedItem = position
                 notifyItemChanged(position)
-                onCellClickedState.isClickedState(binding.rbCountry.text.toString(),position)
+                onCellClickedState.isClickedState(binding.rbCountry.text.toString(), position)
             }
         }
     }

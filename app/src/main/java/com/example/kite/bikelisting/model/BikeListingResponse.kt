@@ -32,7 +32,7 @@ data class BikeListingResponse(
         var vehicleDetails: List<VehicleDetail?>? = null,
         @JsonProperty("wrongly_parked_vehicle_details")
         var wronglyParkedVehicleDetails: List<WronglyParkedVehicleDetail?>? = null
-    )  {
+    ) {
         class TripRequestResponse
 
         data class VehicleDetail(

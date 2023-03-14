@@ -175,7 +175,7 @@ class ProfileFragment : Fragment(), OnCellClickedCountry, OnCellClickedState {
         stateViewModel.getStateList(StateRequest(binding.edtCountry.text.toString()))
         stateViewModel.profileLiveData.observe(viewLifecycleOwner) {
             Log.d("getStateData", "getStateData: ${it.stateList?.get(0)?.states}")
-            stateListingAdapter.setList(it.stateList?.getOrNull(0 )?.states as ArrayList<String?>)
+            stateListingAdapter.setList(it.stateList?.getOrNull(0)?.states as ArrayList<String?>)
 
             stateListingAdapter.notifyDataSetChanged()
 
@@ -186,13 +186,14 @@ class ProfileFragment : Fragment(), OnCellClickedCountry, OnCellClickedState {
     override fun isClicked(data: String, position: Int) {
         binding.edtCountry.setText(data)
         binding.edtState.setText("")
-       builder.dismiss()
+        builder.dismiss()
     }
 
     private fun logout() {
         PrefManager.remove()
         findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToWelcomeFragment())
     }
+
     //state dialog click
     override fun isClickedState(data: String, position: Int) {
         binding.edtState.setText(data)

@@ -10,9 +10,9 @@
             name="scheduleTripData"
             type="com.example.kite.scheduletrip.model.ScheduleTripResponse.Data.TripDuration" />
 
-    <variable
-        name="scheduleTripTime"
-        type="com.example.kite.scheduletrip.model.ScheduleTimeDuration" />
+        <variable
+            name="scheduleTripTime"
+            type="com.example.kite.scheduletrip.model.ScheduleTimeDuration" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,8 +24,8 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_8sdp"
+            app:cardCornerRadius="@dimen/_10sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -55,17 +55,17 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_16sdp"
                     android:layout_marginBottom="@dimen/_8sdp"
-                    bind:src="@drawable/one_hour_duration"
                     app:layout_constraintBottom_toBottomOf="@id/imgProperty"
-                    app:layout_constraintStart_toStartOf="@id/imgProperty" />
+                    app:layout_constraintStart_toStartOf="@id/imgProperty"
+                    bind:src="@drawable/one_hour_duration" />
 
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txtTripDesc"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8sdp"
                     android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
                     android:fontFamily="@font/avenir_black"
                     android:text="@{scheduleTripData.title}"
                     android:textSize="@dimen/_10sdp"
@@ -79,10 +79,10 @@
                     style="@style/BlackSmallCustomMaterialTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/_12sdp"
                     android:layout_marginTop="@dimen/_8sdp"
                     android:layout_marginBottom="@dimen/_8sdp"
                     android:text="@{scheduleTripData.duration}"
+                    android:textSize="@dimen/_12sdp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@id/txtTripDesc"
                     app:layout_constraintTop_toBottomOf="@id/txtTripDesc"

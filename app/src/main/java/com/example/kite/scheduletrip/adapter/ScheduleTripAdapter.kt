@@ -9,13 +9,14 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kite.R
 import com.example.kite.databinding.ItemScheduleTripDurationBinding
+import com.example.kite.scheduletrip.listner.OnTripClick
 import com.example.kite.scheduletrip.model.ScheduleTimeDuration
 import com.example.kite.scheduletrip.model.ScheduleTripResponse
 
-class ScheduleTripAdapter(val context: Context) :
+class ScheduleTripAdapter(val context: Context,val onTripClick: OnTripClick) :
     RecyclerView.Adapter<ScheduleTripAdapter.ViewHolder>() {
     private var list = ArrayList<ScheduleTripResponse.Data.TripDuration>()
-    var selected = -1
+    var selected = 0
 
     private var listTimeDuration = ArrayList<ScheduleTimeDuration>()
 
@@ -35,6 +36,7 @@ class ScheduleTripAdapter(val context: Context) :
             binding.root.setOnClickListener {
                 selected = position
                 notifyDataSetChanged()
+                list[position].duration?.let { it1 -> onTripClick.onClickTrip(it1) }
             }
             if (list[position].duration == listTimeDuration[position].time) {
                 binding.imgTimeDuration.setImageResource(listTimeDuration[position].image)
@@ -67,6 +69,7 @@ class ScheduleTripAdapter(val context: Context) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(position)
         if (selected == position) {
+
             holder.binding.txtTripDesc.setTextColor(ContextCompat.getColor(context, R.color.white))
             holder.binding.txtTripHours.setTextColor(ContextCompat.getColor(context, R.color.white))
             holder.binding.txtTripPricing.setTextColor(

@@ -29,7 +29,7 @@ class TermsFragment : Fragment() {
             false
         )
         loadData()
-       // binding.progress.visibility = View.VISIBLE
+        // binding.progress.visibility = View.VISIBLE
         binding.imgBack.setOnClickListener {
             findNavController().navigateUp()
         }

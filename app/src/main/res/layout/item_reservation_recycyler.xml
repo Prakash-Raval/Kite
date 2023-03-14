@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="reservationTrip"
+            type="com.example.kite.reservation.model.ListReservationResponse.ReservationData" />
+    </data>
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardViewTripContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_20sdp"
+        android:layout_marginVertical="@dimen/_8sdp"
+        app:cardCornerRadius="@dimen/_16sdp"
+        app:cardElevation="@dimen/_4sdp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/schedule_card_gray">
+
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imgHCar"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginStart="@dimen/_20sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                bind:image="@{reservationTrip.vehicleTypeImage}"
+                bind:placeholder="@{@drawable/kite_red_logo}"
+                bind:src="@drawable/ic_tesla_one" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtHVehicleSlug"
+                style="@style/BlackSmallCustomMaterialTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:text="@{reservationTrip.vehicleType}"
+                android:textSize="@dimen/_10sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/imgHCar"
+                app:layout_constraintStart_toStartOf="@id/imgHCar"
+                app:layout_constraintTop_toBottomOf="@id/imgHCar"
+                bind:text="Model 3" />
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtHThirdPartyNAME"
+                style="@style/BlackSmallCustomMaterialTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:text="@{reservationTrip.thirdPartyName}"
+                android:textSize="@dimen/_10sdp"
+                android:textStyle="normal"
+                app:layout_constraintStart_toEndOf="@id/imgHCar"
+                app:layout_constraintTop_toTopOf="@id/imgHCar"
+                bind:text="Amal Bike Service" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtHTime"
+                style="@style/BlackSmallCustomMaterialTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{reservationTrip.scheduleTime}"
+                android:textSize="@dimen/_12sdp"
+                app:layout_constraintStart_toStartOf="@id/txtHThirdPartyNAME"
+                app:layout_constraintTop_toBottomOf="@id/txtHThirdPartyNAME"
+                bind:text=" 02:00 AM" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtHDate"
+                style="@style/BlackSmallCustomMaterialTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0.5"
+                android:text="@{reservationTrip.scheduleDate}"
+                android:textSize="@dimen/_10sdp"
+                app:layout_constraintStart_toStartOf="@id/txtHThirdPartyNAME"
+                app:layout_constraintTop_toBottomOf="@id/txtHTime"
+                bind:text="Sat Mar 11" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnHView"
+                style="@style/RedCustomMaterialButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10sdp"
+                android:backgroundTint="@color/schedule_card_gray"
+                android:text="@string/view"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

@@ -18,30 +18,29 @@ class CheckInternet : LiveData<Boolean>() {
     }
 
 
+    fun check(listener: (connected: Boolean) -> Unit) {
+        CoroutineScope(Dispatchers.IO).launch(Dispatchers.IO) {
+            try {
+                Socket().use { it.connect(InetSocketAddress(HOST_NAME, PORT), TIMEOUT) }
+                withContext(Dispatchers.Main) {
+                    listener(true)
+                }
+            } catch (e: IOException) {
+                withContext(Dispatchers.Main) {
+                    listener(false)
+                }
+            }
+        }
+    }
 
-     fun check(listener: (connected: Boolean) -> Unit) {
-         CoroutineScope(Dispatchers.IO).launch(Dispatchers.IO) {
-             try {
-                 Socket().use { it.connect(InetSocketAddress(HOST_NAME, PORT), TIMEOUT) }
-                 withContext(Dispatchers.Main) {
-                     listener(true)
-                 }
-             } catch (e: IOException) {
-                 withContext(Dispatchers.Main) {
-                     listener(false)
-                 }
-             }
-         }
-     }
-
-     suspend fun check(): Boolean {
-         return withContext(Dispatchers.IO) {
-             try {
-                 Socket().use { it.connect(InetSocketAddress(HOST_NAME, PORT), TIMEOUT) }
-                 return@withContext true
-             } catch (e: IOException) {
-                 return@withContext false
-             }
-         }
-     }
+    suspend fun check(): Boolean {
+        return withContext(Dispatchers.IO) {
+            try {
+                Socket().use { it.connect(InetSocketAddress(HOST_NAME, PORT), TIMEOUT) }
+                return@withContext true
+            } catch (e: IOException) {
+                return@withContext false
+            }
+        }
+    }
 }

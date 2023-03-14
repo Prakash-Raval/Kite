@@ -14,7 +14,7 @@ object RetrofitHelper {
         .addInterceptor(mHttpLoggingInterceptor)
         .build()
 
-    fun getInstance(url :String): Retrofit {
+    fun getInstance(url: String): Retrofit {
         return Retrofit.Builder()
             .baseUrl(url)
             .client(mOkHttpClient)

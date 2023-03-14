@@ -44,13 +44,13 @@ class RentalAgreementFragment : Fragment() {
     @SuppressLint("SetJavaScriptEnabled")
     private fun loadUrl() {
         lifecycleScope.launch {
-             binding.wvRental.apply {
-                 webViewClient = WebViewClient()
-                 settings.javaScriptEnabled = true
-                 settings.setSupportZoom(true)
-                 loadUrl(Constants.RENTAL_AGREEMENT)
+            binding.wvRental.apply {
+                webViewClient = WebViewClient()
+                settings.javaScriptEnabled = true
+                settings.setSupportZoom(true)
+                loadUrl(Constants.RENTAL_AGREEMENT)
 
-             }
+            }
         }
     }
 

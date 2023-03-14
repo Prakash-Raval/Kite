@@ -13,18 +13,38 @@ import android.widget.ImageView
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.kite.R
+import com.example.kite.base.network.client.ResponseHandler
+import com.example.kite.base.network.model.ResponseData
+import com.example.kite.basefragment.BaseFragment
+import com.example.kite.databinding.DialogUpdateChargeBinding
 import com.example.kite.databinding.FragmentHomeBinding
+import com.example.kite.home.viewmodel.ViewTripViewModel
+import com.example.kite.login.model.LoginResponse
+import com.example.kite.reservation.model.ListReservationRequest
+import com.example.kite.reservation.model.ListReservationResponse
+import com.example.kite.utils.PrefManager
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 
-class HomeFragment : Fragment() {
+class HomeFragment : BaseFragment() {
     private lateinit var binding: FragmentHomeBinding
+    private lateinit var viewModelViewTrip: ViewTripViewModel
+
+    private var reservationID = ""
+    private var isShown = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        openDialog()
+        if (isShown == 0) {
+            isShown = 1
+            openDialog()
+        }
+
     }
 
     override fun onCreateView(
@@ -38,10 +58,46 @@ class HomeFragment : Fragment() {
             false
         )
         // Inflate the layout for this fragment
+
+        val args = this.arguments
+        val isCheck = args?.getBoolean("UpCharge")
+        if (isCheck == true) {
+            openUpdateChargeDialog()
+        }
         setUpDrawer()
         setUpNavigation()
-
+        getViewTripApi()
+        setObserver()
+        viewTrip()
         return binding.root
+    }
+
+    private fun setObserver() {
+        //observing view model response data
+        viewModelViewTrip.liveData.observe(viewLifecycleOwner, Observer { state ->
+            if (state == null) {
+                return@Observer
+            }
+            when (state) {
+                is ResponseHandler.Loading -> {
+
+                }
+                is ResponseHandler.OnFailed -> {
+
+                }
+                is ResponseHandler.OnSuccessResponse<ResponseData<ListReservationResponse>?> -> {
+
+                    reservationID =
+                        state.response?.data?.reservationData?.get(0)?.reservationId.toString()
+                    if (state.response?.data?.reservationData?.size == 0) {
+                        binding.cardViewTripContainer.visibility = View.GONE
+                    } else {
+                        binding.viewTrip = state.response?.data?.reservationData?.get(0)
+                        binding.cardViewTripContainer.visibility = View.VISIBLE
+                    }
+                }
+            }
+        })
     }
 
     private fun setUpNavigation() {
@@ -58,8 +114,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    @SuppressLint("MissingInflatedId")
-    private fun openDialog(){
+    private fun openDialog() {
         val builder = AlertDialog.Builder(requireContext())
             .create()
         builder.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -78,7 +133,65 @@ class HomeFragment : Fragment() {
         builder.show()
     }
 
+    @SuppressLint("MissingInflatedId")
+    private fun openUpdateChargeDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+            .create()
+        val args = this.arguments
+        val charge = args?.getString("CancelCharge", "2.0")
+        builder.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val bind: DialogUpdateChargeBinding =
+            DialogUpdateChargeBinding.inflate(LayoutInflater.from(context))
+        builder.setView(bind.root)
+        bind.price = charge
+        bind.btnUCOk.setOnClickListener { builder.dismiss() }
+        bind.imgUCClose.setOnClickListener { builder.dismiss() }
+        builder.setCanceledOnTouchOutside(false)
+        builder.show()
+    }
 
 
+    //assigning view model
+    private fun getViewModel(): ViewTripViewModel {
+        viewModelViewTrip = ViewModelProvider(this)[ViewTripViewModel::class.java]
+        return viewModelViewTrip
+    }
 
+
+    //calling api from reservation fragment for schedule trip view
+    private fun getViewTripApi() {
+        //view model
+        viewModelViewTrip = getViewModel()
+
+        //getting value to pass in request class
+        val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        val timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss")
+        val currentDate = LocalDateTime.now().format(dateFormatter)
+        val currentTime = LocalDateTime.now().format(timeFormatter)
+        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.accessToken
+
+        //passing data to request class
+        viewModelViewTrip.getViewTripRequest(
+            ListReservationRequest(
+                access_token = token,
+                start_date = currentDate,
+                start_time = currentTime,
+                offset = 0,
+                current_date = currentDate,
+                current_time = currentTime,
+                limit = 1
+            )
+        )
+
+    }
+
+    //view trip fragment
+    private fun viewTrip() {
+        binding.btnHView.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putString("ReservationID", reservationID)
+            val action = R.id.action_homeFragment_to_viewTripFragment
+            findNavController().navigate(action, bundle)
+        }
+    }
 }

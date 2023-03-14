@@ -1,3 +1,5 @@
+package com.example.kite.base
+
 import android.content.Context
 import android.util.Log
 import android.view.View

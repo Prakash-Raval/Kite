@@ -30,13 +30,17 @@ class DayAdapter(val context: Context, val lis: OnCellClicked) :
         @SuppressLint("NotifyDataSetChanged")
         fun bind(position: Int) {
             binding.timeSlot = list[position].time?.let { convertTo12Hours(it) }
+
             binding.root.setOnClickListener {
                 selected = position
-                list[position].time?.let { it1 -> convertTo12Hours(it1)?.let { it2 ->
-                    lis.onClick(position, list[position],
-                        it2
-                    )
-                } }
+                list[position].time?.let { it1 ->
+                    convertTo12Hours(it1)?.let { it2 ->
+                        lis.onClick(
+                            position, list[position],
+                            it2
+                        )
+                    }
+                }
                 notifyItemChanged(selected)
                 notifyDataSetChanged()
                 Toast.makeText(context, "hello : $position", Toast.LENGTH_SHORT).show()

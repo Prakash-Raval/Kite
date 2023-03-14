@@ -23,7 +23,7 @@ data class TimeSlotResponse(
             @JsonProperty("time")
             var time: String? = null,
             @JsonProperty("position")
-            var position : Int? = null
+            var position: Int? = null
         )
     }
 }

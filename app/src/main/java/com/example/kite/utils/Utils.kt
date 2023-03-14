@@ -24,7 +24,6 @@ internal val Context.layoutInflater: LayoutInflater
     get() = LayoutInflater.from(this)
 
 
-
 internal fun Context.getColorCompat(@ColorRes color: Int) =
     ContextCompat.getColor(this, color)
 

@@ -3,8 +3,6 @@ package com.example.kite.forgetpassword.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.kite.forgetpassword.repository.ForgotPasswordRepository
-import com.example.kite.program.repository.ThirdPartyListRepository
-import com.example.kite.program.viewmodel.ThirdPartyListingViewModel
 
 class FPVMFactory(
     private val repository: ForgotPasswordRepository

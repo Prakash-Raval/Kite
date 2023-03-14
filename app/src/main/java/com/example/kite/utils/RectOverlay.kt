@@ -29,11 +29,13 @@ class RectOverlay constructor(context: Context?, attributeSet: AttributeSet?) :
         color = ContextCompat.getColor(context!!, android.R.color.black)
         strokeWidth = 10f
     }
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        faceBounds.add(0,RectF(200f,200f,200f,200f))
+        faceBounds.add(0, RectF(200f, 200f, 200f, 200f))
         faceBounds.forEach { canvas.drawRect(it, paint) }
     }
+
     fun drawFaceBounds(faceBounds: List<RectF>) {
         this.faceBounds.clear()
         this.faceBounds.addAll(faceBounds)

@@ -43,7 +43,7 @@ inline fun TextInputEditText.onTextChanged(crossinline listener: (String) -> Uni
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
-                listener(s.toString())
+            listener(s.toString())
 
         }
 

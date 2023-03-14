@@ -209,7 +209,7 @@ class ScanLicenseFragment : Fragment() {
     ) {
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
             if (allPermissionsGranted()) {
-              startCamera()
+                startCamera()
             } else {
                 Toast.makeText(
                     requireContext(), "Permissions not granted by the user.", Toast.LENGTH_SHORT

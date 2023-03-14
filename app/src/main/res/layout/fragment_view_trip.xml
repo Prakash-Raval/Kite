@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewTripResponse"
+            type="com.example.kite.viewscheduletrip.model.ViewTripResponse" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgVTDurationImage"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_200sdp"
+            android:scaleType="fitXY"
+            android:src="@drawable/guest_hotel_selection_copy"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            bind:image="@{viewTripResponse.TripDuration.get(0).image}"
+            bind:placeholder="@{@drawable/kite_red_logo}" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgVTBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_20sdp"
+            android:src="@drawable/ic_back_black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:src="@drawable/one_hour_duration"
+            app:layout_constraintBottom_toTopOf="@id/txtVTTripText"
+            app:layout_constraintStart_toStartOf="parent"
+            bind:src="@drawable/one_hour_duration" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtVTHourDuration"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:fontFamily="@font/avenir_black"
+            android:text="@{viewTripResponse.duration}"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/imgVTDurationImage"
+            app:layout_constraintStart_toStartOf="parent"
+            bind:text="1 hr" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtVTTripText"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:fontFamily="@font/avenir_black"
+            android:text="@{viewTripResponse.TripDuration.get(0).title}"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/txtVTHourDuration"
+            app:layout_constraintStart_toStartOf="parent"
+            bind:text="The Quick Trip" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtVTDate"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:fontFamily="@font/avenir_heavy"
+            android:text="@{viewTripResponse.scheduleDate}"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imgVTDurationImage"
+            bind:text="Sat Mar 11" />
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtVTTime"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:fontFamily="@font/avenir_heavy"
+            android:text="@{viewTripResponse.scheduleTime}"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtVTDate"
+            bind:text="02:00 AM" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtVTThirdPartyName"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:fontFamily="@font/avenir_heavy"
+            android:text="@{viewTripResponse.thirdPartyName}"
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtVTTime"
+            bind:text="Amal bike Service" />
+
+        <View
+            android:id="@+id/viewVT"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:alpha="0.5"
+            android:background="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtVTThirdPartyName" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtVTDetails"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:fontFamily="@font/avenir_heavy"
+            android:text="@string/vehicle_details"
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/viewVT" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtVTQrCode"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:fontFamily="@font/avenir_heavy"
+            android:text="@string/vehicle_qr_code"
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/viewVT" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtVTVehicleType"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:fontFamily="@font/avenir_heavy"
+            android:text="@{viewTripResponse.vehicleType}"
+            android:textSize="@dimen/_20sdp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/txtVTQr"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtVTDetails"
+            bind:text="Model 3" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtVTQr"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_30sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:fontFamily="@font/avenir_heavy"
+            android:text="@{viewTripResponse.qrCode}"
+            android:textSize="@dimen/_20sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/txtVTVehicleType"
+            app:layout_constraintTop_toBottomOf="@id/txtVTQrCode"
+            app:lineHeight="@dimen/_20sdp"
+            bind:text="AMAL-CAR-QR-0001" />
+
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgVTImageCar"
+            android:layout_width="@dimen/_180sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_40sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtVTVehicleType"
+            bind:image="@{viewTripResponse.vehicleTypeImage}"
+            bind:placeholder="@{@drawable/kite_red_logo}"
+            bind:src="@drawable/ic_tesla_one" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnVTUpdateTrip"
+            style="@style/BlackCustomMaterialButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_marginVertical="@dimen/_20sdp"
+            android:text="@string/update_trip"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imgVTImageCar" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

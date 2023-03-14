@@ -19,17 +19,17 @@ class CountryListingAdapter(
     inner class ViewHolder(val binding: ItemCountryListBinding) :
         RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("NotifyDataSetChanged")
-        fun bind(position : Int) {
+        fun bind(position: Int) {
             binding.rbCountry.text = list[position].country.toString()
-            if (mCountry.isNotEmpty()){
-                if (mCountry==list[position].country){
+            if (mCountry.isNotEmpty()) {
+                if (mCountry == list[position].country) {
                     selectedItem = position
                 }
             }
             binding.rbCountry.setOnClickListener {
                 selectedItem = position
                 notifyItemChanged(position)
-                onCellClickedCountry.isClicked(binding.rbCountry.text.toString(),position)
+                onCellClickedCountry.isClicked(binding.rbCountry.text.toString(), position)
 
             }
 

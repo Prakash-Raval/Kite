@@ -98,6 +98,9 @@
         android:name="com.example.kite.home.HomeFragment"
         android:label="HomeFragment">
         <action
+            android:id="@+id/action_homeFragment_to_viewTripFragment"
+            app:destination="@id/viewTripFragment" />
+        <action
             android:id="@+id/action_homeFragment_to_supportFragment"
             app:destination="@id/supportFragment" />
         <action
@@ -199,6 +202,10 @@
         <action
             android:id="@+id/action_reservationFragment_to_bikeListingFragment"
             app:destination="@id/bikeListingFragment" />
+
+        <action
+            android:id="@+id/action_reservationFragment_to_viewTripFragment"
+            app:destination="@id/viewTripFragment" />
     </fragment>
     <fragment
         android:id="@+id/bikeListingFragment"
@@ -295,6 +302,12 @@
         <action
             android:id="@+id/action_scheduleTripFragment_to_dateAndTimeFragment2"
             app:destination="@id/dateAndTimeFragment2" />
+
+        <action
+            android:id="@+id/action_scheduleTripFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
 
@@ -303,9 +316,9 @@
         android:name="com.example.kite.dateandtime.ui.DateAndTimeFragment"
         android:label="DateAndTimeFragment">
 
-    <!--    <argument
-            android:name="scheduleTripRes"
-            app:argType="com.example.kite.scheduletrip.model.ScheduleTripResponse" />-->
+        <!--    <argument
+                android:name="scheduleTripRes"
+                app:argType="com.example.kite.scheduletrip.model.ScheduleTripResponse" />-->
 
     </dialog>
 
@@ -313,5 +326,13 @@
         android:id="@+id/enterQRCodeFragment"
         android:name="com.example.kite.scanqr.bottomsheet.EnterQRCodeFragment"
         android:label="EnterQRCodeFragment" />
+    <fragment
+        android:id="@+id/viewTripFragment"
+        android:name="com.example.kite.viewscheduletrip.ViewTripFragment"
+        android:label="ViewTripFragment">
+        <action
+            android:id="@+id/action_viewTripFragment_to_scheduleTripFragment2"
+            app:destination="@id/scheduleTripFragment" />
+    </fragment>
 
 </navigation>

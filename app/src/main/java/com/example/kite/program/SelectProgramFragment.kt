@@ -26,6 +26,7 @@ import com.example.kite.R
 import com.example.kite.basefragment.BaseFragment
 import com.example.kite.constants.Constants
 import com.example.kite.databinding.FragmentSelectProgramBinding
+import com.example.kite.extensions.showKeyboard
 import com.example.kite.login.model.LoginResponse
 import com.example.kite.network.ApiInterface
 import com.example.kite.network.RetrofitHelper
@@ -37,7 +38,6 @@ import com.example.kite.program.viewmodel.ThirdPartyListingViewModel
 import com.example.kite.utils.BaseResponse
 import com.example.kite.utils.PrefManager
 import com.example.kite.utils.onTextChanged
-import com.example.kite.extensions.showKeyboard
 import kotlinx.coroutines.launch
 
 

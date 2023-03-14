@@ -44,7 +44,7 @@ class LoginFragment : Fragment() {
         return binding.root
     }
 
-    private fun setUpToolBar(){
+    private fun setUpToolBar() {
         binding.inLoginBar.imgBack.setOnClickListener {
             findNavController().navigateUp()
         }

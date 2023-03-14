@@ -28,7 +28,7 @@ class ChangeContactFragment : Fragment() {
         return binding.root
     }
 
-    private fun setUPToolbar(){
+    private fun setUPToolbar() {
         binding.inContactBar.imgBack.setOnClickListener {
             findNavController().navigateUp()
         }

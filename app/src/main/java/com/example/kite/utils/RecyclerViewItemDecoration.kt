@@ -4,7 +4,6 @@ import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
-import kotlinx.coroutines.NonDisposableHandle.parent
 
 
 class RecyclerViewItemDecoration(private val space: Int, private val lastRight: Int) :
@@ -31,7 +30,6 @@ class RecyclerViewItemDecoration(private val space: Int, private val lastRight: 
             outRect.right = space
         }
     }
-
 
 
 }

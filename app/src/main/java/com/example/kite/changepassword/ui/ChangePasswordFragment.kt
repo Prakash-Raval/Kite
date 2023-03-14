@@ -14,11 +14,11 @@ import com.example.kite.changepassword.viewmodel.CPVMFactory
 import com.example.kite.changepassword.viewmodel.ChangePasswordViewModel
 import com.example.kite.constants.Constants
 import com.example.kite.databinding.FragmentChangePasswordBinding
+import com.example.kite.extensions.snackError
 import com.example.kite.login.model.LoginResponse
 import com.example.kite.network.ApiInterface
 import com.example.kite.network.RetrofitHelper
 import com.example.kite.utils.PrefManager
-import com.example.kite.extensions.snackError
 import com.google.android.material.snackbar.Snackbar
 
 class ChangePasswordFragment : Fragment() {

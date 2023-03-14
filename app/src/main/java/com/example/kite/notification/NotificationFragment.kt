@@ -27,6 +27,7 @@ class NotificationFragment : Fragment() {
         setNavigation()
         return binding.root
     }
+
     private fun setNavigation() {
         binding.imgBack.setOnClickListener {
             findNavController().navigateUp()

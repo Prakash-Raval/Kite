@@ -12,16 +12,16 @@ data class ListReservationRequest(
     var current_date: String? = "",
     @JsonProperty("current_time")
     var current_time: String? = "",
-    @JsonProperty("limit")
-    var limit: Int? = 1,
-    @JsonProperty("offset")
-    var offset: Int? = 0,
     @JsonProperty("start_date")
     var start_date: String? = "",
     @JsonProperty("start_time")
     var start_time: String? = "",
     @JsonProperty("third_party_id")
-    var third_party_id: String? = "1Gj0mr5eI",
+    var third_party_id: String? = "i5sejdPiR",
     @JsonProperty("time_zone")
-    var time_zone: String? = "Asia/Kolkata"
+    var time_zone: String? = "Asia/Kolkata",
+    @JsonProperty("limit")
+    var limit: Int? = 200,
+    @JsonProperty("offset")
+    var offset: Int?= 0
 )

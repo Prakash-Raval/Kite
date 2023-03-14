@@ -37,8 +37,8 @@ class OtpViewModel(val repository: OtpRepository) :
         viewModelScope.launch(Dispatchers.Main) {
             try {
                 val response =
-                    repository.verifyOTP(OtpRequest("0",token, otpData.otpCode))
-                Log.d("Token String",token)
+                    repository.verifyOTP(OtpRequest("0", token, otpData.otpCode))
+                Log.d("Token String", token)
                 if (response.isSuccessful) {
                     otpResult.postValue(response.body())
                 } else {

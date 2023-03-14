@@ -17,8 +17,6 @@ class BikeListingViewModel(val repository: BikeListingRepository) : ViewModel() 
         get() = bikeListingMLD
 
 
-
-
     fun getRequiredData(request: BikeListingRequest) {
         getList(request)
     }

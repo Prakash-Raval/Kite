@@ -3,8 +3,6 @@ package com.example.kite.login.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.kite.login.repository.LoginRepository
-import com.example.kite.signup.repository.SignUpRepository
-import com.example.kite.signup.viewmodel.SignUpViewModel
 
 
 class LoginVMFFactory(

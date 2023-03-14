@@ -13,11 +13,15 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.window.layout.WindowMetrics
 import androidx.window.layout.WindowMetricsCalculator
 import com.example.kite.MainActivity
 import com.example.kite.R
+import com.example.kite.base.network.client.ResponseHandler
+import com.example.kite.base.network.model.ResponseData
+import com.example.kite.base.network.model.ResponseWrapper
 import com.example.kite.constants.Constants
 import com.example.kite.databinding.FragmentDateAndTimeBinding
 import com.example.kite.databinding.ItemCalendarDayBinding
@@ -26,9 +30,11 @@ import com.example.kite.dateandtime.adapter.DateAndTimeAdapter
 import com.example.kite.dateandtime.listner.GetDateAndTime
 import com.example.kite.dateandtime.listner.OnCellClicked
 import com.example.kite.dateandtime.model.HeaderModel
+import com.example.kite.dateandtime.model.PromoCodeResponse
 import com.example.kite.dateandtime.model.TimeSlotRequest
 import com.example.kite.dateandtime.model.TimeSlotResponse
 import com.example.kite.dateandtime.repository.TimeSlotRepository
+import com.example.kite.dateandtime.viewmodel.PromoCodeViewModel
 import com.example.kite.dateandtime.viewmodel.TSVMFactory
 import com.example.kite.dateandtime.viewmodel.TimeSlotViewModel
 import com.example.kite.login.model.LoginResponse
@@ -59,22 +65,20 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
     private lateinit var binding: FragmentDateAndTimeBinding
 
     private lateinit var viewModel: TimeSlotViewModel
+    private lateinit var viewModelPromoCode: PromoCodeViewModel
     private lateinit var adapter: DateAndTimeAdapter
 
     var list = ArrayList<TimeSlotResponse.Data.AllTimeSlot>()
     private val sections = ArrayList<HeaderModel>()
 
-
-    @RequiresApi(Build.VERSION_CODES.O)
     private val today = LocalDate.now()
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private var selectedDate: LocalDate? = today
 
     private var timeZone: String = ""
+    private var timeZoneText: String = ""
 
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dialog?.setOnShowListener {
@@ -92,7 +96,6 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
         setUpNavigate()
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -103,7 +106,6 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
     }
 
 
-    @RequiresApi(Build.VERSION_CODES.R)
     private fun setupFullHeight(bottomSheetDialog: BottomSheetDialog) {
         val bottomSheet: FrameLayout =
             bottomSheetDialog.findViewById(com.google.android.material.R.id.design_bottom_sheet)!!
@@ -118,7 +120,6 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
         behavior.skipCollapsed = true
     }
 
-    @RequiresApi(Build.VERSION_CODES.R)
     private fun getWindowHeight(): Int {
         val windowMetrics: WindowMetrics =
             WindowMetricsCalculator.getOrCreate().computeCurrentWindowMetrics(
@@ -214,7 +215,6 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
     }
 
     //managing date and time layout visibility
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun manageLayoutVisibility() {
         binding.txtDTDate.setOnClickListener {
             binding.nsTimeData.visibility = View.GONE
@@ -235,8 +235,12 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
         }
     }
 
+    fun getViewModel(): PromoCodeViewModel {
+        viewModelPromoCode = ViewModelProvider(this)[PromoCodeViewModel::class.java]
+        return viewModelPromoCode
+    }
+
     //navigation
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun setUpNavigate() {
         binding.btnDTSet.setOnClickListener {
             if (binding.spinnerDTRegion.selectedItem.toString() == "Select Region") {
@@ -246,9 +250,14 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
                 getDateAndTime.getDate(
                     selectedDate.toString(),
                     "",
-                    timeZone
+                    timeZone, timeZoneText
                 )
-                dialog?.dismiss()
+                if (!binding.edtDTPromoCode.text.isNullOrEmpty()) {
+                    setLiveDataObservers()
+                    //dialog?.dismiss()
+                } else {
+                    dialog?.dismiss()
+                }
             }
         }
 
@@ -262,7 +271,6 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
     }
 
     //setting up spinner data
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun setUpSpinnerData() {
         val args = this.arguments
         val user = args?.getParcelable<ScheduleTripResponse>("ScheduleResponse")
@@ -271,9 +279,6 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
         val date = args?.getString("ScheduleDate")
         val time = args?.getString("ScheduleTime")
         val timeZone2 = args?.getString("ScheduleTimezone")
-        Log.d("Heheheh", date.toString())
-        Log.d("Heheheh", time.toString())
-        Log.d("Heheheh", timeZone2.toString())
         if (date != null)
             selectedDate = if (date == "") {
                 today
@@ -295,7 +300,7 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
         binding.spinnerDTRegion.adapter = arrayAdapter
 
         if (timeZone2 != null) {
-            if ( list.size > 0 && timeZone2.isNotEmpty())
+            if (list.size > 0 && timeZone2.isNotEmpty())
                 binding.spinnerDTRegion.setSelection(timeZone2.toInt())
         }
 
@@ -315,6 +320,7 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
 
 
                     timeZone = position.toString()
+                    timeZoneText = binding.spinnerDTRegion.selectedItem.toString()
                     Log.d("TimeZone", "onClick: $timeZone")
 
                     user?.data?.timezoneArr?.forEach { it ->
@@ -335,8 +341,8 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
 
 
     //calling api data
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun getTimeSlotData() {
+
         val service =
             RetrofitHelper.getInstance(Constants.BASE_URL).create(ApiInterface::class.java)
         val repository = TimeSlotRepository(service)
@@ -384,8 +390,7 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
     }
 
     //setting data to time slot recycler view header
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun setHeaderData() {
+    private fun setHeaderData() {
         if (LocalDate.parse(selectedDate.toString()).equals(today)) {
 
             val mPickupTimeBean: ArrayList<TimeSlotResponse.Data.AllTimeSlot> = ArrayList()
@@ -433,7 +438,8 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
                 getDateAndTime.getDate(
                     data.date.toString(),
                     timeValue,
-                    timeZone
+                    timeZone,
+                    timeZoneText
                 )
 
                 Log.d("TimeZone", "onClick: $timeZone")
@@ -456,5 +462,40 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
         binding.rvTimeSlotContainer.adapter = adapter
     }
 
+    //promo code api call
+    private fun setLiveDataObservers() {
+        viewModelPromoCode = getViewModel()
+        binding.viewModelPromoCode = viewModelPromoCode
 
+        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.accessToken
+        if (token != null) {
+            viewModelPromoCode.checkPromoCode(token = token)
+        }
+
+        viewModelPromoCode.responseLiveData.observe(this, Observer { state ->
+            if (state == null) {
+                return@Observer
+            }
+            when (state) {
+                is ResponseHandler.Loading -> {
+                    //PromoCodeViewModel.showProgressBar(true)
+                    //httpFailedHandler(state.code, state.message, state.messageCode)
+                    Log.d("PromoCodeResponse", "setLiveDataObservers: $state")
+
+                }
+                is ResponseHandler.OnFailed -> {
+                    //PromoCodeViewModel.showProgressBar(false)
+                    Log.d("PromoCodeResponse", "setLiveDataObservers: $state")
+
+
+                }
+                is ResponseHandler.OnSuccessResponse<ResponseData<PromoCodeResponse>?> -> {
+                    //PromoCodeViewModel.showProgressBar(false)
+                    Log.d("PromoCodeResponse", "setLiveDataObservers: $state")
+                    dialog?.dismiss()
+
+                }
+            }
+        })
+    }
 }

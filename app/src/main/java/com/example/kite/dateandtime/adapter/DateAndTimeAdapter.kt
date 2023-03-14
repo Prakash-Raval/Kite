@@ -13,7 +13,7 @@ import com.example.kite.dateandtime.listner.OnCellClicked
 import com.example.kite.dateandtime.model.HeaderModel
 import com.example.kite.dateandtime.model.TimeSlotResponse
 
-class DateAndTimeAdapter(val context: Context,val lis : OnCellClicked) :
+class DateAndTimeAdapter(val context: Context, val lis: OnCellClicked) :
     RecyclerView.Adapter<DateAndTimeAdapter.ViewHolder>() {
     private var header = ArrayList<HeaderModel>()
     private var adapter: DayAdapter? = null
@@ -74,7 +74,7 @@ class DateAndTimeAdapter(val context: Context,val lis : OnCellClicked) :
             header[position].list?.get(i)?.position = position
         }
 
-        adapter = DayAdapter(holder.itemView.context,lis)
+        adapter = DayAdapter(holder.itemView.context, lis)
         adapter?.setList(header[position].list as ArrayList<TimeSlotResponse.Data.AllTimeSlot>)
         holder.binding.rvSTDay.adapter = adapter
     }

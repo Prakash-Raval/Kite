@@ -25,10 +25,10 @@ class UserAgreementAdapter(private var onCellClicked: OnCellClicked) :
         fun bind(position: Int) {
             binding.imgGuestPropertyType.setImageResource(list[position].id)
             binding.txtGuestPropertyName.text = list[position].name
-              binding.root.setOnClickListener {
-                  selected = position
-                  notifyDataSetChanged()
-              }
+            binding.root.setOnClickListener {
+                selected = position
+                notifyDataSetChanged()
+            }
 
         }
     }

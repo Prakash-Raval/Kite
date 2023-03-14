@@ -12,6 +12,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
+import com.example.kite.base.network.ApiClient
 import com.example.kite.databinding.ActivityMainBinding
 
 
@@ -25,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setUpNavigation()
         setNavigation()
+        ApiClient.initRetrofit()
     }
 
     private fun setUpNavigation() {
