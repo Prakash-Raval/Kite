@@ -34,6 +34,15 @@
                 android:layout_gravity="center"
                 android:text="@string/login" />
 
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imgClose"
+                android:layout_gravity="end"
+                android:visibility="gone"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_close" />
+
         </com.google.android.material.appbar.MaterialToolbar>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

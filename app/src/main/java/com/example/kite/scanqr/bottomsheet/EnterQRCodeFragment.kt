@@ -5,11 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.kite.R
 import com.example.kite.databinding.FragmentEnterQRCodeBinding
+import com.example.kite.utils.onTextChanged
 
 class EnterQRCodeFragment : Fragment() {
     private lateinit var binding: FragmentEnterQRCodeBinding
@@ -45,6 +47,17 @@ class EnterQRCodeFragment : Fragment() {
                 Toast.makeText(requireContext(), "Please enter access code", Toast.LENGTH_SHORT)
                     .show()
             }
+        }
+    }
+
+    fun setButtonColor() {
+        binding.edtACCode.onTextChanged {
+            binding.btnACUnlockVehicle.setBackgroundColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.black
+                )
+            )
         }
     }
 

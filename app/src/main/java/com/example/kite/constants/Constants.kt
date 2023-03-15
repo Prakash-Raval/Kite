@@ -58,5 +58,11 @@ object Constants {
                     "$"
         )
 
+    //qr code
+    const val SCAN_QR = ""
+
+    //Ride History
+    const val RIDE_HISTORY = "customer/ride_history"
+
 }
 

@@ -4,44 +4,23 @@
 
     <data>
 
-        <variable
-            name="addCardData"
-            type="com.example.kite.addcard.viewmodel.AddCardViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <include
+            android:id="@+id/inCardBar"
+            layout="@layout/item_common_toolbar" />
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/cardBar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/imgBack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:src="@drawable/ic_back_black" />
-
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/BlackSmallCustomMaterialTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/add_card" />
-        </com.google.android.material.appbar.MaterialToolbar>
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cardBar">
+            app:layout_constraintTop_toBottomOf="@id/inCardBar">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -131,6 +110,7 @@
                     style="@style/TextInputLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
                     app:layout_constraintEnd_toStartOf="@id/glEnd"
                     app:layout_constraintStart_toEndOf="@id/glStart"
                     app:layout_constraintTop_toBottomOf="@id/txtCardHolderName">
@@ -159,6 +139,7 @@
                     style="@style/TextInputLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
                     app:layout_constraintEnd_toStartOf="@id/glEnd"
                     app:layout_constraintStart_toEndOf="@id/glStart"
                     app:layout_constraintTop_toBottomOf="@id/txtCardNumber">
@@ -209,6 +190,7 @@
                     style="@style/TextInputLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
                     app:errorEnabled="false"
                     app:layout_constraintStart_toEndOf="@id/glStart"
                     app:layout_constraintTop_toBottomOf="@id/txtCardExpiryDate">
@@ -232,6 +214,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
                     app:errorEnabled="false"
                     app:layout_constraintEnd_toStartOf="@id/tilCVV"
@@ -256,6 +239,7 @@
                     style="@style/TextInputLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
                     app:layout_constraintEnd_toStartOf="@id/glEnd"
                     app:layout_constraintStart_toStartOf="@id/txtCardCVV"
                     app:layout_constraintTop_toBottomOf="@id/txtCardCVV">
@@ -277,6 +261,7 @@
                     style="@style/BlackCustomMaterialButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
                     android:text="@string/make_this_card_priority"
                     app:layout_constraintEnd_toStartOf="@id/glEnd"
                     app:layout_constraintStart_toEndOf="@id/glStart"
@@ -287,6 +272,7 @@
                     style="@style/BlackCustomMaterialButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
                     android:text="@string/next"
                     app:layout_constraintEnd_toStartOf="@id/glEnd"
                     app:layout_constraintTop_toBottomOf="@id/btnPriority" />

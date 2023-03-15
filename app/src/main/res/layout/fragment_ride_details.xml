@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/inRideBar"
+            layout="@layout/item_common_toolbar" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/_20sdp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/_20sdp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtRDCustomerName"
+            style="@style/BlackMediumCustomMaterialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_24sdp"
+            app:layout_constraintStart_toEndOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/inRideBar"
+            tools:text="Jason Jason" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtRDCarNo"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintStart_toEndOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/txtRDCustomerName"
+            tools:text="Ride no. C2000" />
+
+        <com.example.kite.utils.DashDividerView
+            android:id="@+id/d1"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:alpha="0.5"
+            app:dividerDashColor="@color/black"
+            app:dividerDashGap="@dimen/_2sdp"
+            app:dividerDashWidth="@dimen/_3sdp"
+            app:dividerDirection="horizontal"
+            app:layout_constraintEnd_toStartOf="@id/glEnd"
+            app:layout_constraintStart_toEndOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/txtRDCarNo" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtRDDate"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintStart_toEndOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/d1"
+            tools:text=" 08/04/2023" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtRDTime"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintEnd_toStartOf="@id/glEnd"
+            app:layout_constraintTop_toBottomOf="@id/d1"
+            tools:text=" 30 min" />
+
+        <com.example.kite.utils.DashDividerView
+            android:id="@+id/d2"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:alpha="0.5"
+            app:dividerDashColor="@color/black"
+            app:dividerDashGap="@dimen/_2sdp"
+            app:dividerDashWidth="@dimen/_3sdp"
+            app:dividerDirection="horizontal"
+            app:layout_constraintEnd_toStartOf="@id/glEnd"
+            app:layout_constraintStart_toEndOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/txtRDDate" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtRDTotalCDN"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintEnd_toStartOf="@id/imgCDNDialog"
+            app:layout_constraintTop_toBottomOf="@id/d2"
+            tools:text="CDN $305.35" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgCDNDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_error"
+            app:layout_constraintBottom_toBottomOf="@id/txtRDTotalCDN"
+            app:layout_constraintEnd_toStartOf="@id/glEnd"
+            app:layout_constraintTop_toTopOf="@id/txtRDTotalCDN" />
+
+        <com.example.kite.utils.DashDividerView
+            android:id="@+id/d3"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:alpha="0.5"
+            app:dividerDashColor="@color/black"
+            app:dividerDashGap="@dimen/_2sdp"
+            app:dividerDashWidth="@dimen/_3sdp"
+            app:dividerDirection="horizontal"
+            app:layout_constraintEnd_toStartOf="@id/glEnd"
+            app:layout_constraintStart_toEndOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/txtRDTotalCDN" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtRDStartTime"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintStart_toEndOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/d3"
+            tools:text=" 08:05 PM" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtRDEndingTime"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintStart_toEndOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/txtRDStartTime"
+            tools:text=" 08:35 PM" />
+
+        <com.google.android.material.button.MaterialButton
+            app:layout_constraintTop_toTopOf="@id/txtRDStartTime"
+            app:layout_constraintBottom_toBottomOf="@id/txtRDEndingTime"
+            android:id="@+id/btnRDReceipt"
+            style="@style/CustomMaterialButton"
+            app:layout_constraintEnd_toStartOf="@id/glEnd"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:padding="0dp"
+            android:text="@string/receipt" />
+
+        <com.example.kite.utils.DashDividerView
+            android:id="@+id/d4"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:alpha="0.5"
+            app:dividerDashColor="@color/black"
+            app:dividerDashGap="@dimen/_2sdp"
+            app:dividerDashWidth="@dimen/_3sdp"
+            app:dividerDirection="horizontal"
+            app:layout_constraintEnd_toStartOf="@id/glEnd"
+            app:layout_constraintStart_toEndOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/txtRDEndingTime" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtRDSecurityDeposited"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:textSize="@dimen/_12sdp"
+            android:alpha="0.5"
+            app:layout_constraintStart_toEndOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/d4"
+            android:text="@string/security_deposited" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtRDDepositPrice"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:textSize="@dimen/_12sdp"
+            android:alpha="0.5"
+            app:layout_constraintEnd_toStartOf="@id/glEnd"
+            app:layout_constraintTop_toBottomOf="@id/d4"
+            tools:text="$3000" />
+
+        <com.example.kite.utils.DashDividerView
+            android:id="@+id/d5"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:alpha="0.5"
+            app:dividerDashColor="@color/black"
+            app:dividerDashGap="@dimen/_2sdp"
+            app:dividerDashWidth="@dimen/_3sdp"
+            app:dividerDirection="horizontal"
+            app:layout_constraintEnd_toStartOf="@id/glEnd"
+            app:layout_constraintStart_toEndOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/txtRDSecurityDeposited" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtRDTravelCharge"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:textSize="@dimen/_12sdp"
+            android:alpha="0.5"
+            app:layout_constraintStart_toEndOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/d5"
+            android:text="@string/travel_charges" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtRDTravelPrice"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:textSize="@dimen/_12sdp"
+            android:alpha="0.5"
+            app:layout_constraintEnd_toStartOf="@id/glEnd"
+            app:layout_constraintTop_toBottomOf="@id/d5"
+            tools:text="$3000" />
+
+        <com.example.kite.utils.DashDividerView
+            android:id="@+id/d6"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:alpha="0.5"
+            app:dividerDashColor="@color/black"
+            app:dividerDashGap="@dimen/_2sdp"
+            app:dividerDashWidth="@dimen/_3sdp"
+            app:dividerDirection="horizontal"
+            app:layout_constraintEnd_toStartOf="@id/glEnd"
+            app:layout_constraintStart_toEndOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/txtRDTravelCharge" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtRDReturn"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:textSize="@dimen/_12sdp"
+            android:alpha="0.5"
+            app:layout_constraintStart_toEndOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/d6"
+            android:text="@string/returnable_amount" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtRDReturnPrice"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:textSize="@dimen/_12sdp"
+            android:alpha="0.5"
+            app:layout_constraintEnd_toStartOf="@id/glEnd"
+            app:layout_constraintTop_toBottomOf="@id/d6"
+            tools:text="$3000" />
+
+        <com.example.kite.utils.DashDividerView
+            android:id="@+id/d7"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:alpha="0.5"
+            app:dividerDashColor="@color/black"
+            app:dividerDashGap="@dimen/_2sdp"
+            app:dividerDashWidth="@dimen/_3sdp"
+            app:dividerDirection="horizontal"
+            app:layout_constraintEnd_toStartOf="@id/glEnd"
+            app:layout_constraintStart_toEndOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/txtRDReturn" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtRDFinalAmount"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintStart_toEndOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/d7"
+            android:text="@string/final_amount" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtRDFinalPrice"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintEnd_toStartOf="@id/glEnd"
+            app:layout_constraintTop_toBottomOf="@id/d7"
+            tools:text="$9000" />
+
+        
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

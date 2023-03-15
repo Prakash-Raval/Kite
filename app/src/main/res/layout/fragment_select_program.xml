@@ -12,24 +12,9 @@
         android:layout_height="match_parent"
         tools:context=".program.SelectProgramFragment">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/programToolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/BlackSmallCustomMaterialTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:fontFamily="@font/avenir_black"
-                android:text="@string/select_your_program" />
-
-        </com.google.android.material.appbar.MaterialToolbar>
+        <include
+            android:id="@+id/inProgramBar"
+            layout="@layout/item_common_toolbar" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="0dp"
@@ -37,7 +22,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/programToolbar">
+            app:layout_constraintTop_toBottomOf="@id/inProgramBar">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

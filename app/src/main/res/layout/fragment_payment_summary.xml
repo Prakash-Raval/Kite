@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/paymentSummaryBar"
+            layout="@layout/item_common_toolbar" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgPSVehicleImage"
+            android:layout_width="@dimen/_200sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:src="@drawable/ic_tesla_one"
+            app:layout_constraintEnd_toEndOf="@id/paymentSummaryBar"
+            app:layout_constraintStart_toStartOf="@id/paymentSummaryBar"
+            app:layout_constraintTop_toBottomOf="@id/paymentSummaryBar" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtPSText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/your_trip_will_be_charged_as_per_the_following_rate"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imgPSVehicleImage" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtPricingPerMin"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:text="@string/pricing_per_minute"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtPSText" />
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtPSPrice"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_20sdp"
+            app:layout_constraintBottom_toBottomOf="@id/txtPricingPerMin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/txtPricingPerMin"
+            tools:text="$0.25" />
+
+        <View
+            android:id="@+id/viewPS"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="@dimen/_20sdp"
+            android:alpha="0.6"
+            android:background="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtPSPrice" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtSecurityDeposited"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:text="@string/security_deposited"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/viewPS" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtPSDepositPrice"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintBottom_toBottomOf="@id/txtSecurityDeposited"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/txtSecurityDeposited"
+            tools:text="$25" />
+
+        <View
+            android:id="@+id/viewPS1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="@dimen/_20sdp"
+            android:alpha="0.6"
+            android:background="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtPSDepositPrice" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtWrongDrop"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:text="@string/wrong_drop_charges"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/viewPS1" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtPSWrongDropPrice"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_30sdp"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintBottom_toBottomOf="@id/txtWrongDrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/txtWrongDrop"
+            tools:text="$2500" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_2sdp"
+            android:src="@drawable/ic_error"
+            app:layout_constraintBottom_toBottomOf="@id/txtPSWrongDropPrice"
+            app:layout_constraintStart_toEndOf="@id/txtPSWrongDropPrice"
+            app:layout_constraintTop_toTopOf="@id/txtPSWrongDropPrice" />
+
+        <View
+            android:id="@+id/viewPS3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="@dimen/_20sdp"
+            android:alpha="0.6"
+            android:background="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtPSWrongDropPrice" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnPSNext"
+            style="@style/BlackCustomMaterialButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:text="@string/next"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilPSPromoCode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:padding="0dp"
+            app:boxStrokeWidth="0dp"
+            app:errorEnabled="false"
+            app:layout_constraintEnd_toStartOf="@id/btnPSApply"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/viewPS3">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtPSPromoCode"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_grey_start_radius"
+                android:hint="@string/apply_promo_code"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnPSApply"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_red_end_radius"
+            android:text="@string/apply"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@id/tilPSPromoCode"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tilPSPromoCode"
+            app:layout_constraintTop_toTopOf="@id/tilPSPromoCode" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:gravity="center"
+            android:text="@string/disclaimer_the_minimum_ride_charge_is_1"
+            app:layout_constraintTop_toBottomOf="@id/tilPSPromoCode" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

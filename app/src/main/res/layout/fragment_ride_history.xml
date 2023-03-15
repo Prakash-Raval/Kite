@@ -12,31 +12,12 @@
         android:layout_height="match_parent"
         tools:context=".history.RideHistoryFragment">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbarHistory"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/imgBack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:src="@drawable/ic_back_black" />
-
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/BlackSmallCustomMaterialTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/ride_history" />
-
-        </com.google.android.material.appbar.MaterialToolbar>
+        <include
+            android:id="@+id/inHistoryBar"
+            layout="@layout/item_common_toolbar" />
 
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/centerText"
             style="@style/BlackSmallCustomMaterialTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -50,6 +31,29 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtRHTripText"
+            style="@style/BlackMediumCustomMaterialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:visibility="gone"
+            android:text="@string/your_trip"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/inHistoryBar" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvRideHistory"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            tools:itemCount="10"
+            tools:listitem="@layout/item_ride_history"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtRHTripText" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

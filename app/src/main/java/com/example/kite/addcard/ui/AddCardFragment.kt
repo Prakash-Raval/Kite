@@ -18,18 +18,17 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.kite.R
-import com.example.kite.addcard.repository.AddCardRepository
-import com.example.kite.addcard.viewmodel.AddCardVMFFactory
 import com.example.kite.addcard.viewmodel.AddCardViewModel
 import com.example.kite.constants.Constants
 import com.example.kite.databinding.FragmentAddCardBinding
-import com.example.kite.network.ApiInterface
-import com.example.kite.network.RetrofitHelper
 import com.example.kite.utils.onTextChanged
+import com.example.kite.viewscheduletrip.viewmodel.ViewTripDetailsViewModel
 
 class AddCardFragment : Fragment() {
     private lateinit var binding: FragmentAddCardBinding
     private lateinit var viewModel: AddCardViewModel
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -42,17 +41,16 @@ class AddCardFragment : Fragment() {
             false
         )
         setNavigation()
-        addCardData()
         checkCardType()
         return binding.root
     }
 
-
     //setting up the navigation
     private fun setNavigation() {
-        binding.imgBack.setOnClickListener {
+        binding.inCardBar.imgBack.setOnClickListener {
             findNavController().navigateUp()
         }
+        binding.inCardBar.txtToolbarHeader.setText(R.string.add_card)
         binding.imgError.setOnClickListener {
             showCVVDialog()
         }
@@ -83,19 +81,6 @@ class AddCardFragment : Fragment() {
                 binding.btnPriority.alpha = 1.0f
             }
         }
-    }
-
-    //getting data from api
-    private fun addCardData() {
-        val service =
-            RetrofitHelper.getInstance(Constants.BASE_URL).create(ApiInterface::class.java)
-        val repository = AddCardRepository(service)
-        viewModel =
-            ViewModelProvider(this, AddCardVMFFactory(repository))[AddCardViewModel::class.java]
-
-        //binding variable from xml
-        binding.addCardData = viewModel
-        binding.lifecycleOwner = this
     }
 
     //creating custom dialog to show CVV info
@@ -193,6 +178,16 @@ class AddCardFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun getViewModel(): AddCardViewModel {
+        viewModel = ViewModelProvider(this)[AddCardViewModel::class.java]
+        return viewModel
+    }
+    //calling api data for add card fragment
+    private fun getAddCardAPi(){
+        viewModel = getViewModel()
+
     }
 
 }

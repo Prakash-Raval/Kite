@@ -30,8 +30,20 @@
         <item name="boxStrokeColor">@color/box_stroke_color</item>
     </style>
 
-    <style name="TextEditText" parent="ThemeOverlay.Material3.TextInputEditText">
+    <style name="RoundTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="hintEnabled">false</item>
+        <item name="errorEnabled">true</item>
 
+        <item name="background">@drawable/bg_grey_start_radius</item>
+        <item name="errorIconDrawable">@null</item>
+        <item name="errorTextColor">@color/error_text</item>
+        <item name="boxStrokeErrorColor">@color/error_text</item>
+        <item name="boxStrokeColor">@color/box_stroke_color</item>
+    </style>
+
+
+
+    <style name="TextEditText" parent="ThemeOverlay.Material3.TextInputEditText">
         <item name="android:paddingStart">0dp</item>
         <item name="android:paddingEnd">0dp</item>
         <item name="android:textCursorDrawable">@drawable/text_cursor_drawable</item>
@@ -46,6 +58,22 @@
 
     </style>
 
+
+
+    <style name="DashTextEditText" parent="ThemeOverlay.Material3.TextInputEditText">
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">0dp</item>
+        <item name="android:textCursorDrawable">@drawable/text_cursor_drawable</item>
+        <item name="android:paddingTop">@dimen/_5sdp</item>
+        <item name="android:textColorHint">#2628282D</item>
+        <item name="android:paddingBottom">@dimen/_6sdp</item>
+        <item name="android:lines">1</item>
+        <item name="fontFamily">@font/avenir_regular</item>
+        <item name="android:textSize">@dimen/_12sdp</item>
+        <item name="android:background">@drawable/bg_dash_border_card</item>
+        <item name="hintTextColor">#2628282D</item>
+
+    </style>
     //add card edit text style
 
     <style name="CardTextEditText" parent="ThemeOverlay.Material3.TextInputEditText">
@@ -217,5 +245,12 @@
         <item name="background">@drawable/bg_text_grey</item>
     </style>
 
+    <style name="DashedDividerDefault">
+        <item name="dividerDashGap">2dp</item>
+        <item name="dividerDashWidth">2dp</item>
+        <!-- or any color -->
+        <item name="dividerDashColor">#000000</item>
+        <item name="dividerDirection">horizontal</item>
+    </style>
 
 </resources>

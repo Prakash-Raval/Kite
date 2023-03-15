@@ -1,21 +1,21 @@
-package com.example.kite.addcard.repository
+package com.example.kite.history.repository
 
-import com.example.kite.addcard.model.AddCardRequest
-import com.example.kite.addcard.model.AddCardResponse
 import com.example.kite.base.BaseRepository
 import com.example.kite.base.network.client.Api
 import com.example.kite.base.network.client.ResponseHandler
 import com.example.kite.base.network.model.ResponseData
+import com.example.kite.history.model.RideHistoryRequest
+import com.example.kite.history.model.RideHistoryResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class AddCardRepository(val api: Api) : BaseRepository() {
+class RideHistoryRepository(val api: Api) : BaseRepository() {
 
-    suspend fun callApiAddCard(request: AddCardRequest): ResponseHandler<ResponseData<AddCardResponse>?> {
+    suspend fun callApiRideHistory(request: RideHistoryRequest): ResponseHandler<ResponseData<RideHistoryResponse>?> {
         return withContext(Dispatchers.Default) {
             return@withContext makeAPICall(
                 call = {
-                    api.addCard(request)
+                    api.rideHistory(request)
                 })
         }
     }

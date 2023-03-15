@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_40sdp"
-            android:src="@drawable/ic_qr_code_white"
+            android:src="@drawable/ic_code_entry"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/imgQrFlash"
             app:layout_constraintStart_toStartOf="parent" />
@@ -50,7 +50,7 @@
             android:id="@+id/imgQrFlash"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_qr_code_white"
+            android:src="@drawable/ic_torch"
             app:layout_constraintBottom_toBottomOf="@id/imgQREntry"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/imgQREntry"

@@ -6,90 +6,94 @@
 
     </data>
 
-    <com.google.android.material.card.MaterialCardView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black"
-        app:cardElevation="0dp">
+        android:background="@color/black">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/bg_card_white_round">
+            app:cardCornerRadius="@dimen/_40sdp"
+            app:cardElevation="0dp">
 
-            <include
-                android:id="@+id/inEnterQRBar"
-                layout="@layout/item_common_toolbar" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/imgACQr"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:src="@drawable/ic_qr_code_black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/inEnterQRBar" />
+                <include
+                    android:id="@+id/inEnterQRBar"
+                    layout="@layout/item_common_toolbar" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilACCode"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_40sdp"
-                app:boxStrokeColor="@color/white"
-                app:hintEnabled="false"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/imgACQr">
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imgACQr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_qr_code_black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/inEnterQRBar" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edtACCode"
-                    style="@style/TextEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:hint="@string/type_code"
-                    android:inputType="number"
-                    android:textColorHint="#28282D"
-                    android:textSize="@dimen/_20sdp"
-                    android:textStyle="bold" />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilACCode"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_40sdp"
+                    app:boxStrokeColor="@color/white"
+                    app:hintEnabled="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imgACQr">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtACCode"
+                        style="@style/TextEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:hint="@string/type_code"
+                        android:inputType="number"
+                        android:textColorHint="#28282D"
+                        android:textSize="@dimen/_20sdp"
+                        android:textStyle="bold" />
+
+                </com.google.android.material.textfield.TextInputLayout>
 
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/imgACQREntry"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_40sdp"
-                android:src="@drawable/ic_qr_code_black"
-                app:layout_constraintEnd_toStartOf="@id/imgACQrFlash"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tilACCode" />
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imgACQREntry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_40sdp"
+                    android:src="@drawable/ic_qr_code_black"
+                    app:layout_constraintEnd_toStartOf="@id/imgACQrFlash"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tilACCode" />
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/imgACQrFlash"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_qr_code_black"
-                app:layout_constraintBottom_toBottomOf="@id/imgACQREntry"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/imgACQREntry"
-                app:layout_constraintTop_toTopOf="@id/imgACQREntry" />
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imgACQrFlash"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_torch_black"
+                    app:layout_constraintBottom_toBottomOf="@id/imgACQREntry"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/imgACQREntry"
+                    app:layout_constraintTop_toTopOf="@id/imgACQREntry" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnACUnlockVehicle"
-                style="@style/WhiteCustomMaterialButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_20sdp"
-                android:layout_marginVertical="@dimen/_30sdp"
-                android:text="@string/unlock_vehicle"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/imgACQREntry" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnACUnlockVehicle"
+                    style="@style/WhiteCustomMaterialButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_20sdp"
+                    android:layout_marginVertical="@dimen/_30sdp"
+                    android:text="@string/unlock_vehicle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imgACQREntry" />
 
-    </com.google.android.material.card.MaterialCardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -9,21 +9,21 @@ import com.fasterxml.jackson.annotation.JsonProperty
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class AddCardRequest(
     @JsonProperty("access_token")
-    var accessToken: String? = null,
+    var access_token: String? = null,
     @JsonProperty("card_name")
-    var cardName: String? = null,
+    var card_name: String? = null,
     @JsonProperty("card_number")
-    var cardNumber: String? = null,
+    var card_number: String? = null,
     @JsonProperty("card_token")
-    var cardToken: String? = null,
+    var card_token: String? = null,
     @JsonProperty("card_type")
-    var cardType: String? = null,
+    var card_type: String? = null,
     @JsonProperty("customer_id")
-    var customerId: String? = null,
+    var customer_id: String? = null,
     @JsonProperty("expiry_date")
-    var expiryDate: String? = null,
+    var expiry_date: String? = null,
     @JsonProperty("is_default")
-    var isDefault: Int? = null,
+    var is_default: Int? = null,
     @JsonProperty("stripe_card_id")
-    var stripeCardId: String? = null
+    var stripe_card_id: String? = null
 )

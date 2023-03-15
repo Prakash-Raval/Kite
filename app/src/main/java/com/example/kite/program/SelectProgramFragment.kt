@@ -62,7 +62,7 @@ class SelectProgramFragment : BaseFragment() {
         spannableText()
         setUpTextWatcher()
         navigate()
-
+        setUPToolbar()
         list = ArrayList()
         adapter = ThirdPartyListAdapter(
             list, requireContext()
@@ -76,6 +76,11 @@ class SelectProgramFragment : BaseFragment() {
         binding.btnConfirm.setOnClickListener {
             findNavController().navigate(SelectProgramFragmentDirections.actionSelectProgramFragmentToHomeFragment())
         }
+    }
+
+    fun setUPToolbar(){
+        binding.inProgramBar.imgBack.visibility = View.GONE
+        binding.inProgramBar.txtToolbarHeader.setText(R.string.select_your_program)
     }
 
     @SuppressLint("NotifyDataSetChanged")

@@ -64,6 +64,7 @@ class HomeFragment : BaseFragment() {
         if (isCheck == true) {
             openUpdateChargeDialog()
         }
+        binding.cardViewTripContainer.visibility = View.GONE
         setUpDrawer()
         setUpNavigation()
         getViewTripApi()
@@ -86,13 +87,12 @@ class HomeFragment : BaseFragment() {
 
                 }
                 is ResponseHandler.OnSuccessResponse<ResponseData<ListReservationResponse>?> -> {
-
                     reservationID =
-                        state.response?.data?.reservationData?.get(0)?.reservationId.toString()
+                        state.response?.data?.reservationData?.getOrNull(0)?.reservationId.toString()
                     if (state.response?.data?.reservationData?.size == 0) {
                         binding.cardViewTripContainer.visibility = View.GONE
                     } else {
-                        binding.viewTrip = state.response?.data?.reservationData?.get(0)
+                        binding.viewTrip = state.response?.data?.reservationData?.getOrNull(0)
                         binding.cardViewTripContainer.visibility = View.VISIBLE
                     }
                 }

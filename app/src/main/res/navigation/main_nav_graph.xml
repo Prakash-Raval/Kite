@@ -146,6 +146,14 @@
             app:popUpToInclusive="true" />
 
         <action
+            android:id="@+id/action_settingFragment_to_addCardFragment"
+            app:destination="@id/addCardFragment" />
+
+        <action
+            android:id="@+id/action_settingFragment_to_termsFragment"
+            app:destination="@id/termsFragment" />
+
+        <action
             android:id="@+id/action_settingFragment_to_verifyInfoFragment"
             app:destination="@id/verifyInfoFragment" />
         <action
@@ -194,7 +202,9 @@
     <fragment
         android:id="@+id/subscriptionFragment"
         android:name="com.example.kite.subscription.SubscriptionFragment"
-        android:label="SubscriptionFragment" />
+        android:label="SubscriptionFragment" >
+
+    </fragment>
     <fragment
         android:id="@+id/reservationFragment"
         android:name="com.example.kite.reservation.ReservationFragment"
