@@ -21,8 +21,6 @@ import com.example.kite.MainActivity
 import com.example.kite.R
 import com.example.kite.base.network.client.ResponseHandler
 import com.example.kite.base.network.model.ResponseData
-import com.example.kite.base.network.model.ResponseWrapper
-import com.example.kite.constants.Constants
 import com.example.kite.databinding.FragmentDateAndTimeBinding
 import com.example.kite.databinding.ItemCalendarDayBinding
 import com.example.kite.databinding.ItemCalendarHeaderBinding
@@ -33,13 +31,9 @@ import com.example.kite.dateandtime.model.HeaderModel
 import com.example.kite.dateandtime.model.PromoCodeResponse
 import com.example.kite.dateandtime.model.TimeSlotRequest
 import com.example.kite.dateandtime.model.TimeSlotResponse
-import com.example.kite.dateandtime.repository.TimeSlotRepository
 import com.example.kite.dateandtime.viewmodel.PromoCodeViewModel
-import com.example.kite.dateandtime.viewmodel.TSVMFactory
 import com.example.kite.dateandtime.viewmodel.TimeSlotViewModel
 import com.example.kite.login.model.LoginResponse
-import com.example.kite.network.ApiInterface
-import com.example.kite.network.RetrofitHelper
 import com.example.kite.scheduletrip.model.ScheduleTripResponse
 import com.example.kite.utils.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -68,7 +62,7 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
     private lateinit var viewModelPromoCode: PromoCodeViewModel
     private lateinit var adapter: DateAndTimeAdapter
 
-    var list = ArrayList<TimeSlotResponse.Data.AllTimeSlot>()
+    var list = ArrayList<TimeSlotResponse.AllTimeSlot>()
     private val sections = ArrayList<HeaderModel>()
 
     private val today = LocalDate.now()
@@ -235,9 +229,14 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
         }
     }
 
-    fun getViewModel(): PromoCodeViewModel {
+    private fun getViewModel(): PromoCodeViewModel {
         viewModelPromoCode = ViewModelProvider(this)[PromoCodeViewModel::class.java]
         return viewModelPromoCode
+    }
+
+    private fun getViewModelTime(): TimeSlotViewModel {
+        viewModel = ViewModelProvider(this)[TimeSlotViewModel::class.java]
+        return viewModel
     }
 
     //navigation
@@ -343,12 +342,7 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
     //calling api data
     private fun getTimeSlotData() {
 
-        val service =
-            RetrofitHelper.getInstance(Constants.BASE_URL).create(ApiInterface::class.java)
-        val repository = TimeSlotRepository(service)
-        viewModel = ViewModelProvider(
-            requireActivity(), TSVMFactory(repository)
-        )[TimeSlotViewModel::class.java]
+        viewModel = getViewModelTime()
 
         //collecting data for passing in to request class
         val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.accessToken
@@ -369,7 +363,7 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
         }
 
         //passing data to request class
-        viewModel.getRequiredData(
+        viewModel.getTimeSlot(
             TimeSlotRequest(
                 access_token = token,
                 current_time = currentTime,
@@ -380,21 +374,50 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
             )
         )
 
-        viewModel.timeSlotLD.observe(this.viewLifecycleOwner) {
-            if (it.code == 200) {
-                sections.clear()
-                list = it.data?.allTimeSlots as ArrayList<TimeSlotResponse.Data.AllTimeSlot>
-                setHeaderData()
+        /* viewModel.liveData.observe(viewLifecycleOwner) {
+             if (it.code == 200) {
+                 sections.clear()
+                 list = it.data?.allTimeSlots as ArrayList<TimeSlotResponse.Data.AllTimeSlot>
+                 setHeaderData()
+             }
+         }*/
+        viewModel.liveData.observe(this, Observer { state ->
+            if (state == null) {
+                return@Observer
             }
-        }
+            when (state) {
+                is ResponseHandler.Loading -> {
+                    //PromoCodeViewModel.showProgressBar(true)
+                    //httpFailedHandler(state.code, state.message, state.messageCode)
+                    Log.d("PromoCodeResponse", "setLiveDataObservers: $state")
+
+                }
+                is ResponseHandler.OnFailed -> {
+                    //PromoCodeViewModel.showProgressBar(false)
+                    Log.d("PromoCodeResponse", "setLiveDataObservers: $state")
+
+
+                }
+                is ResponseHandler.OnSuccessResponse<ResponseData<TimeSlotResponse>?> -> {
+                    //PromoCodeViewModel.showProgressBar(false)
+                    Log.d("PromoCodeResponse", "setLiveDataObservers: $state")
+                    sections.clear()
+                    list =
+                        state.response?.data?.allTimeSlots as ArrayList<TimeSlotResponse.AllTimeSlot>
+                    setHeaderData()
+                }
+            }
+        })
+
+
     }
 
     //setting data to time slot recycler view header
     private fun setHeaderData() {
         if (LocalDate.parse(selectedDate.toString()).equals(today)) {
 
-            val mPickupTimeBean: ArrayList<TimeSlotResponse.Data.AllTimeSlot> = ArrayList()
-            val nPickupTimeBean: ArrayList<TimeSlotResponse.Data.AllTimeSlot> = ArrayList()
+            val mPickupTimeBean: ArrayList<TimeSlotResponse.AllTimeSlot> = ArrayList()
+            val nPickupTimeBean: ArrayList<TimeSlotResponse.AllTimeSlot> = ArrayList()
             for (mTempPosition in 0 until list.size) {
                 if (LocalDate.parse(list[mTempPosition].date).equals(today)) {
                     mPickupTimeBean.add(list[mTempPosition])
@@ -432,7 +455,7 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
     private fun setUPTimeSlotsAdapter() {
         adapter = DateAndTimeAdapter(context1, object : OnCellClicked {
             override fun onClick(
-                position1: Int, data: TimeSlotResponse.Data.AllTimeSlot, timeValue: String
+                position1: Int, data: TimeSlotResponse.AllTimeSlot, timeValue: String
             ) {
                 //passing data to previous fragment (ScheduleTripFragment)
                 getDateAndTime.getDate(

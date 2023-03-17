@@ -6,6 +6,7 @@ import android.view.View
 import androidx.annotation.IntegerRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
+import com.example.kite.R
 import com.google.android.material.snackbar.Snackbar
 
 
@@ -17,7 +18,7 @@ inline fun View.snack(message: String, length: Int = Snackbar.LENGTH_LONG, f: Sn
 
 fun View.snackError(message: String, length: Int = Snackbar.LENGTH_LONG) {
     val snack = Snackbar.make(this, message, length)
-    snack.setBackgroundTint(Color.RED)
+    snack.setBackgroundTint(resources.getColor(R.color.bg_main))
     snack.anchorView?.parent
     snack.show()
 }

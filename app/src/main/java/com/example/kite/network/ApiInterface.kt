@@ -8,8 +8,6 @@ import com.example.kite.changepassword.model.ChangePasswordRequest
 import com.example.kite.changepassword.model.ChangePasswordResponse
 import com.example.kite.constants.Constants
 import com.example.kite.countrylisting.CountryResponse
-import com.example.kite.dateandtime.model.TimeSlotRequest
-import com.example.kite.dateandtime.model.TimeSlotResponse
 import com.example.kite.forgetpassword.model.ForgetPasswordResponse
 import com.example.kite.forgetpassword.model.ForgotPasswordRequest
 import com.example.kite.login.model.LoginRequest
@@ -20,8 +18,6 @@ import com.example.kite.profile.model.ViewProfileRequest
 import com.example.kite.profile.model.ViewProfileResponse
 import com.example.kite.program.model.ThirdPartyListRequest
 import com.example.kite.program.model.ThirdPartyListResponse
-import com.example.kite.reservation.model.ListReservationRequest
-import com.example.kite.reservation.model.ListReservationResponse
 import com.example.kite.scheduletrip.model.ScheduleTripRequest
 import com.example.kite.scheduletrip.model.ScheduleTripResponse
 import com.example.kite.signup.model.SignUpResponse2
@@ -49,17 +45,12 @@ interface ApiInterface {
     @POST(Constants.THIRD_PARTY_LIST)
     suspend fun setList(@Body listRequest: ThirdPartyListRequest): Response<ThirdPartyListResponse>
 
-    @POST(Constants.ADD_CARD)
-    suspend fun addCard(@Body addCardRequest: AddCardRequest): Response<AddCardResponse>
 
     @POST(Constants.VIEW_PROFILE)
     suspend fun viewProfile(@Body viewProfileRequest: ViewProfileRequest): Response<ViewProfileResponse>
 
     @POST(Constants.FORGOT_PASSWORD_URL)
     suspend fun forgotPassword(@Body request: ForgotPasswordRequest): Response<ForgetPasswordResponse>
-
-    @POST(Constants.RESERVATION_LIST)
-    suspend fun getReservationListing(@Body request: ListReservationRequest): Response<ListReservationResponse>
 
     @POST(Constants.CHANGE_PASSWORD)
     suspend fun changePassword(@Body changePasswordRequest: ChangePasswordRequest): Response<ChangePasswordResponse>
@@ -77,6 +68,5 @@ interface ApiInterface {
     @POST(Constants.SCHEDULE_TRIP)
     suspend fun getScheduleTripData(@Body scheduleTripRequest: ScheduleTripRequest): Response<ScheduleTripResponse>
 
-    @POST(Constants.TIME_SLOT)
-    suspend fun getTimeSlot(@Body timeSlotRequest: TimeSlotRequest): Response<TimeSlotResponse>
+
 }

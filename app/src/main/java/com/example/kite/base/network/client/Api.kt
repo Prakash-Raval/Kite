@@ -6,6 +6,8 @@ import com.example.kite.base.network.model.ResponseData
 import com.example.kite.constants.Constants
 import com.example.kite.dateandtime.model.PromoCodeRequest
 import com.example.kite.dateandtime.model.PromoCodeResponse
+import com.example.kite.dateandtime.model.TimeSlotRequest
+import com.example.kite.dateandtime.model.TimeSlotResponse
 import com.example.kite.history.model.RideHistoryRequest
 import com.example.kite.history.model.RideHistoryResponse
 import com.example.kite.reservation.model.ListReservationRequest
@@ -48,4 +50,9 @@ interface Api {
 
     @POST(Constants.RIDE_HISTORY)
     suspend fun rideHistory(@Body addCardRequest: RideHistoryRequest): Response<ResponseData<RideHistoryResponse>>
+
+    @POST(Constants.TIME_SLOT)
+    suspend fun getTimeSlot(@Body request: TimeSlotRequest): Response<ResponseData<TimeSlotResponse>>
+
+
 }

@@ -21,8 +21,8 @@ import com.example.kite.R
 import com.example.kite.addcard.viewmodel.AddCardViewModel
 import com.example.kite.constants.Constants
 import com.example.kite.databinding.FragmentAddCardBinding
+import com.example.kite.extensions.snackError
 import com.example.kite.utils.onTextChanged
-import com.example.kite.viewscheduletrip.viewmodel.ViewTripDetailsViewModel
 
 class AddCardFragment : Fragment() {
     private lateinit var binding: FragmentAddCardBinding
@@ -42,6 +42,8 @@ class AddCardFragment : Fragment() {
         )
         setNavigation()
         checkCardType()
+        getAddCardAPi()
+        setObserver()
         return binding.root
     }
 
@@ -113,14 +115,14 @@ class AddCardFragment : Fragment() {
             minValue = 2023
             maxValue = 2045
             wrapSelectorWheel = true
-            setOnValueChangedListener { picker, _, _ ->
-                binding.edtYear.apply {
-                    setText(picker.value.toString())
-                }
-            }
+
         }
         builder.apply {
-            setPositiveButton("Ok") { dialog, _ -> dialog.cancel() }
+            setPositiveButton("Ok") { dialog, _ ->
+                binding.edtYear.apply {
+                    setText(numberPicker.value.toString())
+                }
+                dialog.cancel() }
             setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
             setView(view)
             create()
@@ -138,15 +140,16 @@ class AddCardFragment : Fragment() {
             minValue = 1
             maxValue = 12
             wrapSelectorWheel = true
-            setOnValueChangedListener { picker, _, _ ->
-                binding.edtMonth.apply {
-                    setText(picker.value.toString())
-                }
-            }
+
         }
 
         builder.apply {
-            setPositiveButton("Ok") { dialog, _ -> dialog.cancel() }
+            setPositiveButton("Ok") { dialog, _ ->
+                binding.edtMonth.apply {
+                    setText(numberPicker.value.toString())
+                }
+                dialog.cancel()
+            }
             setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
             setView(view)
             create()
@@ -184,10 +187,21 @@ class AddCardFragment : Fragment() {
         viewModel = ViewModelProvider(this)[AddCardViewModel::class.java]
         return viewModel
     }
-    //calling api data for add card fragment
-    private fun getAddCardAPi(){
-        viewModel = getViewModel()
 
+    //calling api data for add card fragment
+    private fun getAddCardAPi() {
+        viewModel = getViewModel()
+        binding.viewModel = viewModel
+
+    }
+
+    private fun setObserver() {
+        //handling error event in snack bar
+        viewModel.errorEvent.observe(viewLifecycleOwner) { it ->
+            it.getContentIfNotHandled()?.let { it1 ->
+                binding.btnAddCard.snackError(it1)
+            }
+        }
     }
 
 }

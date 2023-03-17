@@ -59,10 +59,12 @@ object Constants {
         )
 
     //qr code
-    const val SCAN_QR = ""
+    const val SCAN_QR = "customer/scan_qrcode"
 
     //Ride History
     const val RIDE_HISTORY = "customer/ride_history"
+
+
 
 }
 

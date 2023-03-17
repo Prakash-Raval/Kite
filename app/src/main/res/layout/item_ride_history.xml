@@ -1,16 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
+        <variable
+            name="rideHistory"
+            type="com.example.kite.history.model.RideHistoryResponse.RideHistory" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtIRHDate"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_20sdp"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="29/08/2022 06:00 Am" />
 
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtIRHPrice"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:text="@{rideHistory.currencyFormat + rideHistory.totalAmount}"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintEnd_toStartOf="@id/imgRDClickArrow"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="$0.00" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtIRHAddress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            app:layout_constraintEnd_toStartOf="@id/txtIRHDistance"
+            android:text="@{rideHistory.destAddress +` - `+ rideHistory.modalName}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtIRHDate"
+            tools:text="29/08/2022 06:00 Am" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtIRHDistance"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_20sdp"
+            app:layout_constraintStart_toEndOf="@id/txtIRHAddress"
+            android:gravity="end"
+            android:text="@{rideHistory.totalDistance.toString() + ` Km Travelled`}"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/imgRDClickArrow"
+            app:layout_constraintTop_toBottomOf="@id/txtIRHDate"
+            tools:text="$0.00" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgRDClickArrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:src="@drawable/ic_arrow_end_black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

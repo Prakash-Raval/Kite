@@ -14,6 +14,7 @@ import com.example.kite.base.network.client.ResponseHandler
 import com.example.kite.base.network.model.ResponseData
 import com.example.kite.basefragment.BaseFragment
 import com.example.kite.databinding.FragmentRideHistoryBinding
+import com.example.kite.history.adapter.RideHistoryAdapter
 import com.example.kite.history.model.RideHistoryRequest
 import com.example.kite.history.model.RideHistoryResponse
 import com.example.kite.history.viewmodel.RideHistoryViewModel
@@ -24,6 +25,7 @@ class RideHistoryFragment : BaseFragment() {
 
     private lateinit var binding: FragmentRideHistoryBinding
     private lateinit var viewModel: RideHistoryViewModel
+    private lateinit var adapter: RideHistoryAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,6 +41,7 @@ class RideHistoryFragment : BaseFragment() {
         setUPToolbar()
         getApiRequest()
         setRideObserver()
+        setAdapter()
         return binding.root
     }
 
@@ -48,6 +51,11 @@ class RideHistoryFragment : BaseFragment() {
         binding.inHistoryBar.imgBack.setOnClickListener {
             findNavController().navigateUp()
         }
+    }
+
+    private fun setAdapter() {
+        adapter = RideHistoryAdapter()
+        binding.rvRideHistory.adapter = adapter
     }
 
     private fun getViewModel(): RideHistoryViewModel {
@@ -64,7 +72,7 @@ class RideHistoryFragment : BaseFragment() {
 
         viewModel.getHistoryRequest(
             RideHistoryRequest(
-                access_token =  token,
+                access_token = token,
                 customer_id = cusID
             )
         )
@@ -86,6 +94,8 @@ class RideHistoryFragment : BaseFragment() {
                 }
                 is ResponseHandler.OnSuccessResponse<ResponseData<RideHistoryResponse>?> -> {
                     Log.d("ViewTripFragment", "setObserverData: ${state.response?.data}")
+                    adapter.setList(state.response?.data?.rideHistory as ArrayList<RideHistoryResponse.RideHistory>)
+                    adapter.notifyDataSetChanged()
                     binding.rvRideHistory.visibility = View.VISIBLE
                     binding.txtRHTripText.visibility = View.VISIBLE
                     binding.centerText.visibility = View.GONE

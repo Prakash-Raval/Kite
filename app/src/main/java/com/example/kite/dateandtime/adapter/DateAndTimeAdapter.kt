@@ -72,10 +72,11 @@ class DateAndTimeAdapter(val context: Context, val lis: OnCellClicked) :
 
         for (i in 0 until header[position].list?.size!!) {
             header[position].list?.get(i)?.position = position
+
         }
 
         adapter = DayAdapter(holder.itemView.context, lis)
-        adapter?.setList(header[position].list as ArrayList<TimeSlotResponse.Data.AllTimeSlot>)
+        adapter?.setList(header[position].list as ArrayList<TimeSlotResponse.AllTimeSlot>)
         holder.binding.rvSTDay.adapter = adapter
     }
 

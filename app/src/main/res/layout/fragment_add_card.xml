@@ -4,6 +4,9 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.example.kite.addcard.viewmodel.AddCardViewModel" />
 
     </data>
 
@@ -121,7 +124,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="@string/card_holder_name"
-                        android:inputType="textPersonName" />
+                        android:inputType="textPersonName"
+                        android:text="@={viewModel.cardName}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textview.MaterialTextView
@@ -151,7 +155,8 @@
                         android:layout_height="match_parent"
                         android:hint="@string/card_hint"
                         android:inputType="number"
-                        android:maxLength="16" />
+                        android:maxLength="16"
+                        android:text="@={viewModel.cardNumber}" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -203,7 +208,8 @@
                         android:drawableEnd="@drawable/ic_arrow_down"
                         android:drawablePadding="@dimen/_40sdp"
                         android:focusable="false"
-                        android:hint="@string/year" />
+                        android:hint="@string/year"
+                        android:text="@={viewModel.cardYear}" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -229,7 +235,8 @@
                         android:drawableEnd="@drawable/ic_arrow_down"
                         android:drawablePadding="@dimen/_40sdp"
                         android:focusable="false"
-                        android:hint="@string/month" />
+                        android:hint="@string/month"
+                        android:text="@={viewModel.cardMonth}" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -251,7 +258,8 @@
                         android:layout_height="match_parent"
                         android:hint="@string/cvv"
                         android:inputType="number"
-                        android:maxLength="4" />
+                        android:maxLength="4"
+                        android:text="@={viewModel.cardCVV}" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -273,13 +281,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginBottom="@dimen/_20sdp"
+                    android:onClick="@{() -> viewModel.checkValidation()}"
                     android:text="@string/next"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/glEnd"
                     app:layout_constraintTop_toBottomOf="@id/btnPriority" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
         </androidx.core.widget.NestedScrollView>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

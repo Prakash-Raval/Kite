@@ -4,14 +4,6 @@ package com.example.kite.scanqr.model
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class ScanQRResponse(
-    @JsonProperty("code")
-    var code: Int? = null,
-    @JsonProperty("data")
-    var `data`: Data? = null,
-    @JsonProperty("message")
-    var message: String? = null
-) {
-    data class Data(
         @JsonProperty("access_code")
         var accessCode: Any? = null,
         @JsonProperty("accesscode_enable")
@@ -55,4 +47,3 @@ data class ScanQRResponse(
         @JsonProperty("wrong_drop_price")
         var wrongDropPrice: Int? = null
     )
-}

@@ -38,6 +38,4 @@ open class BaseFragment : Fragment() {
     fun hideProgressBar() {
         mProgressDialog.dismiss()
     }
-
-
 }

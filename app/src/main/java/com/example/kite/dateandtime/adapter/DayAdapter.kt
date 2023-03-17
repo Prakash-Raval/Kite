@@ -18,10 +18,10 @@ import java.util.*
 class DayAdapter(val context: Context, val lis: OnCellClicked) :
     RecyclerView.Adapter<DayAdapter.ViewHolder>() {
 
-    private var list = ArrayList<TimeSlotResponse.Data.AllTimeSlot>()
+    private var list = ArrayList<TimeSlotResponse.AllTimeSlot>()
     private var selected = -1
 
-    fun setList(list: ArrayList<TimeSlotResponse.Data.AllTimeSlot>) {
+    fun setList(list: ArrayList<TimeSlotResponse.AllTimeSlot>) {
         this.list = list
     }
 

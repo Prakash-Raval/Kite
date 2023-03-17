@@ -147,7 +147,6 @@ class BikeListingFragment : Fragment(), OnCellClicked {
                         vehicleDetails.putString("ModelName", modelName)
                         vehicleDetails.putString("ModelImage", modelImage)
                         vehicleDetails.putString("RepeatCount", repeatCount.toString())
-
                         vehicleDetails.putString("vehicleTypeID", vehicleTypeID.toString())
                         vehicleDetails.putString("ManufacturerID", manufacturerID.toString())
                     }
