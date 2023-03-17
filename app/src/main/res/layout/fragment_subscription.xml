@@ -6,218 +6,437 @@
 
     </data>
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/subNest1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="gone">
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cvSubscription"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_30sdp"
-                android:layout_marginTop="@dimen/_50sdp"
-                android:background="@color/bg_card_gray"
-                app:cardCornerRadius="@dimen/_12sdp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="match_parent">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cvSubscription"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/bg_gray_rect">
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_50sdp"
+                    android:background="@color/bg_card_gray"
+                    app:cardCornerRadius="@dimen/_12sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                    <androidx.constraintlayout.widget.Guideline
-                        android:id="@+id/glStartInside"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        app:layout_constraintGuide_begin="@dimen/_20sdp" />
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_gray_rect">
 
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_marginHorizontal="@dimen/_50sdp"
-                        android:layout_marginBottom="@dimen/_30sdp"
-                        android:background="@drawable/bg_view_blue_color"
-                        app:layout_constraintBottom_toBottomOf="@id/imgCar"
-                        app:layout_constraintEnd_toEndOf="@id/imgCar"
-                        app:layout_constraintStart_toStartOf="@id/imgCar"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/glStartInside"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_begin="@dimen/_20sdp" />
 
-                    <androidx.constraintlayout.widget.Guideline
-                        android:id="@+id/glEndInside"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        app:layout_constraintGuide_end="@dimen/_10sdp" />
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_marginHorizontal="@dimen/_50sdp"
+                            android:layout_marginBottom="@dimen/_30sdp"
+                            android:background="@drawable/bg_view_blue_color"
+                            app:layout_constraintBottom_toBottomOf="@id/imgCar"
+                            app:layout_constraintEnd_toEndOf="@id/imgCar"
+                            app:layout_constraintStart_toStartOf="@id/imgCar"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/imgCar"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_30sdp"
-                        android:src="@drawable/ic_tesla_one"
-                        app:layout_constraintStart_toEndOf="@id/glStartInside"
-                        app:layout_constraintTop_toBottomOf="@id/imgRedStar" />
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/glEndInside"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_end="@dimen/_10sdp" />
 
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/imgRedStar"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/_10sdp"
-                        android:src="@drawable/ic_red_star"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/imgCar"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_30sdp"
+                            android:src="@drawable/ic_tesla_one"
+                            app:layout_constraintStart_toEndOf="@id/glStartInside"
+                            app:layout_constraintTop_toBottomOf="@id/imgRedStar" />
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/txtBecome"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_20sdp"
-                        android:fontFamily="@font/avenir_black"
-                        android:text="@string/become_a"
-                        android:textSize="@dimen/_8sdp"
-                        app:layout_constraintStart_toEndOf="@id/glStartInside"
-                        app:layout_constraintTop_toBottomOf="@id/imgCar" />
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/imgRedStar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/_10sdp"
+                            android:src="@drawable/ic_red_star"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/txtKiteRun"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/avenir_regular"
-                        android:text="@string/kite_runner"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_20sdp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toEndOf="@id/glStartInside"
-                        app:layout_constraintTop_toBottomOf="@id/txtBecome" />
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/txtBecome"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_20sdp"
+                            android:fontFamily="@font/avenir_black"
+                            android:text="@string/become_a"
+                            android:textSize="@dimen/_8sdp"
+                            app:layout_constraintStart_toEndOf="@id/glStartInside"
+                            app:layout_constraintTop_toBottomOf="@id/imgCar" />
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/txtRate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_20sdp"
-                        android:fontFamily="@font/avenir_black"
-                        android:text="@string/rate"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_12sdp"
-                        app:layout_constraintEnd_toStartOf="@id/glEndInside"
-                        app:layout_constraintTop_toBottomOf="@id/imgCar" />
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/txtKiteRun"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/avenir_regular"
+                            android:text="@string/kite_runner"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_20sdp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toEndOf="@id/glStartInside"
+                            app:layout_constraintTop_toBottomOf="@id/txtBecome" />
 
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/g1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_20sdp"
-                        android:src="@drawable/ic_green_right"
-                        app:layout_constraintStart_toEndOf="@id/glStartInside"
-                        app:layout_constraintTop_toBottomOf="@id/txtKiteRun" />
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/txtRate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_20sdp"
+                            android:fontFamily="@font/avenir_black"
+                            android:text="@string/rate"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_12sdp"
+                            app:layout_constraintEnd_toStartOf="@id/glEndInside"
+                            app:layout_constraintTop_toBottomOf="@id/imgCar" />
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:fontFamily="@font/avenir_light"
-                        android:text="@string/schedule_weeks_in_advance"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@id/g1"
-                        app:layout_constraintStart_toEndOf="@id/g1"
-                        app:layout_constraintTop_toTopOf="@id/g1" />
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/g1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_20sdp"
+                            android:src="@drawable/ic_green_right"
+                            app:layout_constraintStart_toEndOf="@id/glStartInside"
+                            app:layout_constraintTop_toBottomOf="@id/txtKiteRun" />
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:fontFamily="@font/avenir_light"
-                        android:text="@string/up_to_3_edits_each_trip"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@id/g2"
-                        app:layout_constraintStart_toEndOf="@id/g2"
-                        app:layout_constraintTop_toTopOf="@id/g2" />
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:fontFamily="@font/avenir_light"
+                            android:text="@string/schedule_weeks_in_advance"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@id/g1"
+                            app:layout_constraintStart_toEndOf="@id/g1"
+                            app:layout_constraintTop_toTopOf="@id/g1" />
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:fontFamily="@font/avenir_light"
-                        android:text="@string/reduced_cancellation_fees"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@id/g3"
-                        app:layout_constraintStart_toEndOf="@id/g3"
-                        app:layout_constraintTop_toTopOf="@id/g3" />
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:fontFamily="@font/avenir_light"
+                            android:text="@string/up_to_3_edits_each_trip"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@id/g2"
+                            app:layout_constraintStart_toEndOf="@id/g2"
+                            app:layout_constraintTop_toTopOf="@id/g2" />
 
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/g2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:src="@drawable/ic_green_right"
-                        app:layout_constraintStart_toEndOf="@id/glStartInside"
-                        app:layout_constraintTop_toBottomOf="@id/g1" />
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:fontFamily="@font/avenir_light"
+                            android:text="@string/reduced_cancellation_fees"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@id/g3"
+                            app:layout_constraintStart_toEndOf="@id/g3"
+                            app:layout_constraintTop_toTopOf="@id/g3" />
 
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/g3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:layout_marginBottom="@dimen/_20sdp"
-                        android:src="@drawable/ic_green_right"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/glStartInside"
-                        app:layout_constraintTop_toBottomOf="@id/g2" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/g2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:src="@drawable/ic_green_right"
+                            app:layout_constraintStart_toEndOf="@id/glStartInside"
+                            app:layout_constraintTop_toBottomOf="@id/g1" />
 
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/glStart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_begin="@dimen/_20sdp" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/glEnd"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_end="@dimen/_20sdp" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnGetStarted"
-                style="@style/BlackCustomMaterialButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/_20sdp"
-                android:text="@string/get_started"
-                app:layout_constraintEnd_toStartOf="@id/glEnd"
-                app:layout_constraintStart_toEndOf="@id/glStart"
-                app:layout_constraintTop_toBottomOf="@id/cvSubscription" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:alpha="0.6"
-                android:fontFamily="@font/avenir_regular"
-                android:gravity="center"
-                android:text="@string/subscription_text"
-                android:textSize="@dimen/_12sdp"
-                app:layout_constraintEnd_toStartOf="@id/glEnd"
-                app:layout_constraintStart_toEndOf="@id/glStart"
-                app:layout_constraintTop_toBottomOf="@id/btnGetStarted"
-                app:lineHeight="@dimen/_12sdp" />
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/g3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_marginBottom="@dimen/_20sdp"
+                            android:src="@drawable/ic_green_right"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/glStartInside"
+                            app:layout_constraintTop_toBottomOf="@id/g2" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+                </com.google.android.material.card.MaterialCardView>
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/glStart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="@dimen/_20sdp" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/glEnd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_end="@dimen/_20sdp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnGetStarted"
+                    style="@style/BlackCustomMaterialButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/_20sdp"
+                    android:text="@string/get_started"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/cvSubscription" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:alpha="0.6"
+                    android:fontFamily="@font/avenir_regular"
+                    android:gravity="center"
+                    android:text="@string/subscription_text"
+                    android:textSize="@dimen/_12sdp"
+                    app:layout_constraintEnd_toStartOf="@id/glEnd"
+                    app:layout_constraintStart_toEndOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@id/btnGetStarted"
+                    app:lineHeight="@dimen/_12sdp" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/subNest2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cvSubscription2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_50sdp"
+                    android:background="@color/bg_card_gray"
+                    app:cardCornerRadius="@dimen/_12sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_gray_rect">
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/glStartInside1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_begin="@dimen/_20sdp" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_marginHorizontal="@dimen/_50sdp"
+                            android:layout_marginBottom="@dimen/_30sdp"
+                            android:background="@drawable/bg_view_blue_color"
+                            app:layout_constraintBottom_toBottomOf="@id/imgCar1"
+                            app:layout_constraintEnd_toEndOf="@id/imgCar1"
+                            app:layout_constraintStart_toStartOf="@id/imgCar1"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/glEndInside1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_end="@dimen/_10sdp" />
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/imgCar1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_30sdp"
+                            android:layout_marginBottom="@dimen/_20sdp"
+                            android:src="@drawable/ic_tesla_one"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/glStartInside1"
+                            app:layout_constraintTop_toBottomOf="@id/imgRedStar1" />
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/imgRedStar1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/_10sdp"
+                            android:src="@drawable/ic_red_star"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtKiteRun2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:fontFamily="@font/avenir_regular"
+                    android:text="@string/kite_runner"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_20sdp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cvSubscription2" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtRat2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:fontFamily="@font/avenir_black"
+                    android:text="@string/rate"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"
+                    app:layout_constraintBottom_toBottomOf="@id/txtKiteRun2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/txtKiteRun2" />
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtSubStartDate"
+                    style="@style/CapitalTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:text="@string/start_date"
+                    android:textSize="@dimen/_10sdp"
+                    app:layout_constraintEnd_toStartOf="@id/txtSubEndDate"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/txtKiteRun2" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtSubEndDate"
+                    style="@style/CapitalTextView"
+                    android:textSize="@dimen/_10sdp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:text="@string/end_date"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/txtSubStartDate"
+                    app:layout_constraintTop_toBottomOf="@id/txtKiteRun2" />
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilStartDate"
+                    style="@style/TextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_12sdp"
+                    app:errorEnabled="false"
+                    app:layout_constraintEnd_toStartOf="@id/tilEndDate"
+                    app:layout_constraintStart_toStartOf="@id/txtSubStartDate"
+                    app:layout_constraintTop_toBottomOf="@id/txtSubStartDate">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtStartDate"
+                        style="@style/TextEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:focusable="false" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilEndDate"
+                    style="@style/TextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    app:errorEnabled="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/txtSubEndDate"
+                    app:layout_constraintTop_toBottomOf="@id/txtSubEndDate">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtEndDate"
+                        style="@style/TextEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:focusable="false" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtMonthRenewal"
+                    style="@style/CapitalTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:text="@string/monthly_renewal"
+                    android:textSize="@dimen/_10sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tilStartDate" />
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtCancelSub"
+                    style="@style/CapitalTextView"
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:text="@string/cancel_subscription"
+                    android:textSize="@dimen/_12sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/txtMonthRenewal" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

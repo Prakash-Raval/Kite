@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.kite.R
 import com.example.kite.databinding.FragmentVerifyInfoBinding
 import com.example.kite.login.model.LoginResponse
+import com.example.kite.setting.SettingFragmentDirections
 import com.example.kite.utils.PrefManager
 
 class VerifyInfoFragment : Fragment() {
@@ -25,6 +27,7 @@ class VerifyInfoFragment : Fragment() {
             false
         )
         getCustomerData()
+        setNavigation()
         return binding.root
     }
 
@@ -33,5 +36,24 @@ class VerifyInfoFragment : Fragment() {
         val customerData = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")
         binding.txtVerifyName.text = customerData?.data?.customerFirstName
 
+        val isVerified = customerData?.data?.isTruliooVerified
+        if (isVerified == 1) {
+            binding.txtVerifyStatus.setText(R.string.verified)
+            binding.btnUpdate.visibility = View.GONE
+            binding.edtVerificationExpiry.setText(customerData.data?.subscription?.subscriptionEndDate.toString())
+            binding.edtCountryCod.setText(customerData.data?.country)
+        } else {
+            binding.txtVerifyStatus.setText(R.string.not_verified)
+            binding.btnUpdate.visibility = View.VISIBLE
+            binding.edtVerificationExpiry.setText("-")
+            binding.edtCountryCod.setText("-")
+        }
+    }
+
+
+    private fun setNavigation() {
+        binding.btnUpdate.setOnClickListener {
+            findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToLicenceAgreementFragment())
+        }
     }
 }

@@ -10,7 +10,10 @@ import androidx.navigation.fragment.findNavController
 import com.example.kite.R
 import com.example.kite.databinding.FragmentSettingBinding
 import com.example.kite.setting.adapter.SettingsAdapter
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayoutMediator
+
 
 class SettingFragment : Fragment() {
     private lateinit var binding: FragmentSettingBinding
@@ -28,6 +31,30 @@ class SettingFragment : Fragment() {
         setupViewPager()
         setupTabLayout()
         navigation()
+        when (binding.viewPager.currentItem) {
+            0 -> {
+                binding.txtSave.visibility = View.VISIBLE
+            }
+            else -> {
+                binding.txtSave.visibility = View.GONE
+
+            }
+        }
+        binding.tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                when (tab.position) {
+                    0 -> {
+                        binding.txtSave.visibility = View.VISIBLE
+                    }
+                    else -> {
+                        binding.txtSave.visibility = View.GONE
+
+                    }
+                }
+            }
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
+            override fun onTabReselected(tab: TabLayout.Tab) {}
+        })
         return binding.root
     }
 
@@ -58,7 +85,6 @@ class SettingFragment : Fragment() {
     private fun setupViewPager() {
         val adapter = activity?.let { SettingsAdapter(it, 3) }
         binding.viewPager.adapter = adapter
-
     }
 
 

@@ -15,6 +15,8 @@ import com.example.kite.reservation.model.ListReservationResponse
 import com.example.kite.scanqr.model.ScanQRRequest
 import com.example.kite.scanqr.model.ScanQRResponse
 import com.example.kite.scheduletrip.model.*
+import com.example.kite.selectpayment.model.GetCardRequest
+import com.example.kite.selectpayment.model.GetCardResponse
 import com.example.kite.viewscheduletrip.model.ViewTripRequest
 import com.example.kite.viewscheduletrip.model.ViewTripResponse
 import retrofit2.Response
@@ -47,6 +49,9 @@ interface Api {
 
     @POST(Constants.ADD_CARD)
     suspend fun addCard(@Body addCardRequest: AddCardRequest): Response<ResponseData<AddCardResponse>>
+
+    @POST(Constants.GET_CARD)
+    suspend fun getCard(@Body addCardRequest: GetCardRequest): Response<ResponseData<GetCardResponse>>
 
     @POST(Constants.RIDE_HISTORY)
     suspend fun rideHistory(@Body addCardRequest: RideHistoryRequest): Response<ResponseData<RideHistoryResponse>>

@@ -277,5 +277,12 @@
     <string name="final_amount">Final Amount</string>
     <string name="your_trip">Your Trip</string>
     <string name="alert_enter_card_name">Please enter your name</string>
+    <string name="stripe_pk">pk_test_51IkYgGLeLFZin2JquJOhPpOs0bShH4jVwXSwCYjmVT7NoqK825iY83ISpc7ABAv3DghwhIB3UKZPiy4Uf4z7iw6I00eB5dbHHI</string>
+    <string name="use_payment_method">Use Payment Method</string>
+    <string name="verified">VERIFIED</string>
+    <string name="start_date">Start Date</string>
+    <string name="end_date">End Date</string>
+    <string name="monthly_renewal">*Monthly Renewal</string>
+    <string name="cancel_subscription">Cancel Subscription</string>
 
 </resources>

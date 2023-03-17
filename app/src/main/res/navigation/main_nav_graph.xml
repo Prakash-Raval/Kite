@@ -146,6 +146,10 @@
             app:popUpToInclusive="true" />
 
         <action
+            android:id="@+id/action_settingFragment_to_licenceAgreementFragment"
+            app:destination="@id/licenceAgreementFragment" />
+
+        <action
             android:id="@+id/action_settingFragment_to_addCardFragment"
             app:destination="@id/addCardFragment" />
 
@@ -165,7 +169,7 @@
     </fragment>
     <fragment
         android:id="@+id/selectPaymentFragment"
-        android:name="com.example.kite.selectpayment.SelectPaymentFragment"
+        android:name="com.example.kite.selectpayment.ui.SelectPaymentFragment"
         android:label="SelectPaymentFragment">
         <action
             android:id="@+id/action_selectPaymentFragment_to_addCardFragment"

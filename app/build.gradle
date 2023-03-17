@@ -106,7 +106,8 @@ dependencies {
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 
-    implementation 'com.stripe:stripeterminal:2.18.0'
+    def stripeVersion = "16.1.1"
+    implementation "com.stripe:stripe-android:$stripeVersion"
 
     //guava library
     implementation "com.google.guava:guava:31.0.1-android"

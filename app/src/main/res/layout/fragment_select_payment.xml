@@ -9,8 +9,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".selectpayment.SelectPaymentFragment">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/glStart"
@@ -26,29 +25,9 @@
             android:orientation="vertical"
             app:layout_constraintGuide_end="@dimen/_20sdp" />
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/supportToolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/imgBack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:src="@drawable/ic_back_black" />
-
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/BlackSmallCustomMaterialTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/select_payment" />
-
-        </com.google.android.material.appbar.MaterialToolbar>
+        <include
+            android:id="@+id/inSelectPaymentBar"
+            layout="@layout/item_common_toolbar" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtGet"
@@ -57,9 +36,10 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_20sdp"
             android:text="@string/your_card"
+            android:textSize="@dimen/_24sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/supportToolbar" />
+            app:layout_constraintTop_toBottomOf="@id/inSelectPaymentBar" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/addCardContainer"
@@ -86,6 +66,21 @@
 
         </com.google.android.material.card.MaterialCardView>
 
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvGetCard"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/txtAddCard"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtGet"
+            tools:itemCount="1"
+            tools:listitem="@layout/item_card_design" />
+
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtAddCard"
             android:layout_width="0dp"
@@ -103,6 +98,17 @@
             app:layout_constraintStart_toEndOf="@id/glStart"
             app:layout_constraintTop_toBottomOf="@id/addCardContainer" />
 
+        <com.google.android.material.button.MaterialButton
+            android:visibility="gone"
+            android:id="@+id/btnUsePaymentMethod"
+            style="@style/BlackCustomMaterialButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:text="@string/use_payment_method"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/glEnd"
+            app:layout_constraintStart_toEndOf="@id/glStart" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

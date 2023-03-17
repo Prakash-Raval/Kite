@@ -31,6 +31,7 @@ object Constants {
 
     //CUSTOMER CARD DETAILS
     const val ADD_CARD = "payment/add_card"
+    const val GET_CARD = "payment/get_card"
 
     //COUNTRY LISTING
     const val COUNTRY_LIST = "country/country_list"
