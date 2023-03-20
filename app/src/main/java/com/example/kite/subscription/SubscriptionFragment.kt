@@ -7,25 +7,42 @@ import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.kite.R
+import com.example.kite.base.network.client.ResponseHandler
+import com.example.kite.base.network.model.ResponseData
+import com.example.kite.basefragment.BaseFragment
 import com.example.kite.databinding.DialogSubscriptionBottomSheetBinding
 import com.example.kite.databinding.FragmentSubscriptionBinding
 import com.example.kite.login.model.LoginResponse
+import com.example.kite.selectpayment.model.GetCardRequest
+import com.example.kite.selectpayment.model.GetCardResponse
+import com.example.kite.selectpayment.viewmodel.GetCardViewModel
 import com.example.kite.setting.SettingFragmentDirections
+import com.example.kite.subscription.model.AddSubRequest
+import com.example.kite.subscription.model.AddSubResponse
+import com.example.kite.subscription.model.CancelSubRequest
+import com.example.kite.subscription.model.CancelSubResponse
+import com.example.kite.subscription.viewmodel.SubViewModel
 import com.example.kite.utils.PrefManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
 
-class SubscriptionFragment : Fragment() {
+class SubscriptionFragment : BaseFragment() {
 
     private lateinit var binding: FragmentSubscriptionBinding
+    private lateinit var viewModel: SubViewModel
+    private lateinit var viewModelCard: GetCardViewModel
+
+    private var cardNumber = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,6 +56,8 @@ class SubscriptionFragment : Fragment() {
             false
         )
         setNavigation()
+        checkVisibility()
+        getApiDataCard()
         return binding.root
     }
 
@@ -46,9 +65,64 @@ class SubscriptionFragment : Fragment() {
         binding.btnGetStarted.setOnClickListener {
             openBottomSheet()
         }
+        binding.txtCancelSub.setOnClickListener {
+            cancelSub()
+        }
+        binding.txtRestartSub.setOnClickListener {
+            addSub()
+        }
+    }
+
+    //getting the view model
+    private fun getViewModelCard(): GetCardViewModel {
+        viewModelCard = ViewModelProvider(this)[GetCardViewModel::class.java]
+        return viewModelCard
+    }
+
+    //collecting request data
+    private fun getApiDataCard() {
+        viewModelCard = getViewModelCard()
+        //get request data
+        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data
+
+        viewModelCard.getGetCardRequest(
+            GetCardRequest(
+                access_token = token?.accessToken,
+                customer_id = token?.customerId.toString()
+            )
+        )
+        setObserverCard()
+    }
+
+    //setting up the observers
+    private fun setObserverCard() {
+        //handling error event in snack bar
+        viewModelCard.liveData.observe(viewLifecycleOwner, Observer { state ->
+            if (state == null) {
+                return@Observer
+            }
+            when (state) {
+                is ResponseHandler.Loading -> {
+                    showProgressDialog()
+                    Log.d("ViewTripFragment", "setObserverData: $state")
+                }
+                is ResponseHandler.OnFailed -> {
+                    hideProgressBar()
+                    Log.d("ViewTripFragment", "setObserverData: $state")
+
+                }
+                is ResponseHandler.OnSuccessResponse<ResponseData<GetCardResponse>?> -> {
+                    hideProgressBar()
+                    Log.d("ViewTripFragment", "setObserverData: ${state.response?.data}")
+                    cardNumber = state.response?.data?.details?.get(0)?.cardNumber.toString()
+
+                }
+            }
+        })
     }
 
     private fun openBottomSheet() {
+
         val dialog = BottomSheetDialog(requireContext())
         val bindingDialog: DialogSubscriptionBottomSheetBinding =
             DataBindingUtil.inflate(
@@ -58,11 +132,22 @@ class SubscriptionFragment : Fragment() {
                 false
             )
         val subPrice =
-            PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.subscription?.subscriptionPrice
+            PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data
+
+        if (subPrice?.isDefaultCard == 1) {
+            bindingDialog.gpDS.visibility = View.VISIBLE
+            "....  ....  .... $cardNumber".also { bindingDialog.txtCardNumber.text = it }
+        }
 
         bindingDialog.btnDSSubScribe.setOnClickListener {
-            addCardDialog()
-            dialog.dismiss()
+            if (subPrice?.isDefaultCard == 0) {
+                addCardDialog()
+                dialog.dismiss()
+            } else {
+                addSub()
+                dialog.dismiss()
+            }
+
         }
         bindingDialog.txtDSAddCard.setOnClickListener {
             findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToAddCardFragment())
@@ -71,7 +156,7 @@ class SubscriptionFragment : Fragment() {
 
         bindingDialog.txtDSPrice.text = buildString {
             append("$")
-            append(subPrice.toString())
+            append(subPrice?.subscription?.subscriptionPrice.toString())
             append("/mo")
         }
 
@@ -105,7 +190,6 @@ class SubscriptionFragment : Fragment() {
         dialog.show()
     }
 
-
     //add card dialog
     private fun addCardDialog() {
         val builder: android.app.AlertDialog.Builder =
@@ -118,6 +202,133 @@ class SubscriptionFragment : Fragment() {
             }
         val alert: android.app.AlertDialog? = builder.create()
         alert?.show()
+    }
+
+    //if user subscribed or not
+    private fun checkVisibility() {
+        val sub =
+            PrefManager.get<LoginResponse.Data.Subscription>("SUBSCRIPTION-DATA")
+        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.subscription?.subscriptionPrice
+        if (sub?.isSubscribe == 0) {
+            binding.subNest1.visibility = View.VISIBLE
+            binding.subNest2.visibility = View.GONE
+        } else {
+            binding.subNest1.visibility = View.GONE
+            binding.subNest2.visibility = View.VISIBLE
+            "$${token.toString()}/mo".also {
+                binding.txtRat2.text = it
+            }
+            binding.edtStartDate.setText(sub?.subscriptionStartDate)
+            binding.edtEndDate.setText(sub?.subscriptionEndDate)
+        }
+
+        if (sub?.isSubscriptionAutorenewal == 0) {
+            binding.txtRestartSub.visibility = View.VISIBLE
+            binding.txtRestartSub2.visibility = View.VISIBLE
+            binding.txtCancelSub.visibility = View.GONE
+        } else {
+            binding.txtRestartSub.visibility = View.GONE
+            binding.txtRestartSub2.visibility = View.GONE
+            binding.txtCancelSub.visibility = View.VISIBLE
+        }
+
+    }
+
+    //cancel subscription
+    private fun cancelSub() {
+        binding.txtCancelSub.setOnClickListener {
+            getApiDataCancel()
+        }
+    }
+
+    //add subscription
+    private fun addSub() {
+        getApiData()
+    }
+
+    private fun getViewModel(): SubViewModel {
+        viewModel = ViewModelProvider(this)[SubViewModel::class.java]
+        return viewModel
+    }
+
+    private fun getApiData() {
+        viewModel = getViewModel()
+        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.accessToken
+        //add subscription viw model data
+        viewModel.getAddSubRequest(
+            AddSubRequest(
+                access_token = token
+            )
+        )
+        setObserver()
+    }
+
+    private fun getApiDataCancel() {
+        viewModel = getViewModel()
+        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.accessToken
+        //cancel subscription view model data
+        viewModel.getCancelSubRequest(
+            CancelSubRequest(
+                access_token = token
+            )
+        )
+        setObserverCancel()
+    }
+
+    private fun setObserver() {
+        //handling error event in snack bar
+        viewModel.liveDataADD.observe(viewLifecycleOwner, Observer { state ->
+            if (state == null) {
+                return@Observer
+            }
+            when (state) {
+                is ResponseHandler.Loading -> {
+                    showProgressDialog()
+                    Log.d("ViewTripFragment", "setObserverData: $state")
+                }
+                is ResponseHandler.OnFailed -> {
+                    hideProgressBar()
+                    Log.d("ViewTripFragment", "setObserverData: $state")
+                }
+                is ResponseHandler.OnSuccessResponse<ResponseData<AddSubResponse>?> -> {
+                    hideProgressBar()
+                    Log.d("ViewTripFragment", "setObserverData: ${state.response?.data}")
+                    if (state.response?.code == 200) {
+                        PrefManager.put(state.response.data?.subscription, "SUBSCRIPTION-DATA")
+                        checkVisibility()
+                    }
+                }
+            }
+        })
+    }
+
+    private fun setObserverCancel() {
+        //handling error event in snack bar
+        viewModel.liveDataCancel.observe(viewLifecycleOwner, Observer { state ->
+            if (state == null) {
+                return@Observer
+            }
+            when (state) {
+                is ResponseHandler.Loading -> {
+                    showProgressDialog()
+                    Log.d("ViewTripFragment", "setObserverData: $state")
+                }
+
+                is ResponseHandler.OnFailed -> {
+                    hideProgressBar()
+                    Log.d("ViewTripFragment", "setObserverData: $state")
+                }
+
+                is ResponseHandler.OnSuccessResponse<ResponseData<CancelSubResponse>?> -> {
+                    hideProgressBar()
+                    Log.d("ViewTripFragment", "setObserverData: ${state.response?.data}")
+                    if (state.response?.code == 200) {
+                        PrefManager.put(state.response.data?.subscription, "SUBSCRIPTION-DATA")
+                        checkVisibility()
+                    }
+                }
+            }
+        })
     }
 
 }

@@ -177,6 +177,15 @@
         <item name="background">@drawable/circle_white</item>
         <item name="android:padding">@dimen/_2sdp</item>
     </style>
+
+
+
+    <style name="TopCornersCardView" parent="Widget.MaterialComponents.CardView">
+        <item name="android:topRightRadius">@dimen/_20sdp</item>
+        <item name="android:topLeftRadius">@dimen/_20sdp</item>
+        <item name="cardElevation">@dimen/_1sdp</item>
+        <item name="background">@color/white</item>
+    </style>
     //white button style
 
     <style name="WhiteCustomMaterialButton" parent="Widget.MaterialComponents.Button">

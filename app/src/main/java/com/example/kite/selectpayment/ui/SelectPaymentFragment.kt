@@ -105,12 +105,13 @@ class SelectPaymentFragment : BaseFragment() {
                     hideProgressBar()
                     if (state.response?.data?.details == null) {
                         binding.addCardContainer.visibility = View.VISIBLE
+                        binding.btnUsePaymentMethod.visibility = View.GONE
                         binding.rvGetCard.visibility = View.GONE
                         binding.btnUsePaymentMethod.visibility = View.GONE
-                    }
-                    else {
+                    } else {
                         binding.btnUsePaymentMethod.visibility = View.VISIBLE
                         binding.rvGetCard.visibility = View.VISIBLE
+                        binding.btnUsePaymentMethod.visibility = View.VISIBLE
                         binding.addCardContainer.visibility = View.INVISIBLE
                     }
                     adapter.setList(state.response?.data?.details as ArrayList<GetCardResponse.Detail>)

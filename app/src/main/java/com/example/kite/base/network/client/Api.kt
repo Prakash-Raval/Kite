@@ -10,6 +10,10 @@ import com.example.kite.dateandtime.model.TimeSlotRequest
 import com.example.kite.dateandtime.model.TimeSlotResponse
 import com.example.kite.history.model.RideHistoryRequest
 import com.example.kite.history.model.RideHistoryResponse
+import com.example.kite.notification.model.NotificationRequest
+import com.example.kite.notification.model.NotificationResponse
+import com.example.kite.notification.model.UpdateNotificationRequest
+import com.example.kite.notification.model.UpdateNotificationResponse
 import com.example.kite.reservation.model.ListReservationRequest
 import com.example.kite.reservation.model.ListReservationResponse
 import com.example.kite.scanqr.model.ScanQRRequest
@@ -17,6 +21,10 @@ import com.example.kite.scanqr.model.ScanQRResponse
 import com.example.kite.scheduletrip.model.*
 import com.example.kite.selectpayment.model.GetCardRequest
 import com.example.kite.selectpayment.model.GetCardResponse
+import com.example.kite.subscription.model.AddSubRequest
+import com.example.kite.subscription.model.AddSubResponse
+import com.example.kite.subscription.model.CancelSubRequest
+import com.example.kite.subscription.model.CancelSubResponse
 import com.example.kite.viewscheduletrip.model.ViewTripRequest
 import com.example.kite.viewscheduletrip.model.ViewTripResponse
 import retrofit2.Response
@@ -59,5 +67,15 @@ interface Api {
     @POST(Constants.TIME_SLOT)
     suspend fun getTimeSlot(@Body request: TimeSlotRequest): Response<ResponseData<TimeSlotResponse>>
 
+    @POST(Constants.ADD_SUBSCRIPTION)
+    suspend fun addSubscription(@Body request : AddSubRequest) : Response<ResponseData<AddSubResponse>>
 
+    @POST(Constants.CANCEL_SUBSCRIPTION)
+    suspend fun cancelSubscription(@Body request: CancelSubRequest) : Response<ResponseData<CancelSubResponse>>
+
+    @POST(Constants.NOTIFICATION_UPDATE)
+    suspend fun updateNotificationListing(@Body request: UpdateNotificationRequest) : Response<ResponseData<UpdateNotificationResponse>>
+
+    @POST(Constants.NOTIFICATION_LISTING)
+    suspend fun getNotificationListing(@Body request: NotificationRequest) : Response<ResponseData<NotificationResponse>>
 }

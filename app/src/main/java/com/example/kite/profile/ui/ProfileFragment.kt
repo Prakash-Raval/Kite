@@ -2,6 +2,8 @@ package com.example.kite.profile.ui
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -29,6 +31,7 @@ import com.example.kite.setting.SettingFragmentDirections
 import com.example.kite.statelisting.*
 import com.example.kite.utils.PrefManager
 import kotlinx.coroutines.launch
+import org.bouncycastle.asn1.x500.style.RFC4519Style.name
 
 
 class ProfileFragment : Fragment(), OnCellClickedCountry, OnCellClickedState {
@@ -66,6 +69,12 @@ class ProfileFragment : Fragment(), OnCellClickedCountry, OnCellClickedState {
 
         viewModel.profileLiveData.observe(viewLifecycleOwner) {
             binding.viewProfile = it.data
+            val sharedPreferences = activity?.getSharedPreferences("MySharedPref",MODE_PRIVATE)?.edit()
+            it.data?.subscription?.isSubscribe?.let { it1 ->
+                sharedPreferences?.putInt("name",
+                    it1
+                )?.apply()
+            }
         }
         binding.lifecycleOwner = viewLifecycleOwner
 

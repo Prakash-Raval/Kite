@@ -66,6 +66,15 @@ object Constants {
     const val RIDE_HISTORY = "customer/ride_history"
 
 
+    //subscription
+    const val ADD_SUBSCRIPTION = "subscription/add_subscription"
+    const val CANCEL_SUBSCRIPTION = "subscription/cancel_subscription"
+
+    //notification
+    const val NOTIFICATION_LISTING = "customer/notification_listing"
+    const val NOTIFICATION_UPDATE = "customer/update_notification"
+
+
 
 }
 

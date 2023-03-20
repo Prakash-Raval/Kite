@@ -284,5 +284,10 @@
     <string name="end_date">End Date</string>
     <string name="monthly_renewal">*Monthly Renewal</string>
     <string name="cancel_subscription">Cancel Subscription</string>
+    <string name="congrats_your_subscription_has_been_activated">Congrats, your subscription has been activated.</string>
+    <string name="sub_added_success_text">You can now enjoy the freedom of open schedule periods, multiple trip edits, and reduced fees.</string>
+    <string name="change_card"><u>Change Card</u></string>
+    <string name="restart_sub">Restart Subscription</string>
+    <string name="restart_sub_text">Your subscription and features will be cancelled on the end date listed above. you can restart your subscription at any time</string>
 
 </resources>

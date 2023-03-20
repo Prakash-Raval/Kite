@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+<variable
+    name="dataNotification"
+    type="com.example.kite.notification.model.NotificationResponse.NotificationsData" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintNotification"
+        android:background="@color/card_view_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtNotificationHeader"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            style="@style/BlackSmallCustomMaterialTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{dataNotification.notificationText}"
+            android:layout_marginTop="@dimen/_8sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Your ride is about to start" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:id="@+id/txtNotificationDesc"
+            android:text="@{dataNotification.description}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/avenir_regular"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtNotificationHeader"
+            app:lineHeight="@dimen/_16sdp"
+            tools:text="Your ride is about to start Your ride is about to start Your ride is about to start Your ride is about to start Your ride is about to start " />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/black"
+            android:alpha="0.3"
+            android:layout_marginVertical="@dimen/_8sdp"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtNotificationDesc" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

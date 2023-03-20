@@ -92,6 +92,7 @@ class LoginFragment : Fragment() {
             if (it.code == 200) {
                 findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToSelectProgramFragment())
                 PrefManager.put(it, "LOGIN_RESPONSE")
+                PrefManager.put(it.data?.subscription,"SUBSCRIPTION-DATA")
             } else {
                 Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
             }

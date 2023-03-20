@@ -8,7 +8,8 @@ import com.bumptech.glide.Glide
 @BindingAdapter("image", "placeholder")
 fun setImage(image: ImageView, url: String?, placeHolder: Drawable) {
     if (!url.isNullOrEmpty()) {
-        Glide.with(image.context).load(url)
+        Glide.with(image.context)
+            .load(url)
             .into(image)
     } else {
         image.setImageDrawable(placeHolder)
