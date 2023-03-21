@@ -18,6 +18,7 @@ import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.jackson.JacksonConverterFactory
 import java.util.concurrent.TimeUnit
 
@@ -60,6 +61,7 @@ class ApiClient {
             val builder = Retrofit.Builder()
             builder.baseUrl(Constants.BASE_URL)
             builder.addConverterFactory(JacksonConverterFactory.create())
+            builder.addConverterFactory(GsonConverterFactory.create())
             builder.addCallAdapterFactory(CoroutineCallAdapterFactory())
             builder.client(getOkHttpClient())
             return builder.build()

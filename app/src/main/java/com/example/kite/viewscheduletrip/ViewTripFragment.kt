@@ -32,15 +32,10 @@ class ViewTripFragment : BaseFragment() {
     ): View {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_view_trip, container, false)
-
-        backNavigation()
-        return binding.root
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         requestApiData()
         setObserverData()
+        backNavigation()
+        return binding.root
     }
 
     private fun backNavigation() {
@@ -80,7 +75,7 @@ class ViewTripFragment : BaseFragment() {
 
     private fun setObserverData() {
         //observing view model response data
-        viewModel.liveData.observe(this, Observer { state ->
+        viewModel.liveData.observe(viewLifecycleOwner, Observer { state ->
             if (state == null) {
                 return@Observer
             }
@@ -95,10 +90,11 @@ class ViewTripFragment : BaseFragment() {
 
                 }
                 is ResponseHandler.OnSuccessResponse<ResponseData<ViewTripResponse>?> -> {
+                    hideProgressBar()
                     viewTripResponse = state.response?.data!!
                     binding.viewTripResponse = state.response.data
                     Log.d("ViewTripFragment", "setObserverData: ${state.response.data}")
-                    hideProgressBar()
+
                 }
             }
         })

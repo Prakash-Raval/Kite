@@ -142,8 +142,8 @@ class NotificationFragment : BaseFragment(), OnNotifyUpdate {
         viewModel.updateNotification(
             UpdateNotificationRequest(
                 access_token = token,
+                notification_id = notificationID,
                 is_read = 1,
-                notification_id = notificationID
             )
         )
 
