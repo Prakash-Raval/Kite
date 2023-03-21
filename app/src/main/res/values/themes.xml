@@ -13,7 +13,7 @@
         <!--
                 <item name="android:windowTranslucentStatus">false</item>
         -->
-        <item name="android:statusBarColor">@color/light_gray_status_color</item>
+        <item name="android:statusBarColor">@color/white</item>
 
 
         <!-- Customize your theme here. -->

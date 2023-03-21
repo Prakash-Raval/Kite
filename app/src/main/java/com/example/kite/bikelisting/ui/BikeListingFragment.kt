@@ -1,6 +1,7 @@
 package com.example.kite.bikelisting.ui
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -35,7 +36,7 @@ class BikeListingFragment : Fragment(), OnCellClicked {
     private lateinit var viewModel: BikeListingViewModel
     private lateinit var adapter: Adapter
     val bundle = Bundle()
-    val vehicleDetails = Bundle()
+    private val vehicleDetails = Bundle()
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -106,13 +107,16 @@ class BikeListingFragment : Fragment(), OnCellClicked {
         val currentDate = LocalDateTime.now().format(dateFormatter)
         val currentTime = LocalDateTime.now().format(timeFormatter)
         val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.accessToken
-
+        val sharedPreferences =
+            activity?.getSharedPreferences("THIRD_PARTY_ID", Context.MODE_PRIVATE)
+        val thirdPartyID = sharedPreferences?.getString("ThirdPartyID","ThirdPartyID")
         viewModel.getRequiredData(
             BikeListingRequest(
-                token,
+               access_token =  token,
                 currentDate,
                 currentTime,
-                BikeListingRequest.UserLocation()
+                BikeListingRequest.UserLocation(),
+                third_party_id = thirdPartyID
             )
         )
     }

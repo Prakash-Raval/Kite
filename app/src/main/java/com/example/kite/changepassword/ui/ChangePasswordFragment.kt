@@ -58,6 +58,10 @@ class ChangePasswordFragment : Fragment() {
                 ?.let { it1 -> binding.btnLogin.snackError(it1, Snackbar.LENGTH_SHORT) }
         }
 
+        viewModel.liveData.observe(viewLifecycleOwner){
+            binding.btnLogin.snackError(it.message, Snackbar.LENGTH_SHORT)
+        }
+
         //getting access token
         val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")
         if (token != null) {

@@ -1,6 +1,7 @@
 package com.example.kite.program
 
 import android.annotation.SuppressLint
+import android.content.Context.MODE_PRIVATE
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Spannable
@@ -31,6 +32,7 @@ import com.example.kite.login.model.LoginResponse
 import com.example.kite.network.ApiInterface
 import com.example.kite.network.RetrofitHelper
 import com.example.kite.program.adapter.ThirdPartyListAdapter
+import com.example.kite.program.lis.OnThirdPartyListing
 import com.example.kite.program.model.ThirdPartyListResponse
 import com.example.kite.program.repository.ThirdPartyListRepository
 import com.example.kite.program.viewmodel.TPLViewModelFactory
@@ -41,7 +43,7 @@ import com.example.kite.utils.onTextChanged
 import kotlinx.coroutines.launch
 
 
-class SelectProgramFragment : BaseFragment() {
+class SelectProgramFragment : BaseFragment(), OnThirdPartyListing {
     private lateinit var binding: FragmentSelectProgramBinding
     private lateinit var viewModel: ThirdPartyListingViewModel
     private lateinit var adapter: ThirdPartyListAdapter
@@ -65,7 +67,8 @@ class SelectProgramFragment : BaseFragment() {
         setUPToolbar()
         list = ArrayList()
         adapter = ThirdPartyListAdapter(
-            list, requireContext()
+            list, requireContext(),
+            this
         )
         binding.vpProgram.adapter = adapter
         return binding.root
@@ -78,7 +81,7 @@ class SelectProgramFragment : BaseFragment() {
         }
     }
 
-    fun setUPToolbar(){
+    fun setUPToolbar() {
         binding.inProgramBar.imgBack.visibility = View.GONE
         binding.inProgramBar.txtToolbarHeader.setText(R.string.select_your_program)
     }
@@ -191,6 +194,13 @@ class SelectProgramFragment : BaseFragment() {
         binding.edtSearch.onTextChanged {
             adapter.filter.filter(it)
         }
+    }
+
+    override fun onClick(thirdPartyID: String) {
+        Log.d("ThirdPartyListingID", thirdPartyID)
+        val sharedPreferences =
+            activity?.getSharedPreferences("THIRD_PARTY_ID", MODE_PRIVATE)?.edit()
+        sharedPreferences?.putString("ThirdPartyID", thirdPartyID)?.apply()
     }
 
 }

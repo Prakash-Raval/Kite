@@ -2,6 +2,7 @@ package com.example.kite.profile.ui
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.graphics.Color
@@ -80,9 +81,16 @@ class ProfileFragment : Fragment(), OnCellClickedCountry, OnCellClickedState {
 
         //giving access token to get particular user
         val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")
+        val sharedPreferences =
+            activity?.getSharedPreferences("THIRD_PARTY_ID", MODE_PRIVATE)
+        val thirdPartyID = sharedPreferences?.getString("ThirdPartyID","ThirdPartyID")
         lifecycleScope.launch {
             if (token != null) {
-                token.data?.accessToken?.let { viewModel.getToken(it) }
+                token.data?.accessToken?.let {
+                    if (thirdPartyID != null) {
+                        viewModel.getToken(it,thirdPartyID)
+                    }
+                }
             }
         }
     }

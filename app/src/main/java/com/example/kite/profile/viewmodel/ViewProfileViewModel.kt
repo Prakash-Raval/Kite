@@ -17,11 +17,13 @@ class ViewProfileViewModel(val repository: ViewProfileRepository) : ViewModel() 
         get() = profileResult
 
     var token: String = ""
+    var thirdPartyID = ""
 
-    fun getToken(token: String) {
+    fun getToken(token: String , thirdPartyID : String) {
         this.token = token
+        this.thirdPartyID = thirdPartyID
 
-        getCustomerProfile(ViewProfileRequest(token))
+        getCustomerProfile(ViewProfileRequest(access_token = token, third_party_id = thirdPartyID))
     }
 
     private fun getCustomerProfile(request: ViewProfileRequest) = viewModelScope.launch {

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.kite.R
 import com.example.kite.base.network.client.ResponseHandler
@@ -23,6 +24,8 @@ import com.example.kite.notification.model.UpdateNotificationRequest
 import com.example.kite.notification.model.UpdateNotificationResponse
 import com.example.kite.notification.viewmodel.NotificationViewModel
 import com.example.kite.utils.PrefManager
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class NotificationFragment : BaseFragment(), OnNotifyUpdate {
     private lateinit var binding: FragmentNotificationBinding
@@ -139,15 +142,18 @@ class NotificationFragment : BaseFragment(), OnNotifyUpdate {
 
     override fun onClick(notificationID: String) {
         val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.accessToken
-        viewModel.updateNotification(
-            UpdateNotificationRequest(
-                access_token = token,
-                notification_id = notificationID,
-                is_read = 1,
-            )
+        val isRead = 1
+        val req = UpdateNotificationRequest(
+            access_token = token,
+            notification_id = notificationID,
+            is_read = isRead
         )
+        lifecycleScope.launch {
+            delay(3000)
+            viewModel.updateNotification(
+                token.toString(), "1", notificationID
+            )
+        }
 
     }
-
-
 }

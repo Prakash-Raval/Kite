@@ -2,6 +2,7 @@ package com.example.kite.home
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -169,7 +170,9 @@ class HomeFragment : BaseFragment() {
         val currentDate = LocalDateTime.now().format(dateFormatter)
         val currentTime = LocalDateTime.now().format(timeFormatter)
         val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.accessToken
-
+        val sharedPreferences =
+            activity?.getSharedPreferences("THIRD_PARTY_ID", Context.MODE_PRIVATE)
+        val thirdPartyID = sharedPreferences?.getString("ThirdPartyID","ThirdPartyID")
         //passing data to request class
         viewModelViewTrip.getViewTripRequest(
             ListReservationRequest(
@@ -179,7 +182,8 @@ class HomeFragment : BaseFragment() {
                 offset = 0,
                 current_date = currentDate,
                 current_time = currentTime,
-                limit = 1
+                limit = 1,
+                third_party_id = thirdPartyID
             )
         )
 

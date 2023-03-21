@@ -361,6 +361,9 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
         } else {
             "00:00:00"
         }
+        val sharedPreferences =
+            activity?.getSharedPreferences("THIRD_PARTY_ID", Context.MODE_PRIVATE)
+        val thirdPartyID = sharedPreferences?.getString("ThirdPartyID","ThirdPartyID")
 
         //passing data to request class
         viewModel.getTimeSlot(
@@ -370,7 +373,8 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
                 time_zone = timeZone,
                 manufacturer_id = manufacturerID,
                 vehicle_type_id = vehicleTypeID,
-                schedule_date = scheduleDate
+                schedule_date = scheduleDate,
+                third_party_id = thirdPartyID
             )
         )
 

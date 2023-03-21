@@ -13,11 +13,13 @@ import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.request.RequestOptions
 import com.example.kite.R
 import com.example.kite.databinding.ItemThirdpartyListBinding
+import com.example.kite.program.lis.OnThirdPartyListing
 import com.example.kite.program.model.ThirdPartyListResponse
 
 class ThirdPartyListAdapter(
     private var thirdPartyList: ArrayList<ThirdPartyListResponse.Data?>,
     private val context: Context,
+    private val onThirdPartyListing: OnThirdPartyListing
 ) :
     RecyclerView.Adapter<ThirdPartyListAdapter.ViewHolder>(), Filterable {
     private lateinit var binding: ItemThirdpartyListBinding
@@ -36,7 +38,6 @@ class ThirdPartyListAdapter(
             binding.imageContainer.setOnClickListener {
                 val select = selectedItem
                 selectedItem = position
-
                 notifyItemChanged(select)
                 notifyItemChanged(position)
             }
@@ -70,6 +71,7 @@ class ThirdPartyListAdapter(
 
         //setting custom style for card view
         if (selectedItem == position) {
+            onThirdPartyListing.onClick(list[position]?.thirdPartyId.toString())
             holder.binding.imageContainer.apply {
                 radius = 30f
                 elevation = 10f

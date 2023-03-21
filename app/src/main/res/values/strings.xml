@@ -289,5 +289,8 @@
     <string name="change_card"><u>Change Card</u></string>
     <string name="restart_sub">Restart Subscription</string>
     <string name="restart_sub_text">Your subscription and features will be cancelled on the end date listed above. you can restart your subscription at any time</string>
+    <string name="before_you_go">Before You go</string>
+    <string name="cancel_dialog_trip_text">Are you sure you\'d like to cancel your reservation?</string>
+    <string name="reservation_cancel_success">Reservation cancelled successfully</string>
 
 </resources>

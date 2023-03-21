@@ -21,14 +21,21 @@ class NotificationRepository(val api: Api) : BaseRepository() {
                 })
         }
     }
-
-    suspend fun callApiNotificationUpdate(request: UpdateNotificationRequest): ResponseHandler<ResponseData<UpdateNotificationResponse>?> {
+    suspend fun callApiNotificationUpdate(token: String, read : String, notify : String): ResponseHandler<ResponseData<UpdateNotificationResponse>?> {
+        return withContext(Dispatchers.Default) {
+            return@withContext makeAPICall(
+                call = {
+                    api.updateNotificationListing(token,read,notify)
+                })
+        }
+    }
+   /* suspend fun callApiNotificationUpdate(request: UpdateNotificationRequest): ResponseHandler<ResponseData<UpdateNotificationResponse>?> {
         return withContext(Dispatchers.Default) {
             return@withContext makeAPICall(
                 call = {
                     api.updateNotificationListing(request)
                 })
         }
-    }
+    }*/
 
 }

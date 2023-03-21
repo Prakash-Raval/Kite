@@ -39,10 +39,10 @@ class NotificationViewModel : ViewModelBase() {
     }
 
 
-    fun updateNotification(request: UpdateNotificationRequest) {
+    fun updateNotification(token: String, read : String, notify : String) {
         viewModelScope.launch(coroutineContext) {
             responseLiveDataUpdate.value = ResponseHandler.Loading
-            responseLiveDataUpdate.value = repository.callApiNotificationUpdate(request)
+            responseLiveDataUpdate.value = repository.callApiNotificationUpdate(token, read, notify)
         }
     }
 }
