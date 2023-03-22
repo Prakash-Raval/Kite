@@ -9,9 +9,7 @@ import com.example.kite.base.network.client.ResponseHandler
 import com.example.kite.base.network.model.ResponseData
 import com.example.kite.scheduletrip.model.CancelTripRequest
 import com.example.kite.scheduletrip.model.CancelTripResponse
-import com.example.kite.scheduletrip.model.UpdateTripRequest
 import com.example.kite.scheduletrip.repository.CancelTripRepository
-import com.example.kite.scheduletrip.repository.UpdateTripRepository
 import kotlinx.coroutines.launch
 
 class CancelTripViewModel : ViewModelBase() {

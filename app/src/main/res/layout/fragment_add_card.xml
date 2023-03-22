@@ -5,7 +5,6 @@
     <data>
 
 
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -122,8 +121,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="@string/card_holder_name"
-                        android:inputType="textPersonName"
-                        />
+                        android:inputType="textPersonName" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textview.MaterialTextView
@@ -153,8 +151,7 @@
                         android:layout_height="match_parent"
                         android:hint="@string/card_hint"
                         android:inputType="number"
-                        android:maxLength="16"
-                        />
+                        android:maxLength="16" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -206,8 +203,7 @@
                         android:drawableEnd="@drawable/ic_arrow_down"
                         android:drawablePadding="@dimen/_40sdp"
                         android:focusable="false"
-                        android:hint="@string/year"
-                         />
+                        android:hint="@string/year" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -233,8 +229,7 @@
                         android:drawableEnd="@drawable/ic_arrow_down"
                         android:drawablePadding="@dimen/_40sdp"
                         android:focusable="false"
-                        android:hint="@string/month"
-                         />
+                        android:hint="@string/month" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -256,8 +251,7 @@
                         android:layout_height="match_parent"
                         android:hint="@string/cvv"
                         android:inputType="number"
-                        android:maxLength="4"
-                        />
+                        android:maxLength="4" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 

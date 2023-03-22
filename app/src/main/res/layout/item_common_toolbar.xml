@@ -36,12 +36,12 @@
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imgClose"
-                android:layout_gravity="end"
-                android:visibility="gone"
-                android:layout_marginEnd="@dimen/_20sdp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_close" />
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:src="@drawable/ic_close"
+                android:visibility="gone" />
 
         </com.google.android.material.appbar.MaterialToolbar>
 

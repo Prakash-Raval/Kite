@@ -1,7 +1,6 @@
 package com.example.kite.extensions
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.view.View
 import androidx.annotation.IntegerRes
 import androidx.annotation.StringRes

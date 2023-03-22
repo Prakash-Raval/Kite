@@ -27,7 +27,19 @@ class NotificationAdapter(val context: Context, val onNotifyUpdate: OnNotifyUpda
         @SuppressLint("NotifyDataSetChanged")
         fun bind(position: Int) {
             binding.dataNotification = list[position]
+         //   binding.isSelected = selected == position
+            //list[position].isSelected = selected == position
+            if (list[position].notificationRead == 0)
+                binding.constraintNotification.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.white
+                    )
+                )
+
+
             binding.root.setOnClickListener {
+                binding.isSelected = true
                 onNotifyUpdate.onClick(
                     list[position].notificationId.toString()
                 )

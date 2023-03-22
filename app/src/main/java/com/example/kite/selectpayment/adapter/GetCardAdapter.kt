@@ -6,10 +6,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kite.databinding.ItemCardDesignBinding
-import com.example.kite.databinding.ItemVehicleListingBinding
 import com.example.kite.selectpayment.model.GetCardResponse
 
-class GetCardAdapter:RecyclerView.Adapter<GetCardAdapter.ViewHolder>() {
+class GetCardAdapter : RecyclerView.Adapter<GetCardAdapter.ViewHolder>() {
     private var list = ArrayList<GetCardResponse.Detail>()
     fun setList(list: ArrayList<GetCardResponse.Detail>) {
         this.list = list

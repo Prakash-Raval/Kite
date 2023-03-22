@@ -10,16 +10,13 @@ import com.example.kite.base.network.model.ResponseData
 import com.example.kite.scanqr.model.ScanQRRequest
 import com.example.kite.scanqr.model.ScanQRResponse
 import com.example.kite.scanqr.repository.ScanQRRepository
-import com.example.kite.viewscheduletrip.model.ViewTripRequest
-import com.example.kite.viewscheduletrip.model.ViewTripResponse
-import com.example.kite.viewscheduletrip.repository.ViewTripDetailsRepository
 import kotlinx.coroutines.launch
 
 class ScanQRViewModel : ViewModelBase() {
 
     private var repository = ScanQRRepository(ApiClient.getApiInterface())
     private var responseLiveData = MutableLiveData<ResponseHandler<ResponseData<ScanQRResponse>?>>()
-    val liveData : LiveData<ResponseHandler<ResponseData<ScanQRResponse>?>>
+    val liveData: LiveData<ResponseHandler<ResponseData<ScanQRResponse>?>>
         get() = responseLiveData
 
     fun getScanQRRequest(request: ScanQRRequest) {

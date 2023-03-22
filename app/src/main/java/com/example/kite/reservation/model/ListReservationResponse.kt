@@ -30,8 +30,7 @@ data class ListReservationResponse(
         @JsonProperty("vehicle_type") var vehicleType: String? = null,
         @JsonProperty("vehicle_type_image") var vehicleTypeImage: String? = null,
         @JsonProperty("vehicle_type_slug") var vehicleTypeSlug: String? = null
-    ) : Parcelable
-    {
+    ) : Parcelable {
         @Parcelize
         data class GeoLocation(
             @JsonProperty("lat") var lat: Double? = null,

@@ -73,6 +73,7 @@ data class LoginResponse(
             @JsonProperty("version_upgrade")
             var versionUpgrade: Int? = null
         )
+
         @JsonIgnoreProperties(ignoreUnknown = true)
         data class Subscription(
             @JsonProperty("is_subscribe")

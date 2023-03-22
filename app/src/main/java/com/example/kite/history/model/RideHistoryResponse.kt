@@ -80,6 +80,7 @@ data class RideHistoryResponse(
             @JsonProperty("y")
             var y: Double? = null
         )
+
         data class PickupLocation(
             @JsonProperty("x")
             var x: Double? = null,

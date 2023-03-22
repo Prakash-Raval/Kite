@@ -1,22 +1,15 @@
 package com.example.kite.dateandtime.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bumptech.glide.Glide.init
 import com.example.kite.base.ViewModelBase
 import com.example.kite.base.network.ApiClient
 import com.example.kite.base.network.client.ResponseHandler
 import com.example.kite.base.network.model.ResponseData
-import com.example.kite.dateandtime.model.PromoCodeRequest
-import com.example.kite.dateandtime.model.PromoCodeResponse
 import com.example.kite.dateandtime.model.TimeSlotRequest
 import com.example.kite.dateandtime.model.TimeSlotResponse
-import com.example.kite.dateandtime.repository.PromoCodeRepository
 import com.example.kite.dateandtime.repository.TimeSlotRepository
-import kotlinx.coroutines.GlobalScope.coroutineContext
 import kotlinx.coroutines.launch
 
 class TimeSlotViewModel : ViewModelBase() {
@@ -47,9 +40,8 @@ class TimeSlotViewModel : ViewModelBase() {
 
     var repository = TimeSlotRepository(ApiClient.getApiInterface())
     var responseLiveData = MutableLiveData<ResponseHandler<ResponseData<TimeSlotResponse>?>>()
-    val liveData :LiveData<ResponseHandler<ResponseData<TimeSlotResponse>?>>
-    get() = responseLiveData
-
+    val liveData: LiveData<ResponseHandler<ResponseData<TimeSlotResponse>?>>
+        get() = responseLiveData
 
 
     fun getTimeSlot(request: TimeSlotRequest) {

@@ -23,7 +23,7 @@ import com.example.kite.utils.PrefManager
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class ReservationFragment : BaseFragment(),OnReservationViewClick {
+class ReservationFragment : BaseFragment(), OnReservationViewClick {
 
     private lateinit var binding: FragmentReservationBinding
     private lateinit var viewModel: ViewTripViewModel
@@ -91,11 +91,11 @@ class ReservationFragment : BaseFragment(),OnReservationViewClick {
 
     }
 
-    private fun viewTripDetails(){
+    private fun viewTripDetails() {
         val action = R.id.action_reservationFragment_to_viewTripFragment
         val bundle = Bundle()
-        bundle.putString("ReservationID",reservationId)
-        findNavController().navigate(action,bundle)
+        bundle.putString("ReservationID", reservationId)
+        findNavController().navigate(action, bundle)
 
     }
 

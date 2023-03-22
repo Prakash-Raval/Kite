@@ -33,7 +33,6 @@ import com.example.kite.scheduletrip.listner.OnTripClick
 import com.example.kite.scheduletrip.model.*
 import com.example.kite.scheduletrip.repository.ScheduleTripRepository
 import com.example.kite.scheduletrip.viewmodel.*
-import com.example.kite.setting.SettingFragmentDirections
 import com.example.kite.utils.PrefManager
 import com.example.kite.viewscheduletrip.model.ViewTripResponse
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -116,9 +115,6 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
         val alert: android.app.AlertDialog? = builder.create()
         alert?.show()
     }
-
-
-
 
 
     private fun setDateAndTime() {
@@ -301,7 +297,7 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
         sharedPreference?.putString("MID", manufacturerID)?.apply()
         val sharedPreferences =
             activity?.getSharedPreferences("THIRD_PARTY_ID", Context.MODE_PRIVATE)
-        val thirdPartyID = sharedPreferences?.getString("ThirdPartyID","ThirdPartyID")
+        val thirdPartyID = sharedPreferences?.getString("ThirdPartyID", "ThirdPartyID")
 
 
 
@@ -358,7 +354,7 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
         val manufacturerID = args?.getString("ManufacturerID")
         val sharedPreferences =
             activity?.getSharedPreferences("THIRD_PARTY_ID", Context.MODE_PRIVATE)
-        val thirdPartyID = sharedPreferences?.getString("ThirdPartyID","ThirdPartyID")
+        val thirdPartyID = sharedPreferences?.getString("ThirdPartyID", "ThirdPartyID")
         //passing request data
         viewModelTrip.getTripRequest(
             TripRequest(
@@ -434,7 +430,7 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
             binding.txtSTTRip.setText(R.string.update_your_trip)
             val sharedPreferences =
                 activity?.getSharedPreferences("THIRD_PARTY_ID", Context.MODE_PRIVATE)
-            val thirdPartyID = sharedPreferences?.getString("ThirdPartyID","ThirdPartyID")
+            val thirdPartyID = sharedPreferences?.getString("ThirdPartyID", "ThirdPartyID")
             //call for schedule trip time duration api call
             binding.txtSTVehicleName.text = viewTripResponse?.vehicleType
             viewModel.getRequiredData(

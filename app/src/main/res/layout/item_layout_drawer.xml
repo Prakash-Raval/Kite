@@ -79,6 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp"
             android:alpha="0.5"
+            android:padding="@dimen/_5sdp"
             android:background="@drawable/bg_text_grey"
             android:text="@string/reservations"
             app:layout_constraintStart_toEndOf="@id/glStart"

@@ -3,9 +3,6 @@ package com.example.kite.notification.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.kite.addcard.model.AddCardRequest
-import com.example.kite.addcard.model.AddCardResponse
-import com.example.kite.addcard.repository.AddCardRepository
 import com.example.kite.base.ViewModelBase
 import com.example.kite.base.network.ApiClient
 import com.example.kite.base.network.client.ResponseHandler
@@ -28,7 +25,7 @@ class NotificationViewModel : ViewModelBase() {
 
     private var responseLiveDataUpdate =
         MutableLiveData<ResponseHandler<ResponseData<UpdateNotificationResponse>?>>()
-    val liveDataUpdate : LiveData<ResponseHandler<ResponseData<UpdateNotificationResponse>?>>
+    val liveDataUpdate: LiveData<ResponseHandler<ResponseData<UpdateNotificationResponse>?>>
         get() = responseLiveDataUpdate
 
     fun getNotificationListing(request: NotificationRequest) {
@@ -39,10 +36,17 @@ class NotificationViewModel : ViewModelBase() {
     }
 
 
-    fun updateNotification(token: String, read : String, notify : String) {
+    /*fun updateNotification(token: String, read: String, notify: String) {
         viewModelScope.launch(coroutineContext) {
             responseLiveDataUpdate.value = ResponseHandler.Loading
             responseLiveDataUpdate.value = repository.callApiNotificationUpdate(token, read, notify)
+        }
+    }*/
+
+    fun updateNotification(req: UpdateNotificationRequest) {
+        viewModelScope.launch(coroutineContext) {
+            responseLiveDataUpdate.value = ResponseHandler.Loading
+            responseLiveDataUpdate.value = repository.callApiNotificationUpdate(req)
         }
     }
 }

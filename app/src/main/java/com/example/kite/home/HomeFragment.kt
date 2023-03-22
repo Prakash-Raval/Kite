@@ -59,7 +59,6 @@ class HomeFragment : BaseFragment() {
             false
         )
         // Inflate the layout for this fragment
-
         val args = this.arguments
         val isCheck = args?.getBoolean("UpCharge")
         if (isCheck == true) {
@@ -73,6 +72,7 @@ class HomeFragment : BaseFragment() {
         viewTrip()
         return binding.root
     }
+
 
     private fun setObserver() {
         //observing view model response data
@@ -172,7 +172,7 @@ class HomeFragment : BaseFragment() {
         val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.accessToken
         val sharedPreferences =
             activity?.getSharedPreferences("THIRD_PARTY_ID", Context.MODE_PRIVATE)
-        val thirdPartyID = sharedPreferences?.getString("ThirdPartyID","ThirdPartyID")
+        val thirdPartyID = sharedPreferences?.getString("ThirdPartyID", "ThirdPartyID")
         //passing data to request class
         viewModelViewTrip.getViewTripRequest(
             ListReservationRequest(

@@ -31,6 +31,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 
+
 class BikeListingFragment : Fragment(), OnCellClicked {
     private lateinit var binding: FragmentBikeListingBinding
     private lateinit var viewModel: BikeListingViewModel
@@ -109,10 +110,10 @@ class BikeListingFragment : Fragment(), OnCellClicked {
         val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.accessToken
         val sharedPreferences =
             activity?.getSharedPreferences("THIRD_PARTY_ID", Context.MODE_PRIVATE)
-        val thirdPartyID = sharedPreferences?.getString("ThirdPartyID","ThirdPartyID")
+        val thirdPartyID = sharedPreferences?.getString("ThirdPartyID", "ThirdPartyID")
         viewModel.getRequiredData(
             BikeListingRequest(
-               access_token =  token,
+                access_token = token,
                 currentDate,
                 currentTime,
                 BikeListingRequest.UserLocation(),

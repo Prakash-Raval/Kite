@@ -47,7 +47,7 @@ class ViewTripFragment : BaseFragment() {
         binding.btnVTUpdateTrip.setOnClickListener {
             val bundle = Bundle()
             bundle.putBoolean("UpdateTrip", true)
-            bundle.putParcelable("ViewTripResponse",viewTripResponse)
+            bundle.putParcelable("ViewTripResponse", viewTripResponse)
             val action = R.id.action_viewTripFragment_to_scheduleTripFragment2
             findNavController().navigate(action, bundle)
         }

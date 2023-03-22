@@ -157,17 +157,17 @@
             tools:text=" 08:35 PM" />
 
         <com.google.android.material.button.MaterialButton
-            app:layout_constraintTop_toTopOf="@id/txtRDStartTime"
-            app:layout_constraintBottom_toBottomOf="@id/txtRDEndingTime"
             android:id="@+id/btnRDReceipt"
             style="@style/CustomMaterialButton"
-            app:layout_constraintEnd_toStartOf="@id/glEnd"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_20sdp"
             android:layout_marginBottom="@dimen/_20sdp"
             android:padding="0dp"
-            android:text="@string/receipt" />
+            android:text="@string/receipt"
+            app:layout_constraintBottom_toBottomOf="@id/txtRDEndingTime"
+            app:layout_constraintEnd_toStartOf="@id/glEnd"
+            app:layout_constraintTop_toTopOf="@id/txtRDStartTime" />
 
         <com.example.kite.utils.DashDividerView
             android:id="@+id/d4"
@@ -189,11 +189,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp"
-            android:textSize="@dimen/_12sdp"
             android:alpha="0.5"
+            android:text="@string/security_deposited"
+            android:textSize="@dimen/_12sdp"
             app:layout_constraintStart_toEndOf="@id/glStart"
-            app:layout_constraintTop_toBottomOf="@id/d4"
-            android:text="@string/security_deposited" />
+            app:layout_constraintTop_toBottomOf="@id/d4" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtRDDepositPrice"
@@ -201,8 +201,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp"
-            android:textSize="@dimen/_12sdp"
             android:alpha="0.5"
+            android:textSize="@dimen/_12sdp"
             app:layout_constraintEnd_toStartOf="@id/glEnd"
             app:layout_constraintTop_toBottomOf="@id/d4"
             tools:text="$3000" />
@@ -227,11 +227,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp"
-            android:textSize="@dimen/_12sdp"
             android:alpha="0.5"
+            android:text="@string/travel_charges"
+            android:textSize="@dimen/_12sdp"
             app:layout_constraintStart_toEndOf="@id/glStart"
-            app:layout_constraintTop_toBottomOf="@id/d5"
-            android:text="@string/travel_charges" />
+            app:layout_constraintTop_toBottomOf="@id/d5" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtRDTravelPrice"
@@ -239,8 +239,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp"
-            android:textSize="@dimen/_12sdp"
             android:alpha="0.5"
+            android:textSize="@dimen/_12sdp"
             app:layout_constraintEnd_toStartOf="@id/glEnd"
             app:layout_constraintTop_toBottomOf="@id/d5"
             tools:text="$3000" />
@@ -265,11 +265,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp"
-            android:textSize="@dimen/_12sdp"
             android:alpha="0.5"
+            android:text="@string/returnable_amount"
+            android:textSize="@dimen/_12sdp"
             app:layout_constraintStart_toEndOf="@id/glStart"
-            app:layout_constraintTop_toBottomOf="@id/d6"
-            android:text="@string/returnable_amount" />
+            app:layout_constraintTop_toBottomOf="@id/d6" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtRDReturnPrice"
@@ -277,8 +277,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp"
-            android:textSize="@dimen/_12sdp"
             android:alpha="0.5"
+            android:textSize="@dimen/_12sdp"
             app:layout_constraintEnd_toStartOf="@id/glEnd"
             app:layout_constraintTop_toBottomOf="@id/d6"
             tools:text="$3000" />
@@ -303,10 +303,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp"
+            android:text="@string/final_amount"
             android:textSize="@dimen/_12sdp"
             app:layout_constraintStart_toEndOf="@id/glStart"
-            app:layout_constraintTop_toBottomOf="@id/d7"
-            android:text="@string/final_amount" />
+            app:layout_constraintTop_toBottomOf="@id/d7" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtRDFinalPrice"
@@ -319,6 +319,6 @@
             app:layout_constraintTop_toBottomOf="@id/d7"
             tools:text="$9000" />
 
-        
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

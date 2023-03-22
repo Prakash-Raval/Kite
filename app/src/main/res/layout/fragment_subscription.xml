@@ -231,10 +231,10 @@
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/subNest2"
-            android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -356,12 +356,12 @@
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txtSubEndDate"
                     style="@style/CapitalTextView"
-                    android:textSize="@dimen/_10sdp"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_16sdp"
                     android:layout_marginEnd="@dimen/_20sdp"
                     android:text="@string/end_date"
+                    android:textSize="@dimen/_10sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/txtSubStartDate"
                     app:layout_constraintTop_toBottomOf="@id/txtKiteRun2" />
@@ -381,10 +381,10 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edtStartDate"
                         style="@style/TextEditText"
-                        android:hint="@string/dash"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:focusable="false" />
+                        android:focusable="false"
+                        android:hint="@string/dash" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -403,10 +403,10 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edtEndDate"
                         style="@style/TextEditText"
-                        android:hint="@string/dash"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:focusable="false" />
+                        android:focusable="false"
+                        android:hint="@string/dash" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -428,10 +428,10 @@
                     android:id="@+id/txtCancelSub"
                     style="@style/CapitalTextView"
                     android:layout_width="match_parent"
-                    android:gravity="center"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_16sdp"
+                    android:gravity="center"
                     android:text="@string/cancel_subscription"
                     android:textSize="@dimen/_12sdp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -439,33 +439,32 @@
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txtRestartSub2"
-                    app:layout_constraintTop_toBottomOf="@id/txtMonthRenewal"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_20sdp"
+                    android:fontFamily="@font/avenir_light"
+                    android:gravity="center"
                     android:text="@string/restart_sub_text"
                     android:textSize="@dimen/_12sdp"
-                    android:fontFamily="@font/avenir_light"
                     android:visibility="gone"
-                    android:gravity="center"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/txtMonthRenewal" />
 
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txtRestartSub"
                     style="@style/CapitalTextView"
                     android:layout_width="match_parent"
-                    android:gravity="center"
-                    android:visibility="gone"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_16sdp"
+                    android:gravity="center"
                     android:text="@string/restart_sub"
                     android:textSize="@dimen/_12sdp"
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/txtRestartSub2" />
-
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

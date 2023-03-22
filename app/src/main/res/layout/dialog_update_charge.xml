@@ -51,25 +51,25 @@
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txtTripBook"
-                    app:layout_constraintTop_toBottomOf="@id/imgProperty"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:textStyle="bold"
                     style="@style/BlackSmallCustomMaterialTextView"
-                    android:text="@string/congrats_your_trip_has_been_scheduled"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:layout_height="wrap_content" />
+                    android:text="@string/congrats_your_trip_has_been_scheduled"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imgProperty" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txtRandom"
                     style="@style/BlackSmallCustomMaterialTextView"
                     android:layout_width="0dp"
-                    android:textColor="@color/light_black_text_color"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_20sdp"
                     android:gravity="center"
                     android:text="@{`You can make edits to your trip in the 'Reservations' menu at any time. A $ ` + price + ` fee will be charged on missed reservation ` }"
+                    android:textColor="@color/light_black_text_color"
                     android:textSize="@dimen/_14sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

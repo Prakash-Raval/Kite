@@ -140,12 +140,6 @@
         android:label="SettingFragment">
 
         <action
-            android:id="@+id/action_settingFragment_to_welcomeFragment"
-            app:destination="@id/welcomeFragment"
-            app:popUpTo="@+id/main_nav_graph"
-            app:popUpToInclusive="true" />
-
-        <action
             android:id="@+id/action_settingFragment_to_licenceAgreementFragment"
             app:destination="@id/licenceAgreementFragment" />
 
@@ -166,6 +160,14 @@
         <action
             android:id="@+id/action_settingFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+
+        <action
+            android:id="@+id/action_settingFragment_to_welcomeFragment"
+            app:destination="@id/welcomeFragment"
+            app:popUpTo="@+id/main_nav_graph"
+            app:popUpToInclusive="true" />
+
+
     </fragment>
     <fragment
         android:id="@+id/selectPaymentFragment"
@@ -206,7 +208,7 @@
     <fragment
         android:id="@+id/subscriptionFragment"
         android:name="com.example.kite.subscription.SubscriptionFragment"
-        android:label="SubscriptionFragment" >
+        android:label="SubscriptionFragment">
 
     </fragment>
     <fragment

@@ -27,7 +27,7 @@ class EndRideCheckListFragment : Fragment() {
         return binding.root
     }
 
-    fun setupToolbar(){
+    fun setupToolbar() {
         binding.inETCBar.imgBack.setOnClickListener {
             findNavController().navigateUp()
         }

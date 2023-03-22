@@ -60,13 +60,13 @@
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/_10sdp"
             android:orientation="vertical"
-            tools:itemCount="3"
-            tools:listitem="@layout/item_reservation_recycyler"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@id/btnScheduleTrip"
             app:layout_constraintEnd_toStartOf="@id/glEnd"
             app:layout_constraintStart_toEndOf="@id/glStart"
-            app:layout_constraintTop_toBottomOf="@id/txtBooking" />
+            app:layout_constraintTop_toBottomOf="@id/txtBooking"
+            tools:itemCount="3"
+            tools:listitem="@layout/item_reservation_recycyler" />
 
 
         <com.google.android.material.button.MaterialButton

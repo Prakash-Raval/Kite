@@ -15,8 +15,9 @@ import kotlinx.coroutines.launch
 class ViewTripDetailsViewModel : ViewModelBase() {
 
     private var repository = ViewTripDetailsRepository(ApiClient.getApiInterface())
-    private var responseLiveData = MutableLiveData<ResponseHandler<ResponseData<ViewTripResponse>?>>()
-    val liveData : LiveData<ResponseHandler<ResponseData<ViewTripResponse>?>>
+    private var responseLiveData =
+        MutableLiveData<ResponseHandler<ResponseData<ViewTripResponse>?>>()
+    val liveData: LiveData<ResponseHandler<ResponseData<ViewTripResponse>?>>
         get() = responseLiveData
 
     fun getTripRequest(request: ViewTripRequest) {

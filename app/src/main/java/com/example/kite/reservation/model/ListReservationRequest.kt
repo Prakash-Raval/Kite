@@ -23,5 +23,5 @@ data class ListReservationRequest(
     @JsonProperty("limit")
     var limit: Int? = 200,
     @JsonProperty("offset")
-    var offset: Int?= 0
+    var offset: Int? = 0
 )

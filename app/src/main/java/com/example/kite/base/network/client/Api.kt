@@ -12,6 +12,7 @@ import com.example.kite.history.model.RideHistoryRequest
 import com.example.kite.history.model.RideHistoryResponse
 import com.example.kite.notification.model.NotificationRequest
 import com.example.kite.notification.model.NotificationResponse
+import com.example.kite.notification.model.UpdateNotificationRequest
 import com.example.kite.notification.model.UpdateNotificationResponse
 import com.example.kite.reservation.model.ListReservationRequest
 import com.example.kite.reservation.model.ListReservationResponse
@@ -71,13 +72,19 @@ interface Api {
     @POST(Constants.CANCEL_SUBSCRIPTION)
     suspend fun cancelSubscription(@Body request: CancelSubRequest): Response<ResponseData<CancelSubResponse>>
 
-     @FormUrlEncoded
-     @Headers("Content-Type: application/json")
+ /*   @FormUrlEncoded
+    @Headers("Content-Type: application/json")
     @POST(Constants.NOTIFICATION_UPDATE)
     suspend fun updateNotificationListing(
         @Field("access_token") access_token: String,
         @Field("is_read") is_read: String,
         @Field("notification_id") notification_id: String
+    ): Response<ResponseData<UpdateNotificationResponse>>*/
+
+
+    @POST(Constants.NOTIFICATION_UPDATE)
+    suspend fun updateNotificationListing(
+        @Body req:UpdateNotificationRequest
     ): Response<ResponseData<UpdateNotificationResponse>>
 
     @POST(Constants.NOTIFICATION_LISTING)

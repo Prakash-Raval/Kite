@@ -21,12 +21,12 @@
             android:layout_margin="@dimen/_16sdp"
             android:backgroundTint="@color/bg_card_gray"
             app:cardCornerRadius="@dimen/_20sdp"
-            app:strokeWidth="@dimen/_1sdp"
-            app:strokeColor="@color/bg_main"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeColor="@color/bg_main"
+            app:strokeWidth="@dimen/_1sdp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

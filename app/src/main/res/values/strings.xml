@@ -270,7 +270,7 @@
     <string name="apply_promo_code">Apply Promo Code</string>
     <string name="apply">Apply</string>
     <string name="disclaimer_the_minimum_ride_charge_is_1">Disclaimer : The minimum ride charge is $1.</string>
-    <string name="ride_details" >Ride Details</string>
+    <string name="ride_details">Ride Details</string>
     <string name="receipt">Receipt</string>
     <string name="travel_charges">Travel charges</string>
     <string name="returnable_amount">Returnable Amount</string>

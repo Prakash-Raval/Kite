@@ -2,30 +2,31 @@ package com.example.kite.bikelisting.model
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.google.gson.annotations.SerializedName
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class BikeListingRequest(
-    @JsonProperty("access_token")
+    @SerializedName("access_token")
     var access_token: String? = null,
-    @JsonProperty("start_date")
+    @SerializedName("start_date")
     var start_date: String? = null,
-    @JsonProperty("start_time")
+    @SerializedName("start_time")
     var start_time: String? = null,
-    @JsonProperty("user_location")
+    @SerializedName("user_location")
     var user_location: UserLocation? = null,
-    @JsonProperty("radius")
+    @SerializedName("radius")
     var radius: Long? = 100000000000000000,
-    @JsonProperty("third_party_id")
+    @SerializedName("third_party_id")
     var third_party_id: String? = "i5sejdPiR",
-    @JsonProperty("time_zone")
+    @SerializedName("time_zone")
     var time_zone: String? = "Asia/Kolkata"
+
 
 ) {
     data class UserLocation(
-        @JsonProperty("lat")
+        @SerializedName("lat")
         var lat: String? = "23.024555",
-        @JsonProperty("long")
+        @SerializedName("long")
         var long: String? = "72.5668533"
     )
 }

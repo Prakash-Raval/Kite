@@ -13,7 +13,7 @@ import com.example.kite.scheduletrip.listner.OnTripClick
 import com.example.kite.scheduletrip.model.ScheduleTimeDuration
 import com.example.kite.scheduletrip.model.ScheduleTripResponse
 
-class ScheduleTripAdapter(val context: Context,val onTripClick: OnTripClick) :
+class ScheduleTripAdapter(val context: Context, val onTripClick: OnTripClick) :
     RecyclerView.Adapter<ScheduleTripAdapter.ViewHolder>() {
     private var list = ArrayList<ScheduleTripResponse.Data.TripDuration>()
     var selected = 0

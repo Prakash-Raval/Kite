@@ -7,8 +7,8 @@
     <data>
 
         <variable
-            name="timeSlot"
-            type="String" />
+            name="model"
+            type="com.example.kite.dateandtime.model.TimeSlotResponse.AllTimeSlot" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,10 +21,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/_2sdp"
-            android:background="@drawable/bg_card_black_round"
+            android:background="@{model.isItemSelected == true ? @drawable/bg_card_red_round :model.available == true ? @drawable/bg_card_black_round:@drawable/bg_card_grey_round}"
             android:paddingHorizontal="@dimen/_16sdp"
             android:paddingVertical="@dimen/_6sdp"
-            android:text="@{timeSlot}"
+            android:text="@{model.convertedTime}"
+            android:textColor="@{model.isItemSelected == true ? @color/white : @color/black}"
             android:textSize="@dimen/_12sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

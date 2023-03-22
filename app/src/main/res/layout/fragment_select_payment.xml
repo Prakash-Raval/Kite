@@ -99,13 +99,13 @@
             app:layout_constraintTop_toBottomOf="@id/addCardContainer" />
 
         <com.google.android.material.button.MaterialButton
-            android:visibility="gone"
             android:id="@+id/btnUsePaymentMethod"
             style="@style/BlackCustomMaterialButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_20sdp"
             android:text="@string/use_payment_method"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/glEnd"
             app:layout_constraintStart_toEndOf="@id/glStart" />

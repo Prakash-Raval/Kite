@@ -5,10 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.example.kite.R
 import com.example.kite.databinding.ItemTimeSlotDayBinding
 import com.example.kite.dateandtime.listner.OnCellClicked
 import com.example.kite.dateandtime.model.TimeSlotResponse
@@ -29,21 +26,17 @@ class DayAdapter(val context: Context, val lis: OnCellClicked) :
         RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("NotifyDataSetChanged")
         fun bind(position: Int) {
-            binding.timeSlot = list[position].time?.let { convertTo12Hours(it) }
+            list[position].isItemSelected = selected == position
+            list[position].convertedTime = list[position].time?.let { convertTo12Hours(it) }
+            binding.model = list[position]
 
             binding.root.setOnClickListener {
-                selected = position
-                list[position].time?.let { it1 ->
-                    convertTo12Hours(it1)?.let { it2 ->
-                        lis.onClick(
-                            position, list[position],
-                            it2
-                        )
-                    }
+                if (list[position].available != false) {
+                    list[position].isItemSelected = true
+                    selected = position
+                    lis.onClick(position,list[position])
+                    notifyDataSetChanged()
                 }
-                notifyItemChanged(selected)
-                notifyDataSetChanged()
-                Toast.makeText(context, "hello : $position", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -66,12 +59,9 @@ class DayAdapter(val context: Context, val lis: OnCellClicked) :
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: ItemTimeSlotDayBinding =
-            ItemTimeSlotDayBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
+        val binding: ItemTimeSlotDayBinding = ItemTimeSlotDayBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        )
         return ViewHolder(binding)
     }
 
@@ -80,39 +70,5 @@ class DayAdapter(val context: Context, val lis: OnCellClicked) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(position)
-        if (list[position].available == false) {
-            holder.binding.txtTSTime.isClickable = false
-            holder.binding.txtTSTime.apply {
-                background =
-                    (ContextCompat.getDrawable(context, R.drawable.bg_card_grey_round))
-                setTextColor(ContextCompat.getColor(context, R.color.black))
-            }
-        }
-
-        if (selected == position) {
-            holder.binding.txtTSTime.apply {
-                setTextColor(
-                    ContextCompat.getColor(
-                        context,
-                        R.color.white
-                    )
-                )
-                background =
-                    (ContextCompat.getDrawable(context, R.drawable.bg_card_red_round))
-            }
-        } else {
-            holder.binding.txtTSTime.apply {
-                setTextColor(
-                    ContextCompat.getColor(
-                        context,
-                        R.color.black
-                    )
-                )
-                background =
-                    (ContextCompat.getDrawable(context, R.drawable.bg_card_black_round))
-            }
-
-        }
-
     }
 }

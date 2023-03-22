@@ -1,7 +1,5 @@
 package com.example.kite.network
 
-import com.example.kite.addcard.model.AddCardRequest
-import com.example.kite.addcard.model.AddCardResponse
 import com.example.kite.bikelisting.model.BikeListingRequest
 import com.example.kite.bikelisting.model.BikeListingResponse
 import com.example.kite.changepassword.model.ChangePasswordRequest

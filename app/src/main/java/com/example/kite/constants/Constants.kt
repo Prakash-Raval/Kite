@@ -75,6 +75,5 @@ object Constants {
     const val NOTIFICATION_UPDATE = "customer/update_notification"
 
 
-
 }
 

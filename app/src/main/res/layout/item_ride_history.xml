@@ -44,8 +44,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_20sdp"
-            app:layout_constraintEnd_toStartOf="@id/txtIRHDistance"
             android:text="@{rideHistory.destAddress +` - `+ rideHistory.modalName}"
+            app:layout_constraintEnd_toStartOf="@id/txtIRHDistance"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txtIRHDate"
             tools:text="29/08/2022 06:00 Am" />
@@ -55,12 +55,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_20sdp"
-            app:layout_constraintStart_toEndOf="@id/txtIRHAddress"
             android:gravity="end"
             android:text="@{rideHistory.totalDistance.toString() + ` Km Travelled`}"
             android:textSize="@dimen/_12sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/imgRDClickArrow"
+            app:layout_constraintStart_toEndOf="@id/txtIRHAddress"
             app:layout_constraintTop_toBottomOf="@id/txtIRHDate"
             tools:text="$0.00" />
 

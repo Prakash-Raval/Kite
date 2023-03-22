@@ -58,7 +58,7 @@ class ChangePasswordFragment : Fragment() {
                 ?.let { it1 -> binding.btnLogin.snackError(it1, Snackbar.LENGTH_SHORT) }
         }
 
-        viewModel.liveData.observe(viewLifecycleOwner){
+        viewModel.liveData.observe(viewLifecycleOwner) {
             binding.btnLogin.snackError(it.message, Snackbar.LENGTH_SHORT)
         }
 

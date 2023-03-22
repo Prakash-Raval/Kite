@@ -208,7 +208,8 @@ class SubscriptionFragment : BaseFragment() {
     private fun checkVisibility() {
         val sub =
             PrefManager.get<LoginResponse.Data.Subscription>("SUBSCRIPTION-DATA")
-        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.subscription?.subscriptionPrice
+        val token =
+            PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.subscription?.subscriptionPrice
         if (sub?.isSubscribe == 0) {
             binding.subNest1.visibility = View.VISIBLE
             binding.subNest2.visibility = View.GONE

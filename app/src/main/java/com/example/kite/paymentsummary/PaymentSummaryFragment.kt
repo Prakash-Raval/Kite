@@ -28,7 +28,7 @@ class PaymentSummaryFragment : Fragment() {
         return binding.root
     }
 
-    private fun setUPToolbar(){
+    private fun setUPToolbar() {
         binding.paymentSummaryBar.txtToolbarHeader.setText(R.string.payment_summary)
         binding.paymentSummaryBar.imgBack.setOnClickListener {
             findNavController().navigateUp()

@@ -42,7 +42,6 @@
     </style>
 
 
-
     <style name="TextEditText" parent="ThemeOverlay.Material3.TextInputEditText">
         <item name="android:paddingStart">0dp</item>
         <item name="android:paddingEnd">0dp</item>
@@ -57,7 +56,6 @@
         <item name="hintTextColor">#2628282D</item>
 
     </style>
-
 
 
     <style name="DashTextEditText" parent="ThemeOverlay.Material3.TextInputEditText">
@@ -177,7 +175,6 @@
         <item name="background">@drawable/circle_white</item>
         <item name="android:padding">@dimen/_2sdp</item>
     </style>
-
 
 
     <style name="TopCornersCardView" parent="Widget.MaterialComponents.CardView">

@@ -11,6 +11,7 @@ import com.example.kite.R
 import com.example.kite.bikelisting.model.BikeListingResponse
 import com.example.kite.databinding.ItemVehicleListingBinding
 
+
 class Adapter(
     private val context: Context, private var onCellClicked: OnCellClicked
 ) :
@@ -28,7 +29,8 @@ class Adapter(
         fun bind(position: Int) {
             binding.data = list[position]
             binding.root.setOnClickListener {
-                selected = position
+                //list[position]  = selected = position
+                onCellClicked.isClicked(position)
                 notifyDataSetChanged()
             }
         }

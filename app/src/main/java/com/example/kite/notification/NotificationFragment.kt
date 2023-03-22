@@ -1,5 +1,6 @@
 package com.example.kite.notification
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.kite.R
 import com.example.kite.base.network.client.ResponseHandler
 import com.example.kite.base.network.model.ResponseData
+import com.example.kite.base.utils.DebugLog
 import com.example.kite.basefragment.BaseFragment
 import com.example.kite.databinding.FragmentNotificationBinding
 import com.example.kite.login.model.LoginResponse
@@ -80,6 +82,7 @@ class NotificationFragment : BaseFragment(), OnNotifyUpdate {
         setNotificationObserver()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun setNotificationObserver() {
         viewModel.liveData.observe(viewLifecycleOwner, Observer { state ->
             if (state == null) {
@@ -93,7 +96,6 @@ class NotificationFragment : BaseFragment(), OnNotifyUpdate {
                 is ResponseHandler.OnFailed -> {
                     hideProgressBar()
                     Log.d("ViewTripFragment", "setObserverData: $state")
-
                 }
                 is ResponseHandler.OnSuccessResponse<ResponseData<NotificationResponse>?> -> {
                     Log.d("ViewTripFragment", "setObserverData: ${state.response?.data}")
@@ -102,7 +104,7 @@ class NotificationFragment : BaseFragment(), OnNotifyUpdate {
                             state.response.data?.notificationsData
                                     as ArrayList<NotificationResponse.NotificationsData>
                         )
-                        adapter.notifyDataSetChanged()
+                        //adapter.notifyDataSetChanged()
                         binding.rvNotification.visibility = View.VISIBLE
                         binding.imgNotification.visibility = View.GONE
                         binding.txtNotification.visibility = View.GONE
@@ -142,18 +144,15 @@ class NotificationFragment : BaseFragment(), OnNotifyUpdate {
 
     override fun onClick(notificationID: String) {
         val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.accessToken
-        val isRead = 1
-        val req = UpdateNotificationRequest(
-            access_token = token,
-            notification_id = notificationID,
-            is_read = isRead
-        )
-        lifecycleScope.launch {
-            delay(3000)
-            viewModel.updateNotification(
-                token.toString(), "1", notificationID
-            )
-        }
+        val isRead = 0
+        val req = UpdateNotificationRequest()
+        req.notification_id = notificationID
+        req.access_token = token
+        req.is_read = isRead.toString()
 
+        DebugLog.d("BODYDATA $req")
+        viewModel.updateNotification(
+            req
+        )
     }
 }

@@ -36,6 +36,7 @@ import com.example.kite.dateandtime.viewmodel.TimeSlotViewModel
 import com.example.kite.login.model.LoginResponse
 import com.example.kite.scheduletrip.model.ScheduleTripResponse
 import com.example.kite.utils.*
+import com.example.kite.utils.setTextColorRes
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -133,7 +134,6 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
             // Will be set when this container is bound. See the dayBinder.
             lateinit var day: CalendarDay
             val textView = ItemCalendarDayBinding.bind(view).exTwoDayText
-
             init {
                 textView.setOnClickListener {
                     Toast.makeText(
@@ -161,6 +161,15 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
             }
         }
 
+        /*calendarView.dayBinder = object : MonthDayBinder<DayViewContainer> {
+            override fun create(view: View) = DayViewContainer(view)
+            override fun bind(container: DayViewContainer, data: CalendarDay) {
+                container.day = data
+                val textView = container.textView
+                textView.text = data.date.dayOfMonth.toString()
+                textView.alpha = if (day.position == DayPosition.MonthDate) 1f else 0.3f
+            }*/
+
         calendarView.dayBinder = object : MonthDayBinder<DayViewContainer> {
 
             @RequiresApi(Build.VERSION_CODES.O)
@@ -172,6 +181,13 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
                 container.day = data
                 val textView = container.textView
                 textView.text = data.date.dayOfMonth.toString()
+
+               //making past date non clickable
+                if (data.date.isBefore(today)) {
+                    textView.isClickable = false
+                    textView.alpha = 0.3f
+                }
+
 
                 if (data.position == DayPosition.MonthDate) {
                     textView.makeVisible()
@@ -253,7 +269,7 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
                 )
                 if (!binding.edtDTPromoCode.text.isNullOrEmpty()) {
                     setLiveDataObservers()
-                    //dialog?.dismiss()
+
                 } else {
                     dialog?.dismiss()
                 }
@@ -363,7 +379,7 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
         }
         val sharedPreferences =
             activity?.getSharedPreferences("THIRD_PARTY_ID", Context.MODE_PRIVATE)
-        val thirdPartyID = sharedPreferences?.getString("ThirdPartyID","ThirdPartyID")
+        val thirdPartyID = sharedPreferences?.getString("ThirdPartyID", "ThirdPartyID")
 
         //passing data to request class
         viewModel.getTimeSlot(
@@ -459,15 +475,20 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
     private fun setUPTimeSlotsAdapter() {
         adapter = DateAndTimeAdapter(context1, object : OnCellClicked {
             override fun onClick(
-                position1: Int, data: TimeSlotResponse.AllTimeSlot, timeValue: String
+                position1: Int, data: TimeSlotResponse.AllTimeSlot
             ) {
                 //passing data to previous fragment (ScheduleTripFragment)
                 getDateAndTime.getDate(
                     data.date.toString(),
-                    timeValue,
+                    data.convertedTime.toString(),
                     timeZone,
                     timeZoneText
                 )
+
+                Log.d("TimeSlot_Data",data.date.toString())
+                Log.d("TimeSlot_Data",data.convertedTime.toString())
+                Log.d("TimeSlot_Data",timeZoneText)
+                Log.d("TimeSlot_Data",timeZone)
 
                 Log.d("TimeZone", "onClick: $timeZone")
 

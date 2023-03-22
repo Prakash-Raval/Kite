@@ -19,7 +19,7 @@ class ViewProfileViewModel(val repository: ViewProfileRepository) : ViewModel() 
     var token: String = ""
     var thirdPartyID = ""
 
-    fun getToken(token: String , thirdPartyID : String) {
+    fun getToken(token: String, thirdPartyID: String) {
         this.token = token
         this.thirdPartyID = thirdPartyID
 
