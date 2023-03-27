@@ -22,6 +22,7 @@ import com.example.kite.basefragment.BaseFragment
 import com.example.kite.databinding.DialogBottomQrHelperBinding
 import com.example.kite.databinding.DialogQrOpenBinding
 import com.example.kite.databinding.FragmentScanQRCodeBinding
+import com.example.kite.extensions.snackError
 import com.example.kite.login.model.LoginResponse
 import com.example.kite.scanqr.model.ScanQRRequest
 import com.example.kite.scanqr.model.ScanQRResponse
@@ -30,6 +31,9 @@ import com.example.kite.utils.PrefManager
 
 
 class ScanQRCodeFragment : BaseFragment() {
+    /*
+    * variables
+    * */
 
     private lateinit var binding: FragmentScanQRCodeBinding
     private lateinit var codeScanner: CodeScanner
@@ -45,47 +49,25 @@ class ScanQRCodeFragment : BaseFragment() {
             container,
             false
         )
+        /*
+        * methods toolbar and back navigation
+        * */
         setUPToolBar()
         setUPNavigation()
+        /*
+        * initializing qr scanner view
+        * */
+        initCodeScanner()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        codeScanner = CodeScanner(requireActivity(), binding.scannerView)
-        codeScanner.apply {
-            startPreview()
-            camera = CodeScanner.CAMERA_BACK // or CAMERA_FRONT or specific camera id
-            formats = CodeScanner.ALL_FORMATS // list of type BarcodeFormat,
-            // ex. listOf(BarcodeFormat.QR_CODE)
-            autoFocusMode = AutoFocusMode.SAFE // or CONTINUOUS
-            scanMode = ScanMode.SINGLE // or CONTINUOUS or PREVIEW or SINGLE
-            isAutoFocusEnabled = true // Whether to enable auto focus or not
-        }
-        codeScanner.decodeCallback = DecodeCallback {
-            activity?.runOnUiThread {
-                qrCodeString = it.text
-                getApiData()
-                Toast.makeText(
-                    requireContext(), "Camera initialization error: ${it.text}",
-                    Toast.LENGTH_LONG
-                ).show()
-                Log.d("TAG", "onViewCreated: ${it.text}")
-            }
-        }
-        codeScanner.errorCallback = ErrorCallback { // or ErrorCallback.SUPPRESS
-            activity?.runOnUiThread {
-                Toast.makeText(
-                    requireContext(), "Camera initialization error: ${it.message}",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-            Log.d("TAG1111", "scanCallBacks: ${it.message}")
-        }
-        /*binding.scannerView.setOnClickListener {
-            codeScanner.startPreview()
-        }*/
-
+        /*
+        * call back methods for scanner view
+        *
+        * */
+        scanCallBacks()
     }
 
 
@@ -105,7 +87,11 @@ class ScanQRCodeFragment : BaseFragment() {
         super.onPause()
     }
 
-    //setting up toolbar
+
+    /*
+    *
+    * setting up toolbar
+    * */
     private fun setUPToolBar() {
         binding.inScanBar.txtToolbarHeader.apply {
             setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
@@ -117,44 +103,50 @@ class ScanQRCodeFragment : BaseFragment() {
         }
     }
 
-    //code scanner default values
+    /*
+    * creating code scanner
+    * code scanner property and attributes
+    *
+    * */
     private fun initCodeScanner() {
         codeScanner = CodeScanner(requireContext(), binding.scannerView)
         codeScanner.apply {
+            startPreview()// for preview of scanner
             camera = CodeScanner.CAMERA_BACK // or CAMERA_FRONT or specific camera id
             formats = CodeScanner.ALL_FORMATS // list of type BarcodeFormat,
             // ex. listOf(BarcodeFormat.QR_CODE)
             autoFocusMode = AutoFocusMode.SAFE // or CONTINUOUS
             scanMode = ScanMode.SINGLE // or CONTINUOUS or PREVIEW
             isAutoFocusEnabled = true // Whether to enable auto focus or not
-            startPreview()// for preview of scanner
         }
-
     }
 
-    //callback method for scanner
+    /*
+    *
+    * call back method for scanner view
+    *
+    *
+    * */
     private fun scanCallBacks() {
         // Callbacks
         codeScanner.decodeCallback = DecodeCallback {
-            /*activity?.runOnUiThread {
+            activity?.runOnUiThread {
+                //getting the qr string for api call
                 qrCodeString = it.text
                 getApiData()
                 Toast.makeText(
-                    requireContext(), "Camera initialization error: ${it.text}",
+                    requireContext(), "Camera initialization Success: ${it.text}",
                     Toast.LENGTH_LONG
                 ).show()
-                findNavController().navigateUp()
-            }*/
-            Log.d("TAG1111", "scanCallBacks: ${it.text}")
+            }
         }
         codeScanner.errorCallback = ErrorCallback { // or ErrorCallback.SUPPRESS
-            /*activity?.runOnUiThread {
+            activity?.runOnUiThread {
                 Toast.makeText(
                     requireContext(), "Camera initialization error: ${it.message}",
                     Toast.LENGTH_LONG
                 ).show()
-            }*/
-            Log.d("TAG1111", "scanCallBacks: ${it.message}")
+            }
         }
     }
 
@@ -170,6 +162,12 @@ class ScanQRCodeFragment : BaseFragment() {
         }
     }
 
+
+    /*
+    * method for showing dialog
+    * if vehicle type is car
+    *
+    * */
     private fun setUPCarDialog() {
         val args = this.arguments
         val vehicleSlug = args?.getString("VehicleSlug")
@@ -196,6 +194,12 @@ class ScanQRCodeFragment : BaseFragment() {
         }
     }
 
+
+    /*
+    * if first dialog shown for car
+    * second dialog for helping qr scanner
+    *
+    * */
     private fun openCarDialog() {
         val builder = Dialog(requireContext(), R.style.DialogTheme)
         val bindingDialog: DialogBottomQrHelperBinding =
@@ -212,23 +216,39 @@ class ScanQRCodeFragment : BaseFragment() {
         builder.show()
     }
 
+
+    /*
+    * getting view model
+    * */
     private fun getViewModel(): ScanQRViewModel {
         viewModel = ViewModelProvider(this)[ScanQRViewModel::class.java]
         return viewModel
     }
 
+    /*
+    *
+    * collecting request class data
+    * */
     private fun getApiData() {
         viewModel = getViewModel()
         val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.accessToken
+        val args = this.arguments
+        val vehicleSlug = args?.getString("VehicleSlug")
+
         viewModel.getScanQRRequest(
             ScanQRRequest(
                 access_token = token,
-                qr_code = qrCodeString
-            )
+                qr_code = qrCodeString,
+                vehicle_type_slug = vehicleSlug,
+
+                )
         )
         setObserver()
     }
 
+    /*
+    * setting up the observables
+    * */
     private fun setObserver() {
         viewModel = getViewModel()
         viewModel.liveData.observe(viewLifecycleOwner, Observer { state ->
@@ -238,19 +258,29 @@ class ScanQRCodeFragment : BaseFragment() {
             when (state) {
                 is ResponseHandler.Loading -> {
                     showProgressDialog()
-                    Log.d("ViewTripFragment", "setObserverData: $state")
+                    Log.d("ScanQRCode", "setObserverData: $state")
                 }
                 is ResponseHandler.OnFailed -> {
                     hideProgressBar()
-                    Log.d("ViewTripFragment", "setObserverData: ${state.message}")
-
+                    Log.d("ScanQRCode", "setObserverData: ${state.code}")
+                    Log.d("ScanQRCode", "setObserverData: ${state.messageCode}")
+                    Log.d("ScanQRCode", "setObserverData: ${state.message}")
+                    if (state.code == 500)
+                        state.message.let { binding.scannerView.snackError(it) }
+                    codeScanner.startPreview()
                 }
+
                 is ResponseHandler.OnSuccessResponse<ResponseData<ScanQRResponse>?> -> {
-                    Log.d("ViewTripFragment", "setObserverData: ${state.response?.data}")
                     hideProgressBar()
+                    Log.d("ScanQRCode", "setObserverData: ${state.response?.data}")
+                    val bundle = Bundle()
+                    bundle.putParcelable("ScanResponse", state.response?.data)
+                    findNavController().navigate(
+                        R.id.action_scanQRCodeFragment_to_paymentSummaryFragment,
+                        bundle
+                    )
                 }
             }
         })
     }
-
 }

@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/inVIBar"
+            layout="@layout/item_common_toolbar" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtVILText"
+            style="@style/BlackMediumCustomMaterialTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_50sdp"
+            android:text="@string/just_a_few_things_before_you_ride"
+            android:textSize="@dimen/_22sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/inVIBar"
+            app:lineHeight="@dimen/_20sdp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtVILText2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_40sdp"
+            android:fontFamily="@font/avenir_light"
+            android:text="@string/please_make_sure_you_have_collected_your_keys_checked_for_the_following_before_proceeding"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtVILText"
+            app:lineHeight="@dimen/_16sdp" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvResendCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtVILText2">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/bg_card_gray">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imgVILShield0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginBottom="@dimen/_20sdp"
+                    android:src="@drawable/ic_shield_red"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtVILShield0"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:fontFamily="@font/avenir_light"
+                    android:text="@string/use_the_code_sent_via_text_to_access_your_vehicle_keys"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10sdp"
+                    app:layout_constraintBottom_toBottomOf="@id/imgVILShield0"
+                    app:layout_constraintEnd_toStartOf="@id/txtVIResendCode"
+                    app:layout_constraintStart_toEndOf="@id/imgVILShield0"
+                    app:layout_constraintTop_toTopOf="@id/imgVILShield0" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtVIResendCode"
+                    style="@style/SmallCustomMaterialTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:drawableEnd="@drawable/ic_arrow_end_black"
+                    android:text="@string/resend_code_space"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgVILShield1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:src="@drawable/ic_shield_red"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cvResendCode" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtVILShield1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:fontFamily="@font/avenir_light"
+            android:text="@string/identify_any_damage_or_inconsistencies_to_the_selected_vehicle"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_10sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imgVILShield1"
+            app:layout_constraintTop_toTopOf="@id/imgVILShield1" />
+
+        <View
+            android:id="@+id/viewVIL1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:alpha="0.5"
+            android:background="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/imgVILShield1" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgVILShield2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:src="@drawable/ic_shield_red"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/viewVIL1" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtVILShield2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:fontFamily="@font/avenir_light"
+            android:text="@string/ensure_the_tires_are_inflated"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_10sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imgVILShield2"
+            app:layout_constraintTop_toTopOf="@id/imgVILShield2" />
+
+        <View
+            android:id="@+id/viewVIL2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:alpha="0.5"
+            android:background="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/imgVILShield2" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgVILShield3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:src="@drawable/ic_shield_red"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/viewVIL2" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtVILShield3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:fontFamily="@font/avenir_light"
+            android:text="@string/check_that_the_battery_level_is_above_50"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_10sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imgVILShield3"
+            app:layout_constraintTop_toTopOf="@id/imgVILShield3" />
+
+        <View
+            android:id="@+id/viewVIL3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:alpha="0.5"
+            android:background="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/imgVILShield3" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnVILSubmit"
+            style="@style/BlackCustomMaterialButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:text="@string/submit_ride"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnVIUseCamera"
+            style="@style/WhiteCustomMaterialButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_16sdp"
+            android:text="@string/use_camera"
+            app:layout_constraintBottom_toTopOf="@id/btnVILSubmit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

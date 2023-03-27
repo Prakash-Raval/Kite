@@ -132,8 +132,14 @@
         android:label="AddCardFragment" />
     <fragment
         android:id="@+id/rideHistoryFragment"
-        android:name="com.example.kite.history.RideHistoryFragment"
-        android:label="RideHistoryFragment" />
+        android:name="com.example.kite.history.ui.RideHistoryFragment"
+        android:label="RideHistoryFragment" >
+
+        <action
+            android:id="@+id/action_rideHistoryFragment_to_rideDetailsFragment"
+            app:destination="@id/rideDetailsFragment" />
+
+    </fragment>
     <fragment
         android:id="@+id/settingFragment"
         android:name="com.example.kite.setting.SettingFragment"
@@ -304,6 +310,10 @@
         android:label="ScanQRCodeFragment">
 
         <action
+            android:id="@+id/action_scanQRCodeFragment_to_paymentSummaryFragment"
+            app:destination="@id/paymentSummaryFragment" />
+
+        <action
             android:id="@+id/action_scanQRCodeFragment_to_enterQRCodeFragment"
             app:destination="@id/enterQRCodeFragment"
             app:enterAnim="@anim/slide_in_bottom"
@@ -341,7 +351,11 @@
     <fragment
         android:id="@+id/enterQRCodeFragment"
         android:name="com.example.kite.scanqr.bottomsheet.EnterQRCodeFragment"
-        android:label="EnterQRCodeFragment" />
+        android:label="EnterQRCodeFragment">
+        <action
+            android:id="@+id/action_enterQRCodeFragment_to_paymentSummaryFragment"
+            app:destination="@id/paymentSummaryFragment" />
+    </fragment>
     <fragment
         android:id="@+id/viewTripFragment"
         android:name="com.example.kite.viewscheduletrip.ViewTripFragment"
@@ -349,6 +363,46 @@
         <action
             android:id="@+id/action_viewTripFragment_to_scheduleTripFragment2"
             app:destination="@id/scheduleTripFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/paymentSummaryFragment"
+        android:name="com.example.kite.paymentsummary.PaymentSummaryFragment"
+        android:label="PaymentSummaryFragment">
+        <action
+            android:id="@+id/action_paymentSummaryFragment_to_vehicleInspectionFragment"
+            app:destination="@id/vehicleInspectionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/vehicleInspectionFragment"
+        android:name="com.example.kite.vehicleinspection.VehicleInspectionFragment"
+        android:label="VehicleInspectionFragment" />
+    <fragment
+        android:id="@+id/endRideCheckListFragment"
+        android:name="com.example.kite.endridechecklist.EndRideCheckListFragment"
+        android:label="EndRideCheckListFragment" />
+    <fragment
+        android:id="@+id/endTripDialogFragment"
+        android:name="com.example.kite.endtrip.EndTripDialogFragment"
+        android:label="EndTripDialogFragment" />
+    <fragment
+        android:id="@+id/wrongDropCheckListFragment"
+        android:name="com.example.kite.wrongdropChecklist.WrongDropCheckListFragment"
+        android:label="WrongDropCheckListFragment" />
+    <fragment
+        android:id="@+id/wrongDropChargeFragment"
+        android:name="com.example.kite.wrongdropcharge.WrongDropChargeFragment"
+        android:label="WrongDropChargeFragment" />
+    <fragment
+        android:id="@+id/rateUsFragment"
+        android:name="com.example.kite.rateus.RateUsFragment"
+        android:label="RateUsFragment" />
+    <fragment
+        android:id="@+id/rideDetailsFragment"
+        android:name="com.example.kite.ridedetails.RideDetailsFragment"
+        android:label="RideDetailsFragment" >
+        <action
+            android:id="@+id/action_rideDetailsFragment_to_supportFragment"
+            app:destination="@id/supportFragment" />
     </fragment>
 
 </navigation>

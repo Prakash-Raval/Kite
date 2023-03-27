@@ -74,6 +74,21 @@ object Constants {
     const val NOTIFICATION_LISTING = "customer/notification_listing"
     const val NOTIFICATION_UPDATE = "customer/update_notification"
 
+    //vehicle type
+    const val CAR = "eCar"
+    const val BIKE = "eBike"
+    const val SCOOTER = "eScooter"
+
+
+    //starting ride session
+    const val START_SESSION = "/customer/session_started"
+
+    //ride details
+    const val RIDE_DETAILS = "customer/booking_details"
+
+    //print receipt
+    const val PRINT_RECEIPT = "customer/print-transaction-details"
+
 
 }
 

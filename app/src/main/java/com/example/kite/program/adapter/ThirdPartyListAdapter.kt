@@ -8,23 +8,18 @@ import android.widget.Filter
 import android.widget.Filterable
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.FitCenter
-import com.bumptech.glide.request.RequestOptions
 import com.example.kite.R
 import com.example.kite.databinding.ItemThirdpartyListBinding
 import com.example.kite.program.lis.OnThirdPartyListing
 import com.example.kite.program.model.ThirdPartyListResponse
 
 class ThirdPartyListAdapter(
-    private var thirdPartyList: ArrayList<ThirdPartyListResponse.Data?>,
-    private val context: Context,
+    private var thirdPartyList: ArrayList<ThirdPartyListResponse>,
     private val onThirdPartyListing: OnThirdPartyListing
 ) :
     RecyclerView.Adapter<ThirdPartyListAdapter.ViewHolder>(), Filterable {
-    private lateinit var binding: ItemThirdpartyListBinding
     var selectedItem = 0
-    var list = ArrayList<ThirdPartyListResponse.Data?>()
+    var list = ArrayList<ThirdPartyListResponse>()
 
     init {
         list = thirdPartyList
@@ -34,7 +29,6 @@ class ThirdPartyListAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(position: Int) {
             binding.listingData = list[position]
-
             binding.imageContainer.setOnClickListener {
                 val select = selectedItem
                 selectedItem = position
@@ -42,19 +36,11 @@ class ThirdPartyListAdapter(
                 notifyItemChanged(position)
             }
 
-            var requestOptions = RequestOptions()
-            requestOptions = requestOptions.transform(FitCenter())
-            val url = list[position]?.thirdPartyImage
-
-            Glide.with(context)
-                .load(url)
-                .apply(requestOptions)
-                .into(binding.imgList)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        binding =
+        val binding: ItemThirdpartyListBinding =
             ItemThirdpartyListBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
@@ -71,21 +57,15 @@ class ThirdPartyListAdapter(
 
         //setting custom style for card view
         if (selectedItem == position) {
-            onThirdPartyListing.onClick(list[position]?.thirdPartyId.toString())
+            onThirdPartyListing.onClick(list[position].thirdPartyId.toString())
             holder.binding.imageContainer.apply {
-                radius = 30f
-                elevation = 10f
                 strokeWidth = 5
                 strokeColor = ContextCompat.getColor(context, R.color.bg_main)
-
             }
         } else {
             holder.binding.imageContainer.apply {
-                radius = 30f
-                elevation = 10f
                 strokeColor = ContextCompat.getColor(context, R.color.white)
             }
-
         }
     }
 
@@ -97,9 +77,9 @@ class ThirdPartyListAdapter(
                 list = if (charSequence.isEmpty()) {
                     thirdPartyList
                 } else {
-                    val resultList = ArrayList<ThirdPartyListResponse.Data?>()
+                    val resultList = ArrayList<ThirdPartyListResponse>()
                     for (row in list) {
-                        if (row?.thirdPartyName?.lowercase()
+                        if (row.thirdPartyName?.lowercase()
                                 ?.contains(constraint.toString().lowercase()) == true
                         ) {
                             resultList.add(row)
@@ -114,7 +94,7 @@ class ThirdPartyListAdapter(
 
             @SuppressLint("NotifyDataSetChanged")
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                list = results?.values as ArrayList<ThirdPartyListResponse.Data?>
+                list = results?.values as ArrayList<ThirdPartyListResponse>
                 notifyDataSetChanged()
             }
         }

@@ -1,4 +1,4 @@
-package com.example.kite.history
+package com.example.kite.history.ui
 
 import android.os.Bundle
 import android.util.Log
@@ -15,13 +15,14 @@ import com.example.kite.base.network.model.ResponseData
 import com.example.kite.basefragment.BaseFragment
 import com.example.kite.databinding.FragmentRideHistoryBinding
 import com.example.kite.history.adapter.RideHistoryAdapter
+import com.example.kite.history.lis.OnRideClick
 import com.example.kite.history.model.RideHistoryRequest
 import com.example.kite.history.model.RideHistoryResponse
 import com.example.kite.history.viewmodel.RideHistoryViewModel
 import com.example.kite.login.model.LoginResponse
 import com.example.kite.utils.PrefManager
 
-class RideHistoryFragment : BaseFragment() {
+class RideHistoryFragment : BaseFragment(), OnRideClick {
 
     private lateinit var binding: FragmentRideHistoryBinding
     private lateinit var viewModel: RideHistoryViewModel
@@ -39,10 +40,19 @@ class RideHistoryFragment : BaseFragment() {
             false
         )
         setUPToolbar()
-        getApiRequest()
-        setRideObserver()
         setAdapter()
         return binding.root
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        getApiRequest()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setRideObserver()
+
     }
 
     //toolbar
@@ -54,7 +64,7 @@ class RideHistoryFragment : BaseFragment() {
     }
 
     private fun setAdapter() {
-        adapter = RideHistoryAdapter()
+        adapter = RideHistoryAdapter(this)
         binding.rvRideHistory.adapter = adapter
     }
 
@@ -79,21 +89,18 @@ class RideHistoryFragment : BaseFragment() {
     }
 
     private fun setRideObserver() {
-        viewModel.liveData.observe(viewLifecycleOwner, Observer { state ->
-            if (state == null) {
-                return@Observer
-            }
+        viewModel.responseLiveData.observe(viewLifecycleOwner, Observer { state ->
             when (state) {
                 is ResponseHandler.Loading -> {
                     showProgressDialog()
-                    Log.d("ViewTripFragment", "setObserverData: $state")
+                    Log.d("RideHistoryFragment", "setObserverData: $state")
                 }
                 is ResponseHandler.OnFailed -> {
                     hideProgressBar()
-                    Log.d("ViewTripFragment", "setObserverData: $state")
+                    Log.d("RideHistoryFragment", "setObserverData: $state")
                 }
                 is ResponseHandler.OnSuccessResponse<ResponseData<RideHistoryResponse>?> -> {
-                    Log.d("ViewTripFragment", "setObserverData: ${state.response?.data}")
+                    Log.d("RideHistoryFragment", "setObserverData: ${state.response?.data}")
                     adapter.setList(state.response?.data?.rideHistory as ArrayList<RideHistoryResponse.RideHistory>)
                     adapter.notifyDataSetChanged()
                     binding.rvRideHistory.visibility = View.VISIBLE
@@ -103,5 +110,11 @@ class RideHistoryFragment : BaseFragment() {
                 }
             }
         })
+    }
+
+    override fun onClick(bookingID: String) {
+        val bundle = Bundle()
+        bundle.putString("BookingID", bookingID)
+        findNavController().navigate(R.id.action_rideHistoryFragment_to_rideDetailsFragment, bundle)
     }
 }

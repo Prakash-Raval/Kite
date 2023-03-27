@@ -1,11 +1,16 @@
 package com.example.kite.scanqr.model
 
 
+import android.os.Parcelable
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
+import kotlinx.parcelize.Parcelize
 
+@JsonIgnoreProperties(ignoreUnknown = true)
+@Parcelize
 data class ScanQRResponse(
     @JsonProperty("access_code")
-    var accessCode: Any? = null,
+    var accessCode: String? = null,
     @JsonProperty("accesscode_enable")
     var accesscodeEnable: Int? = null,
     @JsonProperty("booking_id")
@@ -21,7 +26,7 @@ data class ScanQRResponse(
     @JsonProperty("currency_format")
     var currencyFormat: String? = null,
     @JsonProperty("futureReserved")
-    var futureReserved: List<Any?>? = null,
+    var futureReserved: List<String?>? = null,
     @JsonProperty("is_lock_active")
     var isLockActive: Int? = null,
     @JsonProperty("mac_address")
@@ -31,9 +36,9 @@ data class ScanQRResponse(
     @JsonProperty("mac_address_lock")
     var macAddressLock: String? = null,
     @JsonProperty("pricing_value")
-    var pricingValue: Int? = null,
+    var pricingValue: String? = null,
     @JsonProperty("refundable_deposit")
-    var refundableDeposit: Int? = null,
+    var refundableDeposit: String? = null,
     @JsonProperty("vehicle_type")
     var vehicleType: String? = null,
     @JsonProperty("vehicle_type_id")
@@ -45,5 +50,5 @@ data class ScanQRResponse(
     @JsonProperty("wrong_drop_distance")
     var wrongDropDistance: Int? = null,
     @JsonProperty("wrong_drop_price")
-    var wrongDropPrice: Int? = null
-)
+    var wrongDropPrice: String? = null
+) : Parcelable

@@ -1,16 +1,20 @@
 package com.example.kite.home
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
@@ -33,8 +37,14 @@ import java.time.format.DateTimeFormatter
 
 
 class HomeFragment : BaseFragment() {
+
+    /*
+    * variables
+    * */
     private lateinit var binding: FragmentHomeBinding
     private lateinit var viewModelViewTrip: ViewTripViewModel
+    private val foregroundLocationPermissionsRequestCode = 1
+    private val backgroundLocationPermissionsRequestCode = 2
 
     private var reservationID = ""
     private var isShown = 0
@@ -45,8 +55,24 @@ class HomeFragment : BaseFragment() {
             isShown = 1
             openDialog()
         }
-
+        /*
+        * permission id of location dialog
+        * */
+        requestLocationPermissions()
     }
+
+    /*private fun initMap() {
+        *//*
+        * init radar api for map
+        * *//*
+        val receiver = MyRadarReceiver()
+        Radar.initialize(requireContext(), "prj_test_pk_9fa4fb5a14490462e0c12aa4995063460dd62b5a",receiver)
+        Radar.getLocation { status, location, stopped ->
+            Log.d("example", "Location: status = ${status}; location = $location; stopped = $stopped")
+            Log.d("example", "Location: status = ${status}; location = ${location?.latitude}; location = ${location?.longitude}; stopped = $stopped")
+        }
+    }*/
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -196,6 +222,66 @@ class HomeFragment : BaseFragment() {
             bundle.putString("ReservationID", reservationID)
             val action = R.id.action_homeFragment_to_viewTripFragment
             findNavController().navigate(action, bundle)
+        }
+    }
+
+    private fun requestLocationPermissions() {
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
+                ActivityCompat.requestPermissions(
+                    requireActivity(),
+                    arrayOf(
+                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                    ),
+                    backgroundLocationPermissionsRequestCode
+                )
+            } else {
+                ActivityCompat.requestPermissions(
+                    requireActivity(),
+                    arrayOf(
+                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    ),
+                    foregroundLocationPermissionsRequestCode
+                )
+            }
+        }
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == foregroundLocationPermissionsRequestCode && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED && Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    requireActivity(),
+                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                )
+            ) {
+                androidx.appcompat.app.AlertDialog.Builder(requireContext())
+                    .setTitle("Background location permissions needed")
+                    .setMessage("Background location permission needed, tap \"Allow all the time\" on the next screen")
+                    .setPositiveButton(
+                        "OK"
+                    ) { _, _ ->
+                        ActivityCompat.requestPermissions(
+                            requireActivity(),
+                            arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
+                            backgroundLocationPermissionsRequestCode
+                        )
+                    }
+                    .create()
+                    .show()
+            }
         }
     }
 }

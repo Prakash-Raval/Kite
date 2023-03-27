@@ -40,11 +40,7 @@ interface ApiInterface {
     @POST(Constants.LOGIN_URL)
     suspend fun setLogin(@Body loginRequest: LoginRequest): Response<LoginResponse>
 
-    @POST(Constants.THIRD_PARTY_LIST)
-    suspend fun setList(@Body listRequest: ThirdPartyListRequest): Response<ThirdPartyListResponse>
-
-
-    @POST(Constants.VIEW_PROFILE)
+      @POST(Constants.VIEW_PROFILE)
     suspend fun viewProfile(@Body viewProfileRequest: ViewProfileRequest): Response<ViewProfileResponse>
 
     @POST(Constants.FORGOT_PASSWORD_URL)

@@ -18,36 +18,40 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.ORIENTATION_HORIZONTAL
 import com.example.kite.R
+import com.example.kite.base.network.client.ResponseHandler
+import com.example.kite.base.network.model.ResponseListData
 import com.example.kite.basefragment.BaseFragment
-import com.example.kite.constants.Constants
 import com.example.kite.databinding.FragmentSelectProgramBinding
 import com.example.kite.extensions.showKeyboard
 import com.example.kite.login.model.LoginResponse
-import com.example.kite.network.ApiInterface
-import com.example.kite.network.RetrofitHelper
 import com.example.kite.program.adapter.ThirdPartyListAdapter
 import com.example.kite.program.lis.OnThirdPartyListing
+import com.example.kite.program.model.ThirdPartyListRequest
 import com.example.kite.program.model.ThirdPartyListResponse
-import com.example.kite.program.repository.ThirdPartyListRepository
-import com.example.kite.program.viewmodel.TPLViewModelFactory
-import com.example.kite.program.viewmodel.ThirdPartyListingViewModel
-import com.example.kite.utils.BaseResponse
+import com.example.kite.program.viewmodel.ThirdPartyViewModel
 import com.example.kite.utils.PrefManager
 import com.example.kite.utils.onTextChanged
-import kotlinx.coroutines.launch
 
 
 class SelectProgramFragment : BaseFragment(), OnThirdPartyListing {
+    /*
+    * variables
+    * */
     private lateinit var binding: FragmentSelectProgramBinding
-    private lateinit var viewModel: ThirdPartyListingViewModel
+    private lateinit var viewModel: ThirdPartyViewModel
     private lateinit var adapter: ThirdPartyListAdapter
-    private lateinit var list: ArrayList<ThirdPartyListResponse.Data?>
+
+    /*
+    * list
+    * */
+    private lateinit var list: ArrayList<ThirdPartyListResponse>
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,6 +63,10 @@ class SelectProgramFragment : BaseFragment(), OnThirdPartyListing {
             container,
             false
         )
+        /*
+        *
+        * method calls
+        * */
         getData()
         viewPagerStyle()
         spannableText()
@@ -67,7 +75,7 @@ class SelectProgramFragment : BaseFragment(), OnThirdPartyListing {
         setUPToolbar()
         list = ArrayList()
         adapter = ThirdPartyListAdapter(
-            list, requireContext(),
+            list,
             this
         )
         binding.vpProgram.adapter = adapter
@@ -81,49 +89,60 @@ class SelectProgramFragment : BaseFragment(), OnThirdPartyListing {
         }
     }
 
+    /*
+    * setting up the toolbar
+    * */
     fun setUPToolbar() {
         binding.inProgramBar.imgBack.visibility = View.GONE
+        binding.inProgramBar.imgBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
         binding.inProgramBar.txtToolbarHeader.setText(R.string.select_your_program)
+    }
+
+    private fun getViewModel(): ThirdPartyViewModel {
+        viewModel = ViewModelProvider(this)[ThirdPartyViewModel::class.java]
+        return viewModel
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun getData() {
-        val thirdPartyService =
-            RetrofitHelper.getInstance(Constants.BASE_URL).create(ApiInterface::class.java)
-        val repository = ThirdPartyListRepository(thirdPartyService)
-        viewModel =
-            ViewModelProvider(
-                this,
-                TPLViewModelFactory(repository)
-            )[ThirdPartyListingViewModel::class.java]
+        viewModel = getViewModel()
+        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.accessToken
+        viewModel.getThirdPartyList(
+            ThirdPartyListRequest(
+                access_token = token,
+                ThirdPartyListRequest.UserLocation()
+            )
+        )
+        setObserver()
+    }
 
-        // adding response data to list for viewpager
-        viewModel.listLiveData.observe(viewLifecycleOwner) {
-
-            when (it) {
-                is BaseResponse.Loading -> {
+    private fun setObserver() {
+        //handling error event in snack bar
+        viewModel.liveData.observe(viewLifecycleOwner, Observer { state ->
+            if (state == null) {
+                return@Observer
+            }
+            when (state) {
+                is ResponseHandler.Loading -> {
                     showProgressDialog()
+                    Log.d("ViewTripFragment", "setObserverData: $state")
                 }
-                is BaseResponse.Error -> {
+                is ResponseHandler.OnFailed -> {
                     hideProgressBar()
+                    Log.d("ViewTripFragment", "setObserverData: $state")
+
                 }
-                is BaseResponse.Success -> {
+                is ResponseHandler.OnSuccessResponse<ResponseListData<ThirdPartyListResponse>?> -> {
                     hideProgressBar()
-                    it.data?.let { it1 -> it1.data?.let { it2 -> list.addAll(it2) } }
+                    state.response?.data?.let { it1 -> it1.let { it2 -> list.addAll(it2) } }
                     adapter.notifyDataSetChanged()
-                    Log.d("ListDataFromApi", list.toString())
+                    Log.d("ViewTripFragment", "setObserverData: ${state.response?.data}")
                 }
             }
-        }
-
-        //getting access token for listing
-        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")
-        lifecycleScope.launch {
-            if (token != null) {
-                token.data?.accessToken?.let { viewModel.getToken(it) }
-            }
-        }
-
+        })
     }
 
     //style  for viewpager 2
@@ -197,7 +216,6 @@ class SelectProgramFragment : BaseFragment(), OnThirdPartyListing {
     }
 
     override fun onClick(thirdPartyID: String) {
-        Log.d("ThirdPartyListingID", thirdPartyID)
         val sharedPreferences =
             activity?.getSharedPreferences("THIRD_PARTY_ID", MODE_PRIVATE)?.edit()
         sharedPreferences?.putString("ThirdPartyID", thirdPartyID)?.apply()

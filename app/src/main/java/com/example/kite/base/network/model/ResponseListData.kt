@@ -1,9 +1,10 @@
 package com.example.kite.base.network.model
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 class ResponseListData<T> {
     @SerializedName("message")
     @Expose

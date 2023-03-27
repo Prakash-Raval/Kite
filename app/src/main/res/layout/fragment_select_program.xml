@@ -9,8 +9,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".program.SelectProgramFragment">
+        android:layout_height="match_parent">
 
         <include
             android:id="@+id/inProgramBar"
@@ -19,6 +18,7 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:fillViewport="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -90,9 +90,10 @@
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/vpProgram"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/btnConfirm"
                     app:layout_constraintTop_toBottomOf="@id/txtProgram" />
 
 

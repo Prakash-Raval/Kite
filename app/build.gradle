@@ -60,8 +60,8 @@ dependencies {
     //coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
     //livedata and view-model
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
     //sdp library
     implementation 'com.intuit.sdp:sdp-android:1.1.0'
     //retrofit and jackson
@@ -71,14 +71,16 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.14.2'
     //google map service
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
+    implementation "com.google.android.play:integrity:1.1.0"
+
     //gson
     implementation 'com.google.code.gson:gson:2.10.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
     //camera x
-    implementation 'androidx.camera:camera-camera2:1.2.1'
-    implementation 'androidx.camera:camera-lifecycle:1.2.1'
-    implementation 'androidx.camera:camera-view:1.2.1'
+    implementation 'androidx.camera:camera-camera2:1.2.2'
+    implementation 'androidx.camera:camera-lifecycle:1.2.2'
+    implementation 'androidx.camera:camera-view:1.2.2'
 
     //trulioo for licence verify
     implementation group: 'com.trulioo', name: 'normalizedapi', version: '1.0.3'
@@ -113,6 +115,19 @@ dependencies {
 
     //guava library
     implementation "com.google.guava:guava:31.0.1-android"
+
+
+
+
+    //radar api for map
+    //  implementation 'io.radar:sdk:3.5.12'
+
+    //mapbox
+    //implementation 'com.mapbox.maps:android:10.11.2'
+
+    /*  implementation('com.mapbox.maps:android:10.11.2') {
+          exclude group: 'com.mapbox.common', module: 'okhttp'
+      }*/
 
 
 }

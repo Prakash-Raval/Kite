@@ -485,13 +485,6 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
                     timeZoneText
                 )
 
-                Log.d("TimeSlot_Data",data.date.toString())
-                Log.d("TimeSlot_Data",data.convertedTime.toString())
-                Log.d("TimeSlot_Data",timeZoneText)
-                Log.d("TimeSlot_Data",timeZone)
-
-                Log.d("TimeZone", "onClick: $timeZone")
-
                 //checking adapter position for header data
                 /*
                 * if position 0

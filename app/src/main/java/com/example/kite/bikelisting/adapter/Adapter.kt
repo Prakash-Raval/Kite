@@ -29,7 +29,7 @@ class Adapter(
         fun bind(position: Int) {
             binding.data = list[position]
             binding.root.setOnClickListener {
-                //list[position]  = selected = position
+                selected = position
                 onCellClicked.isClicked(position)
                 notifyDataSetChanged()
             }

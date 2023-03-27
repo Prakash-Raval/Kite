@@ -53,7 +53,7 @@
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:hint="@string/type_code"
-                        android:inputType="number"
+                        android:inputType="text"
                         android:textColorHint="#28282D"
                         android:textSize="@dimen/_20sdp"
                         android:textStyle="bold" />

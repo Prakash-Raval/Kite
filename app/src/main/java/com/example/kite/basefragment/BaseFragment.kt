@@ -1,6 +1,8 @@
 package com.example.kite.basefragment
 
 import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -28,8 +30,13 @@ open class BaseFragment : Fragment() {
         return binding.root
     }
 
-    fun showProgressDialog() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         mProgressDialog = Dialog(requireContext())
+    }
+
+    fun showProgressDialog() {
+        mProgressDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         mProgressDialog.setContentView(R.layout.dialog_progressbar)
         mProgressDialog.setCancelable(false)
         mProgressDialog.show()

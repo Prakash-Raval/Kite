@@ -273,7 +273,7 @@
     <string name="ride_details">Ride Details</string>
     <string name="receipt">Receipt</string>
     <string name="travel_charges">Travel charges</string>
-    <string name="returnable_amount">Returnable Amount</string>
+    <string name="returnable_amount">Refunded</string>
     <string name="final_amount">Final Amount</string>
     <string name="your_trip">Your Trip</string>
     <string name="alert_enter_card_name">Please enter your name</string>
@@ -292,5 +292,22 @@
     <string name="before_you_go">Before You go</string>
     <string name="cancel_dialog_trip_text">Are you sure you\'d like to cancel your reservation?</string>
     <string name="reservation_cancel_success">Reservation cancelled successfully</string>
+    <string name="please_enter_promo_code">Please enter promo code</string>
+    <string name="vehicle_inspection">Vehicle Inspection</string>
+    <string name="just_a_few_things_before_you_ride">Just a few things before you ride.</string>
+    <string name="please_make_sure_you_have_collected_your_keys_checked_for_the_following_before_proceeding">Please make sure you have collected your keys &amp; checked for the following before proceeding.</string>
+    <string name="submit_ride">Submit &amp; Ride</string>
+    <string name="check_that_the_battery_level_is_above_50">Check that the battery level is above 50%</string>
+    <string name="ensure_the_tires_are_inflated">Ensure the tires are inflated</string>
+    <string name="identify_any_damage_or_inconsistencies_to_the_selected_vehicle">Identify any damage or inconsistencies to the selected vehicle</string>
+    <string name="resend_code">Resend Code</string>
+    <string name="resend_code_space">Resend\n Code</string>
+
+    <string name="have_you_collected_your_keys">Have you collected your keys?</string>
+    <string name="keys_text">Before you start your trip, Let\'s make sure you have your keys</string>
+    <string name="lbl_invalid_promocode">The promocode you have entered is invalid</string>
+    <string name="use_the_code_sent_via_text_to_access_your_vehicle_keys">Use the code sent via text, to access your vehicle keys</string>
+    <string name="promotion">Promotion</string>
+    <string name="credit_debit_card">Credit/Debit Card</string>
 
 </resources>

@@ -1,8 +1,6 @@
 package com.example.kite.dateandtime.model
 
-
 import com.google.gson.annotations.SerializedName
-
 data class TimeSlotResponse(
     @SerializedName("allTimeSlots")
     var allTimeSlots: List<AllTimeSlot?>? = null

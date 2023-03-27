@@ -17,14 +17,21 @@ import com.example.kite.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {
+
+    /*
+    * variables
+    * */
     private lateinit var binding: ActivityMainBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var pNavController: NavController
     private lateinit var pDrawerLayout: DrawerLayout
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+
         setUpNavigation()
         setNavigation()
         ApiClient.initRetrofit()
@@ -118,4 +125,6 @@ class MainActivity : AppCompatActivity() {
             pNavController.navigate(R.id.notificationFragment)
         }
     }
+
+
 }
