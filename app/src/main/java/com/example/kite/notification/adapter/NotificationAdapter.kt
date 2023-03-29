@@ -27,15 +27,13 @@ class NotificationAdapter(val context: Context, val onNotifyUpdate: OnNotifyUpda
         @SuppressLint("NotifyDataSetChanged")
         fun bind(position: Int) {
             binding.dataNotification = list[position]
-         //   binding.isSelected = selected == position
-            //list[position].isSelected = selected == position
-            if (list[position].notificationRead == 0)
-                binding.constraintNotification.setBackgroundColor(
-                    ContextCompat.getColor(
-                        context,
-                        R.color.white
-                    )
-                )
+              if (list[position].notificationRead == 0)
+                  binding.constraintNotification.setBackgroundColor(
+                      ContextCompat.getColor(
+                          context,
+                          R.color.white
+                      )
+                  )
 
 
             binding.root.setOnClickListener {
@@ -59,13 +57,13 @@ class NotificationAdapter(val context: Context, val onNotifyUpdate: OnNotifyUpda
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: ItemNotificationRecyclerBinding =
+        return ViewHolder(
             ItemNotificationRecyclerBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
             )
-        return ViewHolder(binding)
+        )
     }
 
     override fun getItemCount(): Int = list.size
@@ -73,13 +71,13 @@ class NotificationAdapter(val context: Context, val onNotifyUpdate: OnNotifyUpda
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(position)
-        if (selected == position) {
-            holder.binding.constraintNotification.setBackgroundColor(
-                ContextCompat.getColor(
-                    context,
-                    R.color.white
-                )
-            )
-        }
+          if (selected == position) {
+              holder.binding.constraintNotification.setBackgroundColor(
+                  ContextCompat.getColor(
+                      context,
+                      R.color.white
+                  )
+              )
+          }
     }
 }

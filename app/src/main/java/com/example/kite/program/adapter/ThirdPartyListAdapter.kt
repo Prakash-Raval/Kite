@@ -1,14 +1,11 @@
 package com.example.kite.program.adapter
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.example.kite.R
 import com.example.kite.databinding.ItemThirdpartyListBinding
 import com.example.kite.program.lis.OnThirdPartyListing
 import com.example.kite.program.model.ThirdPartyListResponse
@@ -30,6 +27,7 @@ class ThirdPartyListAdapter(
         fun bind(position: Int) {
             binding.listingData = list[position]
             binding.imageContainer.setOnClickListener {
+                onThirdPartyListing.onClick(list[position].thirdPartyId.toString())
                 val select = selectedItem
                 selectedItem = position
                 notifyItemChanged(select)
@@ -40,13 +38,13 @@ class ThirdPartyListAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: ItemThirdpartyListBinding =
+        return ViewHolder(
             ItemThirdpartyListBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
             )
-        return ViewHolder(binding)
+        )
     }
 
     override fun getItemCount(): Int = list.size
@@ -54,19 +52,7 @@ class ThirdPartyListAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(position)
-
-        //setting custom style for card view
-        if (selectedItem == position) {
-            onThirdPartyListing.onClick(list[position].thirdPartyId.toString())
-            holder.binding.imageContainer.apply {
-                strokeWidth = 5
-                strokeColor = ContextCompat.getColor(context, R.color.bg_main)
-            }
-        } else {
-            holder.binding.imageContainer.apply {
-                strokeColor = ContextCompat.getColor(context, R.color.white)
-            }
-        }
+        holder.binding.isSelected = selectedItem == position
     }
 
     override fun getFilter(): Filter {

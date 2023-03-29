@@ -32,13 +32,13 @@ class GetCardAdapter : RecyclerView.Adapter<GetCardAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: ItemCardDesignBinding =
+        return ViewHolder(
             ItemCardDesignBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
             )
-        return ViewHolder(binding)
+        )
     }
 
     override fun getItemCount(): Int = list.size

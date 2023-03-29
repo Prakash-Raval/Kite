@@ -1,7 +1,6 @@
 package com.example.kite.dateandtime.ui
 
 import android.content.Context
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,14 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.FrameLayout
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.window.layout.WindowMetrics
-import androidx.window.layout.WindowMetricsCalculator
 import com.example.kite.MainActivity
 import com.example.kite.R
 import com.example.kite.base.network.client.ResponseHandler
@@ -36,8 +31,6 @@ import com.example.kite.dateandtime.viewmodel.TimeSlotViewModel
 import com.example.kite.login.model.LoginResponse
 import com.example.kite.scheduletrip.model.ScheduleTripResponse
 import com.example.kite.utils.*
-import com.example.kite.utils.setTextColorRes
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.kizitonwose.calendar.core.CalendarDay
@@ -57,6 +50,11 @@ import java.util.*
 class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndTime) :
     BottomSheetDialogFragment() {
 
+
+    /*
+    *
+    * variables
+    * */
     private lateinit var binding: FragmentDateAndTimeBinding
 
     private lateinit var viewModel: TimeSlotViewModel
@@ -65,11 +63,8 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
 
     var list = ArrayList<TimeSlotResponse.AllTimeSlot>()
     private val sections = ArrayList<HeaderModel>()
-
     private val today = LocalDate.now()
-
     private var selectedDate: LocalDate? = today
-
     private var timeZone: String = ""
     private var timeZoneText: String = ""
 
@@ -77,7 +72,7 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dialog?.setOnShowListener {
-            setupFullHeight(it as BottomSheetDialog)
+            FullScreenDialog.setupFullHeight(it as BottomSheetDialog, requireActivity())
         }
         manageLayoutVisibility()
         val daysOfWeek = daysOfWeek()
@@ -101,39 +96,16 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
     }
 
 
-    private fun setupFullHeight(bottomSheetDialog: BottomSheetDialog) {
-        val bottomSheet: FrameLayout =
-            bottomSheetDialog.findViewById(com.google.android.material.R.id.design_bottom_sheet)!!
-        val behavior: BottomSheetBehavior<View> = BottomSheetBehavior.from(bottomSheet)
-        val layoutParams = bottomSheet.layoutParams
-        val windowHeight = getWindowHeight()
-        if (layoutParams != null) {
-            layoutParams.height = windowHeight
-        }
-        bottomSheet.layoutParams = layoutParams
-        behavior.state = BottomSheetBehavior.STATE_EXPANDED
-        behavior.skipCollapsed = true
-    }
-
-    private fun getWindowHeight(): Int {
-        val windowMetrics: WindowMetrics =
-            WindowMetricsCalculator.getOrCreate().computeCurrentWindowMetrics(
-                requireActivity()
-            )
-        return windowMetrics.bounds.height()
-    }
-
-
     //calender view data
     private fun configureBinders() {
         val calendarView = binding.exTwoCalendar
 
 
-        @RequiresApi(Build.VERSION_CODES.O)
         class DayViewContainer(view: View) : ViewContainer(view) {
             // Will be set when this container is bound. See the dayBinder.
             lateinit var day: CalendarDay
             val textView = ItemCalendarDayBinding.bind(view).exTwoDayText
+
             init {
                 textView.setOnClickListener {
                     Toast.makeText(
@@ -161,28 +133,19 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
             }
         }
 
-        /*calendarView.dayBinder = object : MonthDayBinder<DayViewContainer> {
-            override fun create(view: View) = DayViewContainer(view)
-            override fun bind(container: DayViewContainer, data: CalendarDay) {
-                container.day = data
-                val textView = container.textView
-                textView.text = data.date.dayOfMonth.toString()
-                textView.alpha = if (day.position == DayPosition.MonthDate) 1f else 0.3f
-            }*/
+
 
         calendarView.dayBinder = object : MonthDayBinder<DayViewContainer> {
 
-            @RequiresApi(Build.VERSION_CODES.O)
             override fun create(view: View) = DayViewContainer(view)
 
 
-            @RequiresApi(Build.VERSION_CODES.O)
             override fun bind(container: DayViewContainer, data: CalendarDay) {
                 container.day = data
                 val textView = container.textView
                 textView.text = data.date.dayOfMonth.toString()
 
-               //making past date non clickable
+                //making past date non clickable
                 if (data.date.isBefore(today)) {
                     textView.isClickable = false
                     textView.alpha = 0.3f
@@ -394,32 +357,23 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
             )
         )
 
-        /* viewModel.liveData.observe(viewLifecycleOwner) {
-             if (it.code == 200) {
-                 sections.clear()
-                 list = it.data?.allTimeSlots as ArrayList<TimeSlotResponse.Data.AllTimeSlot>
-                 setHeaderData()
-             }
-         }*/
         viewModel.liveData.observe(this, Observer { state ->
             if (state == null) {
                 return@Observer
             }
             when (state) {
                 is ResponseHandler.Loading -> {
-                    //PromoCodeViewModel.showProgressBar(true)
-                    //httpFailedHandler(state.code, state.message, state.messageCode)
+
                     Log.d("PromoCodeResponse", "setLiveDataObservers: $state")
 
                 }
                 is ResponseHandler.OnFailed -> {
-                    //PromoCodeViewModel.showProgressBar(false)
+
                     Log.d("PromoCodeResponse", "setLiveDataObservers: $state")
 
 
                 }
                 is ResponseHandler.OnSuccessResponse<ResponseData<TimeSlotResponse>?> -> {
-                    //PromoCodeViewModel.showProgressBar(false)
                     Log.d("PromoCodeResponse", "setLiveDataObservers: $state")
                     sections.clear()
                     list =

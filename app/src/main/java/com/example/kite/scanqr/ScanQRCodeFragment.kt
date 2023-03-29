@@ -4,7 +4,6 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +21,6 @@ import com.example.kite.basefragment.BaseFragment
 import com.example.kite.databinding.DialogBottomQrHelperBinding
 import com.example.kite.databinding.DialogQrOpenBinding
 import com.example.kite.databinding.FragmentScanQRCodeBinding
-import com.example.kite.extensions.snackError
 import com.example.kite.login.model.LoginResponse
 import com.example.kite.scanqr.model.ScanQRRequest
 import com.example.kite.scanqr.model.ScanQRResponse
@@ -38,7 +36,7 @@ class ScanQRCodeFragment : BaseFragment() {
     private lateinit var binding: FragmentScanQRCodeBinding
     private lateinit var codeScanner: CodeScanner
     private lateinit var viewModel: ScanQRViewModel
-    var qrCodeString = ""
+    private var qrCodeString = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -134,10 +132,6 @@ class ScanQRCodeFragment : BaseFragment() {
                 //getting the qr string for api call
                 qrCodeString = it.text
                 getApiData()
-                Toast.makeText(
-                    requireContext(), "Camera initialization Success: ${it.text}",
-                    Toast.LENGTH_LONG
-                ).show()
             }
         }
         codeScanner.errorCallback = ErrorCallback { // or ErrorCallback.SUPPRESS
@@ -258,27 +252,32 @@ class ScanQRCodeFragment : BaseFragment() {
             when (state) {
                 is ResponseHandler.Loading -> {
                     showProgressDialog()
-                    Log.d("ScanQRCode", "setObserverData: $state")
                 }
                 is ResponseHandler.OnFailed -> {
                     hideProgressBar()
-                    Log.d("ScanQRCode", "setObserverData: ${state.code}")
-                    Log.d("ScanQRCode", "setObserverData: ${state.messageCode}")
-                    Log.d("ScanQRCode", "setObserverData: ${state.message}")
-                    if (state.code == 500)
-                        state.message.let { binding.scannerView.snackError(it) }
-                    codeScanner.startPreview()
+                    Toast.makeText(requireContext(), "Please try again later", Toast.LENGTH_SHORT)
+                        .show()
+                    findNavController().navigateUp()
                 }
-
                 is ResponseHandler.OnSuccessResponse<ResponseData<ScanQRResponse>?> -> {
                     hideProgressBar()
-                    Log.d("ScanQRCode", "setObserverData: ${state.response?.data}")
-                    val bundle = Bundle()
-                    bundle.putParcelable("ScanResponse", state.response?.data)
-                    findNavController().navigate(
-                        R.id.action_scanQRCodeFragment_to_paymentSummaryFragment,
-                        bundle
-                    )
+                    if (state.response?.code == 200) {
+                        val bundle = Bundle()
+                        bundle.putParcelable("ScanResponse", state.response.data)
+                        bundle.putString("QRString",qrCodeString)
+                        findNavController().navigate(
+                            R.id.action_scanQRCodeFragment_to_paymentSummaryFragment,
+                            bundle
+                        )
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            state.response?.message,
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+                        codeScanner.startPreview()
+                    }
                 }
             }
         })

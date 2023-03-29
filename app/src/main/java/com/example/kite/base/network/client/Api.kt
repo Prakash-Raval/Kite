@@ -4,13 +4,18 @@ import com.example.kite.addcard.model.AddCardRequest
 import com.example.kite.addcard.model.AddCardResponse
 import com.example.kite.base.network.model.ResponseData
 import com.example.kite.base.network.model.ResponseListData
+import com.example.kite.bikelisting.model.BikeListingRequest
+import com.example.kite.bikelisting.model.BikeListingResponse
 import com.example.kite.constants.Constants
 import com.example.kite.dateandtime.model.PromoCodeRequest
 import com.example.kite.dateandtime.model.PromoCodeResponse
 import com.example.kite.dateandtime.model.TimeSlotRequest
 import com.example.kite.dateandtime.model.TimeSlotResponse
+import com.example.kite.endridechecklist.model.EndRideResponse
 import com.example.kite.history.model.RideHistoryRequest
 import com.example.kite.history.model.RideHistoryResponse
+import com.example.kite.home.model.OnGoingRideRequest
+import com.example.kite.home.model.OnGoingRideResponse
 import com.example.kite.notification.model.NotificationRequest
 import com.example.kite.notification.model.NotificationResponse
 import com.example.kite.notification.model.UpdateNotificationRequest
@@ -45,6 +50,8 @@ import retrofit2.http.Part
 
 interface Api {
 
+    @POST(Constants.BIKE_LISTING)
+    suspend fun getBikeListing(@Body request: BikeListingRequest): Response<ResponseData<BikeListingResponse>>
 
     @POST(Constants.PROMO_CODE)
     suspend fun promoCode(@Body request: PromoCodeRequest): Response<ResponseData<PromoCodeResponse>>
@@ -95,12 +102,22 @@ interface Api {
         @Part("access_token") access_token: RequestBody?,
         @Part("booking_id") booking_id: RequestBody?,
         @Part("battery") battery: RequestBody?,
-        @Part("promocode_id") promoCode_id: RequestBody?,
-        @Part("ride_start_document1") ride_start_document1: MultipartBody.Part?,
-        @Part("ride_start_document2") ride_start_document2: MultipartBody.Part?,
-        @Part("ride_start_document3") ride_start_document3: MultipartBody.Part?
+        @Part("promocode_id") promoCode_id: RequestBody?
+
     ): Response<ResponseData<AddSessionResponse>>
 
+
+    @Multipart
+    @POST(Constants.END_RIDE)
+    suspend fun endRide(
+        @Part("access_token") access_token: RequestBody?,
+        @Part("booking_id") booking_id: RequestBody?,
+        @Part("dropoff_lat") dropoff_lat: RequestBody?,
+        @Part("dropoff_long") dropoff_long: RequestBody?,
+        @Part("geolocation_id") geolocation_id : RequestBody?,
+        @Part("battery") battery: RequestBody?,
+        @Part image : MultipartBody.Part
+    ): Response<ResponseData<EndRideResponse>>
 
     @POST(Constants.NOTIFICATION_UPDATE)
     suspend fun updateNotificationListing(
@@ -116,6 +133,8 @@ interface Api {
     @POST(Constants.PRINT_RECEIPT)
     suspend fun getPrintReceipt(@Body request: PrintReceiptRequest): Response<ResponseData<PrintReceiptResponse>>
 
+    @POST(Constants.ONGOING_RIDE)
+    suspend fun getOnGoingRide(@Body request: OnGoingRideRequest): Response<ResponseData<OnGoingRideResponse>>
 
 
 }

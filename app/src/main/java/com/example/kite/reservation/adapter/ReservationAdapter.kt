@@ -11,8 +11,8 @@ import com.example.kite.reservation.model.ListReservationResponse
 
 class ReservationAdapter(val onReservationViewClick: OnReservationViewClick) :
     RecyclerView.Adapter<ReservationAdapter.ViewHolder>() {
-    private var list = ArrayList<ListReservationResponse.ReservationData>()
 
+    private var list = ArrayList<ListReservationResponse.ReservationData>()
     fun setList(list: ArrayList<ListReservationResponse.ReservationData>) {
         this.list = list
     }
@@ -39,13 +39,11 @@ class ReservationAdapter(val onReservationViewClick: OnReservationViewClick) :
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: ItemReservationRecycylerBinding =
-            ItemReservationRecycylerBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-        return ViewHolder(binding)
+        return ViewHolder( ItemReservationRecycylerBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        ))
     }
 
     override fun getItemCount(): Int = list.size

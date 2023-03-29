@@ -5,9 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.example.kite.R
 import com.example.kite.databinding.ItemScheduleTripDurationBinding
 import com.example.kite.scheduletrip.listner.OnTripClick
 import com.example.kite.scheduletrip.model.ScheduleTimeDuration
@@ -68,39 +66,7 @@ class ScheduleTripAdapter(val context: Context, val onTripClick: OnTripClick) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(position)
-        if (selected == position) {
-
-            holder.binding.txtTripDesc.setTextColor(ContextCompat.getColor(context, R.color.white))
-            holder.binding.txtTripHours.setTextColor(ContextCompat.getColor(context, R.color.white))
-            holder.binding.txtTripPricing.setTextColor(
-                ContextCompat.getColor(
-                    context,
-                    R.color.white
-                )
-            )
-            holder.binding.clScheduleTrip.setBackgroundColor(
-                ContextCompat.getColor(
-                    context,
-                    R.color.bg_main
-                )
-            )
-        } else {
-            holder.binding.txtTripDesc.setTextColor(ContextCompat.getColor(context, R.color.black))
-            holder.binding.txtTripHours.setTextColor(ContextCompat.getColor(context, R.color.black))
-            holder.binding.txtTripPricing.setTextColor(
-                ContextCompat.getColor(
-                    context,
-                    R.color.black
-                )
-            )
-            holder.binding.clScheduleTrip.setBackgroundColor(
-                ContextCompat.getColor(
-                    context,
-                    R.color.schedule_card_gray
-                )
-            )
-
-        }
+        holder.binding.isSelected = selected == position
 
     }
 

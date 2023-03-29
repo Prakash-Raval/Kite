@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="isSelected"
+            type="Boolean" />
+
+        <variable
             name="listingData"
             type="com.example.kite.program.model.ThirdPartyListResponse" />
     </data>
@@ -26,16 +30,18 @@
             app:cardElevation="@dimen/_10sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeColor="@{isSelected == true ? @color/bg_main : @color/white}"
+            app:strokeWidth="@{isSelected == true ? 10 : 0 }">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imgList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/_2sdp"
                 android:scaleType="fitXY"
                 bind:image="@{listingData.thirdPartyImage}"
                 bind:placeholder="@{@drawable/kite_red_logo}"
-                android:layout_margin="@dimen/_2sdp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
                 bind:src="@drawable/kite_red_logo" />
 
         </com.google.android.material.card.MaterialCardView>

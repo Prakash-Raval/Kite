@@ -309,5 +309,7 @@
     <string name="use_the_code_sent_via_text_to_access_your_vehicle_keys">Use the code sent via text, to access your vehicle keys</string>
     <string name="promotion">Promotion</string>
     <string name="credit_debit_card">Credit/Debit Card</string>
+    <string name="duration">Duration</string>
+    <string name="cost">Cost</string>
 
 </resources>

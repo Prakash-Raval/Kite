@@ -1,7 +1,8 @@
 package com.example.kite.ridedetails
 
-import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.content.pm.ResolveInfo
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -224,7 +225,7 @@ class RideDetailsFragment : BaseFragment() {
                 File(
                     Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
                         .toString()
-                            + "/" + bookingId + "_Kite_Booking_Receipt" + System.currentTimeMillis() + ".pdf"
+                            + "/" + bookingId + "_Kite_Booking_Receipt" + ".pdf"
                 )
             var inputStream: InputStream? = null
             var outputStream: OutputStream? = null
@@ -245,6 +246,8 @@ class RideDetailsFragment : BaseFragment() {
                         Log.d("LOgDownload", "file download: $fileSizeDownloaded of $fileSize")
                     }
                     outputStream.flush()
+                    //showDialogDownload(futureStudioIconFile)
+                    //showPDF(futureStudioIconFile.path)
                     true
                 } catch (e: IOException) {
                     Log.d("LOgDownload", "file download: $e")
@@ -266,11 +269,10 @@ class RideDetailsFragment : BaseFragment() {
         }
     }
 
-
     /*
     * showing dialog to open pdf file
     * */
-    private fun showDialogDownload(filename: File) {
+    /*private fun showDialogDownload(filename: File) {
         val writeResponseBodyToDisk =
             writeResponseBodyToDisk(list.let { Bytes.toArray(it) }, bookingID)
         val file = File(
@@ -293,7 +295,38 @@ class RideDetailsFragment : BaseFragment() {
                 ).show()
             }
         }
+    }*/
+    /*  private fun showDialog(mFilePath : String){
+          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+              val file = File(mFilePath)
+              val uri = FileProvider.getUriForFile(requireContext(),
+                  activity?.packageName + ".provider", file)
+             val intent = Intent(Intent.ACTION_VIEW)
+              intent.data = uri
+              intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+              startActivity(intent)
+          } else {
+             var intent = Intent(Intent.ACTION_VIEW)
+              intent.setDataAndType(Uri.parse(mFilePath), "application/pdf")
+              intent = Intent.createChooser(intent, "Open File")
+              intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+              startActivity(intent)
+          }
+      }*/
 
+
+    private fun showPDF(filepath: String) {
+        val file = File(Environment.getExternalStorageDirectory().toString() + filepath)
+        val packageManager: PackageManager? = activity?.packageManager
+        val testIntent = Intent(Intent.ACTION_VIEW)
+        testIntent.type = "application/pdf"
+        val list: MutableList<ResolveInfo>? =
+            packageManager?.queryIntentActivities(testIntent, PackageManager.MATCH_DEFAULT_ONLY)
+        val intent = Intent()
+        intent.action = Intent.ACTION_VIEW
+        val uri = Uri.fromFile(file)
+        intent.setDataAndType(uri, "application/pdf")
+        startActivity(intent)
     }
 }
 

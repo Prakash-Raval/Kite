@@ -62,7 +62,9 @@ class UserAgreementFragment : Fragment(), OnCellClicked, OnCellClickedCountry, O
     private lateinit var stateViewModel: StateViewModel
     private lateinit var stateListingAdapter: StateListingAdapter
     private lateinit var builder: AlertDialog
-    private val PERMISSION_REQUEST_CODE = 200
+    companion object{
+        const val PERMISSION_REQUEST_CODE = 200
+    }
     private var profileImagePath: String? = null
 
 
@@ -76,6 +78,8 @@ class UserAgreementFragment : Fragment(), OnCellClicked, OnCellClickedCountry, O
 
             }
         }
+
+
 
 
     private val startForResult = registerForActivityResult(

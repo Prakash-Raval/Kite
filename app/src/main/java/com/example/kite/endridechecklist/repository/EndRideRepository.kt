@@ -1,36 +1,32 @@
-package com.example.kite.paymentsummary.repository
+package com.example.kite.endridechecklist.repository
 
 import com.example.kite.base.BaseRepository
 import com.example.kite.base.network.client.Api
 import com.example.kite.base.network.client.ResponseHandler
 import com.example.kite.base.network.model.ResponseData
-import com.example.kite.paymentsummary.model.AddSessionResponse
+import com.example.kite.endridechecklist.model.EndRideResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
-class AddSessionRepository(val api: Api) : BaseRepository() {
+class EndRideRepository(val api: Api) : BaseRepository() {
 
-    suspend fun callApiAddSession(
+    suspend fun callApiEndRide(
         access_token: RequestBody?,
         booking_id: RequestBody?,
-        battery: RequestBody?,
-        promoCode_id: RequestBody?
-
-    ): ResponseHandler<ResponseData<AddSessionResponse>?> {
+        dropoff_lat: RequestBody?,
+        dropoff_long: RequestBody?,
+        geolocation_id: RequestBody?,
+        battery : RequestBody?,
+        image: MultipartBody.Part
+    ):
+            ResponseHandler<ResponseData<EndRideResponse>?> {
         return withContext(Dispatchers.Default) {
             return@withContext makeAPICall(
                 call = {
-                    api.startSession(
-                        access_token,
-                        booking_id,
-                        battery,
-                        promoCode_id
-
-                    )
+                    api.endRide(access_token,booking_id, dropoff_lat, dropoff_long, geolocation_id, battery, image)
                 })
         }
     }
-
 }

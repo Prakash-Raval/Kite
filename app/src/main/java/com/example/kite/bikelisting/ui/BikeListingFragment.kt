@@ -4,35 +4,33 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.kite.R
+import com.example.kite.base.network.client.ResponseHandler
+import com.example.kite.base.network.model.ResponseData
+import com.example.kite.basefragment.BaseFragment
 import com.example.kite.bikelisting.adapter.Adapter
 import com.example.kite.bikelisting.adapter.OnCellClicked
 import com.example.kite.bikelisting.model.BikeListingRequest
 import com.example.kite.bikelisting.model.BikeListingResponse
-import com.example.kite.bikelisting.repository.BikeListingRepository
-import com.example.kite.bikelisting.viewmodel.BLVMFactory
 import com.example.kite.bikelisting.viewmodel.BikeListingViewModel
-import com.example.kite.constants.Constants
 import com.example.kite.databinding.FragmentBikeListingBinding
 import com.example.kite.login.model.LoginResponse
-import com.example.kite.network.ApiInterface
-import com.example.kite.network.RetrofitHelper
 import com.example.kite.utils.PrefManager
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 
-
-class BikeListingFragment : Fragment(), OnCellClicked {
+class BikeListingFragment : BaseFragment(), OnCellClicked {
     private lateinit var binding: FragmentBikeListingBinding
     private lateinit var viewModel: BikeListingViewModel
     private lateinit var adapter: Adapter
@@ -77,31 +75,20 @@ class BikeListingFragment : Fragment(), OnCellClicked {
         }
     }
 
+    private fun getViewModel(): BikeListingViewModel {
+        viewModel = ViewModelProvider(this)[BikeListingViewModel::class.java]
+        return viewModel
+    }
 
-    @SuppressLint("NotifyDataSetChanged")
     private fun setAdapter() {
-        adapter = Adapter(requireContext(), this)
+        adapter = Adapter(this)
         binding.rvListVehicleContainer.adapter = adapter
     }
 
     @SuppressLint("NotifyDataSetChanged")
     @RequiresApi(Build.VERSION_CODES.O)
     private fun getData() {
-        val service =
-            RetrofitHelper.getInstance(Constants.BASE_URL).create(ApiInterface::class.java)
-        val repository = BikeListingRepository(service)
-        viewModel = ViewModelProvider(
-            this, BLVMFactory(repository)
-        )[BikeListingViewModel::class.java]
-
-        viewModel.bikeListingLD.observe(viewLifecycleOwner) {
-            binding.model = it
-            adapter.setList(it.data?.vehicleDetails as ArrayList<BikeListingResponse.Data.VehicleDetail>)
-            adapter.notifyDataSetChanged()
-
-            PrefManager.put(it?.data?.vehicleDetails, "VEHICLE_RESPONSE")
-        }
-        binding.lifecycleOwner = viewLifecycleOwner
+        viewModel = getViewModel()
 
         val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         val timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss")
@@ -111,7 +98,7 @@ class BikeListingFragment : Fragment(), OnCellClicked {
         val sharedPreferences =
             activity?.getSharedPreferences("THIRD_PARTY_ID", Context.MODE_PRIVATE)
         val thirdPartyID = sharedPreferences?.getString("ThirdPartyID", "ThirdPartyID")
-        viewModel.getRequiredData(
+        viewModel.getAddCardRequest(
             BikeListingRequest(
                 access_token = token,
                 currentDate,
@@ -120,11 +107,41 @@ class BikeListingFragment : Fragment(), OnCellClicked {
                 third_party_id = thirdPartyID
             )
         )
+        setObserver()
+    }
+
+    private fun setObserver() {
+        //handling error event in snack bar
+        viewModel.liveData.observe(viewLifecycleOwner, Observer { state ->
+            if (state == null) {
+                return@Observer
+            }
+            when (state) {
+                is ResponseHandler.Loading -> {
+                    showProgressDialog()
+                    Log.d("ViewTripFragment", "setObserverData: $state")
+                }
+                is ResponseHandler.OnFailed -> {
+                    hideProgressBar()
+                    Log.d("ViewTripFragment", "setObserverData: $state")
+
+                }
+                is ResponseHandler.OnSuccessResponse<ResponseData<BikeListingResponse>?> -> {
+                    hideProgressBar()
+                    Log.d("ViewTripFragment", "setObserverData: ${state.response?.data}")
+                    binding.model = state.response?.data
+                    adapter.setList(state.response?.data?.vehicleDetails as ArrayList<BikeListingResponse.VehicleDetail>)
+                    adapter.notifyDataSetChanged()
+                    PrefManager.put(state.response.data?.vehicleDetails, "VEHICLE_RESPONSE")
+
+                }
+            }
+        })
     }
 
     //interface for clicking item on recyclerview
     override fun isClicked(data: Int) {
-        val bind = binding.model?.data?.vehicleDetails?.get(data)
+        val bind = binding.model?.vehicleDetails?.get(data)
         val vehicleSlug = bind?.vehicleTypeSlug
         val availableVehicle = bind?.availableVehicles
 

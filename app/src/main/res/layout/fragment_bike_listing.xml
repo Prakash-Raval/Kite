@@ -12,6 +12,7 @@
     </data>
 
     <androidx.core.widget.NestedScrollView
+        android:fillViewport="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -27,7 +28,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            bind:image="@{model.Data.propertyImage}"
+            bind:image="@{model.propertyImage}"
             bind:placeholder="@{@drawable/kite_red_logo}"
             bind:src="@drawable/kite_red_logo" />
 
@@ -69,7 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_12sdp"
-            android:text="@{model.Data.propertyName}"
+            android:text="@{model.propertyName}"
             android:textSize="@dimen/_20sdp"
             app:layout_constraintStart_toEndOf="@id/glStart"
             app:layout_constraintTop_toBottomOf="@id/imgTopToolbar"
@@ -80,7 +81,7 @@
             style="@style/BlackSmallCustomMaterialTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{model.Data.propertyAddress}"
+            android:text="@{model.propertyAddress}"
             android:textSize="@dimen/_12sdp"
             app:layout_constraintStart_toEndOf="@id/glStart"
             app:layout_constraintTop_toBottomOf="@id/txtListTitle"

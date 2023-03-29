@@ -7,6 +7,10 @@
     <data>
 
         <variable
+            name="isSelected"
+            type="Boolean" />
+
+        <variable
             name="scheduleTripData"
             type="com.example.kite.scheduletrip.model.ScheduleTripResponse.Data.TripDuration" />
 
@@ -36,7 +40,7 @@
                 android:id="@+id/clScheduleTrip"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/schedule_card_gray">
+                android:background="@{isSelected == true ? @color/bg_main : @color/schedule_card_gray}">
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/imgProperty"
@@ -68,6 +72,7 @@
                     android:layout_marginTop="@dimen/_8sdp"
                     android:fontFamily="@font/avenir_black"
                     android:text="@{scheduleTripData.title}"
+                    android:textColor="@{isSelected == true ? @color/white : @color/black}"
                     android:textSize="@dimen/_10sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -82,6 +87,7 @@
                     android:layout_marginTop="@dimen/_8sdp"
                     android:layout_marginBottom="@dimen/_8sdp"
                     android:text="@{scheduleTripData.duration}"
+                    android:textColor="@{isSelected == true ? @color/white : @color/black}"
                     android:textSize="@dimen/_12sdp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@id/txtTripDesc"
@@ -95,6 +101,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_8sdp"
                     android:text="@{`$` + scheduleTripData.price}"
+                    android:textColor="@{isSelected == true ? @color/white : @color/black}"
                     android:textSize="@dimen/_10sdp"
                     app:layout_constraintBottom_toBottomOf="@id/txtTripHours"
                     app:layout_constraintEnd_toEndOf="parent"

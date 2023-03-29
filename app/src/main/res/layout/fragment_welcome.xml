@@ -10,13 +10,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/splash_back"
         tools:context=".intro.WelcomeFragment">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/splashBack"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:src="@drawable/splash_back" />
+
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/glStart"

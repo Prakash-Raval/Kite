@@ -31,7 +31,6 @@ class WelcomeFragment : Fragment() {
             container,
             false
         )
-        setBackground()
         // Inflate the layout for this fragment
         loadFragment()
         spannableText()
@@ -44,14 +43,6 @@ class WelcomeFragment : Fragment() {
         }
     }
 
-    private fun setBackground() {
-        var requestOptions = RequestOptions()
-        requestOptions = requestOptions.transform().centerCrop()
-        Glide.with(requireContext())
-            .load(R.drawable.splash_back)
-            .apply(requestOptions)
-            .into(binding.splashBack)
-    }
 
     private fun spannableText() {
         binding.txtCreateAct.movementMethod = LinkMovementMethod.getInstance()

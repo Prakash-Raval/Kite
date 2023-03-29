@@ -1,7 +1,6 @@
 package com.example.kite.home
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.pm.PackageManager
@@ -9,6 +8,8 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,15 +26,23 @@ import com.example.kite.R
 import com.example.kite.base.network.client.ResponseHandler
 import com.example.kite.base.network.model.ResponseData
 import com.example.kite.basefragment.BaseFragment
+import com.example.kite.databinding.DialogBsEndTripBinding
 import com.example.kite.databinding.DialogUpdateChargeBinding
 import com.example.kite.databinding.FragmentHomeBinding
+import com.example.kite.home.model.OnGoingRideRequest
+import com.example.kite.home.model.OnGoingRideResponse
+import com.example.kite.home.viewmodel.OnGoingRideViewModel
 import com.example.kite.home.viewmodel.ViewTripViewModel
 import com.example.kite.login.model.LoginResponse
 import com.example.kite.reservation.model.ListReservationRequest
 import com.example.kite.reservation.model.ListReservationResponse
+import com.example.kite.utils.FullScreenDialog
 import com.example.kite.utils.PrefManager
+import com.example.kite.utils.Util
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.concurrent.TimeUnit
 
 
 class HomeFragment : BaseFragment() {
@@ -43,11 +52,17 @@ class HomeFragment : BaseFragment() {
     * */
     private lateinit var binding: FragmentHomeBinding
     private lateinit var viewModelViewTrip: ViewTripViewModel
+    private lateinit var viewModelOnGoingRide: OnGoingRideViewModel
+
+    val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.accessToken
     private val foregroundLocationPermissionsRequestCode = 1
     private val backgroundLocationPermissionsRequestCode = 2
-
     private var reservationID = ""
     private var isShown = 0
+    private var counter: Int = 0
+    private val bundle = Bundle()
+    var countDownTimer: CountDownTimer? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,20 +73,15 @@ class HomeFragment : BaseFragment() {
         /*
         * permission id of location dialog
         * */
+
         requestLocationPermissions()
+
     }
 
-    /*private fun initMap() {
-        *//*
-        * init radar api for map
-        * *//*
-        val receiver = MyRadarReceiver()
-        Radar.initialize(requireContext(), "prj_test_pk_9fa4fb5a14490462e0c12aa4995063460dd62b5a",receiver)
-        Radar.getLocation { status, location, stopped ->
-            Log.d("example", "Location: status = ${status}; location = $location; stopped = $stopped")
-            Log.d("example", "Location: status = ${status}; location = ${location?.latitude}; location = ${location?.longitude}; stopped = $stopped")
-        }
-    }*/
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        getOnGoingRide()
+    }
 
 
     override fun onCreateView(
@@ -92,6 +102,7 @@ class HomeFragment : BaseFragment() {
         }
         binding.cardViewTripContainer.visibility = View.GONE
         setUpDrawer()
+        getOnGoingRide()
         setUpNavigation()
         getViewTripApi()
         setObserver()
@@ -100,6 +111,65 @@ class HomeFragment : BaseFragment() {
     }
 
 
+    /*
+    *
+    * checking for onGoing ride data
+    * */
+    private fun checkStartTripData(response: OnGoingRideResponse?) {
+        if (response?.bookingId != null) {
+            /*  val startDate: Long? = response.startDate?.let { Util.getMillisFromTime(it) }
+                  ?.let { TimeUnit.MILLISECONDS.toMinutes(it) }
+              val currentTime: Long = TimeUnit.MILLISECONDS.toMinutes(System.currentTimeMillis())
+              counter = (currentTime - startDate!!).toInt()*/
+
+            val start: Long? = response.startDate?.let { Util.getMillisFromTime(it) }
+            Log.d("TAG111", "checkStartTripData: $start")
+
+            val current: Long? = System.currentTimeMillis()
+
+            val dif: Long? = start?.let { current?.minus(it) }
+
+            if (dif != null) {
+                counter = (TimeUnit.MILLISECONDS.toMinutes(dif) - 330).toInt()
+
+                Log.d("TAG111", "checkStartTripData: $dif")
+                Log.d("TAG111", "checkStartTripData: ${TimeUnit.MILLISECONDS.toMinutes(dif) - 330}")
+            }
+        }
+    }
+
+    /*
+    *
+    * set counter for calculating min and charge according to the time
+    *
+    */
+    private fun startTimeCounter() {
+        if (countDownTimer == null) {
+            countDownTimer = object : CountDownTimer(43200000, 60000) {
+                override fun onTick(millisUntilFinished: Long) {
+                    binding.txtBDTime.text = buildString {
+                        append(counter)
+                        append("/min")
+                    }
+
+                    binding.txtBDCost.text = buildString {
+                        append("$")
+                        append(counter)
+                        append(".00")
+                    }
+                    counter++
+                }
+
+                override fun onFinish() {
+                }
+            }.start()
+        }
+    }
+
+
+    /*
+    * setting up observer for view schedule trip
+    * */
     private fun setObserver() {
         //observing view model response data
         viewModelViewTrip.liveData.observe(viewLifecycleOwner, Observer { state ->
@@ -120,20 +190,29 @@ class HomeFragment : BaseFragment() {
                         binding.cardViewTripContainer.visibility = View.GONE
                     } else {
                         binding.viewTrip = state.response?.data?.reservationData?.getOrNull(0)
-                        binding.cardViewTripContainer.visibility = View.VISIBLE
                     }
                 }
             }
         })
     }
 
+    /*
+    * opening helper fragment
+    * */
     private fun setUpNavigation() {
         binding.viewHelp.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSupportFragment())
         }
+
+        binding.btnHEndTrip.setOnClickListener {
+            endTripBottomSheetDialog()
+        }
     }
 
-    //calling drawer from main activity
+    /*
+    *
+    * calling method from main activity for opening drawer
+    * */
     private fun setUpDrawer() {
         val mDrawer = activity?.findViewById<DrawerLayout>(R.id.drawerLayout)
         binding.viewMenu.setOnClickListener {
@@ -141,6 +220,9 @@ class HomeFragment : BaseFragment() {
         }
     }
 
+    /*
+    * dialog shown when app open first time
+    * */
     private fun openDialog() {
         val builder = AlertDialog.Builder(requireContext())
             .create()
@@ -160,7 +242,11 @@ class HomeFragment : BaseFragment() {
         builder.show()
     }
 
-    @SuppressLint("MissingInflatedId")
+
+    /*
+    *
+    * dialog shown when trip scheduled successfully
+    * */
     private fun openUpdateChargeDialog() {
         val builder = AlertDialog.Builder(requireContext())
             .create()
@@ -178,15 +264,78 @@ class HomeFragment : BaseFragment() {
     }
 
 
-    //assigning view model
+    /*
+    assigning view model view schedule trip
+    */
     private fun getViewModel(): ViewTripViewModel {
         viewModelViewTrip = ViewModelProvider(this)[ViewTripViewModel::class.java]
         return viewModelViewTrip
     }
 
+    /*
+    assigning view model for on going ride
+    */
+    private fun getViewModelOnGoingRide(): OnGoingRideViewModel {
+        viewModelOnGoingRide = ViewModelProvider(this)[OnGoingRideViewModel::class.java]
+        return viewModelOnGoingRide
+    }
 
-    //calling api from reservation fragment for schedule trip view
+    /*
+    * calling on going ride api
+    * */
+    private fun getOnGoingRide() {
+        viewModelOnGoingRide = getViewModelOnGoingRide()
+        val customerID = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.customerId
+        viewModelOnGoingRide.getOnGoingRideRequest(
+            OnGoingRideRequest(
+                accessToken = token,
+                customerId = customerID,
+                lang = 1
+            )
+        )
+        setObserverOnGoingRide()
+    }
+
+
+    /*
+    * setting up observer for ongoing ride
+    */
+    private fun setObserverOnGoingRide() {
+        //observing view model response data
+        viewModelOnGoingRide.liveData.observe(viewLifecycleOwner, Observer { state ->
+            if (state == null) {
+                return@Observer
+            }
+            when (state) {
+                is ResponseHandler.Loading -> {
+
+                }
+                is ResponseHandler.OnFailed -> {
+
+                }
+                is ResponseHandler.OnSuccessResponse<ResponseData<OnGoingRideResponse>?> -> {
+                    if (state.response?.code == 200) {
+                        /*
+                        * managing visibility for card views
+                        */
+                        bundle.putString(
+                            "BookingIDForEndTrip",
+                            state.response.data?.bookingId.toString()
+                        )
+                        binding.onGoingRide = state.response.data
+                        checkStartTripData(state.response.data)
+                        startTimeCounter()
+                    }
+                }
+            }
+        })
+    }
+
+    /*
+    * calling api from reservation fragment for schedule trip view
+    */
     private fun getViewTripApi() {
+
         //view model
         viewModelViewTrip = getViewModel()
 
@@ -195,10 +344,10 @@ class HomeFragment : BaseFragment() {
         val timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss")
         val currentDate = LocalDateTime.now().format(dateFormatter)
         val currentTime = LocalDateTime.now().format(timeFormatter)
-        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.accessToken
         val sharedPreferences =
             activity?.getSharedPreferences("THIRD_PARTY_ID", Context.MODE_PRIVATE)
         val thirdPartyID = sharedPreferences?.getString("ThirdPartyID", "ThirdPartyID")
+
         //passing data to request class
         viewModelViewTrip.getViewTripRequest(
             ListReservationRequest(
@@ -215,7 +364,10 @@ class HomeFragment : BaseFragment() {
 
     }
 
-    //view trip fragment
+
+    /*
+    * opening view schedule trip fragment
+    * */
     private fun viewTrip() {
         binding.btnHView.setOnClickListener {
             val bundle = Bundle()
@@ -225,6 +377,9 @@ class HomeFragment : BaseFragment() {
         }
     }
 
+    /*
+    * request permissions fro location
+    * */
     private fun requestLocationPermissions() {
         if (ActivityCompat.checkSelfPermission(
                 requireContext(),
@@ -284,4 +439,28 @@ class HomeFragment : BaseFragment() {
             }
         }
     }
+
+
+    /*
+    * open bottom sheet dialog when user tries to end trip
+    * */
+    private fun endTripBottomSheetDialog() {
+        val builder = BottomSheetDialog(requireContext())
+        val bind: DialogBsEndTripBinding =
+            DialogBsEndTripBinding.inflate(LayoutInflater.from(context))
+        builder.setContentView(bind.root)
+        bind.imgETBack.setOnClickListener { builder.dismiss() }
+        bind.btnETEndTrip.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_homeFragment_to_endRideCheckListFragment,
+                bundle
+            )
+            builder.dismiss()
+        }
+        bind.txtETNot.setOnClickListener { builder.dismiss() }
+        FullScreenDialog.setupFullHeight(builder, requireActivity())
+        builder.behavior.isDraggable = false
+        builder.show()
+    }
+
 }

@@ -1,21 +1,22 @@
-package com.example.kite.bikelisting.repository
+package com.example.kite.home.repository
 
 import com.example.kite.base.BaseRepository
 import com.example.kite.base.network.client.Api
 import com.example.kite.base.network.client.ResponseHandler
 import com.example.kite.base.network.model.ResponseData
-import com.example.kite.bikelisting.model.BikeListingRequest
-import com.example.kite.bikelisting.model.BikeListingResponse
+import com.example.kite.home.model.OnGoingRideRequest
+import com.example.kite.home.model.OnGoingRideResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class BikeListingRepository(val api: Api) : BaseRepository(){
+class OnGoingRideRepository(val api: Api) : BaseRepository() {
 
-    suspend fun getBikeListing(request: BikeListingRequest): ResponseHandler<ResponseData<BikeListingResponse>?> {
+    suspend fun callApiOnGoingRide(request: OnGoingRideRequest):
+            ResponseHandler<ResponseData<OnGoingRideResponse>?> {
         return withContext(Dispatchers.Default) {
             return@withContext makeAPICall(
                 call = {
-                    api.getBikeListing(request)
+                    api.getOnGoingRide(request)
                 })
         }
     }

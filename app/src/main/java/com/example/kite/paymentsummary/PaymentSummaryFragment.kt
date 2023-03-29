@@ -1,7 +1,9 @@
 package com.example.kite.paymentsummary
 
+import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
 import android.util.Log
+import android.view.Display.Mode
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,11 +26,7 @@ import com.example.kite.paymentsummary.viewmodel.AddSessionViewModel
 import com.example.kite.scanqr.model.ScanQRResponse
 import com.example.kite.utils.PrefManager
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import java.io.File
 
 
 class PaymentSummaryFragment : BaseFragment() {
@@ -40,6 +38,8 @@ class PaymentSummaryFragment : BaseFragment() {
     private lateinit var viewModelPromoCode: PromoCodeViewModel
     val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.accessToken
     private lateinit var viewModelSession: AddSessionViewModel
+    val bundle = Bundle()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -74,28 +74,39 @@ class PaymentSummaryFragment : BaseFragment() {
     /*
     * getting response of scan qr
     * to display data in page
+    * changes in args according to vehicles
     * */
     private fun getArgs() {
         val args = this.arguments
         val responseData: ScanQRResponse = args?.get("ScanResponse") as ScanQRResponse
+        val qrString = args.getString("QRString")
+
+        val sh = activity?.getSharedPreferences("PaymentResponse",MODE_PRIVATE)?.edit()
         binding.paymentData = responseData
 
+        sh?.putString("QRString", qrString)
         binding.btnPSNext.setOnClickListener {
             when (responseData.vehicleTypeSlug) {
                 Constants.CAR -> {
-                    findNavController().navigate(R.id.action_paymentSummaryFragment_to_vehicleInspectionFragment)
                     getStartSessionData()
+                    sh?.putString("VehicleImage", responseData.vehicleTypeImage)
+                    sh?.putString("PricingValue", responseData.pricingValue)
                 }
                 Constants.BIKE -> {
                     getStartSessionData()
+                    sh?.putString("VehicleImage", responseData.vehicleTypeImage)
+                    sh?.putString("PricingValue", responseData.vehicleType)
                 }
                 Constants.SCOOTER -> {
                     getStartSessionData()
+                    sh?.putString("VehicleImage", responseData.vehicleTypeImage)
+                    sh?.putString("PricingValue", responseData.vehicleType)
                 }
                 else -> {
 
                 }
             }
+            sh?.apply()
         }
     }
 
@@ -186,28 +197,21 @@ class PaymentSummaryFragment : BaseFragment() {
             "${responseData.bookingId}".toRequestBody("text/plain".toMediaTypeOrNull())
         val promoCodeID =
             "".toRequestBody("text/plain".toMediaTypeOrNull())
-        val file = File("")
-        val requestBody: RequestBody =
-            file.asRequestBody("image/*".toMediaTypeOrNull())
-        val imagePart = MultipartBody.Part.createFormData("profile_image", file.name, requestBody)
-
-
 
         viewModelSession.getAddCardRequest(
             access_token = accessToken,
             booking_id = bookingId,
             promoCode_id = promoCodeID,
-            battery = "40".toRequestBody("text/plain".toMediaTypeOrNull()),
-            ride_start_document1 = imagePart,
-            ride_start_document2 = imagePart,
-            ride_start_document3 = imagePart
+            battery = "40".toRequestBody("text/plain".toMediaTypeOrNull())
+
         )
         setObserverSession()
     }
+
     /*
     * setting up observer for session
+    *
     * */
-
     private fun setObserverSession() {
         viewModelSession.liveData.observe(viewLifecycleOwner, Observer { state ->
             if (state == null) {
@@ -216,15 +220,20 @@ class PaymentSummaryFragment : BaseFragment() {
             when (state) {
                 is ResponseHandler.Loading -> {
                     showProgressDialog()
-                    Log.d("PromoCodeResponse", "setLiveDataObservers: $state")
+                    Log.d("ADDTRIPRESPONSE", "setLiveDataObservers: $state")
                 }
                 is ResponseHandler.OnFailed -> {
                     hideProgressBar()
-                    Log.d("PromoCodeResponse", "setLiveDataObservers: $state")
+                    Log.d("ADDTRIPRESPONSE", "setLiveDataObservers: ${state}")
                 }
                 is ResponseHandler.OnSuccessResponse<ResponseData<AddSessionResponse>?> -> {
                     hideProgressBar()
-                    Log.d("PromoCodeResponse", "setLiveDataObservers: $state")
+                    if (state.response?.code == 200)
+                        findNavController().navigate(
+                            R.id.action_paymentSummaryFragment_to_homeFragment,
+                            bundle
+                        )
+                    Log.d("ADDTRIPRESPONSE", "setLiveDataObservers: $state")
                 }
             }
         })

@@ -8,8 +8,12 @@
         <import type="android.view.View" />
 
         <variable
+            name="isSelected"
+            type="Boolean" />
+
+        <variable
             name="data"
-            type="com.example.kite.bikelisting.model.BikeListingResponse.Data.VehicleDetail" />
+            type="com.example.kite.bikelisting.model.BikeListingResponse.VehicleDetail" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -21,6 +25,7 @@
         app:cardCornerRadius="@dimen/_10sdp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:background="@{isSelected == true ? @color/bg_main : @color/bg_card_gray}"
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -32,6 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_10sdp"
+                android:textColor="@{isSelected == true ? @color/white : @color/black}"
                 android:text="@{`$`+data.pricingValue.toString()+`/min`}"
                 android:textSize="@dimen/_12sdp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -61,6 +67,7 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:text="@{data.vehicleType}"
+                android:textColor="@{isSelected == true ? @color/white : @color/black}"
                 android:textSize="@dimen/_10sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/imgCarHolder"
@@ -75,6 +82,7 @@
                 android:layout_marginBottom="@dimen/_10sdp"
                 android:text="@string/available"
                 android:textSize="@dimen/_8sdp"
+                android:textColor="@{isSelected == true ? @color/white : @color/black}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/txtVehicleModel" />
@@ -87,6 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:padding="0dp"
+                android:textColor="@{isSelected == true ? @color/white : @color/black}"
                 android:text="@{data.availableVehicles.toString()}"
                 android:textSize="@dimen/_14sdp"
                 app:layout_constraintBottom_toBottomOf="@id/txtVehicleAvailibility"

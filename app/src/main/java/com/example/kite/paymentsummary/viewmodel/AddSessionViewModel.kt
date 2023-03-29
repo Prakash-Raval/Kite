@@ -25,10 +25,8 @@ class AddSessionViewModel : ViewModelBase() {
         access_token: RequestBody?,
         booking_id: RequestBody?,
         battery: RequestBody?,
-        promoCode_id: RequestBody?,
-        ride_start_document1: MultipartBody.Part?,
-        ride_start_document2: MultipartBody.Part?,
-        ride_start_document3: MultipartBody.Part?
+        promoCode_id: RequestBody?
+
     ) {
         viewModelScope.launch(coroutineContext) {
             responseLiveData.value = ResponseHandler.Loading
@@ -36,10 +34,8 @@ class AddSessionViewModel : ViewModelBase() {
                 access_token,
                 booking_id,
                 battery,
-                promoCode_id,
-                ride_start_document1,
-                ride_start_document2,
-                ride_start_document3
+                promoCode_id
+
             )
         }
     }

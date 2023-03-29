@@ -32,10 +32,6 @@ class RideHistoryAdapter(val onRideClick: OnRideClick) :
         }
     }
 
-    private fun convertDate(data: String): String {
-        val dateTime: ZonedDateTime = ZonedDateTime.parse(data)
-        return dateTime.toLocalDateTime().toString()
-    }
 
     override fun getItemId(position: Int): Long {
         return getItemId(position)

@@ -19,11 +19,8 @@
         android:id="@+id/constraintNotification"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/card_view_background">
-<!--
-@color/card_view_background
-@{dataNotification.isSelected == true ? @color/card_view_background : dataNotification.notificationRead == 0 ? @color/white : @color/card_view_background
--->
+       android:background="@color/card_view_background">
+
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtNotificationHeader"
             style="@style/BlackSmallCustomMaterialTextView"

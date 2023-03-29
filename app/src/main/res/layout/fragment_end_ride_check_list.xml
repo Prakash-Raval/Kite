@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -48,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_16sdp"
             android:src="@drawable/ic_shield_red"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txtETCLText2" />
@@ -71,7 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginHorizontal="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_16sdp"
             android:alpha="0.5"
             android:background="@color/black"
             app:layout_constraintTop_toBottomOf="@id/imgETCLShield1" />
@@ -81,7 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_16sdp"
             android:src="@drawable/ic_shield_red"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/viewETCL1" />
@@ -104,7 +105,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginHorizontal="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_16sdp"
             android:alpha="0.5"
             android:background="@color/black"
             app:layout_constraintTop_toBottomOf="@id/imgETCLShield2" />
@@ -114,7 +115,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_16sdp"
             android:src="@drawable/ic_shield_red"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/viewETCL2" />
@@ -137,7 +138,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginHorizontal="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_16sdp"
             android:alpha="0.5"
             android:background="@color/black"
             app:layout_constraintTop_toBottomOf="@id/txtWDCLShield3" />
@@ -147,7 +148,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_16sdp"
             android:src="@drawable/ic_shield_red"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/viewETCL3" />
@@ -166,9 +167,19 @@
             app:layout_constraintTop_toTopOf="@id/imgETCLShield4" />
 
 
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgERPhoto"
+            app:layout_constraintTop_toBottomOf="@id/txtWDCLShield4"
+            android:layout_marginStart="@dimen/_20sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            tools:src ="@drawable/kite_red_logo"
+            android:layout_height="@dimen/_50sdp"/>
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnETCLSubmit"
-            style="@style/RedCustomMaterialButton"
+            style="@style/WhiteCustomMaterialButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_20sdp"
@@ -180,11 +191,11 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnETCLCamera"
-            style="@style/CustomMaterialButton"
+            style="@style/BlackCustomMaterialButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_20sdp"
-            android:layout_marginBottom="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_16sdp"
             android:drawableEnd="@drawable/ic_camera_white"
             android:drawablePadding="0dp"
             android:text="@string/use_camera"

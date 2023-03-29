@@ -5,6 +5,12 @@
 
     <data>
 
+        <import type="android.view.View" />
+
+        <variable
+            name="onGoingRide"
+            type="com.example.kite.home.model.OnGoingRideResponse" />
+
         <variable
             name="viewTrip"
             type="com.example.kite.reservation.model.ListReservationResponse.ReservationData" />
@@ -81,8 +87,6 @@
             app:layout_constraintTop_toTopOf="@id/viewHelp" />
 
 
-
-
         <View
             android:id="@+id/viewGps"
             android:layout_width="@dimen/_30sdp"
@@ -109,7 +113,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_20sdp"
-            android:visibility="visible"
+            android:visibility="@{onGoingRide.bookingId != null ? View.GONE : View.VISIBLE}"
             app:cardCornerRadius="@dimen/_20sdp"
             app:cardElevation="@dimen/_8sdp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -211,13 +215,120 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-<!--        <com.mapbox.maps.MapView xmlns:mapbox="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/mapView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            mapbox:mapbox_cameraTargetLat="40.7128"
-            mapbox:mapbox_cameraTargetLng="-74.0060"
-            mapbox:mapbox_cameraZoom="9.0" />-->
 
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvStartSession"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="@{onGoingRide.bookingId != null ? View.VISIBLE : View.GONE}"
+            app:cardElevation="@dimen/_20sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imgBottomVehicle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    app:layout_constraintEnd_toStartOf="@id/txtBottomVN"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    bind:image="@{onGoingRide.vehicleTypeImage}"
+                    bind:placeholder="@{@drawable/kite_red_logo}"
+                    bind:src="@drawable/ic_tesla_one" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtBottomVN"
+                    style="@style/BlackSmallCustomMaterialTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:gravity="end"
+                    android:text="@{onGoingRide.qrCode}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/imgBottomVehicle"
+                    app:layout_constraintTop_toTopOf="parent"
+                    bind:text="AML-NISSAN-QR-0002" />
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtBottomPricePerMin"
+                    style="@style/BlackSmallCustomMaterialTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:gravity="end"
+                    android:text="@{`$`+onGoingRide.pricingValue.toString()+`/min`}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/txtBottomVN"
+                    bind:text="$0.1/min" />
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtBottomDuration"
+                    style="@style/BlackSmallCustomMaterialTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_20sdp"
+                    android:alpha="0.7"
+                    android:text="@string/duration"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imgBottomVehicle" />
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtBDTime"
+                    style="@style/BlackSmallCustomMaterialTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_20sdp"
+                    app:layout_constraintStart_toStartOf="@id/txtBottomDuration"
+                    app:layout_constraintTop_toBottomOf="@id/txtBottomDuration"
+                    bind:text="000Min" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtBottomCost"
+                    style="@style/BlackSmallCustomMaterialTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_40sdp"
+                    android:alpha="0.7"
+                    android:text="@string/cost"
+                    app:layout_constraintStart_toEndOf="@id/txtBottomDuration"
+                    app:layout_constraintTop_toTopOf="@id/txtBottomDuration" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtBDCost"
+                    style="@style/BlackSmallCustomMaterialTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_20sdp"
+                    app:layout_constraintStart_toStartOf="@id/txtBottomCost"
+                    app:layout_constraintTop_toBottomOf="@id/txtBottomCost"
+                    bind:text="$00.00" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnHEndTrip"
+                    style="@style/BlackCustomMaterialButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_20sdp"
+                    android:text="@string/end_trip"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/txtBDTime" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
