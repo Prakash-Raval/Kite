@@ -23,6 +23,7 @@ import com.example.kite.bikelisting.adapter.OnCellClicked
 import com.example.kite.bikelisting.model.BikeListingRequest
 import com.example.kite.bikelisting.model.BikeListingResponse
 import com.example.kite.bikelisting.viewmodel.BikeListingViewModel
+import com.example.kite.constants.Constants
 import com.example.kite.databinding.FragmentBikeListingBinding
 import com.example.kite.login.model.LoginResponse
 import com.example.kite.utils.PrefManager
@@ -85,8 +86,6 @@ class BikeListingFragment : BaseFragment(), OnCellClicked {
         binding.rvListVehicleContainer.adapter = adapter
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun getData() {
         viewModel = getViewModel()
 
@@ -94,7 +93,7 @@ class BikeListingFragment : BaseFragment(), OnCellClicked {
         val timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss")
         val currentDate = LocalDateTime.now().format(dateFormatter)
         val currentTime = LocalDateTime.now().format(timeFormatter)
-        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.accessToken
+        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
         val sharedPreferences =
             activity?.getSharedPreferences("THIRD_PARTY_ID", Context.MODE_PRIVATE)
         val thirdPartyID = sharedPreferences?.getString("ThirdPartyID", "ThirdPartyID")
@@ -131,7 +130,6 @@ class BikeListingFragment : BaseFragment(), OnCellClicked {
                     Log.d("ViewTripFragment", "setObserverData: ${state.response?.data}")
                     binding.model = state.response?.data
                     adapter.setList(state.response?.data?.vehicleDetails as ArrayList<BikeListingResponse.VehicleDetail>)
-                    adapter.notifyDataSetChanged()
                     PrefManager.put(state.response.data?.vehicleDetails, "VEHICLE_RESPONSE")
 
                 }
@@ -160,7 +158,7 @@ class BikeListingFragment : BaseFragment(), OnCellClicked {
             }
             when (vehicleSlug) {
 
-                "eScooter" -> {
+                Constants.SCOOTER -> {
                     if (availableVehicle != null && availableVehicle > 0) {
                         enableButton()
                         disableText()
@@ -173,7 +171,7 @@ class BikeListingFragment : BaseFragment(), OnCellClicked {
                         vehicleDetails.putString("ManufacturerID", manufacturerID.toString())
                     }
                 }
-                "eCar" -> {
+                Constants.CAR-> {
                     if (availableVehicle != null && availableVehicle > 0) {
                         enableButton()
                         enableText()
@@ -185,7 +183,7 @@ class BikeListingFragment : BaseFragment(), OnCellClicked {
                         vehicleDetails.putString("ManufacturerID", manufacturerID.toString())
                     }
                 }
-                "eBike" -> {
+                Constants.BIKE -> {
                     if (availableVehicle != null && availableVehicle > 0) {
                         enableButton()
                         disableText()

@@ -72,7 +72,7 @@ class SelectPaymentFragment : BaseFragment() {
     private fun getApiData() {
         viewModel = getViewModel()
         //get request data
-        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data
+        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")
 
         viewModel.getGetCardRequest(
             GetCardRequest(

@@ -1,12 +1,9 @@
 package com.example.kite.home
 
-import android.Manifest
 import android.app.AlertDialog
 import android.content.Context
-import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
@@ -15,7 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
-import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
@@ -54,14 +50,12 @@ class HomeFragment : BaseFragment() {
     private lateinit var viewModelViewTrip: ViewTripViewModel
     private lateinit var viewModelOnGoingRide: OnGoingRideViewModel
 
-    val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.accessToken
-    private val foregroundLocationPermissionsRequestCode = 1
-    private val backgroundLocationPermissionsRequestCode = 2
+    val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
     private var reservationID = ""
     private var isShown = 0
     private var counter: Int = 0
     private val bundle = Bundle()
-    var countDownTimer: CountDownTimer? = null
+    private var countDownTimer: CountDownTimer? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,12 +64,6 @@ class HomeFragment : BaseFragment() {
             isShown = 1
             openDialog()
         }
-        /*
-        * permission id of location dialog
-        * */
-
-        requestLocationPermissions()
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -117,23 +105,16 @@ class HomeFragment : BaseFragment() {
     * */
     private fun checkStartTripData(response: OnGoingRideResponse?) {
         if (response?.bookingId != null) {
-            /*  val startDate: Long? = response.startDate?.let { Util.getMillisFromTime(it) }
-                  ?.let { TimeUnit.MILLISECONDS.toMinutes(it) }
-              val currentTime: Long = TimeUnit.MILLISECONDS.toMinutes(System.currentTimeMillis())
-              counter = (currentTime - startDate!!).toInt()*/
-
             val start: Long? = response.startDate?.let { Util.getMillisFromTime(it) }
             Log.d("TAG111", "checkStartTripData: $start")
 
+            /*
+            * calculating diff time between started ride time and current time
+            * */
             val current: Long? = System.currentTimeMillis()
-
             val dif: Long? = start?.let { current?.minus(it) }
-
             if (dif != null) {
                 counter = (TimeUnit.MILLISECONDS.toMinutes(dif) - 330).toInt()
-
-                Log.d("TAG111", "checkStartTripData: $dif")
-                Log.d("TAG111", "checkStartTripData: ${TimeUnit.MILLISECONDS.toMinutes(dif) - 330}")
             }
         }
     }
@@ -144,6 +125,9 @@ class HomeFragment : BaseFragment() {
     *
     */
     private fun startTimeCounter() {
+        /*
+        * checking the countDownTimer value is null or not
+        * */
         if (countDownTimer == null) {
             countDownTimer = object : CountDownTimer(43200000, 60000) {
                 override fun onTick(millisUntilFinished: Long) {
@@ -285,7 +269,7 @@ class HomeFragment : BaseFragment() {
     * */
     private fun getOnGoingRide() {
         viewModelOnGoingRide = getViewModelOnGoingRide()
-        val customerID = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.customerId
+        val customerID = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.customerId
         viewModelOnGoingRide.getOnGoingRideRequest(
             OnGoingRideRequest(
                 accessToken = token,
@@ -340,10 +324,8 @@ class HomeFragment : BaseFragment() {
         viewModelViewTrip = getViewModel()
 
         //getting value to pass in request class
-        val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-        val timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss")
-        val currentDate = LocalDateTime.now().format(dateFormatter)
-        val currentTime = LocalDateTime.now().format(timeFormatter)
+        val currentDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+        val currentTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))
         val sharedPreferences =
             activity?.getSharedPreferences("THIRD_PARTY_ID", Context.MODE_PRIVATE)
         val thirdPartyID = sharedPreferences?.getString("ThirdPartyID", "ThirdPartyID")
@@ -374,69 +356,6 @@ class HomeFragment : BaseFragment() {
             bundle.putString("ReservationID", reservationID)
             val action = R.id.action_homeFragment_to_viewTripFragment
             findNavController().navigate(action, bundle)
-        }
-    }
-
-    /*
-    * request permissions fro location
-    * */
-    private fun requestLocationPermissions() {
-        if (ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
-                ActivityCompat.requestPermissions(
-                    requireActivity(),
-                    arrayOf(
-                        Manifest.permission.ACCESS_COARSE_LOCATION,
-                        Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                    ),
-                    backgroundLocationPermissionsRequestCode
-                )
-            } else {
-                ActivityCompat.requestPermissions(
-                    requireActivity(),
-                    arrayOf(
-                        Manifest.permission.ACCESS_COARSE_LOCATION,
-                        Manifest.permission.ACCESS_FINE_LOCATION
-                    ),
-                    foregroundLocationPermissionsRequestCode
-                )
-            }
-        }
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == foregroundLocationPermissionsRequestCode && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED && Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(
-                    requireActivity(),
-                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                )
-            ) {
-                androidx.appcompat.app.AlertDialog.Builder(requireContext())
-                    .setTitle("Background location permissions needed")
-                    .setMessage("Background location permission needed, tap \"Allow all the time\" on the next screen")
-                    .setPositiveButton(
-                        "OK"
-                    ) { _, _ ->
-                        ActivityCompat.requestPermissions(
-                            requireActivity(),
-                            arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
-                            backgroundLocationPermissionsRequestCode
-                        )
-                    }
-                    .create()
-                    .show()
-            }
         }
     }
 

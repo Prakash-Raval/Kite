@@ -36,7 +36,7 @@ class PaymentSummaryFragment : BaseFragment() {
     * */
     private lateinit var binding: FragmentPaymentSummaryBinding
     private lateinit var viewModelPromoCode: PromoCodeViewModel
-    val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.accessToken
+    val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
     private lateinit var viewModelSession: AddSessionViewModel
     val bundle = Bundle()
 

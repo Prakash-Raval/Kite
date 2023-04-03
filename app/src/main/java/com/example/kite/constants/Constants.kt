@@ -92,6 +92,9 @@ object Constants {
     //end Ride
     const val END_RIDE = "customer/session_ended"
 
+    //rate ride
+    const val RATE_RIDE = "customer/rate_ride"
+
     //print receipt
     const val PRINT_RECEIPT = "customer/print-transaction-details"
 

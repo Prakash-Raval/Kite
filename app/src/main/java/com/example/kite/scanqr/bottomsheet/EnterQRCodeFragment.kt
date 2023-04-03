@@ -75,7 +75,7 @@ class EnterQRCodeFragment : BaseFragment() {
     * */
     private fun getApiData() {
         viewModel = getViewModel()
-        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.accessToken
+        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
         val args = this.arguments
         val vehicleSlug = args?.getString("VehicleSlug")
 

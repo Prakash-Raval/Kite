@@ -7,6 +7,9 @@ import com.example.kite.base.network.model.ResponseListData
 import com.example.kite.bikelisting.model.BikeListingRequest
 import com.example.kite.bikelisting.model.BikeListingResponse
 import com.example.kite.constants.Constants
+import com.example.kite.countrylisting.CountryResponse
+import com.example.kite.countrylisting.statelisting.StateRequest
+import com.example.kite.countrylisting.statelisting.StateResponse
 import com.example.kite.dateandtime.model.PromoCodeRequest
 import com.example.kite.dateandtime.model.PromoCodeResponse
 import com.example.kite.dateandtime.model.TimeSlotRequest
@@ -16,11 +19,15 @@ import com.example.kite.history.model.RideHistoryRequest
 import com.example.kite.history.model.RideHistoryResponse
 import com.example.kite.home.model.OnGoingRideRequest
 import com.example.kite.home.model.OnGoingRideResponse
+import com.example.kite.login.model.LoginRequest
+import com.example.kite.login.model.LoginResponse
 import com.example.kite.notification.model.NotificationRequest
 import com.example.kite.notification.model.NotificationResponse
 import com.example.kite.notification.model.UpdateNotificationRequest
 import com.example.kite.notification.model.UpdateNotificationResponse
 import com.example.kite.paymentsummary.model.AddSessionResponse
+import com.example.kite.profile.model.ViewProfileRequest
+import com.example.kite.profile.model.ViewProfileResponse
 import com.example.kite.program.model.ThirdPartyListRequest
 import com.example.kite.program.model.ThirdPartyListResponse
 import com.example.kite.reservation.model.ListReservationRequest
@@ -43,10 +50,7 @@ import com.example.kite.viewscheduletrip.model.ViewTripResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.Multipart
-import retrofit2.http.POST
-import retrofit2.http.Part
+import retrofit2.http.*
 
 interface Api {
 
@@ -114,9 +118,9 @@ interface Api {
         @Part("booking_id") booking_id: RequestBody?,
         @Part("dropoff_lat") dropoff_lat: RequestBody?,
         @Part("dropoff_long") dropoff_long: RequestBody?,
-        @Part("geolocation_id") geolocation_id : RequestBody?,
+        @Part("geolocation_id") geolocation_id: RequestBody?,
         @Part("battery") battery: RequestBody?,
-        @Part image : MultipartBody.Part
+        @Part image: MultipartBody.Part
     ): Response<ResponseData<EndRideResponse>>
 
     @POST(Constants.NOTIFICATION_UPDATE)
@@ -136,5 +140,16 @@ interface Api {
     @POST(Constants.ONGOING_RIDE)
     suspend fun getOnGoingRide(@Body request: OnGoingRideRequest): Response<ResponseData<OnGoingRideResponse>>
 
+    @GET(Constants.COUNTRY_LIST)
+    suspend fun getCountryList(): Response<ResponseListData<CountryResponse>>
 
+    @POST(Constants.STATE_LIST)
+    suspend fun getStateList(@Body stateRequest: StateRequest): Response<ResponseListData<StateResponse>>
+
+    @POST(Constants.LOGIN_URL)
+    suspend fun setLogin(@Body loginRequest: LoginRequest): Response<ResponseData<LoginResponse>>
+
+
+    @POST(Constants.VIEW_PROFILE)
+    suspend fun getViewProfile(@Body viewProfileRequest: ViewProfileRequest): Response<ResponseData<ViewProfileResponse>>
 }

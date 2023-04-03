@@ -80,7 +80,7 @@ class ReservationFragment : BaseFragment(), OnReservationViewClick {
         if (token != null) {
             viewModel.getViewTripRequest(
                 ListReservationRequest(
-                    token.data?.accessToken,
+                    token.accessToken,
                     currentDate,
                     currentTime,
                     currentDate,

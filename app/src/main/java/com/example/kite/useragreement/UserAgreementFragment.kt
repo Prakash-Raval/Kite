@@ -38,14 +38,18 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kite.R
+import com.example.kite.base.network.client.ResponseHandler
+import com.example.kite.base.network.model.ResponseListData
 import com.example.kite.bikelisting.adapter.OnCellClicked
-import com.example.kite.constants.Constants
-import com.example.kite.countrylisting.*
+import com.example.kite.countrylisting.CountryListingAdapter
+import com.example.kite.countrylisting.CountryResponse
+import com.example.kite.countrylisting.OnCellClickedRegion
+import com.example.kite.countrylisting.RegionViewModel
+import com.example.kite.countrylisting.statelisting.StateListingAdapter
+import com.example.kite.countrylisting.statelisting.StateRequest
+import com.example.kite.countrylisting.statelisting.StateResponse
 import com.example.kite.databinding.FragmentUserAgreementBinding
 import com.example.kite.extensions.setLocalImage
-import com.example.kite.network.ApiInterface
-import com.example.kite.network.RetrofitHelper
-import com.example.kite.statelisting.*
 import com.example.kite.useragreement.adapter.UserAgreementAdapter
 import com.example.kite.useragreement.model.GuestModel
 import java.io.File
@@ -53,18 +57,19 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class UserAgreementFragment : Fragment(), OnCellClicked, OnCellClickedCountry, OnCellClickedState {
+class UserAgreementFragment : Fragment(), OnCellClicked, OnCellClickedRegion {
     private lateinit var binding: FragmentUserAgreementBinding
     private lateinit var adapter: UserAgreementAdapter
     private var myDialog: DatePickerDialog? = null
-    private lateinit var countryViewModel: CountryViewModel
+    private lateinit var regionViewModel: RegionViewModel
     private lateinit var countryListingAdapter: CountryListingAdapter
-    private lateinit var stateViewModel: StateViewModel
     private lateinit var stateListingAdapter: StateListingAdapter
     private lateinit var builder: AlertDialog
-    companion object{
+
+    companion object {
         const val PERMISSION_REQUEST_CODE = 200
     }
+
     private var profileImagePath: String? = null
 
 
@@ -78,8 +83,6 @@ class UserAgreementFragment : Fragment(), OnCellClicked, OnCellClickedCountry, O
 
             }
         }
-
-
 
 
     private val startForResult = registerForActivityResult(
@@ -318,24 +321,45 @@ class UserAgreementFragment : Fragment(), OnCellClicked, OnCellClickedCountry, O
 
     }
 
+    private fun getViewModel(): RegionViewModel {
+        regionViewModel = ViewModelProvider(this)[RegionViewModel::class.java]
+        return regionViewModel
+    }
+
     // getting country data from the api
     @SuppressLint("NotifyDataSetChanged")
     private fun getCountryData() {
-        val service =
-            RetrofitHelper.getInstance(Constants.BASE_URL).create(ApiInterface::class.java)
-        val repository = CountryRepository(service)
-        countryViewModel = ViewModelProvider(
-            this, CountryVMFactory(repository)
-        )[CountryViewModel::class.java]
-        countryViewModel.getCountryList()
-        countryViewModel.profileLiveData.observe(viewLifecycleOwner) {
-            countryListingAdapter.setList(it.countryList as ArrayList<CountryResponse.Country>)
-            countryListingAdapter.notifyDataSetChanged()
-        }
+
+        regionViewModel = getViewModel()
+        regionViewModel.getCountryRequest()
+        regionViewModel.responseLiveDataCountry.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer { state ->
+                if (state == null) {
+                    return@Observer
+                }
+                when (state) {
+                    is ResponseHandler.Loading -> {
+                        Log.d("ViewTripFragment", "setObserverData: $state")
+                    }
+                    is ResponseHandler.OnFailed -> {
+                        Log.d("ViewTripFragment", "setObserverData: $state")
+
+                    }
+                    is ResponseHandler.OnSuccessResponse<ResponseListData<CountryResponse>?> -> {
+                        Log.d("ViewTripFragment", "setObserverData: ${state.response?.data}")
+                        if (state.response?.code == 200) {
+                            countryListingAdapter.setList(state.response.data as ArrayList<CountryResponse.Country>)
+                            countryListingAdapter.notifyDataSetChanged()
+                        }
+                    }
+                }
+            })
+
     }
 
 
-    override fun isClicked(data: String, position: Int) {
+    override fun isClickedCountry(data: String, position: Int) {
         binding.edtUACountry.setText(data)
         binding.edtUAState.setText("")
         builder.dismiss()
@@ -365,24 +389,34 @@ class UserAgreementFragment : Fragment(), OnCellClicked, OnCellClickedCountry, O
     // getting country data from the api
     @SuppressLint("NotifyDataSetChanged")
     private fun getStateData() {
-        val service =
-            RetrofitHelper.getInstance(Constants.BASE_URL).create(ApiInterface::class.java)
-        val repository = StateRepository(service)
-        stateViewModel = ViewModelProvider(
-            this, StateVMFactory(repository)
-        )[StateViewModel::class.java]
-        stateViewModel.getStateList(StateRequest(binding.edtUACountry.text.toString()))
-        stateViewModel.profileLiveData.observe(viewLifecycleOwner) {
-            Log.d("getStateData", "getStateData: ${it.stateList?.get(0)?.states}")
-            stateListingAdapter.setList(it.stateList?.getOrNull(0)?.states as ArrayList<String?>)
+        regionViewModel = getViewModel()
+        regionViewModel.getStateRequest(StateRequest(binding.edtUACountry.text.toString()))
+        regionViewModel.responseLiveDataState.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer { state ->
+                if (state == null) {
+                    return@Observer
+                }
+                when (state) {
+                    is ResponseHandler.Loading -> {
+                        Log.d("ViewTripFragment", "setObserverData: $state")
+                    }
+                    is ResponseHandler.OnFailed -> {
+                        Log.d("ViewTripFragment", "setObserverData: $state")
 
-            stateListingAdapter.notifyDataSetChanged()
-
-        }
+                    }
+                    is ResponseHandler.OnSuccessResponse<ResponseListData<StateResponse>?> -> {
+                        Log.d("ViewTripFragment", "setObserverData: ${state.response?.data}")
+                        if (state.response?.code == 200) {
+                            stateListingAdapter.setList(state.response.data?.getOrNull(0)?.stateList?.getOrNull(0)?.states as ArrayList<String?>)
+                            stateListingAdapter.notifyDataSetChanged()
+                        }
+                    }
+                }
+            })
     }
 
     //opening dialog for state list
-    @SuppressLint("MissingInflatedId")
     private fun openDialogState(mState: String) {
         builder = AlertDialog.Builder(requireContext())
             .create()
@@ -397,7 +431,6 @@ class UserAgreementFragment : Fragment(), OnCellClicked, OnCellClickedCountry, O
         getStateData()
     }
 
-    @SuppressLint("MissingInflatedId")
     private fun cameraDialog() {
         builder = AlertDialog.Builder(requireContext())
             .create()

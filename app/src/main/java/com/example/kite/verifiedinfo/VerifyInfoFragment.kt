@@ -34,14 +34,14 @@ class VerifyInfoFragment : Fragment() {
     //using shared pref to get user info
     private fun getCustomerData() {
         val customerData = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")
-        binding.txtVerifyName.text = customerData?.data?.customerFirstName
+        binding.txtVerifyName.text = customerData?.customerFirstName
 
-        val isVerified = customerData?.data?.isTruliooVerified
+        val isVerified = customerData?.isTruliooVerified
         if (isVerified == 1) {
             binding.txtVerifyStatus.setText(R.string.verified)
             binding.btnUpdate.visibility = View.GONE
-            binding.edtVerificationExpiry.setText(customerData.data?.subscription?.subscriptionEndDate.toString())
-            binding.edtCountryCod.setText(customerData.data?.country)
+            binding.edtVerificationExpiry.setText(customerData.subscription?.subscriptionEndDate.toString())
+            binding.edtCountryCod.setText(customerData.country)
         } else {
             binding.txtVerifyStatus.setText(R.string.not_verified)
             binding.btnUpdate.visibility = View.VISIBLE

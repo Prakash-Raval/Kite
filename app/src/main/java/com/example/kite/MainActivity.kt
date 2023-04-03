@@ -2,6 +2,7 @@ package com.example.kite
 
 import android.os.Bundle
 import android.view.WindowManager
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
@@ -92,14 +93,15 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        if (pDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-            pDrawerLayout.closeDrawer(GravityCompat.START)
-        } else {
-            super.onBackPressed()
-        }
-    }
+      @Deprecated("Deprecated in Java")
+      override fun onBackPressed() {
+          if (pDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+              pDrawerLayout.closeDrawer(GravityCompat.START)
+          } else {
+              onBackPressedDispatcher.onBackPressed()
+          }
+      }
+
 
     //managing navigation
     private fun setNavigation() {

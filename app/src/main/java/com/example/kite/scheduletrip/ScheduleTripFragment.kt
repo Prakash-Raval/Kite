@@ -65,7 +65,7 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
 
     var isUpdate = false
 
-    val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.accessToken
+    val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -347,8 +347,8 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
         //getting request data
 
         val subscribe =
-            PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.subscription?.isSubscribe
-        val customerID = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.customerId
+            PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.subscription?.isSubscribe
+        val customerID = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.customerId
         val args = this.arguments
         val vehicleTypeID = args?.getString("vehicleTypeID")
         val manufacturerID = args?.getString("ManufacturerID")
@@ -461,7 +461,7 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
 
     private fun updateApiCall() {
         val args = this.arguments
-        val customerId = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.customerId
+        val customerId = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.customerId
         val viewTripResponse = args?.getParcelable<ViewTripResponse>("ViewTripResponse")
 
         updateTripViewModel.getTripRequest(

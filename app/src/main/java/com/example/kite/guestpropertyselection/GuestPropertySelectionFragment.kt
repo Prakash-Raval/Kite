@@ -26,7 +26,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.kite.R
 import com.example.kite.countrylisting.CountryListingAdapter
-import com.example.kite.countrylisting.CountryViewModel
+import com.example.kite.countrylisting.RegionViewModel
 import com.example.kite.databinding.FragmentGuestPropertySelectionBinding
 import com.example.kite.extensions.onRightDrawableClicked
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -36,7 +36,7 @@ import java.util.*
 class GuestPropertySelectionFragment : Fragment() {
 
     private lateinit var binding: FragmentGuestPropertySelectionBinding
-    private lateinit var countryViewModel: CountryViewModel
+    private lateinit var regionViewModel: RegionViewModel
     private lateinit var countryListingAdapter: CountryListingAdapter
 
     override fun onCreateView(
@@ -61,7 +61,6 @@ class GuestPropertySelectionFragment : Fragment() {
 
 
     //dialog for no access code
-    @SuppressLint("MissingInflatedId")
     private fun openBottomSheet() {
         val dialog = BottomSheetDialog(requireContext())
         val view = layoutInflater.inflate(R.layout.dialog_no_code, null)
@@ -239,38 +238,5 @@ class GuestPropertySelectionFragment : Fragment() {
 
     }
 
-    /*   //opening dialog for country list
-       private fun openDialogCountry() {
-           val builder = AlertDialog.Builder(requireContext()).create()
-           builder.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-           val view = layoutInflater.inflate(R.layout.dialog_country_picker, null)
-           builder.setView(view)
-           countryListingAdapter = CountryListingAdapter(this)
-           val recycler = view.findViewById<RecyclerView>(R.id.rvCountryList)
-           recycler.adapter = countryListingAdapter
-           builder.setCanceledOnTouchOutside(false)
-           builder.show()
-           getCountryData()
-       }
-
-       // getting country data from the api
-       @SuppressLint("NotifyDataSetChanged")
-       private fun getCountryData() {
-           val service =
-               RetrofitHelper.getInstance(Constants.BASE_URL).create(ApiInterface::class.java)
-           val repository = CountryRepository(service)
-           countryViewModel = ViewModelProvider(
-               this, CountryVMFactory(repository)
-           )[CountryViewModel::class.java]
-           countryViewModel.getCountryList()
-           countryViewModel.profileLiveData.observe(viewLifecycleOwner) {
-               countryListingAdapter.setList(it.countryList as ArrayList<CountryResponse.Country>)
-               countryListingAdapter.notifyDataSetChanged()
-           }
-       }
-
-       override fun isClicked(data: String) {
-
-       }*/
 
 }

@@ -109,7 +109,7 @@ class SelectProgramFragment : BaseFragment(), OnThirdPartyListing {
     @SuppressLint("NotifyDataSetChanged")
     private fun getData() {
         viewModel = getViewModel()
-        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.accessToken
+        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
         viewModel.getThirdPartyList(
             ThirdPartyListRequest(
                 access_token = token,

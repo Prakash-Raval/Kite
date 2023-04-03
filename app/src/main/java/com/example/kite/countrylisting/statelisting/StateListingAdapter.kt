@@ -1,14 +1,14 @@
-package com.example.kite.statelisting
+package com.example.kite.countrylisting.statelisting
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.kite.countrylisting.OnCellClickedRegion
 import com.example.kite.databinding.ItemCountryListBinding
 
 class StateListingAdapter(
     private val mState: String,
-    private val onCellClickedState: OnCellClickedState
+    private val onCellClickedState: OnCellClickedRegion
 ) :
     RecyclerView.Adapter<StateListingAdapter.ViewHolder>() {
 
@@ -18,7 +18,6 @@ class StateListingAdapter(
 
     inner class ViewHolder(val binding: ItemCountryListBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        @SuppressLint("NotifyDataSetChanged")
         fun bind(position: Int) {
             binding.rbCountry.text = list[position]
             if (mState.isNotEmpty()) {

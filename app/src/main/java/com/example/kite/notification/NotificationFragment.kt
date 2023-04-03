@@ -72,7 +72,7 @@ class NotificationFragment : BaseFragment(), OnNotifyUpdate {
 
     private fun getNotificationList() {
         viewModel = getViewModel()
-        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.accessToken
+        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
 
         viewModel.getNotificationListing(
             NotificationRequest(
@@ -143,7 +143,7 @@ class NotificationFragment : BaseFragment(), OnNotifyUpdate {
     }
 
     override fun onClick(notificationID: String) {
-        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.accessToken
+        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
         val isRead = 0
         val req = UpdateNotificationRequest()
         req.notification_id = notificationID

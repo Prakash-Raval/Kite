@@ -324,7 +324,7 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
         viewModel = getViewModelTime()
 
         //collecting data for passing in to request class
-        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.accessToken
+        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
         val timeZone = binding.spinnerDTRegion.selectedItem.toString()
         val sharedPreference =
             (context1 as MainActivity).getSharedPreferences("VEHICLE", Context.MODE_PRIVATE)
@@ -462,7 +462,7 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
         viewModelPromoCode = getViewModel()
         binding.viewModelPromoCode = viewModelPromoCode
 
-        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.accessToken
+        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
         if (token != null) {
             viewModelPromoCode.checkPromoCode(token = token)
         }

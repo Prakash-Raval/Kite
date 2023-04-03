@@ -77,8 +77,8 @@ class RideHistoryFragment : BaseFragment(), OnRideClick {
         viewModel = getViewModel()
 
         //getting data for request class
-        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.accessToken
-        val cusID = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.customerId
+        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
+        val cusID = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.customerId
 
         viewModel.getHistoryRequest(
             RideHistoryRequest(

@@ -1,4 +1,4 @@
-package com.example.kite.statelisting
+package com.example.kite.countrylisting.statelisting
 
 
 import com.fasterxml.jackson.annotation.JsonProperty

@@ -6,7 +6,7 @@
 
         <variable
             name="viewProfile"
-            type="com.example.kite.profile.model.ViewProfileResponse.Data" />
+            type="com.example.kite.profile.model.ViewProfileResponse" />
     </data>
 
     <androidx.core.widget.NestedScrollView

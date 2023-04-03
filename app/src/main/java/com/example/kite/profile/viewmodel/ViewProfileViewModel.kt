@@ -1,45 +1,26 @@
 package com.example.kite.profile.viewmodel
 
-import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.kite.base.ViewModelBase
+import com.example.kite.base.network.ApiClient
+import com.example.kite.base.network.client.ResponseHandler
+import com.example.kite.base.network.model.ResponseData
 import com.example.kite.profile.model.ViewProfileRequest
 import com.example.kite.profile.model.ViewProfileResponse
 import com.example.kite.profile.repository.ViewProfileRepository
 import kotlinx.coroutines.launch
 
-class ViewProfileViewModel(val repository: ViewProfileRepository) : ViewModel() {
+class ViewProfileViewModel : ViewModelBase() {
 
-    private val profileResult = MutableLiveData<ViewProfileResponse>()
-    val profileLiveData: LiveData<ViewProfileResponse>
-        get() = profileResult
+    private var repository = ViewProfileRepository(ApiClient.getApiInterface())
+    var responseDataProfile =
+        MutableLiveData<ResponseHandler<ResponseData<ViewProfileResponse>?>>()
 
-    var token: String = ""
-    var thirdPartyID = ""
-
-    fun getToken(token: String, thirdPartyID: String) {
-        this.token = token
-        this.thirdPartyID = thirdPartyID
-
-        getCustomerProfile(ViewProfileRequest(access_token = token, third_party_id = thirdPartyID))
-    }
-
-    private fun getCustomerProfile(request: ViewProfileRequest) = viewModelScope.launch {
-        try {
-            val response = repository.viewProfile(request)
-            if (response.isSuccessful) {
-
-                profileResult.postValue(response.body())
-            } else {
-                // handle error
-                Log.d("TEST-LOG1", response.body().toString())
-            }
-        } catch (e: Exception) {
-            // handle exception
-            Log.d("TEST-LOG1", e.message.toString())
+    fun getViewProfileRequest(request: ViewProfileRequest) {
+        viewModelScope.launch(coroutineContext) {
+            responseDataProfile.value = ResponseHandler.Loading
+            responseDataProfile.value = repository.callViewProfile(request)
         }
     }
-
 }

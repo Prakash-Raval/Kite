@@ -12,32 +12,36 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kite.R
-import com.example.kite.constants.Constants
-import com.example.kite.countrylisting.*
+import com.example.kite.base.network.client.ResponseHandler
+import com.example.kite.base.network.model.ResponseData
+import com.example.kite.base.network.model.ResponseListData
+import com.example.kite.basefragment.BaseFragment
+import com.example.kite.countrylisting.CountryListingAdapter
+import com.example.kite.countrylisting.CountryResponse
+import com.example.kite.countrylisting.OnCellClickedRegion
+import com.example.kite.countrylisting.RegionViewModel
+import com.example.kite.countrylisting.statelisting.StateListingAdapter
+import com.example.kite.countrylisting.statelisting.StateRequest
+import com.example.kite.countrylisting.statelisting.StateResponse
 import com.example.kite.databinding.FragmentProfileBinding
 import com.example.kite.login.model.LoginResponse
-import com.example.kite.network.ApiInterface
-import com.example.kite.network.RetrofitHelper
-import com.example.kite.profile.repository.ViewProfileRepository
-import com.example.kite.profile.viewmodel.ViewProfileVMFactory
+import com.example.kite.profile.model.ViewProfileRequest
+import com.example.kite.profile.model.ViewProfileResponse
 import com.example.kite.profile.viewmodel.ViewProfileViewModel
 import com.example.kite.setting.SettingFragmentDirections
-import com.example.kite.statelisting.*
 import com.example.kite.utils.PrefManager
-import kotlinx.coroutines.launch
 
 
-class ProfileFragment : Fragment(), OnCellClickedCountry, OnCellClickedState {
+class ProfileFragment : BaseFragment(), OnCellClickedRegion {
 
     private lateinit var binding: FragmentProfileBinding
-    private lateinit var viewModel: ViewProfileViewModel
-    private lateinit var countryViewModel: CountryViewModel
-    private lateinit var stateViewModel: StateViewModel
+    private lateinit var viewModelProfile: ViewProfileViewModel
+    private lateinit var regionViewModel: RegionViewModel
     private lateinit var countryListingAdapter: CountryListingAdapter
     private lateinit var stateListingAdapter: StateListingAdapter
     private lateinit var builder: AlertDialog
@@ -58,40 +62,54 @@ class ProfileFragment : Fragment(), OnCellClickedCountry, OnCellClickedState {
 
     //getting data from api
     private fun getCustomerProfile() {
-        val service =
-            RetrofitHelper.getInstance(Constants.BASE_URL).create(ApiInterface::class.java)
-        val repository = ViewProfileRepository(service)
-        viewModel = ViewModelProvider(
-            this, ViewProfileVMFactory(repository)
-        )[ViewProfileViewModel::class.java]
+        viewModelProfile = getViewModelProfile()
 
-        viewModel.profileLiveData.observe(viewLifecycleOwner) {
-            binding.viewProfile = it.data
-            val sharedPreferences =
-                activity?.getSharedPreferences("MySharedPref", MODE_PRIVATE)?.edit()
-            it.data?.subscription?.isSubscribe?.let { it1 ->
-                sharedPreferences?.putInt(
-                    "name",
-                    it1
-                )?.apply()
-            }
-        }
-        binding.lifecycleOwner = viewLifecycleOwner
-
-        //giving access token to get particular user
-        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")
+        /*
+        * getting data for profile view model request
+        * */
+        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
         val sharedPreferences =
             activity?.getSharedPreferences("THIRD_PARTY_ID", MODE_PRIVATE)
         val thirdPartyID = sharedPreferences?.getString("ThirdPartyID", "ThirdPartyID")
-        lifecycleScope.launch {
-            if (token != null) {
-                token.data?.accessToken?.let {
-                    if (thirdPartyID != null) {
-                        viewModel.getToken(it, thirdPartyID)
+
+        viewModelProfile.getViewProfileRequest(
+            ViewProfileRequest(
+                access_token = token,
+                third_party_id = thirdPartyID
+            )
+        )
+
+        viewModelProfile.responseDataProfile.observe(viewLifecycleOwner, Observer { state ->
+            if (state == null) {
+                return@Observer
+            }
+            when (state) {
+                is ResponseHandler.Loading -> {
+                    showProgressDialog()
+                    Log.d("ViewTripFragment", "setObserverData: $state")
+                }
+                is ResponseHandler.OnFailed -> {
+                    hideProgressBar()
+                    Log.d("ViewTripFragment", "setObserverData: $state")
+
+                }
+                is ResponseHandler.OnSuccessResponse<ResponseData<ViewProfileResponse>?> -> {
+                    hideProgressBar()
+                    Log.d("ViewTripFragment", "setObserverData: ${state.response?.data}")
+                    if (state.response?.code == 200) {
+                        binding.viewProfile = state.response.data
+                        val sh =
+                            activity?.getSharedPreferences("MySharedPref", MODE_PRIVATE)?.edit()
+                        state.response.data?.subscription?.isSubscribe?.let {
+                            sh?.putInt(
+                                "name",
+                                it
+                            )?.apply()
+                        }
                     }
                 }
             }
-        }
+        })
     }
 
     //navigation to policy abd terms pages
@@ -130,7 +148,6 @@ class ProfileFragment : Fragment(), OnCellClickedCountry, OnCellClickedState {
     }
 
     //opening dialog for state list
-    @SuppressLint("MissingInflatedId")
     private fun openDialogState(mState: String) {
         builder = AlertDialog.Builder(requireContext())
             .create()
@@ -162,44 +179,76 @@ class ProfileFragment : Fragment(), OnCellClickedCountry, OnCellClickedState {
         getCountryData()
     }
 
+    private fun getViewModel(): RegionViewModel {
+        regionViewModel = ViewModelProvider(this)[RegionViewModel::class.java]
+        return regionViewModel
+    }
+
+    private fun getViewModelProfile(): ViewProfileViewModel {
+        viewModelProfile = ViewModelProvider(this)[ViewProfileViewModel::class.java]
+        return viewModelProfile
+    }
+
     // getting country data from the api
     @SuppressLint("NotifyDataSetChanged")
     private fun getCountryData() {
-        val service =
-            RetrofitHelper.getInstance(Constants.BASE_URL).create(ApiInterface::class.java)
-        val repository = CountryRepository(service)
-        countryViewModel = ViewModelProvider(
-            this, CountryVMFactory(repository)
-        )[CountryViewModel::class.java]
-        countryViewModel.getCountryList()
-        countryViewModel.profileLiveData.observe(viewLifecycleOwner) {
-            countryListingAdapter.setList(it.countryList as ArrayList<CountryResponse.Country>)
-            countryListingAdapter.notifyDataSetChanged()
+        regionViewModel = getViewModel()
+        regionViewModel.getCountryRequest()
+        regionViewModel.responseLiveDataCountry.observe(viewLifecycleOwner, Observer { state ->
+            if (state == null) {
+                return@Observer
+            }
+            when (state) {
+                is ResponseHandler.Loading -> {
+                    Log.d("ProfileFragment", "setObserverData: $state")
+                }
+                is ResponseHandler.OnFailed -> {
+                    Log.d("ProfileFragment", "setObserverData: $state")
 
-        }
+                }
+                is ResponseHandler.OnSuccessResponse<ResponseListData<CountryResponse>?> -> {
+                    Log.d("ProfileFragment", "setObserverData: ${state.response?.data?.getOrNull(0)?.countryList}")
+                    if (state.response?.code == 200) {
+                        countryListingAdapter.setList(state.response.data?.getOrNull(0)?.countryList as ArrayList<CountryResponse.Country>)
+                        countryListingAdapter.notifyDataSetChanged()
+                    }
+                }
+            }
+        })
     }
 
     // getting country data from the api
     @SuppressLint("NotifyDataSetChanged")
     private fun getStateData() {
-        val service =
-            RetrofitHelper.getInstance(Constants.BASE_URL).create(ApiInterface::class.java)
-        val repository = StateRepository(service)
-        stateViewModel = ViewModelProvider(
-            this, StateVMFactory(repository)
-        )[StateViewModel::class.java]
-        stateViewModel.getStateList(StateRequest(binding.edtCountry.text.toString()))
-        stateViewModel.profileLiveData.observe(viewLifecycleOwner) {
-            Log.d("getStateData", "getStateData: ${it.stateList?.get(0)?.states}")
-            stateListingAdapter.setList(it.stateList?.getOrNull(0)?.states as ArrayList<String?>)
+        regionViewModel = getViewModel()
 
-            stateListingAdapter.notifyDataSetChanged()
+        regionViewModel.getStateRequest(StateRequest(binding.edtCountry.text.toString()))
+        regionViewModel.responseLiveDataState.observe(viewLifecycleOwner, Observer { state ->
+            if (state == null) {
+                return@Observer
+            }
+            when (state) {
+                is ResponseHandler.Loading -> {
+                    Log.d("ViewTripFragment", "setObserverData: $state")
+                }
+                is ResponseHandler.OnFailed -> {
+                    Log.d("ViewTripFragment", "setObserverData: $state")
 
-        }
+                }
+                is ResponseHandler.OnSuccessResponse<ResponseListData<StateResponse>?> -> {
+                    Log.d("ViewTripFragment", "setObserverData: ${state.response?.data}")
+                    if (state.response?.code == 200) {
+                        stateListingAdapter.setList(state.response.data?.getOrNull(0)?.stateList?.getOrNull(0)?.states as ArrayList<String?>)
+                        stateListingAdapter.notifyDataSetChanged()
+                    }
+                }
+            }
+        })
+
     }
 
     //country dialog click
-    override fun isClicked(data: String, position: Int) {
+    override fun isClickedCountry(data: String, position: Int) {
         binding.edtCountry.setText(data)
         binding.edtState.setText("")
         builder.dismiss()

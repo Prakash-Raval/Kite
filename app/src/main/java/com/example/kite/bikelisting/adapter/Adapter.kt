@@ -18,6 +18,7 @@ class Adapter(
 
     fun setList(list: ArrayList<BikeListingResponse.VehicleDetail>) {
         this.list = list
+        notifyDataSetChanged()
     }
 
     inner class ViewHolder(val binding: ItemVehicleListingBinding) :

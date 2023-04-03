@@ -22,11 +22,15 @@ import com.example.kite.R
 import com.example.kite.base.network.client.ResponseHandler
 import com.example.kite.base.network.model.ResponseData
 import com.example.kite.basefragment.BaseFragment
+import com.example.kite.databinding.DialogBsEndTripBinding
+import com.example.kite.databinding.DialogRateUsBinding
 import com.example.kite.databinding.FragmentEndRideCheckListBinding
 import com.example.kite.endridechecklist.model.EndRideResponse
 import com.example.kite.endridechecklist.viewmodel.EndRideViewModel
 import com.example.kite.login.model.LoginResponse
+import com.example.kite.utils.FullScreenDialog
 import com.example.kite.utils.PrefManager
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -157,7 +161,7 @@ class EndRideCheckListFragment : BaseFragment() {
         * */
         val args = this.arguments
         val booking = args?.getString("BookingIDForEndTrip")
-        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.accessToken
+        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
         val accessToken =
             token?.toRequestBody("text/plain".toMediaTypeOrNull())
         val bookingID = booking?.toRequestBody("text/plain".toMediaTypeOrNull())
@@ -205,11 +209,7 @@ class EndRideCheckListFragment : BaseFragment() {
                 is ResponseHandler.OnFailed -> {
                     hideProgressBar()
                     Log.d("EndRideCheckList", "setObserverOnGoingRide: $state")
-                    Log.d("EndRideCheckList", "setObserverOnGoingRide: ${state.message}")
-                    Log.d("EndRideCheckList", "setObserverOnGoingRide: ${state.code}")
-
-
-                }
+                             }
                 is ResponseHandler.OnSuccessResponse<ResponseData<EndRideResponse>?> -> {
                     hideProgressBar()
                     if (state.response?.code == 200) {
@@ -234,5 +234,23 @@ class EndRideCheckListFragment : BaseFragment() {
         startForResult.launch(intent)
     }
 
+    private fun rateUsDialog(){
+        val builder = BottomSheetDialog(requireContext())
+        val bind: DialogRateUsBinding =
+            DialogRateUsBinding.inflate(LayoutInflater.from(context))
+        builder.setContentView(bind.root)
+        bind.btnWDCCancel.setOnClickListener {
+
+        }
+        bind.txtWDCEndRide.setOnClickListener {
+           builder.dismiss()
+        }
+        bind.txtFeedBack.setOnClickListener {
+
+        }
+        FullScreenDialog.setupFullHeight(builder, requireActivity())
+        builder.behavior.isDraggable = false
+        builder.show()
+    }
 
 }

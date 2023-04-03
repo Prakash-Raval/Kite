@@ -65,7 +65,7 @@ class ChangePasswordFragment : Fragment() {
         //getting access token
         val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")
         if (token != null) {
-            token.data?.accessToken?.let { viewModel.getToken(it) }
+            token.accessToken?.let { viewModel.getToken(it) }
         }
     }
 }

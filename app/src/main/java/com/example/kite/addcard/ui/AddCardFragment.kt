@@ -113,7 +113,7 @@ class AddCardFragment : BaseFragment() {
     ) {
         viewModel = getViewModel()
 
-        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data
+        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")
         val expiryDate = String.format(
             Locale.getDefault(), "%02d",
             Integer.parseInt(binding.edtMonth.text.toString())
@@ -198,7 +198,7 @@ class AddCardFragment : BaseFragment() {
     }
 
     //dialog to select expiry year
-    @SuppressLint("SetTextI18n", "InflateParams")
+    @SuppressLint("InflateParams")
     private fun selectYearDialog() {
         val builder = AlertDialog.Builder(requireContext())
         val view = layoutInflater.inflate(R.layout.dialog_date_picker, null)

@@ -6,14 +6,6 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class ViewProfileResponse(
-    @JsonProperty("code")
-    var code: Int? = null,
-    @JsonProperty("data")
-    var data: Data? = null,
-    @JsonProperty("message")
-    var message: String? = null
-) {
-    data class Data(
         @JsonProperty("address")
         var address: Any? = null,
         @JsonProperty("city")
@@ -97,4 +89,3 @@ data class ViewProfileResponse(
             class TruliooResponseFetched
         }
     }
-}

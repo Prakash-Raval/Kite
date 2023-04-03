@@ -1,26 +1,26 @@
 package com.example.kite.login.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.kite.R
-import com.example.kite.constants.Constants
+import com.example.kite.base.network.client.ResponseHandler
+import com.example.kite.base.network.model.ResponseData
+import com.example.kite.basefragment.BaseFragment
 import com.example.kite.databinding.FragmentLoginBinding
-import com.example.kite.login.repository.LoginRepository
-import com.example.kite.login.viewmodel.LoginVMFFactory
+import com.example.kite.login.model.LoginResponse
 import com.example.kite.login.viewmodel.LoginViewModel
-import com.example.kite.network.ApiInterface
-import com.example.kite.network.RetrofitHelper
 import com.example.kite.utils.PrefManager
 
 
-class LoginFragment : Fragment() {
+class LoginFragment : BaseFragment() {
     private lateinit var binding: FragmentLoginBinding
     private lateinit var viewModel: LoginViewModel
 
@@ -61,17 +61,18 @@ class LoginFragment : Fragment() {
         }
     }
 
+    private fun getViewModel(): LoginViewModel {
+        viewModel = ViewModelProvider(this)[LoginViewModel::class.java]
+        return viewModel
+    }
+
+
     //getting data from api
     private fun getRetrofitData() {
-        val loginService =
-            RetrofitHelper.getInstance(Constants.BASE_URL).create(ApiInterface::class.java)
-        val repository = LoginRepository(loginService)
-        viewModel =
-            ViewModelProvider(this, LoginVMFFactory(repository))[LoginViewModel::class.java]
+        viewModel = getViewModel()
 
         //binding variable from xml
         binding.loginData = viewModel
-        binding.lifecycleOwner = this
 
         //getting error msg from view model and displaying it to related textInputLayout
         viewModel.errorMessage.observe(viewLifecycleOwner) {
@@ -86,16 +87,40 @@ class LoginFragment : Fragment() {
                 }
             }
         }
-
-        //checking login state
-        viewModel.loginLiveData.observe(viewLifecycleOwner) {
-            if (it.code == 200) {
-                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToSelectProgramFragment())
-                PrefManager.put(it, "LOGIN_RESPONSE")
-                PrefManager.put(it.data?.subscription, "SUBSCRIPTION-DATA")
-            } else {
-                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+        viewModel.responseLiveData.observe(viewLifecycleOwner, Observer { state ->
+            if (state == null) {
+                return@Observer
             }
-        }
+            when (state) {
+                is ResponseHandler.Loading -> {
+                    showProgressDialog()
+                    Log.d("ViewTripFragment", "setObserverData: $state")
+                }
+                is ResponseHandler.OnFailed -> {
+                    hideProgressBar()
+                    Log.d("ViewTripFragment", "setObserverData: $state")
+                    Toast.makeText(
+                        requireContext(),
+                        "Incorrect password",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                is ResponseHandler.OnSuccessResponse<ResponseData<LoginResponse>?> -> {
+                    hideProgressBar()
+                    Log.d("ViewTripFragment", "setObserverData: ${state.response?.data}")
+                    if (state.response?.code == 200) {
+                        findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToSelectProgramFragment())
+                        PrefManager.put(state.response.data, "LOGIN_RESPONSE")
+                        PrefManager.put(state.response.data?.subscription, "SUBSCRIPTION-DATA")
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            state.response?.message,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+        })
     }
 }

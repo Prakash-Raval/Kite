@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.kite.databinding.ItemCountryListBinding
 
 class CountryListingAdapter(
-    private val onCellClickedCountry: OnCellClickedCountry,
+    private val onCellClickedRegion: OnCellClickedRegion,
     private val mCountry: String
 ) :
     RecyclerView.Adapter<CountryListingAdapter.ViewHolder>() {
@@ -29,7 +29,7 @@ class CountryListingAdapter(
             binding.rbCountry.setOnClickListener {
                 selectedItem = position
                 notifyItemChanged(position)
-                onCellClickedCountry.isClicked(binding.rbCountry.text.toString(), position)
+                onCellClickedRegion.isClickedCountry(binding.rbCountry.text.toString(), position)
 
             }
 

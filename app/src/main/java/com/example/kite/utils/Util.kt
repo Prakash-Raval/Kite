@@ -11,7 +11,7 @@ object Util {
         expectedFormat: String = "yyyy-MM-dd"
     ): String {
         val sdf: DateFormat = SimpleDateFormat(expectedFormat, Locale.getDefault())
-        var date : Date?=null
+        val date: Date?
         var dateString = ""
         try {
             date = Date(millis)
@@ -25,7 +25,7 @@ object Util {
 
     fun getMillisFromTime(timeString: String, timeformat: String = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'") : Long {
         val sdf: DateFormat = SimpleDateFormat(timeformat, Locale.getDefault())
-        var date : Date?=null
+        val date: Date?
         var millis = 0L
         try {
             date = sdf.parse(timeString)

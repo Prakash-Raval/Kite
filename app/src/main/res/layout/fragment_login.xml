@@ -82,7 +82,6 @@
                 android:layout_height="match_parent"
                 android:hint="@string/email"
                 android:inputType="textEmailAddress"
-                android:onTextChanged="@{loginData::onEmailTextChanged}"
                 android:text="@={loginData.loginData.customer_email}" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -113,8 +112,7 @@
                 android:layout_height="match_parent"
                 android:hint="@string/password"
                 android:inputType="textPassword"
-                android:onTextChanged="@{loginData::onPasswordTextChanged}"
-                android:text="@={loginData.loginData.password}" />
+                android:text="@={loginData.password}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

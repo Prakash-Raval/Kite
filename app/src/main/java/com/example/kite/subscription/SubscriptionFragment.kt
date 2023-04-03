@@ -41,6 +41,8 @@ class SubscriptionFragment : BaseFragment() {
     private lateinit var binding: FragmentSubscriptionBinding
     private lateinit var viewModel: SubViewModel
     private lateinit var viewModelCard: GetCardViewModel
+    val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
+    val customerId = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.customerId
 
     private var cardNumber = ""
 
@@ -83,12 +85,11 @@ class SubscriptionFragment : BaseFragment() {
     private fun getApiDataCard() {
         viewModelCard = getViewModelCard()
         //get request data
-        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data
 
         viewModelCard.getGetCardRequest(
             GetCardRequest(
-                access_token = token?.accessToken,
-                customer_id = token?.customerId.toString()
+                access_token = token,
+                customer_id = customerId.toString()
             )
         )
         setObserverCard()
@@ -132,7 +133,7 @@ class SubscriptionFragment : BaseFragment() {
                 false
             )
         val subPrice =
-            PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data
+            PrefManager.get<LoginResponse>("LOGIN_RESPONSE")
 
         if (subPrice?.isDefaultCard == 1) {
             bindingDialog.gpDS.visibility = View.VISIBLE
@@ -207,9 +208,9 @@ class SubscriptionFragment : BaseFragment() {
     //if user subscribed or not
     private fun checkVisibility() {
         val sub =
-            PrefManager.get<LoginResponse.Data.Subscription>("SUBSCRIPTION-DATA")
+            PrefManager.get<LoginResponse.Subscription>("SUBSCRIPTION-DATA")
         val token =
-            PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.subscription?.subscriptionPrice
+            PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.subscription?.subscriptionPrice
         if (sub?.isSubscribe == 0) {
             binding.subNest1.visibility = View.VISIBLE
             binding.subNest2.visibility = View.GONE
@@ -254,7 +255,6 @@ class SubscriptionFragment : BaseFragment() {
 
     private fun getApiData() {
         viewModel = getViewModel()
-        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.accessToken
         //add subscription viw model data
         viewModel.getAddSubRequest(
             AddSubRequest(
@@ -266,7 +266,6 @@ class SubscriptionFragment : BaseFragment() {
 
     private fun getApiDataCancel() {
         viewModel = getViewModel()
-        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.accessToken
         //cancel subscription view model data
         viewModel.getCancelSubRequest(
             CancelSubRequest(

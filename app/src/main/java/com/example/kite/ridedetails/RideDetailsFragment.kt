@@ -103,7 +103,7 @@ class RideDetailsFragment : BaseFragment() {
         viewModel = getViewModel()
         val args = this.arguments
         bookingID = args?.getString("BookingID").toString()
-        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.accessToken
+        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
         Log.d("RideDetailsFragment", "setObserverData: $bookingID")
 
 
@@ -125,7 +125,7 @@ class RideDetailsFragment : BaseFragment() {
         viewModelReceipt = getViewModelReceipt()
         val args = this.arguments
         val bookingID = args?.getString("BookingID")
-        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.accessToken
+        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
         Log.d("RideDetailsFragment", "setObserverData: $bookingID")
 
 

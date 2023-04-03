@@ -62,7 +62,7 @@ class ViewTripFragment : BaseFragment() {
     private fun requestApiData() {
         viewModel = getViewModel()
         val args = this.arguments
-        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.data?.accessToken
+        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
         val reservationID = args?.getString("ReservationID")
 
         viewModel.getTripRequest(
