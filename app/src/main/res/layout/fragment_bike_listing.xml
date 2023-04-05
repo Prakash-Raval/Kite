@@ -7,6 +7,14 @@
     <data>
 
         <variable
+            name="isSelected"
+            type="Boolean" />
+        <variable
+            name="isSelectedText"
+            type="Boolean" />
+
+
+        <variable
             name="model"
             type="com.example.kite.bikelisting.model.BikeListingResponse" />
     </data>
@@ -116,9 +124,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
-            android:alpha="0.2"
-            android:backgroundTint="@color/gray_text_color"
-            android:enabled="false"
+            android:alpha="@{isSelected == true ? 1.0f : 0.2f}"
+            android:backgroundTint="@{isSelected == true ? @color/black : @color/gray_text_color}"
+            android:enabled="@{isSelected == true ? true : false}"
             android:text="@string/ride_now"
             app:layout_constraintEnd_toStartOf="@id/glEnd"
             app:layout_constraintStart_toEndOf="@id/glStart"
@@ -131,11 +139,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_16sdp"
-            android:alpha="0.2"
+            android:alpha="@{isSelectedText  ? 1.0f : 0.2f}"
+            android:clickable="@{isSelectedText ? true : false}"
             android:drawableEnd="@drawable/ic_calendar"
-            android:drawableTint="@color/gray_text_color"
             android:text="@string/schedule_trip"
-            android:textColor="@color/gray_text_color"
+            android:textColor="@{isSelectedText ? @color/black : @color/gray_text_color}"
             android:textSize="@dimen/_12sdp"
             android:layout_marginBottom="@dimen/_8sdp"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -1,4 +1,4 @@
-package com.example.kite.support
+package com.example.kite.webviews.support
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -47,5 +47,10 @@ class SupportFragment : Fragment() {
             settings.setSupportZoom(true)
             loadUrl(Constants.SUPPORT_URL)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding.wvSupport.destroy()
     }
 }

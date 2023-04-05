@@ -1,19 +1,14 @@
 package com.example.kite.addcard.ui
 
-import android.annotation.SuppressLint
-import android.app.AlertDialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
+import android.widget.EditText
 import android.widget.NumberPicker
 import android.widget.Toast
-import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -27,6 +22,7 @@ import com.example.kite.base.network.model.ResponseData
 import com.example.kite.basefragment.BaseFragment
 import com.example.kite.constants.Constants
 import com.example.kite.databinding.FragmentAddCardBinding
+import com.example.kite.extensions.DialogExtensions
 import com.example.kite.login.model.LoginResponse
 import com.example.kite.utils.PrefManager
 import com.example.kite.utils.onTextChanged
@@ -45,6 +41,9 @@ class AddCardFragment : BaseFragment() {
     private var isDefault = 1
 
 
+    /*
+    * init the stripe with api key
+    * */
     private fun initStripe() {
         val stripeKey: String = getString(R.string.stripe_pk)
         stripe = Stripe(requireContext(), stripeKey)
@@ -70,12 +69,40 @@ class AddCardFragment : BaseFragment() {
         checkCardType()
 
         binding.btnAddCard.setOnClickListener {
-            addCard()
+            checkValidation()
         }
 
         return binding.root
     }
 
+   private fun checkValidation(){
+        if(binding.edtCardHolderName.text.toString().isEmpty()){
+            Toast.makeText(requireContext(), getString(R.string.lbl_enter_name), Toast.LENGTH_SHORT).show()
+        }
+        else if(binding.edtCardNumber.text.toString().isEmpty()){
+            Toast.makeText(requireContext(), getString(R.string.lbl_enter_card_number), Toast.LENGTH_SHORT).show()
+        }
+        else if(binding.edtCardNumber.text.toString().length != 16){
+            Toast.makeText(requireContext(), getString(R.string.lbl_enter_valid_card_number), Toast.LENGTH_SHORT).show()
+        }
+        else if(binding.edtYear.text.toString().isEmpty()){
+            Toast.makeText(requireContext(), getString(R.string.lbl_select_year), Toast.LENGTH_SHORT).show()
+        }else if(binding.edtMonth.text.toString().isEmpty()){
+            Toast.makeText(requireContext(), getString(R.string.lbl_select_month), Toast.LENGTH_SHORT).show()
+        }
+        else if(binding.edtCVV.text.toString().isEmpty()){
+            Toast.makeText(requireContext(), getString(R.string.lbl_enter_cvv), Toast.LENGTH_SHORT).show()
+        }
+        else if(binding.edtCVV.text.toString().length != 3){
+            Toast.makeText(requireContext(), getString(R.string.lbl_enter_valid_cvv), Toast.LENGTH_SHORT).show()
+        }
+        else{
+            addCard()
+        }
+    }
+    /*
+    * getting the required param for card
+    * */
     fun addCard() {
         val cardParams = CardParams(
             binding.edtCardNumber.text.toString(),
@@ -88,6 +115,9 @@ class AddCardFragment : BaseFragment() {
     }
 
 
+    /*
+    * checking the validation with stripe of entered card data
+    * */
     private fun addStripeCard(cardParams: CardParams) {
         stripe?.createCardToken(cardParams, null, null,
             object : ApiResultCallback<Token> {
@@ -107,6 +137,9 @@ class AddCardFragment : BaseFragment() {
             })
     }
 
+    /*
+    * saving the new card in to the api
+    * */
     private fun saveNewCard(
         tokenID: String, stripeCardId: String?,
         last4: String?, displayName: String?
@@ -147,71 +180,60 @@ class AddCardFragment : BaseFragment() {
             showCVVDialog()
         }
         binding.edtYear.setOnClickListener {
-            selectYearDialog()
+            setNumberPickerDialog(2023, 2045, binding.edtYear)
         }
         binding.edtMonth.setOnClickListener {
             if (binding.edtYear.text?.isEmpty() == true) {
-                Toast.makeText(requireContext(), "Select Year First", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.lbl_select_year_first), Toast.LENGTH_SHORT).show()
             } else {
-                selectMonthDialog()
+                setNumberPickerDialog(1, 12, binding.edtMonth)
             }
         }
+
+        /*
+        * checking the priority of card with button
+        * @param isDefault is for card type
+        * making the priority card
+        * */
         var isChecked = true
+        binding.isButtonClick = isChecked
         binding.btnPriority.setOnClickListener {
             if (isChecked) {
                 isChecked = false
                 isDefault = 0
-                binding.btnPriority.alpha = 0.3f
-                binding.btnPriority.setCompoundDrawablesWithIntrinsicBounds(
-                    null,
-                    null,
-                    ContextCompat.getDrawable(requireContext(), R.drawable.ic_check),
-                    null
-                )
             } else {
                 isDefault = 1
-                binding.btnPriority.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
                 isChecked = true
-                binding.btnPriority.alpha = 1.0f
             }
+            binding.isButtonClick = isChecked
         }
     }
 
-    //creating custom dialog to show CVV info
+    /*
+    * custom dialog for CVV info
+    * */
     private fun showCVVDialog() {
-        val builder = AlertDialog.Builder(requireContext())
-            .create()
-        builder.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        val view = layoutInflater.inflate(R.layout.dialog_cvv, null)
-        builder.setView(view)
-        val close = view.findViewById<ImageView>(R.id.imgCloseDialog)
-        val btnClose: Button = view.findViewById(R.id.btnGotIt)
-
-        btnClose.setOnClickListener {
-            builder.dismiss()
-        }
-        close.setOnClickListener {
-            builder.dismiss()
-        }
-        builder.setCanceledOnTouchOutside(false)
-        builder.show()
+        DialogExtensions.showDialog(
+            requireContext(), R.layout.dialog_cvv, R.id.imgCloseDialog, R.id.btnGotIt
+        ).show()
     }
 
-    //dialog to select expiry year
-    @SuppressLint("InflateParams")
-    private fun selectYearDialog() {
+    /*
+    * common dialog for year and month of card expiry
+    * */
+    private fun setNumberPickerDialog(min: Int, max: Int, editText: EditText) {
         val builder = AlertDialog.Builder(requireContext())
         val view = layoutInflater.inflate(R.layout.dialog_date_picker, null)
         val numberPicker = view.findViewById<NumberPicker>(R.id.numberPicker)
         numberPicker.apply {
-            minValue = 2023
-            maxValue = 2045
+            minValue = min
+            maxValue = max
             wrapSelectorWheel = true
 
         }
         builder.apply {
             setPositiveButton("Ok") { dialog, _ ->
-                binding.edtYear.apply {
+                editText.apply {
                     setText(numberPicker.value.toString())
                 }
                 dialog.cancel()
@@ -223,65 +245,34 @@ class AddCardFragment : BaseFragment() {
         }
     }
 
-    //dialog to select expiry Month
-    @SuppressLint("InflateParams")
-    private fun selectMonthDialog() {
-        val builder = AlertDialog.Builder(requireContext())
-        val view = layoutInflater.inflate(R.layout.dialog_date_picker, null)
-        val numberPicker = view.findViewById<NumberPicker>(R.id.numberPicker)
-        numberPicker.apply {
-            minValue = 1
-            maxValue = 12
-            wrapSelectorWheel = true
 
-        }
-
-        builder.apply {
-            setPositiveButton("Ok") { dialog, _ ->
-                binding.edtMonth.apply {
-                    setText(numberPicker.value.toString())
-                }
-                dialog.cancel()
-            }
-            setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
-            setView(view)
-            create()
-            show()
-        }
-    }
-
-    //checking entered card type
+    /*
+    * checking entered card type visa or master
+    * */
     private fun checkCardType() {
         binding.edtCardNumber.onTextChanged {
             if (Constants.VISA.matcher(it).matches()) {
-                binding.visaCard.apply {
-                    strokeWidth = 5
-                    strokeColor = ContextCompat.getColor(context, R.color.bg_main)
-                }
+                binding.isVisa = true
             } else if (Constants.MASTER.matcher(it).matches()) {
-                binding.masterCard.apply {
-                    strokeWidth = 5
-                    strokeColor = ContextCompat.getColor(context, R.color.bg_main)
-                }
+                binding.isMaster = true
             } else {
-                binding.visaCard.apply {
-                    strokeWidth = 0
-                    strokeColor = ContextCompat.getColor(context, R.color.white)
-                }
-                binding.masterCard.apply {
-                    strokeWidth = 0
-                    strokeColor = ContextCompat.getColor(context, R.color.white)
-                }
+                binding.isVisa = false
+                binding.isMaster = false
             }
         }
     }
 
+    /*
+    * init view model for add card api
+    * */
     private fun getViewModel(): AddCardViewModel {
         viewModel = ViewModelProvider(this)[AddCardViewModel::class.java]
         return viewModel
     }
 
-
+    /*
+    * setting up the observer for add card api
+    * */
     private fun setObserver() {
         //handling error event in snack bar
         viewModel.liveData.observe(this, Observer { state ->
@@ -308,5 +299,4 @@ class AddCardFragment : BaseFragment() {
             }
         })
     }
-
 }

@@ -1,15 +1,18 @@
 package com.example.kite.bikelisting.model
 
 
+import android.os.Parcelable
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class BikeListingResponse(
     @JsonProperty("gate_enabled")
     var gateEnabled: Int? = null,
     @JsonProperty("is_guest_user_trip_request")
-    var isGuestUserTripRequest: List<Any?>? = null,
+    var isGuestUserTripRequest: List<String?>? = null,
     @JsonProperty("property_address")
     var propertyAddress: String? = null,
     @JsonProperty("property_image")
@@ -24,9 +27,11 @@ data class BikeListingResponse(
     var vehicleDetails: List<VehicleDetail?>? = null,
     @JsonProperty("wrongly_parked_vehicle_details")
     var wronglyParkedVehicleDetails: List<WronglyParkedVehicleDetail?>? = null
-) {
-    class TripRequestResponse
+) : Parcelable {
+    @Parcelize
+    class TripRequestResponse : Parcelable
 
+    @Parcelize
     data class VehicleDetail(
         @JsonProperty("address")
         var address: String? = null,
@@ -78,15 +83,17 @@ data class BikeListingResponse(
         var workingVehicle: Int? = null,
         @JsonProperty("wrong_parked")
         var wrongParked: Int? = null
-    ) {
+    ) : Parcelable {
+        @Parcelize
         data class Geolocation(
             @JsonProperty("lat")
             var lat: Double? = null,
             @JsonProperty("long")
             var long: Double? = null
-        )
+        ) : Parcelable
     }
 
+    @Parcelize
     data class WronglyParkedVehicleDetail(
         @JsonProperty("geolocation_id")
         var geolocationId: Int? = null,
@@ -94,12 +101,13 @@ data class BikeListingResponse(
         var lastUpdatedPoint: LastUpdatedPoint? = null,
         @JsonProperty("wrong_parked")
         var wrongParked: Int? = null
-    ) {
+    ) : Parcelable {
+        @Parcelize
         data class LastUpdatedPoint(
             @JsonProperty("lat")
             var lat: Double? = null,
             @JsonProperty("long")
             var long: Double? = null
-        )
+        ) : Parcelable
     }
 }

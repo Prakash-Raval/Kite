@@ -34,5 +34,4 @@ data class ThirdPartyListResponse(
     var thirdPartyName: String? = null,
     @JsonProperty("third_party_type")
     var thirdPartyType: Int? = null,
-
 )

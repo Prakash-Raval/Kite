@@ -5,6 +5,12 @@
 
     <data>
 
+        <import type="android.view.View" />
+
+        <variable
+            name="isSelectedCard"
+            type="Boolean" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -46,6 +52,7 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/_180sdp"
             android:backgroundTint="@color/bg_card_gray"
+            android:visibility="@{isSelectedCard ? View.VISIBLE : View.INVISIBLE }"
             app:cardCornerRadius="10dp"
             app:cardElevation="0dp"
             app:layout_constraintEnd_toStartOf="@id/glEnd"
@@ -72,7 +79,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="horizontal"
-            android:visibility="gone"
+            android:visibility="@{isSelectedCard ? View.GONE : View.VISIBLE }"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@id/txtAddCard"
             app:layout_constraintEnd_toEndOf="parent"
@@ -105,7 +112,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_20sdp"
             android:text="@string/use_payment_method"
-            android:visibility="gone"
+            android:visibility="@{isSelectedCard ? View.GONE : View.VISIBLE }"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/glEnd"
             app:layout_constraintStart_toEndOf="@id/glStart" />

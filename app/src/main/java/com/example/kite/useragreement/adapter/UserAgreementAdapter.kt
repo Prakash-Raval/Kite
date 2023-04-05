@@ -5,8 +5,8 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.kite.bikelisting.adapter.OnCellClicked
 import com.example.kite.databinding.ItemGuestPropertyTypeBinding
+import com.example.kite.useragreement.OnCellClicked
 import com.example.kite.useragreement.model.GuestModel
 
 class UserAgreementAdapter(private var onCellClicked: OnCellClicked) :
@@ -65,3 +65,5 @@ class UserAgreementAdapter(private var onCellClicked: OnCellClicked) :
     }
 
 }
+
+

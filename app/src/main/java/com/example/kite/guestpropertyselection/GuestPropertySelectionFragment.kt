@@ -25,8 +25,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.kite.R
-import com.example.kite.countrylisting.CountryListingAdapter
-import com.example.kite.countrylisting.RegionViewModel
 import com.example.kite.databinding.FragmentGuestPropertySelectionBinding
 import com.example.kite.extensions.onRightDrawableClicked
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -36,8 +34,6 @@ import java.util.*
 class GuestPropertySelectionFragment : Fragment() {
 
     private lateinit var binding: FragmentGuestPropertySelectionBinding
-    private lateinit var regionViewModel: RegionViewModel
-    private lateinit var countryListingAdapter: CountryListingAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -168,7 +164,6 @@ class GuestPropertySelectionFragment : Fragment() {
     }
 
     //dialog for photo id
-    @SuppressLint("MissingInflatedId")
     private fun openPhotoDialog() {
         val builder = AlertDialog.Builder(requireContext())
             .create()
@@ -190,7 +185,6 @@ class GuestPropertySelectionFragment : Fragment() {
     }
 
     //dialog for Access code
-    @SuppressLint("MissingInflatedId")
     private fun openAccessCodeDialog() {
         val builder = AlertDialog.Builder(requireContext())
             .create()
@@ -237,6 +231,4 @@ class GuestPropertySelectionFragment : Fragment() {
         }
 
     }
-
-
 }

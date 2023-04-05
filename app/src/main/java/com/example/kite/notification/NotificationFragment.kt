@@ -9,12 +9,10 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.kite.R
 import com.example.kite.base.network.client.ResponseHandler
 import com.example.kite.base.network.model.ResponseData
-import com.example.kite.base.utils.DebugLog
 import com.example.kite.basefragment.BaseFragment
 import com.example.kite.databinding.FragmentNotificationBinding
 import com.example.kite.login.model.LoginResponse
@@ -26,8 +24,6 @@ import com.example.kite.notification.model.UpdateNotificationRequest
 import com.example.kite.notification.model.UpdateNotificationResponse
 import com.example.kite.notification.viewmodel.NotificationViewModel
 import com.example.kite.utils.PrefManager
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 class NotificationFragment : BaseFragment(), OnNotifyUpdate {
     private lateinit var binding: FragmentNotificationBinding
@@ -98,22 +94,18 @@ class NotificationFragment : BaseFragment(), OnNotifyUpdate {
                     Log.d("ViewTripFragment", "setObserverData: $state")
                 }
                 is ResponseHandler.OnSuccessResponse<ResponseData<NotificationResponse>?> -> {
+                    hideProgressBar()
+
                     Log.d("ViewTripFragment", "setObserverData: ${state.response?.data}")
                     if (state.response?.code == 200) {
                         adapter.setList(
                             state.response.data?.notificationsData
                                     as ArrayList<NotificationResponse.NotificationsData>
                         )
-                        //adapter.notifyDataSetChanged()
-                        binding.rvNotification.visibility = View.VISIBLE
-                        binding.imgNotification.visibility = View.GONE
-                        binding.txtNotification.visibility = View.GONE
+                        binding.isSelected = true
                     } else {
-                        binding.rvNotification.visibility = View.GONE
-                        binding.imgNotification.visibility = View.VISIBLE
-                        binding.txtNotification.visibility = View.VISIBLE
+                        binding.isSelected = false
                     }
-                    hideProgressBar()
                 }
             }
         })
@@ -144,15 +136,14 @@ class NotificationFragment : BaseFragment(), OnNotifyUpdate {
 
     override fun onClick(notificationID: String) {
         val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
-        val isRead = 0
-        val req = UpdateNotificationRequest()
-        req.notification_id = notificationID
-        req.access_token = token
-        req.is_read = isRead.toString()
-
-        DebugLog.d("BODYDATA $req")
+        val isRead = "0"
         viewModel.updateNotification(
-            req
+            UpdateNotificationRequest(
+                access_token = token,
+                notification_id = notificationID,
+                is_read = isRead
+            )
         )
+        setNotificationObserverUpdate()
     }
 }

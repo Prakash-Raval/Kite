@@ -1,4 +1,4 @@
-package com.example.kite.policy
+package com.example.kite.webviews.terms
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -48,5 +48,10 @@ class TermsFragment : Fragment() {
             }
 
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding.wvPolicy.destroy()
     }
 }

@@ -40,7 +40,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.kite.R
 import com.example.kite.base.network.client.ResponseHandler
 import com.example.kite.base.network.model.ResponseListData
-import com.example.kite.bikelisting.adapter.OnCellClicked
 import com.example.kite.countrylisting.CountryListingAdapter
 import com.example.kite.countrylisting.CountryResponse
 import com.example.kite.countrylisting.OnCellClickedRegion
@@ -349,7 +348,7 @@ class UserAgreementFragment : Fragment(), OnCellClicked, OnCellClickedRegion {
                     is ResponseHandler.OnSuccessResponse<ResponseListData<CountryResponse>?> -> {
                         Log.d("ViewTripFragment", "setObserverData: ${state.response?.data}")
                         if (state.response?.code == 200) {
-                            countryListingAdapter.setList(state.response.data as ArrayList<CountryResponse.Country>)
+                            countryListingAdapter.setList(state.response.data as ArrayList<CountryResponse>)
                             countryListingAdapter.notifyDataSetChanged()
                         }
                     }

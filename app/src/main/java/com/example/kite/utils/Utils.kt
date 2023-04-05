@@ -1,7 +1,6 @@
 package com.example.kite.utils
 
 import android.content.Context
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import androidx.annotation.ColorRes
@@ -18,10 +17,6 @@ fun View.makeVisible() {
 fun View.makeInVisible() {
     visibility = View.INVISIBLE
 }
-
-
-internal val Context.layoutInflater: LayoutInflater
-    get() = LayoutInflater.from(this)
 
 
 internal fun Context.getColorCompat(@ColorRes color: Int) =

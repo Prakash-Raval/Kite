@@ -6,6 +6,11 @@
 
     <data>
 
+        <import type="android.view.View" />
+
+        <variable
+            name="isSelected"
+            type="Boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,6 +28,7 @@
             android:layout_width="@dimen/_100sdp"
             android:layout_height="@dimen/_100sdp"
             android:src="@drawable/no_ride"
+            android:visibility="@{isSelected == true ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -36,6 +42,7 @@
             android:text="@string/no_notifications_available"
             android:textSize="@dimen/_10sdp"
             android:textStyle="bold"
+            android:visibility="@{isSelected == true ? View.GONE : View.VISIBLE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imgNotification" />
@@ -45,6 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="vertical"
+            android:visibility="@{isSelected == true ? View.VISIBLE : View.GONE}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/inNotificationBar"

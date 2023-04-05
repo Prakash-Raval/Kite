@@ -1,9 +1,5 @@
 package com.example.kite.ridedetails
 
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.content.pm.ResolveInfo
-import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
@@ -14,6 +10,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.kite.R
 import com.example.kite.base.network.client.ResponseHandler
@@ -30,6 +27,7 @@ import com.example.kite.ridedetails.viewmodel.RideDetailViewModel
 import com.example.kite.utils.PrefManager
 import com.example.kite.utils.Util
 import com.google.common.primitives.Bytes
+import kotlinx.coroutines.*
 import java.io.*
 
 
@@ -39,7 +37,7 @@ class RideDetailsFragment : BaseFragment() {
     private lateinit var viewModel: RideDetailViewModel
     private lateinit var viewModelReceipt: PrintReceiptViewModel
     lateinit var list: List<Int>
-    var bookingID = ""
+    private var bookingID = ""
 
 
     override fun onCreateView(
@@ -159,7 +157,13 @@ class RideDetailsFragment : BaseFragment() {
                 is ResponseHandler.OnSuccessResponse<ResponseData<PrintReceiptResponse>?> -> {
                     hideProgressBar()
                     list = state.response?.data?.data!!
-                    writeResponseBodyToDisk(list.let { Bytes.toArray(it) }, bookingID)
+                    /*
+                    *
+                    * running task on background thread saving pdf
+                    * */
+                    lifecycleScope.launch(Dispatchers.IO) {
+                        writeResponseBodyToDisk(list.let { Bytes.toArray(it) }, bookingID)
+                    }
                     Log.d("RideDetailsFragment", "setObserverData: ${state.response.data}")
                 }
             }
@@ -246,8 +250,7 @@ class RideDetailsFragment : BaseFragment() {
                         Log.d("LOgDownload", "file download: $fileSizeDownloaded of $fileSize")
                     }
                     outputStream.flush()
-                    //showDialogDownload(futureStudioIconFile)
-                    //showPDF(futureStudioIconFile.path)
+
                     true
                 } catch (e: IOException) {
                     Log.d("LOgDownload", "file download: $e")
@@ -269,53 +272,7 @@ class RideDetailsFragment : BaseFragment() {
         }
     }
 
-    /*
-    * showing dialog to open pdf file
-    * */
-    /*private fun showDialogDownload(filename: File) {
-        val writeResponseBodyToDisk =
-            writeResponseBodyToDisk(list.let { Bytes.toArray(it) }, bookingID)
-        val file = File(
-            Environment
-                .getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).absolutePath
-                    + "/" + filename
-        )
-        if (writeResponseBodyToDisk) {
-            try {
-                val intent = Intent(Intent.ACTION_VIEW)
-                intent.setDataAndType(Uri.fromFile(file), "application/pdf")
-                intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
-                startActivity(intent)
-            } catch (e: ActivityNotFoundException) {
-                e.stackTrace
-                Toast.makeText(
-                    requireContext(),
-                    "No PDF reader found to open this file.",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
-    }*/
-    /*  private fun showDialog(mFilePath : String){
-          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-              val file = File(mFilePath)
-              val uri = FileProvider.getUriForFile(requireContext(),
-                  activity?.packageName + ".provider", file)
-             val intent = Intent(Intent.ACTION_VIEW)
-              intent.data = uri
-              intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
-              startActivity(intent)
-          } else {
-             var intent = Intent(Intent.ACTION_VIEW)
-              intent.setDataAndType(Uri.parse(mFilePath), "application/pdf")
-              intent = Intent.createChooser(intent, "Open File")
-              intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-              startActivity(intent)
-          }
-      }*/
-
-
-    private fun showPDF(filepath: String) {
+/*    private fun showPDF(filepath: String) {
         val file = File(Environment.getExternalStorageDirectory().toString() + filepath)
         val packageManager: PackageManager? = activity?.packageManager
         val testIntent = Intent(Intent.ACTION_VIEW)
@@ -327,7 +284,7 @@ class RideDetailsFragment : BaseFragment() {
         val uri = Uri.fromFile(file)
         intent.setDataAndType(uri, "application/pdf")
         startActivity(intent)
-    }
+    }*/
 }
 
 

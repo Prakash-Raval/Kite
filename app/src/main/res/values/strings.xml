@@ -311,5 +311,13 @@
     <string name="credit_debit_card">Credit/Debit Card</string>
     <string name="duration">Duration</string>
     <string name="cost">Cost</string>
+    <string name="lbl_enter_name">Please enter name</string>
+    <string name="lbl_enter_card_number">Please enter card number</string>
+    <string name="lbl_enter_valid_card_number">Please enter valid card number</string>
+    <string name="lbl_select_year">Please select year</string>
+    <string name="lbl_select_month">Please select month</string>
+    <string name="lbl_enter_cvv">Please enter CVV</string>
+    <string name="lbl_enter_valid_cvv">Please enter valid CVV</string>
+    <string name="lbl_select_year_first">Select Year First</string>
 
 </resources>

@@ -330,5 +330,4 @@ class SubscriptionFragment : BaseFragment() {
             }
         })
     }
-
 }

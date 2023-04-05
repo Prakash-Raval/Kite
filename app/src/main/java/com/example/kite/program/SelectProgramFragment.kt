@@ -47,6 +47,7 @@ class SelectProgramFragment : BaseFragment(), OnThirdPartyListing {
     private lateinit var viewModel: ThirdPartyViewModel
     private lateinit var adapter: ThirdPartyListAdapter
 
+
     /*
     * list
     * */
@@ -73,6 +74,7 @@ class SelectProgramFragment : BaseFragment(), OnThirdPartyListing {
         setUpTextWatcher()
         navigate()
         setUPToolbar()
+        //setAdapterThirdPartyList()
         list = ArrayList()
         adapter = ThirdPartyListAdapter(
             list,
@@ -119,6 +121,7 @@ class SelectProgramFragment : BaseFragment(), OnThirdPartyListing {
         setObserver()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun setObserver() {
         //handling error event in snack bar
         viewModel.liveData.observe(viewLifecycleOwner, Observer { state ->
@@ -215,10 +218,49 @@ class SelectProgramFragment : BaseFragment(), OnThirdPartyListing {
         }
     }
 
+
     override fun onClick(thirdPartyID: String) {
         val sharedPreferences =
             activity?.getSharedPreferences("THIRD_PARTY_ID", MODE_PRIVATE)?.edit()
         sharedPreferences?.putString("ThirdPartyID", thirdPartyID)?.apply()
     }
 
+    /*
+    * calling out generic recycler view adapter
+    * */
+    /*private fun setAdapterThirdPartyList() {
+        var selected = 0
+        val myAdapter = object :
+            GenericAdapter<ThirdPartyListResponse, ItemThirdpartyListBinding>(
+                requireContext(),
+                thirdPartyList
+            ){
+            override val layoutResId: Int
+                get() = R.layout.item_thirdparty_list
+
+            override fun onBindData(
+                model: ThirdPartyListResponse,
+                position: Int,
+                dataBinding: ItemThirdpartyListBinding
+            ) {
+                dataBinding.listingData = model
+                dataBinding.executePendingBindings()
+                dataBinding.isSelected = selected == position
+
+            }
+
+            override fun onItemClick(model: ThirdPartyListResponse, position: Int) {
+                selected = position
+                val select = selected
+                notifyItemChanged(select)
+                notifyItemChanged(position)
+                val sharedPreferences =
+                    activity?.getSharedPreferences("THIRD_PARTY_ID", MODE_PRIVATE)?.edit()
+                sharedPreferences?.putString("ThirdPartyID", model.thirdPartyId)?.apply()
+            }
+
+        }
+
+        binding.vpProgram.adapter = myAdapter
+    }*/
 }

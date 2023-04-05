@@ -13,6 +13,7 @@ import com.example.kite.base.network.client.ResponseHandler
 import com.example.kite.base.network.model.ResponseData
 import com.example.kite.basefragment.BaseFragment
 import com.example.kite.databinding.FragmentReservationBinding
+import com.example.kite.extensions.DateAndTime
 import com.example.kite.home.viewmodel.ViewTripViewModel
 import com.example.kite.login.model.LoginResponse
 import com.example.kite.reservation.adapter.ReservationAdapter
@@ -20,15 +21,13 @@ import com.example.kite.reservation.listner.OnReservationViewClick
 import com.example.kite.reservation.model.ListReservationRequest
 import com.example.kite.reservation.model.ListReservationResponse
 import com.example.kite.utils.PrefManager
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 class ReservationFragment : BaseFragment(), OnReservationViewClick {
 
     private lateinit var binding: FragmentReservationBinding
     private lateinit var viewModel: ViewTripViewModel
     private lateinit var adapter: ReservationAdapter
-
+    val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
     private var reservationId = ""
 
     override fun onCreateView(
@@ -71,20 +70,15 @@ class ReservationFragment : BaseFragment(), OnReservationViewClick {
         viewModel = getViewModel()
 
         //getting required data to generate response
-        val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-        val timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss")
-        val currentDate = LocalDateTime.now().format(dateFormatter)
-        val currentTime = LocalDateTime.now().format(timeFormatter)
-        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")
 
         if (token != null) {
             viewModel.getViewTripRequest(
                 ListReservationRequest(
-                    token.accessToken,
-                    currentDate,
-                    currentTime,
-                    currentDate,
-                    currentTime
+                    token,
+                    DateAndTime.currentDate,
+                    DateAndTime.currentTime,
+                    DateAndTime.currentDate,
+                    DateAndTime.currentTime
                 )
             )
         }

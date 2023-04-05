@@ -13,9 +13,10 @@ import com.example.kite.R
 import com.example.kite.base.network.client.ResponseHandler
 import com.example.kite.base.network.model.ResponseData
 import com.example.kite.basefragment.BaseFragment
+import com.example.kite.constants.GenericAdapter
 import com.example.kite.databinding.FragmentSelectPaymentBinding
+import com.example.kite.databinding.ItemCardDesignBinding
 import com.example.kite.login.model.LoginResponse
-import com.example.kite.selectpayment.adapter.GetCardAdapter
 import com.example.kite.selectpayment.model.GetCardRequest
 import com.example.kite.selectpayment.model.GetCardResponse
 import com.example.kite.selectpayment.viewmodel.GetCardViewModel
@@ -25,7 +26,7 @@ import com.example.kite.utils.PrefManager
 class SelectPaymentFragment : BaseFragment() {
     private lateinit var binding: FragmentSelectPaymentBinding
     private lateinit var viewModel: GetCardViewModel
-    private lateinit var adapter: GetCardAdapter
+    var cardList = ArrayList<GetCardResponse.Detail>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,16 +41,35 @@ class SelectPaymentFragment : BaseFragment() {
         )
         setUpNavigation()
         getApiData()
-        setUPAdapter()
         return binding.root
     }
 
     //setting recycler view adapter
     private fun setUPAdapter() {
-        adapter = GetCardAdapter()
-        binding.rvGetCard.adapter = adapter
-    }
+        val cardAdapter = object :
+            GenericAdapter<GetCardResponse.Detail, ItemCardDesignBinding>(
+                requireContext(),
+                cardList
+            ){
+            override val layoutResId: Int
+                get() = R.layout.item_card_design
 
+            override fun onBindData(
+                model: GetCardResponse.Detail,
+                position: Int,
+                dataBinding: ItemCardDesignBinding
+            ) {
+                dataBinding.getCard = model
+                dataBinding.executePendingBindings()
+            }
+
+            override fun onItemClick(model: GetCardResponse.Detail, position: Int) {
+
+            }
+
+        }
+        binding.rvGetCard.adapter = cardAdapter
+    }
 
     //setting up the toolbar
     private fun setUpNavigation() {
@@ -103,18 +123,9 @@ class SelectPaymentFragment : BaseFragment() {
                 is ResponseHandler.OnSuccessResponse<ResponseData<GetCardResponse>?> -> {
                     Log.d("ViewTripFragment", "setObserverData: ${state.response?.data}")
                     hideProgressBar()
-                    if (state.response?.data?.details == null) {
-                        binding.addCardContainer.visibility = View.VISIBLE
-                        binding.btnUsePaymentMethod.visibility = View.GONE
-                        binding.rvGetCard.visibility = View.GONE
-                        binding.btnUsePaymentMethod.visibility = View.GONE
-                    } else {
-                        binding.btnUsePaymentMethod.visibility = View.VISIBLE
-                        binding.rvGetCard.visibility = View.VISIBLE
-                        binding.btnUsePaymentMethod.visibility = View.VISIBLE
-                        binding.addCardContainer.visibility = View.INVISIBLE
-                    }
-                    adapter.setList(state.response?.data?.details as ArrayList<GetCardResponse.Detail>)
+                    binding.isSelectedCard = state.response?.data?.details == null
+                    cardList = state.response?.data?.details as ArrayList<GetCardResponse.Detail>
+                    setUPAdapter()
                 }
             }
         })

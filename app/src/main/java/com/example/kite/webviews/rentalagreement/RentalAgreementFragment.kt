@@ -1,4 +1,4 @@
-package com.example.kite.rentalagreement
+package com.example.kite.webviews.rentalagreement
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -54,5 +54,9 @@ class RentalAgreementFragment : Fragment() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        binding.wvRental.destroy()
+    }
 
 }

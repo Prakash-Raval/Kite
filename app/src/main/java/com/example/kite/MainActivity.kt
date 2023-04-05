@@ -2,7 +2,6 @@ package com.example.kite
 
 import android.os.Bundle
 import android.view.WindowManager
-import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
@@ -13,7 +12,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
-import com.example.kite.base.network.ApiClient
 import com.example.kite.databinding.ActivityMainBinding
 
 
@@ -35,7 +33,6 @@ class MainActivity : AppCompatActivity() {
 
         setUpNavigation()
         setNavigation()
-        ApiClient.initRetrofit()
     }
 
     private fun setUpNavigation() {
@@ -93,14 +90,14 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-      @Deprecated("Deprecated in Java")
-      override fun onBackPressed() {
-          if (pDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-              pDrawerLayout.closeDrawer(GravityCompat.START)
-          } else {
-              onBackPressedDispatcher.onBackPressed()
-          }
-      }
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        if (pDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            pDrawerLayout.closeDrawer(GravityCompat.START)
+        } else {
+            onBackPressedDispatcher.onBackPressed()
+        }
+    }
 
 
     //managing navigation

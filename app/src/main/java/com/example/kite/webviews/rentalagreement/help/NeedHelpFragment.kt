@@ -1,4 +1,4 @@
-package com.example.kite.rentalagreement.help
+package com.example.kite.webviews.rentalagreement.help
 
 import android.os.Bundle
 import android.view.LayoutInflater

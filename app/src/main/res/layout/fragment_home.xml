@@ -113,7 +113,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_20sdp"
-            android:visibility="@{onGoingRide.bookingId != null ? View.GONE : View.VISIBLE}"
+            android:visibility="@{viewTrip.vehicleType == null ? View.GONE : View.VISIBLE}"
             app:cardCornerRadius="@dimen/_20sdp"
             app:cardElevation="@dimen/_8sdp"
             app:layout_constraintBottom_toBottomOf="parent"

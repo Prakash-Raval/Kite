@@ -34,8 +34,6 @@ class LoginFragment : BaseFragment() {
             container,
             false
         )
-        //pref
-        activity?.application?.let { PrefManager.with(it) }
 
         // Inflate the layout for this fragment
         loadFragment()

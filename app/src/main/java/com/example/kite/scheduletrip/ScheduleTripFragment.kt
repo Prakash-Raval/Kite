@@ -7,8 +7,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -20,10 +18,13 @@ import com.example.kite.R
 import com.example.kite.base.network.client.ResponseHandler
 import com.example.kite.base.network.model.ResponseData
 import com.example.kite.basefragment.BaseFragment
+import com.example.kite.bikelisting.model.BikeListingResponse
 import com.example.kite.constants.Constants
 import com.example.kite.databinding.FragmentScheduleTripBinding
+import com.example.kite.databinding.ItemBsRepeatCountBinding
 import com.example.kite.dateandtime.listner.GetDateAndTime
 import com.example.kite.dateandtime.ui.DateAndTimeFragment
+import com.example.kite.extensions.DateAndTime
 import com.example.kite.extensions.snackError
 import com.example.kite.login.model.LoginResponse
 import com.example.kite.network.ApiInterface
@@ -36,14 +37,13 @@ import com.example.kite.scheduletrip.viewmodel.*
 import com.example.kite.utils.PrefManager
 import com.example.kite.viewscheduletrip.model.ViewTripResponse
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.button.MaterialButton
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
 
+    /*
+    * variables
+    * */
     private lateinit var binding: FragmentScheduleTripBinding
-
     private lateinit var viewModelTrip: TripViewModel
     private lateinit var viewModel: ScheduleTripViewModel
     private lateinit var scheduleTripAdapter: ScheduleTripAdapter
@@ -51,7 +51,6 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
     private lateinit var cancelTripViewModel: CancelTripViewModel
 
     var list = ArrayList<ScheduleTimeDuration>()
-
     private var count = 0
     private val bundle2 = Bundle()
     private val bundle = Bundle()
@@ -62,9 +61,7 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
     var selectedTimeZoneString = ""
     var vehicleReservationPricingId = -1
     var duration = ""
-
     var isUpdate = false
-
     val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
 
     override fun onCreateView(
@@ -126,7 +123,6 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
             binding.imgDownDate.visibility = View.GONE
             binding.txtSTDateSelect.visibility = View.VISIBLE
         }
-
         if (selectedTime == "") {
             binding.imgDownTime.visibility = View.VISIBLE
             binding.txtSTTimeSelected.visibility = View.GONE
@@ -135,7 +131,6 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
             binding.txtSTTimeSelected.visibility = View.VISIBLE
             binding.txtSTTimeSelected.text = selectedTime
         }
-
         binding.btnSTScheduleTrip.setOnClickListener {
             checkTripValidation()
         }
@@ -149,24 +144,19 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
         binding.txtRepeatDialog.setOnClickListener {
             setUPBottomSheet()
         }
-
+        val dialog = DateAndTimeFragment(requireContext(), this)
         binding.imgDownDate.setOnClickListener {
-            val dialog = DateAndTimeFragment(requireContext(), this)
             dialog.arguments = bundle2
-            Log.d("TAG113", "setUPToolbar: $bundle2")
             dialog.show(requireActivity().supportFragmentManager, "")
         }
 
         binding.txtSTDateSelect.setOnClickListener {
-            val dialog = DateAndTimeFragment(requireContext(), this)
             dialog.arguments = bundle2
-            Log.d("TAG112", "setUPToolbar: $bundle2")
             dialog.show(requireActivity().supportFragmentManager, "")
         }
 
         binding.txtSTTimeSelected.setOnClickListener {
             if (binding.txtSTDateSelect.isVisible) {
-                val dialog = DateAndTimeFragment(requireContext(), this)
                 dialog.show(requireActivity().supportFragmentManager, "")
             } else {
                 Toast.makeText(requireContext(), "Please select date", Toast.LENGTH_SHORT).show()
@@ -174,7 +164,6 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
         }
         binding.imgDownTime.setOnClickListener {
             if (binding.txtSTDateSelect.isVisible) {
-                val dialog = DateAndTimeFragment(requireContext(), this)
                 dialog.show(requireActivity().supportFragmentManager, "")
             } else {
                 Toast.makeText(requireContext(), "Please select date", Toast.LENGTH_SHORT).show()
@@ -184,17 +173,21 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
 
     private fun setData() {
         val args = this.arguments
-        val modelName = args?.getString("ModelName")
-        val modelImage = args?.getString("ModelImage")
-        binding.txtSTVehicleName.text = modelName
-        Glide.with(requireContext()).load(modelImage).into(binding.imgVehicleImage)
+        val vehicleDetail: BikeListingResponse.VehicleDetail =
+            args?.get("VehicleDetails") as BikeListingResponse.VehicleDetail
+        binding.txtSTVehicleName.text = vehicleDetail.vehicleType
+        Glide.with(requireContext()).load(vehicleDetail.vehicleTypeImage)
+            .into(binding.imgVehicleImage)
 
     }
 
-    //setting counter variable and it's limit
+    /*
+    * setting counter variable and it's limit
+    * */
     private fun setCounter() {
         val args = this.arguments
-        val repeatCount = args?.getString("RepeatCount")
+        val vehicleDetail: BikeListingResponse.VehicleDetail =
+            args?.get("VehicleDetails") as BikeListingResponse.VehicleDetail
         binding.txtCountRepeat.text = count.toString()
 
         //removing counting
@@ -205,49 +198,53 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
 
         //adding counting
         binding.imgRepeatADD.setOnClickListener {
-            if (repeatCount?.toInt()!! > count)
+            if (vehicleDetail.repeatDaysCount!! > count)
                 count++
             binding.txtCountRepeat.text = count.toString()
         }
     }
 
+    /*
+    * bottom sheet dialog
+    * repeat count
+    * */
     private fun setUPBottomSheet() {
         val args = this.arguments
-        val repeatCount = args?.getString("RepeatCount")
+        val vehicleDetail: BikeListingResponse.VehicleDetail =
+            args?.get("VehicleDetails") as BikeListingResponse.VehicleDetail
         val dialog = BottomSheetDialog(requireContext())
-        val view = layoutInflater.inflate(R.layout.item_bs_repeat_count, null)
-        val countTextView = view.findViewById<TextView>(R.id.txtBSCounter)
-        view.findViewById<ImageView>(R.id.imgBSClose).setOnClickListener {
-            binding.txtCountRepeat.text = countTextView.text
+        val bind: ItemBsRepeatCountBinding =
+            ItemBsRepeatCountBinding.inflate(LayoutInflater.from(context))
+        bind.imgBSClose.setOnClickListener {
+            binding.txtCountRepeat.text = bind.txtBSCounter.text
             dialog.dismiss()
         }
-        countTextView.text = binding.txtCountRepeat.text
+        bind.txtBSCounter.text = binding.txtCountRepeat.text
 
-        view.findViewById<MaterialButton>(R.id.btnBSSave).setOnClickListener {
-            binding.txtCountRepeat.text = countTextView.text
+        bind.btnBSSave.setOnClickListener {
+            binding.txtCountRepeat.text = bind.txtBSCounter.text
             dialog.dismiss()
         }
 
-
-        view.findViewById<ImageView>(R.id.imgBSAdd).setOnClickListener {
-            if (repeatCount?.toInt()!! > count)
+        bind.imgBSAdd.setOnClickListener {
+            if (vehicleDetail.repeatDaysCount!! > count)
                 count++
-            countTextView.text = count.toString()
+            bind.txtBSCounter.text = count.toString()
         }
-
-        view.findViewById<ImageView>(R.id.imgBSRemove).setOnClickListener {
+        bind.imgBSRemove.setOnClickListener {
             if (count != 0) count--
-            countTextView.text = count.toString()
+            bind.txtBSCounter.text = count.toString()
         }
-
         dialog.apply {
             setCancelable(false)
-            setContentView(view)
+            setContentView(bind.root)
             show()
         }
-
     }
 
+    /*
+    * setup adapter according to hour calculation and setting image
+    * */
     private fun setUPAdapter() {
         scheduleTripAdapter = ScheduleTripAdapter(requireContext(), this)
         list.add(ScheduleTimeDuration("1 hr", R.drawable.one_hour_duration))
@@ -289,12 +286,12 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
 
 
         val args = this.arguments
-        val vehicleTypeID = args?.getString("vehicleTypeID")
-        val manufacturerID = args?.getString("ManufacturerID")
+        val vehicleDetail: BikeListingResponse.VehicleDetail =
+            args?.get("VehicleDetails") as BikeListingResponse.VehicleDetail
         val sharedPreference =
             activity?.getSharedPreferences("VEHICLE", Context.MODE_PRIVATE)?.edit()
-        sharedPreference?.putString("TypeID", vehicleTypeID)
-        sharedPreference?.putString("MID", manufacturerID)?.apply()
+        sharedPreference?.putString("TypeID", vehicleDetail.vehicleTypeId.toString())
+        sharedPreference?.putString("MID", vehicleDetail.manufacturerId.toString())?.apply()
         val sharedPreferences =
             activity?.getSharedPreferences("THIRD_PARTY_ID", Context.MODE_PRIVATE)
         val thirdPartyID = sharedPreferences?.getString("ThirdPartyID", "ThirdPartyID")
@@ -304,8 +301,8 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
         viewModel.getRequiredData(
             ScheduleTripRequest(
                 access_token = token,
-                vehicle_type_id = vehicleTypeID,
-                manufacturer_id = manufacturerID,
+                vehicle_type_id = vehicleDetail.vehicleTypeId.toString(),
+                manufacturer_id = vehicleDetail.manufacturerId.toString(),
                 third_party_id = thirdPartyID
             )
         )
@@ -350,8 +347,8 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
             PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.subscription?.isSubscribe
         val customerID = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.customerId
         val args = this.arguments
-        val vehicleTypeID = args?.getString("vehicleTypeID")
-        val manufacturerID = args?.getString("ManufacturerID")
+        val vehicleDetail: BikeListingResponse.VehicleDetail =
+            args?.get("VehicleDetails") as BikeListingResponse.VehicleDetail
         val sharedPreferences =
             activity?.getSharedPreferences("THIRD_PARTY_ID", Context.MODE_PRIVATE)
         val thirdPartyID = sharedPreferences?.getString("ThirdPartyID", "ThirdPartyID")
@@ -360,8 +357,8 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
             TripRequest(
                 accessToken = token,
                 isSubscribed = subscribe.toString(),
-                manufacturerId = manufacturerID,
-                vehicleTypeId = vehicleTypeID,
+                manufacturerId = vehicleDetail.manufacturerId.toString(),
+                vehicleTypeId = vehicleDetail.vehicleTypeId.toString(),
                 vehicleReservationPricingId = vehicleReservationPricingId,
                 timeZone = selectedTimeZoneString,
                 startDate = selectedDate,
@@ -516,10 +513,6 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
     }
 
     private fun getCancelTripData() {
-        val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-        val timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss")
-        val currentDate = LocalDateTime.now().format(dateFormatter)
-        val currentTime = LocalDateTime.now().format(timeFormatter)
         val args = this.arguments
         val viewTripResponse = args?.getParcelable<ViewTripResponse>("ViewTripResponse")
 
@@ -528,8 +521,8 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
                 cancel_fee = viewTripResponse?.cancelFee,
                 access_token = token,
                 reservation_id = viewTripResponse?.reservationId.toString(),
-                current_date = currentDate,
-                current_time = currentTime,
+                current_date = DateAndTime.currentDate,
+                current_time = DateAndTime.currentTime,
                 forcefully_cancel = "0",
                 time_zone = viewTripResponse?.timeZone,
             )

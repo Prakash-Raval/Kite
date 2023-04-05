@@ -10,8 +10,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
@@ -25,6 +23,8 @@ import com.example.kite.basefragment.BaseFragment
 import com.example.kite.databinding.DialogBsEndTripBinding
 import com.example.kite.databinding.DialogUpdateChargeBinding
 import com.example.kite.databinding.FragmentHomeBinding
+import com.example.kite.extensions.DateAndTime
+import com.example.kite.extensions.DialogExtensions
 import com.example.kite.home.model.OnGoingRideRequest
 import com.example.kite.home.model.OnGoingRideResponse
 import com.example.kite.home.viewmodel.OnGoingRideViewModel
@@ -36,8 +36,6 @@ import com.example.kite.utils.FullScreenDialog
 import com.example.kite.utils.PrefManager
 import com.example.kite.utils.Util
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.concurrent.TimeUnit
 
 
@@ -52,7 +50,6 @@ class HomeFragment : BaseFragment() {
 
     val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
     private var reservationID = ""
-    private var isShown = 0
     private var counter: Int = 0
     private val bundle = Bundle()
     private var countDownTimer: CountDownTimer? = null
@@ -60,10 +57,7 @@ class HomeFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (isShown == 0) {
-            isShown = 1
-            openDialog()
-        }
+        openDialog()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -88,7 +82,6 @@ class HomeFragment : BaseFragment() {
         if (isCheck == true) {
             openUpdateChargeDialog()
         }
-        binding.cardViewTripContainer.visibility = View.GONE
         setUpDrawer()
         getOnGoingRide()
         setUpNavigation()
@@ -170,9 +163,7 @@ class HomeFragment : BaseFragment() {
                 is ResponseHandler.OnSuccessResponse<ResponseData<ListReservationResponse>?> -> {
                     reservationID =
                         state.response?.data?.reservationData?.getOrNull(0)?.reservationId.toString()
-                    if (state.response?.data?.reservationData?.size == 0) {
-                        binding.cardViewTripContainer.visibility = View.GONE
-                    } else {
+                    if (state.response?.data?.reservationData?.size != 0) {
                         binding.viewTrip = state.response?.data?.reservationData?.getOrNull(0)
                     }
                 }
@@ -208,22 +199,10 @@ class HomeFragment : BaseFragment() {
     * dialog shown when app open first time
     * */
     private fun openDialog() {
-        val builder = AlertDialog.Builder(requireContext())
-            .create()
-        builder.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        val view = layoutInflater.inflate(R.layout.dialog_show_home, null)
-        builder.setView(view)
-        val close = view.findViewById<ImageView>(R.id.imgClose)
-        val btnClose: Button = view.findViewById(R.id.btnOk)
+        DialogExtensions.showDialog(
+            requireContext(), R.layout.dialog_show_home, R.id.imgClose, R.id.btnOk
+        ).show()
 
-        btnClose.setOnClickListener {
-            builder.dismiss()
-        }
-        close.setOnClickListener {
-            builder.dismiss()
-        }
-        builder.setCanceledOnTouchOutside(false)
-        builder.show()
     }
 
 
@@ -245,6 +224,7 @@ class HomeFragment : BaseFragment() {
         bind.imgUCClose.setOnClickListener { builder.dismiss() }
         builder.setCanceledOnTouchOutside(false)
         builder.show()
+
     }
 
 
@@ -324,8 +304,6 @@ class HomeFragment : BaseFragment() {
         viewModelViewTrip = getViewModel()
 
         //getting value to pass in request class
-        val currentDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-        val currentTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))
         val sharedPreferences =
             activity?.getSharedPreferences("THIRD_PARTY_ID", Context.MODE_PRIVATE)
         val thirdPartyID = sharedPreferences?.getString("ThirdPartyID", "ThirdPartyID")
@@ -334,18 +312,16 @@ class HomeFragment : BaseFragment() {
         viewModelViewTrip.getViewTripRequest(
             ListReservationRequest(
                 access_token = token,
-                start_date = currentDate,
-                start_time = currentTime,
+                start_date = DateAndTime.currentDate,
+                start_time = DateAndTime.currentTime,
                 offset = 0,
-                current_date = currentDate,
-                current_time = currentTime,
+                current_date = DateAndTime.currentDate,
+                current_time = DateAndTime.currentTime,
                 limit = 1,
                 third_party_id = thirdPartyID
             )
         )
-
     }
-
 
     /*
     * opening view schedule trip fragment

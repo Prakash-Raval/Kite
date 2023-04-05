@@ -3,7 +3,6 @@ package com.example.kite.paymentsummary
 import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
 import android.util.Log
-import android.view.Display.Mode
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -81,7 +80,7 @@ class PaymentSummaryFragment : BaseFragment() {
         val responseData: ScanQRResponse = args?.get("ScanResponse") as ScanQRResponse
         val qrString = args.getString("QRString")
 
-        val sh = activity?.getSharedPreferences("PaymentResponse",MODE_PRIVATE)?.edit()
+        val sh = activity?.getSharedPreferences("PaymentResponse", MODE_PRIVATE)?.edit()
         binding.paymentData = responseData
 
         sh?.putString("QRString", qrString)
@@ -185,7 +184,9 @@ class PaymentSummaryFragment : BaseFragment() {
         return viewModelSession
     }
 
-
+    /*
+    * getting data for started session api
+    * */
     private fun getStartSessionData() {
         viewModelSession = getViewModelSession()
 

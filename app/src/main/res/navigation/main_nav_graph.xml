@@ -77,11 +77,11 @@
     </fragment>
     <fragment
         android:id="@+id/policyFragment"
-        android:name="com.example.kite.policy.PolicyFragment"
+        android:name="com.example.kite.webviews.policy.PolicyFragment"
         android:label="PolicyFragment" />
     <fragment
         android:id="@+id/termsFragment"
-        android:name="com.example.kite.policy.TermsFragment"
+        android:name="com.example.kite.webviews.terms.TermsFragment"
         android:label="TermsFragment" />
     <fragment
         android:id="@+id/selectProgramFragment"
@@ -128,7 +128,7 @@
     </fragment>
     <fragment
         android:id="@+id/supportFragment"
-        android:name="com.example.kite.support.SupportFragment"
+        android:name="com.example.kite.webviews.support.SupportFragment"
         android:label="SupportFragment" />
     <fragment
         android:id="@+id/addCardFragment"
@@ -266,7 +266,7 @@
     </fragment>
     <fragment
         android:id="@+id/needHelpFragment"
-        android:name="com.example.kite.rentalagreement.help.NeedHelpFragment"
+        android:name="com.example.kite.webviews.rentalagreement.help.NeedHelpFragment"
         android:label="NeedHelpFragment" />
     <fragment
         android:id="@+id/scanLicenseFragment"
@@ -281,7 +281,7 @@
     </fragment>
     <fragment
         android:id="@+id/rentalAgreementFragment"
-        android:name="com.example.kite.rentalagreement.RentalAgreementFragment"
+        android:name="com.example.kite.webviews.rentalagreement.RentalAgreementFragment"
         android:label="RentalAgreementFragment" />
     <fragment
         android:id="@+id/driverLicenseEntryFragment"
@@ -406,10 +406,7 @@
         android:id="@+id/wrongDropChargeFragment"
         android:name="com.example.kite.wrongdropcharge.WrongDropChargeFragment"
         android:label="WrongDropChargeFragment" />
-    <fragment
-        android:id="@+id/rateUsFragment"
-        android:name="com.example.kite.rateus.RateUsFragment"
-        android:label="RateUsFragment" />
+
     <fragment
         android:id="@+id/rideDetailsFragment"
         android:name="com.example.kite.ridedetails.RideDetailsFragment"

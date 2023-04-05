@@ -11,7 +11,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -207,9 +206,12 @@ class ProfileFragment : BaseFragment(), OnCellClickedRegion {
 
                 }
                 is ResponseHandler.OnSuccessResponse<ResponseListData<CountryResponse>?> -> {
-                    Log.d("ProfileFragment", "setObserverData: ${state.response?.data?.getOrNull(0)?.countryList}")
+                    Log.d(
+                        "ProfileFragment",
+                        "setObserverData: ${state.response?.data}"
+                    )
                     if (state.response?.code == 200) {
-                        countryListingAdapter.setList(state.response.data?.getOrNull(0)?.countryList as ArrayList<CountryResponse.Country>)
+                        countryListingAdapter.setList(state.response.data as ArrayList<CountryResponse>)
                         countryListingAdapter.notifyDataSetChanged()
                     }
                 }
@@ -229,16 +231,20 @@ class ProfileFragment : BaseFragment(), OnCellClickedRegion {
             }
             when (state) {
                 is ResponseHandler.Loading -> {
-                    Log.d("ViewTripFragment", "setObserverData: $state")
+                    Log.d("ProfileFragment", "setObserverData: $state")
                 }
                 is ResponseHandler.OnFailed -> {
-                    Log.d("ViewTripFragment", "setObserverData: $state")
+                    Log.d("ProfileFragment", "setObserverData: $state")
 
                 }
                 is ResponseHandler.OnSuccessResponse<ResponseListData<StateResponse>?> -> {
-                    Log.d("ViewTripFragment", "setObserverData: ${state.response?.data}")
+                    Log.d("ProfileFragment", "setObserverData: ${state.response?.data}")
                     if (state.response?.code == 200) {
-                        stateListingAdapter.setList(state.response.data?.getOrNull(0)?.stateList?.getOrNull(0)?.states as ArrayList<String?>)
+                        stateListingAdapter.setList(
+                            state.response.data?.getOrNull(0)?.stateList?.getOrNull(
+                                0
+                            )?.states as ArrayList<String?>
+                        )
                         stateListingAdapter.notifyDataSetChanged()
                     }
                 }

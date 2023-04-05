@@ -38,7 +38,6 @@ class SplashFragment : Fragment() {
     }
 
     private fun loadFragment() {
-        activity?.application?.let { PrefManager.with(it) }
         val shared = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")
         //pref
 

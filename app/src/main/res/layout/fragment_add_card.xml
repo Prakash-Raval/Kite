@@ -4,7 +4,17 @@
 
     <data>
 
+        <variable
+            name="isButtonClick"
+            type="Boolean" />
 
+        <variable
+            name="isVisa"
+            type="Boolean" />
+
+        <variable
+            name="isMaster"
+            type="Boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -63,6 +73,8 @@
                     android:layout_marginTop="@dimen/_20sdp"
                     app:cardCornerRadius="@dimen/_30sdp"
                     app:cardElevation="@dimen/_8sdp"
+                    app:strokeWidth="@{isMaster ? 5 : 0}"
+                    app:strokeColor="@{isMaster ? @color/bg_main : @color/white}"
                     app:layout_constraintStart_toEndOf="@id/glStart"
                     app:layout_constraintTop_toBottomOf="@id/txtMoving">
 
@@ -81,6 +93,8 @@
                     android:layout_height="@dimen/_100sdp"
                     android:layout_marginStart="@dimen/_20sdp"
                     app:cardCornerRadius="@dimen/_30sdp"
+                    app:strokeWidth="@{isVisa ? 5 : 0}"
+                    app:strokeColor="@{isVisa ? @color/bg_main : @color/white}"
                     app:cardElevation="@dimen/_8sdp"
                     app:layout_constraintBottom_toBottomOf="@id/masterCard"
                     app:layout_constraintStart_toEndOf="@id/masterCard"
@@ -262,6 +276,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_20sdp"
+                    android:alpha="@{isButtonClick ? 1.0f : 0.2f}"
+                    android:drawableEnd="@{isButtonClick ? null : @drawable/ic_check}"
                     android:text="@string/make_this_card_priority"
                     app:layout_constraintEnd_toStartOf="@id/glEnd"
                     app:layout_constraintStart_toEndOf="@id/glStart"
