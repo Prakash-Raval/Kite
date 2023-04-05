@@ -67,9 +67,7 @@ class ProfileFragment : BaseFragment(), OnCellClickedRegion {
         * getting data for profile view model request
         * */
         val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
-        val sharedPreferences =
-            activity?.getSharedPreferences("THIRD_PARTY_ID", MODE_PRIVATE)
-        val thirdPartyID = sharedPreferences?.getString("ThirdPartyID", "ThirdPartyID")
+        val thirdPartyID = PrefManager.get<String>("ThirdPartyID")
 
         viewModelProfile.getViewProfileRequest(
             ViewProfileRequest(

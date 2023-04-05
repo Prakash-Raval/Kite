@@ -304,10 +304,7 @@ class HomeFragment : BaseFragment() {
         viewModelViewTrip = getViewModel()
 
         //getting value to pass in request class
-        val sharedPreferences =
-            activity?.getSharedPreferences("THIRD_PARTY_ID", Context.MODE_PRIVATE)
-        val thirdPartyID = sharedPreferences?.getString("ThirdPartyID", "ThirdPartyID")
-
+        val thirdPartyID = PrefManager.get<String>("ThirdPartyID")
         //passing data to request class
         viewModelViewTrip.getViewTripRequest(
             ListReservationRequest(
@@ -357,5 +354,4 @@ class HomeFragment : BaseFragment() {
         builder.behavior.isDraggable = false
         builder.show()
     }
-
 }

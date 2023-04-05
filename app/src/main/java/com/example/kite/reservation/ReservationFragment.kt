@@ -69,16 +69,18 @@ class ReservationFragment : BaseFragment(), OnReservationViewClick {
 
         viewModel = getViewModel()
 
+        val thirdPartyId = PrefManager.get<String>("ThirdPartyID")
         //getting required data to generate response
 
         if (token != null) {
             viewModel.getViewTripRequest(
                 ListReservationRequest(
-                    token,
-                    DateAndTime.currentDate,
-                    DateAndTime.currentTime,
-                    DateAndTime.currentDate,
-                    DateAndTime.currentTime
+                    third_party_id = thirdPartyId,
+                    access_token = token,
+                    current_date = DateAndTime.currentDate,
+                    current_time = DateAndTime.currentTime,
+                    start_date = DateAndTime.currentDate,
+                    start_time = DateAndTime.currentTime
                 )
             )
         }
@@ -107,14 +109,10 @@ class ReservationFragment : BaseFragment(), OnReservationViewClick {
                     hideProgressBar()
                 }
                 is ResponseHandler.OnSuccessResponse<ResponseData<ListReservationResponse>?> -> {
-                    if (state.response?.data?.reservationData?.size == 0) {
-                        binding.txtBooking1.visibility = View.VISIBLE
-                        binding.rvReservationData.visibility = View.GONE
-                    } else {
-
-                        binding.txtBooking1.visibility = View.GONE
-                        binding.rvReservationData.visibility = View.VISIBLE
-                    }
+                    /*
+                    * managing visibility
+                    * */
+                    binding.isSelected = state.response?.data?.reservationData?.size == 0
                     hideProgressBar()
                     adapter.setList(state.response?.data?.reservationData as ArrayList<ListReservationResponse.ReservationData>)
                     adapter.notifyDataSetChanged()

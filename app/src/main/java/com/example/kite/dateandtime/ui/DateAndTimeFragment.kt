@@ -12,7 +12,6 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.kite.MainActivity
 import com.example.kite.R
 import com.example.kite.base.network.client.ResponseHandler
 import com.example.kite.base.network.model.ResponseData
@@ -326,10 +325,10 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
         //collecting data for passing in to request class
         val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
         val timeZone = binding.spinnerDTRegion.selectedItem.toString()
-        val sharedPreference =
-            (context1 as MainActivity).getSharedPreferences("VEHICLE", Context.MODE_PRIVATE)
-        val vehicleTypeID = sharedPreference?.getString("TypeID", "")
-        val manufacturerID = sharedPreference?.getString("MID", "")
+        val vehicleTypeID = PrefManager.get<String>("TypeID")
+        val manufacturerID = PrefManager.get<String>("MID")
+        val thirdPartyID = PrefManager.get<String>("ThirdPartyID")
+
         val scheduleDate: String = if (selectedDate != null) {
             selectedDate.toString()
         } else {
@@ -340,9 +339,6 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
         } else {
             "00:00:00"
         }
-        val sharedPreferences =
-            activity?.getSharedPreferences("THIRD_PARTY_ID", Context.MODE_PRIVATE)
-        val thirdPartyID = sharedPreferences?.getString("ThirdPartyID", "ThirdPartyID")
 
         //passing data to request class
         viewModel.getTimeSlot(

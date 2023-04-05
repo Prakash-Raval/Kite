@@ -1,6 +1,5 @@
 package com.example.kite.bikelisting.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -129,6 +128,12 @@ class BikeListingFragment : BaseFragment() {
         val bind = binding.model?.vehicleDetails?.get(position)
         val vehicleSlug = bind?.vehicleTypeSlug
         val availableVehicle = bind?.availableVehicles
+        Log.d("TAG Bind", "selectVehicle: $bind")
+        val modelName = bind?.vehicleType
+        val modelImage = bind?.vehicleTypeImage
+        val repeatCount = bind?.repeatDaysCount
+        val vehicleTypeID = bind?.vehicleTypeId
+        val manufacturerID = bind?.manufacturerId
 
         if (position != -1) {
             if (availableVehicle == 0) {
@@ -140,21 +145,40 @@ class BikeListingFragment : BaseFragment() {
                     if (availableVehicle != null && availableVehicle > 0) {
                         binding.isSelected = true
                         binding.isSelectedText = false
-                        bundle.putParcelable("VehicleDetails", bind)
+                        bundle.putString("VehicleSlug", vehicleSlug)
+                        bundle.putString("ModelName", modelName)
+                        bundle.putString("ModelImage", modelImage)
+                        bundle.putString("RepeatCount", repeatCount.toString())
+                        bundle.putString("vehicleTypeID", vehicleTypeID.toString())
+                        bundle.putString("ManufacturerID", manufacturerID.toString())
+                        Log.d("TAG Bind", "selectVehicle: $bind")
                     }
                 }
                 Constants.CAR -> {
                     if (availableVehicle != null && availableVehicle > 0) {
                         binding.isSelected = true
                         binding.isSelectedText = true
-                        bundle.putParcelable("VehicleDetails", bind)
+                        bundle.putString("VehicleSlug", vehicleSlug)
+                        bundle.putString("ModelName", modelName)
+                        bundle.putString("ModelImage", modelImage)
+                        bundle.putString("RepeatCount", repeatCount.toString())
+                        bundle.putString("vehicleTypeID", vehicleTypeID.toString())
+                        bundle.putString("ManufacturerID", manufacturerID.toString())
+                        Log.d("TAG Bind", "selectVehicle: $bind")
+
                     }
                 }
                 Constants.BIKE -> {
                     if (availableVehicle != null && availableVehicle > 0) {
                         binding.isSelected = true
                         binding.isSelectedText = false
-                        bundle.putParcelable("VehicleDetails", bind)
+                        bundle.putString("VehicleSlug", vehicleSlug)
+                        bundle.putString("ModelName", modelName)
+                        bundle.putString("ModelImage", modelImage)
+                        bundle.putString("RepeatCount", repeatCount.toString())
+                        bundle.putString("vehicleTypeID", vehicleTypeID.toString())
+                        bundle.putString("ManufacturerID", manufacturerID.toString())
+                        Log.d("TAG Bind", "selectVehicle: $bind")
                     }
                 }
                 else -> {
@@ -173,9 +197,7 @@ class BikeListingFragment : BaseFragment() {
     private fun getData() {
         viewModel = getViewModel()
         val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
-        val sharedPreferences =
-            activity?.getSharedPreferences("THIRD_PARTY_ID", Context.MODE_PRIVATE)
-        val thirdPartyID = sharedPreferences?.getString("ThirdPartyID", "ThirdPartyID")
+        val thirdPartyID = PrefManager.get<String>("ThirdPartyID")
         viewModel.getAddCardRequest(
             BikeListingRequest(
                 access_token = token,

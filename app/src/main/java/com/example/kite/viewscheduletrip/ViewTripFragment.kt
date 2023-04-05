@@ -24,7 +24,7 @@ class ViewTripFragment : BaseFragment() {
 
     private lateinit var binding: FragmentViewTripBinding
     private lateinit var viewModel: ViewTripDetailsViewModel
-    private var viewTripResponse = ViewTripResponse()
+    val bundle = Bundle()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,16 +38,15 @@ class ViewTripFragment : BaseFragment() {
         return binding.root
     }
 
+    /*
+    * setting up the navigation
+    * */
     private fun backNavigation() {
-
         binding.imgVTBack.setOnClickListener {
             findNavController().navigateUp()
         }
 
         binding.btnVTUpdateTrip.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putBoolean("UpdateTrip", true)
-            bundle.putParcelable("ViewTripResponse", viewTripResponse)
             val action = R.id.action_viewTripFragment_to_scheduleTripFragment2
             findNavController().navigate(action, bundle)
         }
@@ -91,9 +90,12 @@ class ViewTripFragment : BaseFragment() {
                 }
                 is ResponseHandler.OnSuccessResponse<ResponseData<ViewTripResponse>?> -> {
                     hideProgressBar()
-                    viewTripResponse = state.response?.data!!
-                    binding.viewTripResponse = state.response.data
-                    Log.d("ViewTripFragment", "setObserverData: ${state.response.data}")
+                    if(state.response?.code == 200){
+                        bundle.putBoolean("UpdateTrip", true)
+                        bundle.putParcelable("ViewTripResponse", state.response.data)
+                        binding.viewTripResponse = state.response.data
+                    }
+                    Log.d("ViewTripFragment", "setObserverData: ${state.response?.data}")
 
                 }
             }

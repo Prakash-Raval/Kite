@@ -10,5 +10,5 @@ data class ViewProfileRequest(
     @JsonProperty("access_token")
     var access_token: String? = "",
     @JsonProperty("third_party_id")
-    var third_party_id: String? = "8b_2N2QV1"
+    var third_party_id: String? = ""
 )

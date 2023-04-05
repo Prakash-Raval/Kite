@@ -1,7 +1,6 @@
 package com.example.kite.scheduletrip
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,7 +17,6 @@ import com.example.kite.R
 import com.example.kite.base.network.client.ResponseHandler
 import com.example.kite.base.network.model.ResponseData
 import com.example.kite.basefragment.BaseFragment
-import com.example.kite.bikelisting.model.BikeListingResponse
 import com.example.kite.constants.Constants
 import com.example.kite.databinding.FragmentScheduleTripBinding
 import com.example.kite.databinding.ItemBsRepeatCountBinding
@@ -40,10 +38,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
 
-    /*
-    * variables
-    * */
     private lateinit var binding: FragmentScheduleTripBinding
+
     private lateinit var viewModelTrip: TripViewModel
     private lateinit var viewModel: ScheduleTripViewModel
     private lateinit var scheduleTripAdapter: ScheduleTripAdapter
@@ -51,6 +47,7 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
     private lateinit var cancelTripViewModel: CancelTripViewModel
 
     var list = ArrayList<ScheduleTimeDuration>()
+
     private var count = 0
     private val bundle2 = Bundle()
     private val bundle = Bundle()
@@ -61,7 +58,9 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
     var selectedTimeZoneString = ""
     var vehicleReservationPricingId = -1
     var duration = ""
+
     var isUpdate = false
+
     val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
 
     override fun onCreateView(
@@ -123,6 +122,7 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
             binding.imgDownDate.visibility = View.GONE
             binding.txtSTDateSelect.visibility = View.VISIBLE
         }
+
         if (selectedTime == "") {
             binding.imgDownTime.visibility = View.VISIBLE
             binding.txtSTTimeSelected.visibility = View.GONE
@@ -131,12 +131,15 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
             binding.txtSTTimeSelected.visibility = View.VISIBLE
             binding.txtSTTimeSelected.text = selectedTime
         }
+
         binding.btnSTScheduleTrip.setOnClickListener {
             checkTripValidation()
         }
     }
 
-    //set up toolbar
+    /*
+    * set up toolbar
+    */
     private fun setUPToolbar() {
         binding.imgSTBack.setOnClickListener {
             findNavController().navigateUp()
@@ -145,6 +148,7 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
             setUPBottomSheet()
         }
         val dialog = DateAndTimeFragment(requireContext(), this)
+
         binding.imgDownDate.setOnClickListener {
             dialog.arguments = bundle2
             dialog.show(requireActivity().supportFragmentManager, "")
@@ -173,12 +177,10 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
 
     private fun setData() {
         val args = this.arguments
-        val vehicleDetail: BikeListingResponse.VehicleDetail =
-            args?.get("VehicleDetails") as BikeListingResponse.VehicleDetail
-        binding.txtSTVehicleName.text = vehicleDetail.vehicleType
-        Glide.with(requireContext()).load(vehicleDetail.vehicleTypeImage)
-            .into(binding.imgVehicleImage)
-
+        val modelName = args?.getString("ModelName")
+        val modelImage = args?.getString("ModelImage")
+        binding.txtSTVehicleName.text = modelName
+        Glide.with(requireContext()).load(modelImage).into(binding.imgVehicleImage)
     }
 
     /*
@@ -186,8 +188,7 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
     * */
     private fun setCounter() {
         val args = this.arguments
-        val vehicleDetail: BikeListingResponse.VehicleDetail =
-            args?.get("VehicleDetails") as BikeListingResponse.VehicleDetail
+        val repeatCount = args?.getString("RepeatCount")
         binding.txtCountRepeat.text = count.toString()
 
         //removing counting
@@ -198,20 +199,15 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
 
         //adding counting
         binding.imgRepeatADD.setOnClickListener {
-            if (vehicleDetail.repeatDaysCount!! > count)
+            if (repeatCount?.toInt()!! > count)
                 count++
             binding.txtCountRepeat.text = count.toString()
         }
     }
 
-    /*
-    * bottom sheet dialog
-    * repeat count
-    * */
     private fun setUPBottomSheet() {
         val args = this.arguments
-        val vehicleDetail: BikeListingResponse.VehicleDetail =
-            args?.get("VehicleDetails") as BikeListingResponse.VehicleDetail
+        val repeatCount = args?.getString("RepeatCount")
         val dialog = BottomSheetDialog(requireContext())
         val bind: ItemBsRepeatCountBinding =
             ItemBsRepeatCountBinding.inflate(LayoutInflater.from(context))
@@ -220,31 +216,31 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
             dialog.dismiss()
         }
         bind.txtBSCounter.text = binding.txtCountRepeat.text
-
         bind.btnBSSave.setOnClickListener {
             binding.txtCountRepeat.text = bind.txtBSCounter.text
             dialog.dismiss()
         }
 
+
         bind.imgBSAdd.setOnClickListener {
-            if (vehicleDetail.repeatDaysCount!! > count)
+            if (repeatCount?.toInt()!! > count)
                 count++
             bind.txtBSCounter.text = count.toString()
         }
+
         bind.imgBSRemove.setOnClickListener {
             if (count != 0) count--
             bind.txtBSCounter.text = count.toString()
         }
+
         dialog.apply {
             setCancelable(false)
             setContentView(bind.root)
             show()
         }
+
     }
 
-    /*
-    * setup adapter according to hour calculation and setting image
-    * */
     private fun setUPAdapter() {
         scheduleTripAdapter = ScheduleTripAdapter(requireContext(), this)
         list.add(ScheduleTimeDuration("1 hr", R.drawable.one_hour_duration))
@@ -286,23 +282,19 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
 
 
         val args = this.arguments
-        val vehicleDetail: BikeListingResponse.VehicleDetail =
-            args?.get("VehicleDetails") as BikeListingResponse.VehicleDetail
-        val sharedPreference =
-            activity?.getSharedPreferences("VEHICLE", Context.MODE_PRIVATE)?.edit()
-        sharedPreference?.putString("TypeID", vehicleDetail.vehicleTypeId.toString())
-        sharedPreference?.putString("MID", vehicleDetail.manufacturerId.toString())?.apply()
-        val sharedPreferences =
-            activity?.getSharedPreferences("THIRD_PARTY_ID", Context.MODE_PRIVATE)
-        val thirdPartyID = sharedPreferences?.getString("ThirdPartyID", "ThirdPartyID")
+        val vehicleTypeID = args?.getString("vehicleTypeID")
+        val manufacturerID = args?.getString("ManufacturerID")
+        PrefManager.put(manufacturerID, "MID")
+        PrefManager.put(vehicleTypeID, "TypeID")
+        val thirdPartyID = PrefManager.get<String>("ThirdPartyID")
 
 
 
         viewModel.getRequiredData(
             ScheduleTripRequest(
                 access_token = token,
-                vehicle_type_id = vehicleDetail.vehicleTypeId.toString(),
-                manufacturer_id = vehicleDetail.manufacturerId.toString(),
+                vehicle_type_id = vehicleTypeID,
+                manufacturer_id = manufacturerID,
                 third_party_id = thirdPartyID
             )
         )
@@ -347,18 +339,16 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
             PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.subscription?.isSubscribe
         val customerID = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.customerId
         val args = this.arguments
-        val vehicleDetail: BikeListingResponse.VehicleDetail =
-            args?.get("VehicleDetails") as BikeListingResponse.VehicleDetail
-        val sharedPreferences =
-            activity?.getSharedPreferences("THIRD_PARTY_ID", Context.MODE_PRIVATE)
-        val thirdPartyID = sharedPreferences?.getString("ThirdPartyID", "ThirdPartyID")
+        val vehicleTypeID = args?.getString("vehicleTypeID")
+        val manufacturerID = args?.getString("ManufacturerID")
+        val thirdPartyID = PrefManager.get<String>("ThirdPartyID")
         //passing request data
         viewModelTrip.getTripRequest(
             TripRequest(
                 accessToken = token,
                 isSubscribed = subscribe.toString(),
-                manufacturerId = vehicleDetail.manufacturerId.toString(),
-                vehicleTypeId = vehicleDetail.vehicleTypeId.toString(),
+                manufacturerId = manufacturerID,
+                vehicleTypeId = vehicleTypeID,
                 vehicleReservationPricingId = vehicleReservationPricingId,
                 timeZone = selectedTimeZoneString,
                 startDate = selectedDate,
@@ -418,16 +408,12 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
 
         if (isUpdate) {
             //pass data for time slot api call
-            val sharedPreference =
-                activity?.getSharedPreferences("VEHICLE", Context.MODE_PRIVATE)?.edit()
-            sharedPreference?.putString("TypeID", viewTripResponse?.vehicleTypeId.toString())
-            sharedPreference?.putString("MID", viewTripResponse?.manufacturerId.toString())?.apply()
+            PrefManager.put(viewTripResponse?.vehicleTypeId.toString(), "TypeID")
+            PrefManager.put(viewTripResponse?.manufacturerId.toString(), "MID")
             bundle2.putParcelable("ScheduleResponse", viewTripResponse)
 
             binding.txtSTTRip.setText(R.string.update_your_trip)
-            val sharedPreferences =
-                activity?.getSharedPreferences("THIRD_PARTY_ID", Context.MODE_PRIVATE)
-            val thirdPartyID = sharedPreferences?.getString("ThirdPartyID", "ThirdPartyID")
+            val thirdPartyID = PrefManager.get<String>("ThirdPartyID")
             //call for schedule trip time duration api call
             binding.txtSTVehicleName.text = viewTripResponse?.vehicleType
             viewModel.getRequiredData(
@@ -494,6 +480,7 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
                 }
                 is ResponseHandler.OnSuccessResponse<ResponseData<UpdateTripResponse>?> -> {
                     hideProgressBar()
+                    findNavController().navigate(R.id.action_scheduleTripFragment_to_homeFragment)
                     Log.d("ScheduleTripFragmentUpdate", "setObserverData: ${state.response?.data}")
                 }
             }

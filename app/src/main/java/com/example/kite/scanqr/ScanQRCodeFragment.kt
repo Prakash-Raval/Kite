@@ -18,7 +18,6 @@ import com.example.kite.R
 import com.example.kite.base.network.client.ResponseHandler
 import com.example.kite.base.network.model.ResponseData
 import com.example.kite.basefragment.BaseFragment
-import com.example.kite.bikelisting.model.BikeListingResponse
 import com.example.kite.databinding.DialogBottomQrHelperBinding
 import com.example.kite.databinding.DialogQrOpenBinding
 import com.example.kite.databinding.FragmentScanQRCodeBinding
@@ -165,9 +164,8 @@ class ScanQRCodeFragment : BaseFragment() {
     * */
     private fun setUPCarDialog() {
         val args = this.arguments
-        val vehicleSlug : BikeListingResponse.VehicleDetail = args?.get("VehicleDetails") as BikeListingResponse.VehicleDetail
-
-        if (vehicleSlug.vehicleTypeSlug == "eCar") {
+        val vehicleSlug = args?.getString("VehicleSlug")
+        if (vehicleSlug == "eCar") {
             val builder = Dialog(requireContext())
             builder.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             val bindingDialog: DialogQrOpenBinding =
@@ -265,7 +263,7 @@ class ScanQRCodeFragment : BaseFragment() {
                     if (state.response?.code == 200) {
                         val bundle = Bundle()
                         bundle.putParcelable("ScanResponse", state.response.data)
-                        bundle.putString("QRString",qrCodeString)
+                        bundle.putString("QRString", qrCodeString)
                         findNavController().navigate(
                             R.id.action_scanQRCodeFragment_to_paymentSummaryFragment,
                             bundle

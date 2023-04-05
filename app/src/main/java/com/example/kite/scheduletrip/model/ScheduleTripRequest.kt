@@ -11,6 +11,6 @@ data class ScheduleTripRequest(
     @JsonProperty("manufacturer_id")
     var manufacturer_id: String? = null,
     @JsonProperty("third_party_id")
-    var third_party_id: String? = "i5sejdPiR",
+    var third_party_id: String? = "",
 
     )

@@ -42,7 +42,7 @@ data class TripRequest(
     var vehicleTypeId: String? = null,
     @get: JsonProperty("third_party_id")
     @param: JsonProperty("third_party_id")
-    var thirdPartyId: String? = "i5sejdPiR",
+    var thirdPartyId: String? = "",
     @get: JsonProperty("geolocation_id")
     @param: JsonProperty("geolocation_id")
     var geolocationId: String? = "18"

@@ -14,10 +14,7 @@
             name="scheduleTripData"
             type="com.example.kite.scheduletrip.model.ScheduleTripResponse.Data.TripDuration" />
 
-        <variable
-            name="scheduleTripTime"
-            type="com.example.kite.scheduletrip.model.ScheduleTimeDuration" />
-    </data>
+         </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"

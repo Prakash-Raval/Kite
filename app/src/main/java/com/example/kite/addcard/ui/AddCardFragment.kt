@@ -21,6 +21,7 @@ import com.example.kite.base.network.client.ResponseHandler
 import com.example.kite.base.network.model.ResponseData
 import com.example.kite.basefragment.BaseFragment
 import com.example.kite.constants.Constants
+import com.example.kite.databinding.DialogDatePickerBinding
 import com.example.kite.databinding.FragmentAddCardBinding
 import com.example.kite.extensions.DialogExtensions
 import com.example.kite.login.model.LoginResponse
@@ -223,18 +224,16 @@ class AddCardFragment : BaseFragment() {
     * */
     private fun setNumberPickerDialog(min: Int, max: Int, editText: EditText) {
         val builder = AlertDialog.Builder(requireContext())
-        val view = layoutInflater.inflate(R.layout.dialog_date_picker, null)
-        val numberPicker = view.findViewById<NumberPicker>(R.id.numberPicker)
-        numberPicker.apply {
+        val bind : DialogDatePickerBinding = DialogDatePickerBinding.inflate(LayoutInflater.from(context))
+        bind.numberPicker.apply {
             minValue = min
             maxValue = max
             wrapSelectorWheel = true
-
         }
         builder.apply {
             setPositiveButton("Ok") { dialog, _ ->
                 editText.apply {
-                    setText(numberPicker.value.toString())
+                    setText(bind.numberPicker.value.toString())
                 }
                 dialog.cancel()
             }

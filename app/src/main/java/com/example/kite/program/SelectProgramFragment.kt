@@ -218,11 +218,11 @@ class SelectProgramFragment : BaseFragment(), OnThirdPartyListing {
         }
     }
 
-
+    /*
+    * storing third party id for other fragments
+    * */
     override fun onClick(thirdPartyID: String) {
-        val sharedPreferences =
-            activity?.getSharedPreferences("THIRD_PARTY_ID", MODE_PRIVATE)?.edit()
-        sharedPreferences?.putString("ThirdPartyID", thirdPartyID)?.apply()
+        PrefManager.put(thirdPartyID,"ThirdPartyID")
     }
 
     /*

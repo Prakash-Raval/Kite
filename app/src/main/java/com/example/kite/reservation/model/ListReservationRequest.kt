@@ -17,7 +17,7 @@ data class ListReservationRequest(
     @JsonProperty("start_time")
     var start_time: String? = "",
     @JsonProperty("third_party_id")
-    var third_party_id: String? = "i5sejdPiR",
+    var third_party_id: String? = "",
     @JsonProperty("time_zone")
     var time_zone: String? = "Asia/Kolkata",
     @JsonProperty("limit")
