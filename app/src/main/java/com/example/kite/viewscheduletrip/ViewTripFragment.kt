@@ -90,7 +90,7 @@ class ViewTripFragment : BaseFragment() {
                 }
                 is ResponseHandler.OnSuccessResponse<ResponseData<ViewTripResponse>?> -> {
                     hideProgressBar()
-                    if(state.response?.code == 200){
+                    if (state.response?.code == 200) {
                         bundle.putBoolean("UpdateTrip", true)
                         bundle.putParcelable("ViewTripResponse", state.response.data)
                         binding.viewTripResponse = state.response.data

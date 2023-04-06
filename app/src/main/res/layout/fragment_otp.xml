@@ -27,29 +27,9 @@
             android:orientation="vertical"
             app:layout_constraintGuide_end="@dimen/_20sdp" />
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/signUpToolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/imgBack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:src="@drawable/ic_back_black" />
-
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/BlackSmallCustomMaterialTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/otp" />
-
-        </com.google.android.material.appbar.MaterialToolbar>
+        <include
+            android:id="@+id/inOTPBar"
+            layout="@layout/item_common_toolbar" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtConfirm"
@@ -60,7 +40,7 @@
             android:text="@string/confirmation_code"
             android:textSize="@dimen/_25sdp"
             app:layout_constraintStart_toEndOf="@id/glStart"
-            app:layout_constraintTop_toBottomOf="@id/signUpToolbar" />
+            app:layout_constraintTop_toBottomOf="@id/inOTPBar" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtGetOtp"

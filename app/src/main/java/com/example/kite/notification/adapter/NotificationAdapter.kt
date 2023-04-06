@@ -27,13 +27,13 @@ class NotificationAdapter(val context: Context, val onNotifyUpdate: OnNotifyUpda
         @SuppressLint("NotifyDataSetChanged")
         fun bind(position: Int) {
             binding.dataNotification = list[position]
-              if (list[position].notificationRead == 0)
-                  binding.constraintNotification.setBackgroundColor(
-                      ContextCompat.getColor(
-                          context,
-                          R.color.white
-                      )
-                  )
+            if (list[position].notificationRead == 0)
+                binding.constraintNotification.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.white
+                    )
+                )
 
 
             binding.root.setOnClickListener {
@@ -71,13 +71,13 @@ class NotificationAdapter(val context: Context, val onNotifyUpdate: OnNotifyUpda
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(position)
-          if (selected == position) {
-              holder.binding.constraintNotification.setBackgroundColor(
-                  ContextCompat.getColor(
-                      context,
-                      R.color.white
-                  )
-              )
-          }
+        if (selected == position) {
+            holder.binding.constraintNotification.setBackgroundColor(
+                ContextCompat.getColor(
+                    context,
+                    R.color.white
+                )
+            )
+        }
     }
 }

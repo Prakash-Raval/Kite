@@ -1,7 +1,5 @@
 package com.example.kite.ridedetails.repository
 
-import com.example.kite.addcard.model.AddCardRequest
-import com.example.kite.addcard.model.AddCardResponse
 import com.example.kite.base.BaseRepository
 import com.example.kite.base.network.client.Api
 import com.example.kite.base.network.client.ResponseHandler

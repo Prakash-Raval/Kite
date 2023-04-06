@@ -9,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import com.example.kite.MainActivity
 import com.example.kite.R
 import com.example.kite.databinding.FragmentBaseBinding
 
@@ -45,4 +47,6 @@ open class BaseFragment : Fragment() {
     fun hideProgressBar() {
         mProgressDialog.dismiss()
     }
+
+
 }

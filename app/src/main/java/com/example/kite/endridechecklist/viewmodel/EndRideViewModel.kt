@@ -33,7 +33,8 @@ class EndRideViewModel : ViewModelBase() {
         viewModelScope.launch(coroutineContext) {
             responseLiveData.value = ResponseHandler.Loading
             responseLiveData.value = repository.callApiEndRide(
-                access_token, booking_id, dropoff_lat, dropoff_long, geolocation_id, battery, image)
+                access_token, booking_id, dropoff_lat, dropoff_long, geolocation_id, battery, image
+            )
         }
     }
 }

@@ -22,7 +22,6 @@ import com.example.kite.R
 import com.example.kite.base.network.client.ResponseHandler
 import com.example.kite.base.network.model.ResponseData
 import com.example.kite.basefragment.BaseFragment
-import com.example.kite.databinding.DialogBsEndTripBinding
 import com.example.kite.databinding.DialogRateUsBinding
 import com.example.kite.databinding.FragmentEndRideCheckListBinding
 import com.example.kite.endridechecklist.model.EndRideResponse
@@ -209,7 +208,7 @@ class EndRideCheckListFragment : BaseFragment() {
                 is ResponseHandler.OnFailed -> {
                     hideProgressBar()
                     Log.d("EndRideCheckList", "setObserverOnGoingRide: $state")
-                             }
+                }
                 is ResponseHandler.OnSuccessResponse<ResponseData<EndRideResponse>?> -> {
                     hideProgressBar()
                     if (state.response?.code == 200) {
@@ -234,7 +233,7 @@ class EndRideCheckListFragment : BaseFragment() {
         startForResult.launch(intent)
     }
 
-    private fun rateUsDialog(){
+    private fun rateUsDialog() {
         val builder = BottomSheetDialog(requireContext())
         val bind: DialogRateUsBinding =
             DialogRateUsBinding.inflate(LayoutInflater.from(context))
@@ -243,7 +242,7 @@ class EndRideCheckListFragment : BaseFragment() {
 
         }
         bind.txtWDCEndRide.setOnClickListener {
-           builder.dismiss()
+            builder.dismiss()
         }
         bind.txtFeedBack.setOnClickListener {
 

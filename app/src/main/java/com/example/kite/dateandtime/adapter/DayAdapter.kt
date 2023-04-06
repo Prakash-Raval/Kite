@@ -34,7 +34,7 @@ class DayAdapter(val context: Context, val lis: OnCellClicked) :
                 if (list[position].available != false) {
                     list[position].isItemSelected = true
                     selected = position
-                    lis.onClick(position,list[position])
+                    lis.onClick(position, list[position])
                     notifyDataSetChanged()
                 }
             }

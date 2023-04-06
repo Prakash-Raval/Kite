@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.NumberPicker
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
@@ -76,31 +75,48 @@ class AddCardFragment : BaseFragment() {
         return binding.root
     }
 
-   private fun checkValidation(){
-        if(binding.edtCardHolderName.text.toString().isEmpty()){
-            Toast.makeText(requireContext(), getString(R.string.lbl_enter_name), Toast.LENGTH_SHORT).show()
-        }
-        else if(binding.edtCardNumber.text.toString().isEmpty()){
-            Toast.makeText(requireContext(), getString(R.string.lbl_enter_card_number), Toast.LENGTH_SHORT).show()
-        }
-        else if(binding.edtCardNumber.text.toString().length != 16){
-            Toast.makeText(requireContext(), getString(R.string.lbl_enter_valid_card_number), Toast.LENGTH_SHORT).show()
-        }
-        else if(binding.edtYear.text.toString().isEmpty()){
-            Toast.makeText(requireContext(), getString(R.string.lbl_select_year), Toast.LENGTH_SHORT).show()
-        }else if(binding.edtMonth.text.toString().isEmpty()){
-            Toast.makeText(requireContext(), getString(R.string.lbl_select_month), Toast.LENGTH_SHORT).show()
-        }
-        else if(binding.edtCVV.text.toString().isEmpty()){
-            Toast.makeText(requireContext(), getString(R.string.lbl_enter_cvv), Toast.LENGTH_SHORT).show()
-        }
-        else if(binding.edtCVV.text.toString().length != 3){
-            Toast.makeText(requireContext(), getString(R.string.lbl_enter_valid_cvv), Toast.LENGTH_SHORT).show()
-        }
-        else{
+    private fun checkValidation() {
+        if (binding.edtCardHolderName.text.toString().isEmpty()) {
+            Toast.makeText(requireContext(), getString(R.string.lbl_enter_name), Toast.LENGTH_SHORT)
+                .show()
+        } else if (binding.edtCardNumber.text.toString().isEmpty()) {
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.lbl_enter_card_number),
+                Toast.LENGTH_SHORT
+            ).show()
+        } else if (binding.edtCardNumber.text.toString().length != 16) {
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.lbl_enter_valid_card_number),
+                Toast.LENGTH_SHORT
+            ).show()
+        } else if (binding.edtYear.text.toString().isEmpty()) {
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.lbl_select_year),
+                Toast.LENGTH_SHORT
+            ).show()
+        } else if (binding.edtMonth.text.toString().isEmpty()) {
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.lbl_select_month),
+                Toast.LENGTH_SHORT
+            ).show()
+        } else if (binding.edtCVV.text.toString().isEmpty()) {
+            Toast.makeText(requireContext(), getString(R.string.lbl_enter_cvv), Toast.LENGTH_SHORT)
+                .show()
+        } else if (binding.edtCVV.text.toString().length != 3) {
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.lbl_enter_valid_cvv),
+                Toast.LENGTH_SHORT
+            ).show()
+        } else {
             addCard()
         }
     }
+
     /*
     * getting the required param for card
     * */
@@ -185,7 +201,11 @@ class AddCardFragment : BaseFragment() {
         }
         binding.edtMonth.setOnClickListener {
             if (binding.edtYear.text?.isEmpty() == true) {
-                Toast.makeText(requireContext(), getString(R.string.lbl_select_year_first), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.lbl_select_year_first),
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
                 setNumberPickerDialog(1, 12, binding.edtMonth)
             }
@@ -224,7 +244,8 @@ class AddCardFragment : BaseFragment() {
     * */
     private fun setNumberPickerDialog(min: Int, max: Int, editText: EditText) {
         val builder = AlertDialog.Builder(requireContext())
-        val bind : DialogDatePickerBinding = DialogDatePickerBinding.inflate(LayoutInflater.from(context))
+        val bind: DialogDatePickerBinding =
+            DialogDatePickerBinding.inflate(LayoutInflater.from(context))
         bind.numberPicker.apply {
             minValue = min
             maxValue = max

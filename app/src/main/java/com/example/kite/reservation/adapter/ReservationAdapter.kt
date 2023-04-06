@@ -39,11 +39,13 @@ class ReservationAdapter(val onReservationViewClick: OnReservationViewClick) :
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder( ItemReservationRecycylerBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
-        ))
+        return ViewHolder(
+            ItemReservationRecycylerBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun getItemCount(): Int = list.size

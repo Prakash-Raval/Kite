@@ -8,7 +8,6 @@ import com.example.kite.databinding.ItemRideHistoryBinding
 import com.example.kite.history.lis.OnRideClick
 import com.example.kite.history.model.RideHistoryResponse
 import com.example.kite.utils.Util
-import java.time.ZonedDateTime
 
 class RideHistoryAdapter(val onRideClick: OnRideClick) :
     RecyclerView.Adapter<RideHistoryAdapter.ViewHolder>() {
@@ -57,8 +56,11 @@ class RideHistoryAdapter(val onRideClick: OnRideClick) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(position)
-        holder.binding.txtIRHDate.text = list[position].startDate?.let { Util.getDateFromTimeString(
-            Util.getMillisFromTime(it)) }
+        holder.binding.txtIRHDate.text = list[position].startDate?.let {
+            Util.getDateFromTimeString(
+                Util.getMillisFromTime(it)
+            )
+        }
 
     }
 

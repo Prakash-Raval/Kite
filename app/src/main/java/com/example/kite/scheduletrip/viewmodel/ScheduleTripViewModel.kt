@@ -1,38 +1,27 @@
 package com.example.kite.scheduletrip.viewmodel
 
-import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.kite.base.ViewModelBase
+import com.example.kite.base.network.ApiClient
+import com.example.kite.base.network.client.ResponseHandler
+import com.example.kite.base.network.model.ResponseData
 import com.example.kite.scheduletrip.model.ScheduleTripRequest
 import com.example.kite.scheduletrip.model.ScheduleTripResponse
 import com.example.kite.scheduletrip.repository.ScheduleTripRepository
 import kotlinx.coroutines.launch
 
-class ScheduleTripViewModel(val repository: ScheduleTripRepository) : ViewModel() {
+class ScheduleTripViewModel : ViewModelBase() {
 
-    private val scheduleTripMLD = MutableLiveData<ScheduleTripResponse>()
-    val scheduleTripLD: LiveData<ScheduleTripResponse>
-        get() = scheduleTripMLD
+    private var repository = ScheduleTripRepository(ApiClient.getApiInterface())
+    var responseLiveData =
+        MutableLiveData<ResponseHandler<ResponseData<ScheduleTripResponse>?>>()
 
 
-    fun getRequiredData(request: ScheduleTripRequest) {
-        getList(request)
-    }
-
-    private fun getList(request: ScheduleTripRequest) =
-        viewModelScope.launch {
-            val response = repository.getScheduleTripData(request)
-            try {
-                if (response.isSuccessful) {
-                    scheduleTripMLD.postValue(response.body())
-                } else {
-                    Log.d("ScheduleTripResponse", response.message().toString())
-                }
-            } catch (e: Exception) {
-                Log.d("", e.message.toString())
-            }
+    fun getScheduleTripData(request: ScheduleTripRequest) {
+        viewModelScope.launch(coroutineContext) {
+            responseLiveData.value = ResponseHandler.Loading
+            responseLiveData.value = repository.getScheduleTripData(request)
         }
-
+    }
 }

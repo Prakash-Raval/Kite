@@ -18,14 +18,22 @@ class EndRideRepository(val api: Api) : BaseRepository() {
         dropoff_lat: RequestBody?,
         dropoff_long: RequestBody?,
         geolocation_id: RequestBody?,
-        battery : RequestBody?,
+        battery: RequestBody?,
         image: MultipartBody.Part
     ):
             ResponseHandler<ResponseData<EndRideResponse>?> {
         return withContext(Dispatchers.Default) {
             return@withContext makeAPICall(
                 call = {
-                    api.endRide(access_token,booking_id, dropoff_lat, dropoff_long, geolocation_id, battery, image)
+                    api.endRide(
+                        access_token,
+                        booking_id,
+                        dropoff_lat,
+                        dropoff_long,
+                        geolocation_id,
+                        battery,
+                        image
+                    )
                 })
         }
     }

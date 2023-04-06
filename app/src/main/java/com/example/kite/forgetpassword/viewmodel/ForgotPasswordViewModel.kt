@@ -1,22 +1,24 @@
 package com.example.kite.forgetpassword.viewmodel
 
-import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.kite.forgetpassword.model.ForgetPasswordResponse
+import com.example.kite.base.network.model.EmptyResponse
+import com.example.kite.base.ViewModelBase
+import com.example.kite.base.network.ApiClient
+import com.example.kite.base.network.client.ResponseHandler
+import com.example.kite.base.network.model.ResponseData
+import com.example.kite.base.utils.Validation
 import com.example.kite.forgetpassword.model.ForgotPasswordRequest
 import com.example.kite.forgetpassword.repository.ForgotPasswordRepository
-import com.example.kite.utils.BaseResponse
 import com.example.kite.utils.ErrorEvent
 import kotlinx.coroutines.launch
 
-class ForgotPasswordViewModel(val repository: ForgotPasswordRepository) : ViewModel() {
-    //data for observe
-    private val mutableLiveData = MutableLiveData<BaseResponse<ForgetPasswordResponse>>()
-    val liveData: LiveData<BaseResponse<ForgetPasswordResponse>>
-        get() = mutableLiveData
+class ForgotPasswordViewModel : ViewModelBase() {
+
+    private var repository = ForgotPasswordRepository(ApiClient.getApiInterface())
+    var responseLiveData =
+        MutableLiveData<ResponseHandler<ResponseData<EmptyResponse>?>>()
 
     //request for email
     val request = ForgotPasswordRequest()
@@ -28,29 +30,26 @@ class ForgotPasswordViewModel(val repository: ForgotPasswordRepository) : ViewMo
 
     //fun to check validation
     fun checkEnteredEmail() {
-        if (request.email?.isEmpty() == true) {
-            errorMessage.value = ErrorEvent("Please enter email")
-        } else if (!request.email?.let { Patterns.EMAIL_ADDRESS.matcher(it).matches() }!!) {
-            errorMessage.value = ErrorEvent("Please enter valid email")
-        } else {
-            getResponse(request)
+
+        when {
+            !Validation.isNotNull(request.email?.trim()) -> {
+                errorMessage.value = ErrorEvent("Please enter email")
+            }
+            !request.email?.trim()?.let { Validation.isEmailValid(it) }!! -> {
+                errorMessage.value = ErrorEvent("Please enter valid email")
+            }
+            else -> {
+                errorMessage.value = ErrorEvent("")
+                getForgotPasswordRequest(request)
+            }
         }
+
     }
 
-    //fun to get response
-    private fun getResponse(request: ForgotPasswordRequest) {
-        mutableLiveData.value = BaseResponse.Loading()
-        viewModelScope.launch {
-            try {
-                val response = repository.forgotPassword(request)
-                if (response.isSuccessful) {
-                    mutableLiveData.value = BaseResponse.Success(response.body())
-                } else {
-                    mutableLiveData.value = BaseResponse.Error(response.message())
-                }
-            } catch (e: Exception) {
-                mutableLiveData.value = BaseResponse.Error(e.message)
-            }
+    private fun getForgotPasswordRequest(request: ForgotPasswordRequest) {
+        viewModelScope.launch(coroutineContext) {
+            responseLiveData.value = ResponseHandler.Loading
+            responseLiveData.value = repository.callApiForgotPassword(request)
         }
     }
 }

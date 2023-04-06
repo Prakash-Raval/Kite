@@ -3,9 +3,6 @@ package com.example.kite.ridedetails.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.kite.addcard.model.AddCardRequest
-import com.example.kite.addcard.model.AddCardResponse
-import com.example.kite.addcard.repository.AddCardRepository
 import com.example.kite.base.ViewModelBase
 import com.example.kite.base.network.ApiClient
 import com.example.kite.base.network.client.ResponseHandler

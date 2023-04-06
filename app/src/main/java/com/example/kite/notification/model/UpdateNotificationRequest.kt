@@ -16,4 +16,4 @@ data class UpdateNotificationRequest(
 //  @param: JsonProperty("is_read")
     var is_read: String? = null,
 
-)
+    )

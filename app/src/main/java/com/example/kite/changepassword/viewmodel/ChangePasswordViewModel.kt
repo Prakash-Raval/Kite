@@ -1,64 +1,70 @@
 package com.example.kite.changepassword.viewmodel
 
-import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.kite.base.network.model.EmptyResponse
+import com.example.kite.base.ViewModelBase
+import com.example.kite.base.network.ApiClient
+import com.example.kite.base.network.client.ResponseHandler
+import com.example.kite.base.network.model.ResponseData
+import com.example.kite.base.utils.Validation
 import com.example.kite.changepassword.model.ChangePasswordRequest
-import com.example.kite.changepassword.model.ChangePasswordResponse
 import com.example.kite.changepassword.repository.ChangePasswordRepository
-import com.example.kite.constants.Constants
-import com.example.kite.utils.ErrorEvent
 import kotlinx.coroutines.launch
 
-class ChangePasswordViewModel(val repository: ChangePasswordRepository) : ViewModel() {
-
-    //data for observe
-    private val mutableLiveData = MutableLiveData<ChangePasswordResponse>()
-    val liveData: LiveData<ChangePasswordResponse>
-        get() = mutableLiveData
-
-    //request data
-    val request = ChangePasswordRequest()
-
-    //error messages
-    private val errorMessage = MutableLiveData<ErrorEvent<String>>()
-    val errorLiveData: LiveData<ErrorEvent<String>>
-        get() = errorMessage
+class ChangePasswordViewModel : ViewModelBase() {
+    private var repository = ChangePasswordRepository(ApiClient.getApiInterface())
+    var responseLiveData =
+        MutableLiveData<ResponseHandler<ResponseData<EmptyResponse>?>>()
 
     var token = ""
+
+    var requestChangePassword: ChangePasswordRequest? = null
+
+    init {
+        responseLiveData = MutableLiveData()
+        requestChangePassword = ChangePasswordRequest()
+    }
+
     fun getToken(token: String) {
         this.token = token
     }
 
 
-    fun changePassword() {
-        if (request.old_password.isEmpty()) {
-            errorMessage.value = ErrorEvent("Please enter your current password")
-        } else if (request.new_password.isEmpty()) {
-            errorMessage.value = ErrorEvent("Please enter your new password")
-        } else if (!Constants.PASSWORD_PATTERN.matcher(request.new_password).matches()) {
-            errorMessage.value = ErrorEvent("Password to Weak")
-        } else if (request.confirm_password != request.new_password) {
-            errorMessage.value = ErrorEvent("Password not match")
-        } else {
-            callData(ChangePasswordRequest(token, request.new_password, request.old_password))
-        }
-    }
-
-    private fun callData(request: ChangePasswordRequest) = viewModelScope.launch {
-        try {
-            val response = repository.changePassword(request)
-            if (response.isSuccessful) {
-                Log.d("PasswordChange", response.body().toString())
-            } else {
-                Log.d("PasswordChange", response.message())
+    fun checkValidation() {
+        when {
+            !Validation.isNotNull(requestChangePassword?.old_password.toString().trim()) -> {
+                showSnackBarMessage("Please enter current password")
             }
-        } catch (e: Exception) {
-            Log.d("PasswordChange", e.message.toString())
+            (requestChangePassword?.old_password.toString().trim().length <= 6) -> {
+                showSnackBarMessage("Password length should greater than 6")
+            }
+            !Validation.isNotNull(requestChangePassword?.new_password.toString().trim()) -> {
+                showSnackBarMessage("Please enter new password")
+            }
+            (requestChangePassword?.new_password.toString().trim().length <= 6) -> {
+                showSnackBarMessage("Password length should be greater than 6")
+            }
+            !Validation.isNotNull(requestChangePassword?.confirm_password.toString().trim()) -> {
+                showSnackBarMessage("Please enter confirm password")
+            }
+            (requestChangePassword?.confirm_password.toString()
+                .trim() != requestChangePassword?.new_password.toString().trim()) -> {
+                showSnackBarMessage("Password not matched")
+            }
+            else -> {
+                if (token != "") {
+                    requestChangePassword?.access_token = token
+                    requestChangePassword?.let { getChangePasswordRequest(it) }
+                }
+            }
         }
     }
 
-
+    private fun getChangePasswordRequest(request: ChangePasswordRequest) {
+        viewModelScope.launch(coroutineContext) {
+            responseLiveData.value = ResponseHandler.Loading
+            responseLiveData.value = repository.callApiChangePassword(request)
+        }
+    }
 }

@@ -1,7 +1,6 @@
 package com.example.kite.home
 
 import android.app.AlertDialog
-import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -24,7 +23,6 @@ import com.example.kite.databinding.DialogBsEndTripBinding
 import com.example.kite.databinding.DialogUpdateChargeBinding
 import com.example.kite.databinding.FragmentHomeBinding
 import com.example.kite.extensions.DateAndTime
-import com.example.kite.extensions.DialogExtensions
 import com.example.kite.home.model.OnGoingRideRequest
 import com.example.kite.home.model.OnGoingRideResponse
 import com.example.kite.home.viewmodel.OnGoingRideViewModel
@@ -53,12 +51,6 @@ class HomeFragment : BaseFragment() {
     private var counter: Int = 0
     private val bundle = Bundle()
     private var countDownTimer: CountDownTimer? = null
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        openDialog()
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -193,16 +185,6 @@ class HomeFragment : BaseFragment() {
         binding.viewMenu.setOnClickListener {
             mDrawer?.openDrawer(GravityCompat.START)
         }
-    }
-
-    /*
-    * dialog shown when app open first time
-    * */
-    private fun openDialog() {
-        DialogExtensions.showDialog(
-            requireContext(), R.layout.dialog_show_home, R.id.imgClose, R.id.btnOk
-        ).show()
-
     }
 
 

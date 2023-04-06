@@ -40,7 +40,6 @@ class SplashFragment : Fragment() {
     private fun loadFragment() {
         val shared = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")
         //pref
-
         if (shared?.accessToken != null) {
             findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToSelectProgramFragment())
         } else {

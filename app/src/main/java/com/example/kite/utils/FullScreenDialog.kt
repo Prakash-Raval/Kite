@@ -9,7 +9,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
 object FullScreenDialog {
-    fun setupFullHeight(bottomSheetDialog: BottomSheetDialog,activity: Activity) {
+    fun setupFullHeight(bottomSheetDialog: BottomSheetDialog, activity: Activity) {
         val bottomSheet: FrameLayout =
             bottomSheetDialog.findViewById(com.google.android.material.R.id.design_bottom_sheet)!!
         val behavior: BottomSheetBehavior<View> = BottomSheetBehavior.from(bottomSheet)

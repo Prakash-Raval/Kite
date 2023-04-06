@@ -50,7 +50,7 @@ class SelectPaymentFragment : BaseFragment() {
             GenericAdapter<GetCardResponse.Detail, ItemCardDesignBinding>(
                 requireContext(),
                 cardList
-            ){
+            ) {
             override val layoutResId: Int
                 get() = R.layout.item_card_design
 

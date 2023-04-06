@@ -14,7 +14,10 @@ import com.example.kite.setting.SettingFragmentDirections
 import com.example.kite.utils.PrefManager
 
 class VerifyInfoFragment : Fragment() {
+
     private lateinit var binding: FragmentVerifyInfoBinding
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,20 +37,9 @@ class VerifyInfoFragment : Fragment() {
     //using shared pref to get user info
     private fun getCustomerData() {
         val customerData = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")
-        binding.txtVerifyName.text = customerData?.customerFirstName
-
+        binding.data = customerData
         val isVerified = customerData?.isTruliooVerified
-        if (isVerified == 1) {
-            binding.txtVerifyStatus.setText(R.string.verified)
-            binding.btnUpdate.visibility = View.GONE
-            binding.edtVerificationExpiry.setText(customerData.subscription?.subscriptionEndDate.toString())
-            binding.edtCountryCod.setText(customerData.country)
-        } else {
-            binding.txtVerifyStatus.setText(R.string.not_verified)
-            binding.btnUpdate.visibility = View.VISIBLE
-            binding.edtVerificationExpiry.setText("-")
-            binding.edtCountryCod.setText("-")
-        }
+        binding.isVerify = isVerified == 1
     }
 
 

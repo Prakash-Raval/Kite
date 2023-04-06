@@ -17,7 +17,6 @@ import com.example.kite.R
 import com.example.kite.base.network.client.ResponseHandler
 import com.example.kite.base.network.model.ResponseData
 import com.example.kite.basefragment.BaseFragment
-import com.example.kite.constants.Constants
 import com.example.kite.databinding.FragmentScheduleTripBinding
 import com.example.kite.databinding.ItemBsRepeatCountBinding
 import com.example.kite.dateandtime.listner.GetDateAndTime
@@ -25,13 +24,13 @@ import com.example.kite.dateandtime.ui.DateAndTimeFragment
 import com.example.kite.extensions.DateAndTime
 import com.example.kite.extensions.snackError
 import com.example.kite.login.model.LoginResponse
-import com.example.kite.network.ApiInterface
-import com.example.kite.network.RetrofitHelper
 import com.example.kite.scheduletrip.adapter.ScheduleTripAdapter
 import com.example.kite.scheduletrip.listner.OnTripClick
 import com.example.kite.scheduletrip.model.*
-import com.example.kite.scheduletrip.repository.ScheduleTripRepository
-import com.example.kite.scheduletrip.viewmodel.*
+import com.example.kite.scheduletrip.viewmodel.CancelTripViewModel
+import com.example.kite.scheduletrip.viewmodel.ScheduleTripViewModel
+import com.example.kite.scheduletrip.viewmodel.TripViewModel
+import com.example.kite.scheduletrip.viewmodel.UpdateTripViewModel
 import com.example.kite.utils.PrefManager
 import com.example.kite.viewscheduletrip.model.ViewTripResponse
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -46,20 +45,20 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
     private lateinit var updateTripViewModel: UpdateTripViewModel
     private lateinit var cancelTripViewModel: CancelTripViewModel
 
-    var list = ArrayList<ScheduleTimeDuration>()
+    private var list = ArrayList<ScheduleTimeDuration>()
 
     private var count = 0
     private val bundle2 = Bundle()
     private val bundle = Bundle()
 
-    var selectedDate: String = ""
-    var selectedTime: String = ""
-    var selectedTimeZone = " "
-    var selectedTimeZoneString = ""
-    var vehicleReservationPricingId = -1
-    var duration = ""
+    private var selectedDate: String = ""
+    private var selectedTime: String = ""
+    private var selectedTimeZone = " "
+    private var selectedTimeZoneString = ""
+    private var vehicleReservationPricingId = -1
+    private var duration = ""
 
-    var isUpdate = false
+    private var isUpdate = false
 
     val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
 
@@ -112,7 +111,10 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
         alert?.show()
     }
 
-
+    /*
+    * manage visibility of date and time text view
+    * setting data to date and time text view
+    * */
     private fun setDateAndTime() {
         if (selectedDate == "") {
             binding.imgDownDate.visibility = View.VISIBLE
@@ -205,6 +207,9 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
         }
     }
 
+    /*
+    * bottom sheet dialog for repeat count
+    * */
     private fun setUPBottomSheet() {
         val args = this.arguments
         val repeatCount = args?.getString("RepeatCount")
@@ -241,6 +246,9 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
 
     }
 
+    /*
+    * setting the data to second adapter for hour duration
+    * */
     private fun setUPAdapter() {
         scheduleTripAdapter = ScheduleTripAdapter(requireContext(), this)
         list.add(ScheduleTimeDuration("1 hr", R.drawable.one_hour_duration))
@@ -251,35 +259,14 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
         binding.rvSTDuration.adapter = scheduleTripAdapter
     }
 
+    private fun getViewModelScheduleTrip(): ScheduleTripViewModel {
+        viewModel = ViewModelProvider(this)[ScheduleTripViewModel::class.java]
+        return viewModel
+    }
+
     @SuppressLint("NotifyDataSetChanged")
     private fun getApiData() {
-        val service =
-            RetrofitHelper.getInstance(Constants.BASE_URL).create(ApiInterface::class.java)
-        val repository = ScheduleTripRepository(service)
-        viewModel = ViewModelProvider(
-            this, STVMFactory(repository)
-        )[ScheduleTripViewModel::class.java]
-
-        viewModel.scheduleTripLD.observe(viewLifecycleOwner) {
-            Log.d("SCHEDULE-TRIP-RESPONSE", it.toString())
-            if (it.code == 200) {
-
-                //passing data to bundle
-                bundle2.putParcelable("ScheduleResponse", it)
-                vehicleReservationPricingId = it.data?.vehicleReservationPricingId!!
-                bundle.putString("CancelCharge", it.data?.updationCharge)
-                //array adapter list
-                scheduleTripAdapter.setList(
-                    it.data?.tripDuration as ArrayList<ScheduleTripResponse.Data.TripDuration>,
-                    list
-                )
-                scheduleTripAdapter.notifyDataSetChanged()
-
-            } else {
-                Toast.makeText(requireContext(), "${it.message}", Toast.LENGTH_SHORT).show()
-            }
-        }
-
+        viewModel = getViewModelScheduleTrip()
 
         val args = this.arguments
         val vehicleTypeID = args?.getString("vehicleTypeID")
@@ -289,8 +276,7 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
         val thirdPartyID = PrefManager.get<String>("ThirdPartyID")
 
 
-
-        viewModel.getRequiredData(
+        viewModel.getScheduleTripData(
             ScheduleTripRequest(
                 access_token = token,
                 vehicle_type_id = vehicleTypeID,
@@ -298,6 +284,48 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
                 third_party_id = thirdPartyID
             )
         )
+
+        viewModel.responseLiveData.observe(viewLifecycleOwner, Observer { state ->
+            if (state == null) {
+                return@Observer
+
+            }
+            when (state) {
+                is ResponseHandler.Loading -> {
+                    showProgressDialog()
+                    Log.d("TripCodeResponse1", "setLiveDataObservers: $state")
+                }
+                is ResponseHandler.OnFailed -> {
+                    hideProgressBar()
+                    Log.d("TripCodeResponse2", "setLiveDataObservers: $state")
+                }
+                is ResponseHandler.OnSuccessResponse<ResponseData<ScheduleTripResponse>?> -> {
+                    hideProgressBar()
+                    if (state.response?.code == 200) {
+                        //passing data to bundle
+                        bundle2.putParcelable("ScheduleResponse", state.response.data)
+                        vehicleReservationPricingId =
+                            state.response.data?.vehicleReservationPricingId!!
+                        bundle.putString("CancelCharge", state.response.data?.updationCharge)
+                        //array adapter list
+                        scheduleTripAdapter.setList(
+                            state.response.data?.tripDuration as ArrayList<ScheduleTripResponse.TripDuration>,
+                            list
+                        )
+                        scheduleTripAdapter.notifyDataSetChanged()
+
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            "${state.response?.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    Log.d("TripCodeResponse3", "setLiveDataObservers: ${state.response?.data}")
+                }
+            }
+        })
+
     }
 
     override fun getDate(date: String, time: String, timeZone: String, timeZoneText: String) {
@@ -416,7 +444,7 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
             val thirdPartyID = PrefManager.get<String>("ThirdPartyID")
             //call for schedule trip time duration api call
             binding.txtSTVehicleName.text = viewTripResponse?.vehicleType
-            viewModel.getRequiredData(
+            viewModel.getScheduleTripData(
                 ScheduleTripRequest(
                     access_token = token,
                     vehicle_type_id = viewTripResponse?.vehicleTypeId.toString(),

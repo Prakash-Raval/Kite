@@ -13,13 +13,13 @@ import com.example.kite.scheduletrip.model.ScheduleTripResponse
 
 class ScheduleTripAdapter(val context: Context, val onTripClick: OnTripClick) :
     RecyclerView.Adapter<ScheduleTripAdapter.ViewHolder>() {
-    private var list = ArrayList<ScheduleTripResponse.Data.TripDuration>()
+    private var list = ArrayList<ScheduleTripResponse.TripDuration>()
     var selected = 0
 
     private var listTimeDuration = ArrayList<ScheduleTimeDuration>()
 
     fun setList(
-        list: ArrayList<ScheduleTripResponse.Data.TripDuration>,
+        list: ArrayList<ScheduleTripResponse.TripDuration>,
         listTimeDuration: ArrayList<ScheduleTimeDuration>
     ) {
         this.list = list

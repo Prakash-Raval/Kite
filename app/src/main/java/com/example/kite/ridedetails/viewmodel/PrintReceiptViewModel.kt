@@ -7,7 +7,6 @@ import com.example.kite.base.ViewModelBase
 import com.example.kite.base.network.ApiClient
 import com.example.kite.base.network.client.ResponseHandler
 import com.example.kite.base.network.model.ResponseData
-import com.example.kite.base.network.model.ResponseListData
 import com.example.kite.ridedetails.model.PrintReceiptRequest
 import com.example.kite.ridedetails.model.PrintReceiptResponse
 import com.example.kite.ridedetails.repository.PrintReceiptRepository

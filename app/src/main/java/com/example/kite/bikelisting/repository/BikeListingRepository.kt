@@ -9,7 +9,7 @@ import com.example.kite.bikelisting.model.BikeListingResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class BikeListingRepository(val api: Api) : BaseRepository(){
+class BikeListingRepository(val api: Api) : BaseRepository() {
 
     suspend fun getBikeListing(request: BikeListingRequest): ResponseHandler<ResponseData<BikeListingResponse>?> {
         return withContext(Dispatchers.Default) {

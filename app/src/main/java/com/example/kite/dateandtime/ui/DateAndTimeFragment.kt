@@ -266,7 +266,7 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
 
         val list = ArrayList<String>()
         list.add(0, "Select Region")
-        user?.data?.timezoneArr?.forEach { it ->
+        user?.timezoneArr?.forEach { it ->
             it?.timeZone?.let { it1 -> list.add(it1) }
         }
 
@@ -300,7 +300,7 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
                     timeZoneText = binding.spinnerDTRegion.selectedItem.toString()
                     Log.d("TimeZone", "onClick: $timeZone")
 
-                    user?.data?.timezoneArr?.forEach { it ->
+                    user?.timezoneArr?.forEach { it ->
                         if (binding.spinnerDTRegion.selectedItem.toString() == it?.timeZone) {
                             if (position == 0) {
                                 binding.txtDTSelectTimezone.setText(R.string.timezone)

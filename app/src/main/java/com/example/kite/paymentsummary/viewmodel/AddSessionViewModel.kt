@@ -10,7 +10,6 @@ import com.example.kite.base.network.model.ResponseData
 import com.example.kite.paymentsummary.model.AddSessionResponse
 import com.example.kite.paymentsummary.repository.AddSessionRepository
 import kotlinx.coroutines.launch
-import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
 class AddSessionViewModel : ViewModelBase() {

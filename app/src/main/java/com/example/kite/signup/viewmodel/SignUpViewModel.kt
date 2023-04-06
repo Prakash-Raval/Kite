@@ -4,26 +4,31 @@ import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.kite.base.ViewModelBase
+import com.example.kite.base.network.ApiClient
+import com.example.kite.base.network.client.ResponseHandler
+import com.example.kite.base.network.model.ResponseData
 import com.example.kite.constants.Constants
 import com.example.kite.signup.model.SignUpRequest
-import com.example.kite.signup.model.SignUpResponse2
+import com.example.kite.signup.model.SignUpResponse
 import com.example.kite.signup.repository.SignUpRepository
 import com.example.kite.utils.ErrorEvent
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
-class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
-    private val signUpResult = MutableLiveData<SignUpResponse2>()
-    val signUpLiveData: LiveData<SignUpResponse2>
-        get() = signUpResult
+class SignUpViewModel : ViewModelBase() {
+
+
     var signUPData = SignUpRequest()
     private val errorMessage = MutableLiveData<ErrorEvent<String>>()
     val errorLiveData: LiveData<ErrorEvent<String>>
         get() = errorMessage
 
+    private var repository = SignUpRepository(ApiClient.getApiInterface())
+     var responseLiveData =
+        MutableLiveData<ResponseHandler<ResponseData<SignUpResponse>?>>()
 
     fun saveCustomer() {
         Log.d("testdata", signUPData.Firstname)
@@ -67,29 +72,18 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
                 .addFormDataPart("customer_last_name", signUPData.lastName)
                 .addFormDataPart("customer_first_name", signUPData.Firstname)
                 .build()
-            registerCustomer(multipartBody)
+            getSignUpRequest(multipartBody)
         }
 
     }
 
-    private fun registerCustomer(requestBody: RequestBody) = viewModelScope.launch {
-        try {
-            val response = repository.setSignUp(requestBody)
-            if (response.isSuccessful) {
 
-                signUpResult.postValue(response.body())
-            } else {
-                // handle error
-                errorMessage.value = ErrorEvent(response.message())
-                Log.d("TEST-LOG1", response.body().toString())
-            }
-        } catch (e: Exception) {
-            // handle exception
-            Log.d("TEST-LOG1", e.message.toString())
+    private fun getSignUpRequest(request: RequestBody) {
+        viewModelScope.launch(coroutineContext) {
+            responseLiveData.value = ResponseHandler.Loading
+            responseLiveData.value = repository.callApiSignUp(request)
         }
     }
-
-
 }
 
 

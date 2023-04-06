@@ -1,6 +1,5 @@
 package com.example.kite.otpverification.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +17,7 @@ import com.example.kite.network.RetrofitHelper
 import com.example.kite.otpverification.repository.OtpRepository
 import com.example.kite.otpverification.viewmodel.OtpVMFactory
 import com.example.kite.otpverification.viewmodel.OtpViewModel
+import com.example.kite.utils.PrefManager
 
 class OtpFragment : Fragment() {
 
@@ -37,7 +37,7 @@ class OtpFragment : Fragment() {
             false
         )
         getOtp()
-        navigation()
+        setUpToolBar()
         return binding.root
     }
 
@@ -64,24 +64,23 @@ class OtpFragment : Fragment() {
                 Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
             }
         }
-        val sharedPreference =
-            activity?.getSharedPreferences("TOKEN_PREFERENCE", Context.MODE_PRIVATE)
-        val editor = sharedPreference?.edit()
-        val token = sharedPreference?.getString("token", "")
-        editor?.apply()
+
+        val token = PrefManager.get<String>("Token")
         if (token != null) {
             viewModel.otpCheck(token)
         }
-
         if (viewModel.isCheck) {
             findNavController().navigate(R.id.loginFragment)
         }
     }
 
-    private fun navigation() {
-        binding.imgBack.setOnClickListener {
+    /*
+    * setting up the toolbar
+    * */
+    private fun setUpToolBar() {
+        binding.inOTPBar.imgBack.setOnClickListener {
             findNavController().navigateUp()
         }
+        binding.inOTPBar.txtToolbarHeader.setText(R.string.otp)
     }
-
 }

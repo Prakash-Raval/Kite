@@ -10,9 +10,8 @@
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <!--
-                <item name="android:windowTranslucentStatus">false</item>
-        -->
+
+        <item name="android:windowIsTranslucent">true</item>
         <item name="android:statusBarColor">@color/white</item>
 
 
@@ -269,14 +268,6 @@
         <item name="android:windowIsFloating">false</item>
     </style>
 
-    <style name="DialogTheme1" parent="android:Theme.Dialog">
 
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <!-- No backgrounds, titles or window float -->
-        <item name="android:windowBackground">@null</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowIsFloating">false</item>
-    </style>
 
 </resources>

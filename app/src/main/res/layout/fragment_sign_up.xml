@@ -16,30 +16,9 @@
         android:layout_height="match_parent"
         tools:context=".signup.ui.SignUpFragment">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/signUpToolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/imgBack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:src="@drawable/ic_back_black" />
-
-
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/BlackSmallCustomMaterialTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/sign_up" />
-
-        </com.google.android.material.appbar.MaterialToolbar>
+        <include
+            android:id="@+id/inSignupBar"
+            layout="@layout/item_common_toolbar"/>
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -47,7 +26,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/signUpToolbar">
+            app:layout_constraintTop_toBottomOf="@id/inSignupBar">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

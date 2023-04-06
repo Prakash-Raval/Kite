@@ -1,11 +1,13 @@
 package com.example.kite.base.network.client
 
+import com.example.kite.base.network.model.EmptyResponse
 import com.example.kite.addcard.model.AddCardRequest
 import com.example.kite.addcard.model.AddCardResponse
 import com.example.kite.base.network.model.ResponseData
 import com.example.kite.base.network.model.ResponseListData
 import com.example.kite.bikelisting.model.BikeListingRequest
 import com.example.kite.bikelisting.model.BikeListingResponse
+import com.example.kite.changepassword.model.ChangePasswordRequest
 import com.example.kite.constants.Constants
 import com.example.kite.countrylisting.CountryResponse
 import com.example.kite.countrylisting.statelisting.StateRequest
@@ -15,6 +17,7 @@ import com.example.kite.dateandtime.model.PromoCodeResponse
 import com.example.kite.dateandtime.model.TimeSlotRequest
 import com.example.kite.dateandtime.model.TimeSlotResponse
 import com.example.kite.endridechecklist.model.EndRideResponse
+import com.example.kite.forgetpassword.model.ForgotPasswordRequest
 import com.example.kite.history.model.RideHistoryRequest
 import com.example.kite.history.model.RideHistoryResponse
 import com.example.kite.home.model.OnGoingRideRequest
@@ -25,6 +28,8 @@ import com.example.kite.notification.model.NotificationRequest
 import com.example.kite.notification.model.NotificationResponse
 import com.example.kite.notification.model.UpdateNotificationRequest
 import com.example.kite.notification.model.UpdateNotificationResponse
+import com.example.kite.otpverification.model.OtpRequest
+import com.example.kite.otpverification.model.OtpResponse
 import com.example.kite.paymentsummary.model.AddSessionResponse
 import com.example.kite.profile.model.ViewProfileRequest
 import com.example.kite.profile.model.ViewProfileResponse
@@ -41,6 +46,7 @@ import com.example.kite.scanqr.model.ScanQRResponse
 import com.example.kite.scheduletrip.model.*
 import com.example.kite.selectpayment.model.GetCardRequest
 import com.example.kite.selectpayment.model.GetCardResponse
+import com.example.kite.signup.model.SignUpResponse
 import com.example.kite.subscription.model.AddSubRequest
 import com.example.kite.subscription.model.AddSubResponse
 import com.example.kite.subscription.model.CancelSubRequest
@@ -149,7 +155,24 @@ interface Api {
     @POST(Constants.LOGIN_URL)
     suspend fun setLogin(@Body loginRequest: LoginRequest): Response<ResponseData<LoginResponse>>
 
+    @Headers("Content-Type: application/json")
+    @POST(Constants.SCHEDULE_TRIP)
+    suspend fun getScheduleTripData(@Body scheduleTripRequest: ScheduleTripRequest): Response<ResponseData<ScheduleTripResponse>>
+
+    @POST(Constants.SIGNUP_URL)
+    suspend fun setSignUp(@Body body: RequestBody): Response<ResponseData<SignUpResponse>>
+
+    @POST(Constants.FORGOT_PASSWORD_URL)
+    suspend fun forgotPassword(@Body request: ForgotPasswordRequest): Response<ResponseData<EmptyResponse>>
 
     @POST(Constants.VIEW_PROFILE)
     suspend fun getViewProfile(@Body viewProfileRequest: ViewProfileRequest): Response<ResponseData<ViewProfileResponse>>
+
+    @POST(Constants.OTP_URL)
+    suspend fun verifyOTP(@Body body: OtpRequest): Response<ResponseData<OtpResponse>>
+
+    @POST(Constants.CHANGE_PASSWORD)
+    suspend fun changePassword(@Body changePasswordRequest: ChangePasswordRequest): Response<ResponseData<EmptyResponse>>
+
+
 }

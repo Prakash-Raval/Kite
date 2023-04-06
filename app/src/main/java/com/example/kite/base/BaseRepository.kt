@@ -8,6 +8,7 @@ import com.example.kite.base.network.model.ErrorWrapper
 import com.example.kite.base.network.model.HttpErrorCode
 import com.example.kite.base.network.model.ResponseData
 import com.example.kite.base.network.model.ResponseListData
+import com.example.kite.base.utils.DebugLog
 import com.google.gson.Gson
 import okhttp3.internal.http2.ConnectionShutdownException
 import retrofit2.Response

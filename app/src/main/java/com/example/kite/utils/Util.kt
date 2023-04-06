@@ -7,7 +7,7 @@ import java.util.*
 
 object Util {
     fun getDateFromTimeString(
-        millis : Long,
+        millis: Long,
         expectedFormat: String = "yyyy-MM-dd"
     ): String {
         val sdf: DateFormat = SimpleDateFormat(expectedFormat, Locale.getDefault())
@@ -16,21 +16,24 @@ object Util {
         try {
             date = Date(millis)
             dateString = sdf.format(date)
-        }catch (e : Exception) {
+        } catch (e: Exception) {
             e.stackTrace
         }
         Log.e("Time", dateString)
         return dateString
     }
 
-    fun getMillisFromTime(timeString: String, timeformat: String = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'") : Long {
+    fun getMillisFromTime(
+        timeString: String,
+        timeformat: String = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+    ): Long {
         val sdf: DateFormat = SimpleDateFormat(timeformat, Locale.getDefault())
         val date: Date?
         var millis = 0L
         try {
             date = sdf.parse(timeString)
             millis = date.time
-        }catch (e : Exception) {
+        } catch (e: Exception) {
             e.stackTrace
         }
         return millis

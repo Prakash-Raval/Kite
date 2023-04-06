@@ -407,7 +407,11 @@ class UserAgreementFragment : Fragment(), OnCellClicked, OnCellClickedRegion {
                     is ResponseHandler.OnSuccessResponse<ResponseListData<StateResponse>?> -> {
                         Log.d("ViewTripFragment", "setObserverData: ${state.response?.data}")
                         if (state.response?.code == 200) {
-                            stateListingAdapter.setList(state.response.data?.getOrNull(0)?.stateList?.getOrNull(0)?.states as ArrayList<String?>)
+                            stateListingAdapter.setList(
+                                state.response.data?.getOrNull(0)?.stateList?.getOrNull(
+                                    0
+                                )?.states as ArrayList<String?>
+                            )
                             stateListingAdapter.notifyDataSetChanged()
                         }
                     }

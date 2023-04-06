@@ -13,6 +13,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import com.example.kite.databinding.ActivityMainBinding
+import com.example.kite.extensions.DialogExtensions
 
 
 class MainActivity : AppCompatActivity() {
@@ -24,12 +25,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var pNavController: NavController
     private lateinit var pDrawerLayout: DrawerLayout
-
+    var isFirst = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-
 
         setUpNavigation()
         setNavigation()
@@ -51,6 +51,10 @@ class MainActivity : AppCompatActivity() {
                 R.id.homeFragment -> {
                     window.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
                     showDrawer()
+                    if (isFirst) {
+                        isFirst = false
+                        openDialog()
+                    }
                 }
                 else -> {
                     hideDrawer()
@@ -59,6 +63,16 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
+    }
+
+    /*
+    *  dialog shown when app open first time
+    * */
+    private fun openDialog() {
+        DialogExtensions.showDialog(
+            this, R.layout.dialog_show_home, R.id.imgClose, R.id.btnOk
+        ).show()
+
     }
 
     //close drawer(unlock)

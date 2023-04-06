@@ -54,7 +54,15 @@ class LoginViewModel : ViewModelBase() {
                 errorMessage.value =
                     ErrorEvent(ErrorModel("Password minimum length should be 6", "Password"))
             }
-            else -> callLoginApi()
+
+            else -> {
+                errorMessage.value =
+                    ErrorEvent(ErrorModel("", "Email"))
+                errorMessage.value =
+                    ErrorEvent(ErrorModel("", "Password"))
+                callLoginApi()
+
+            }
         }
     }
 

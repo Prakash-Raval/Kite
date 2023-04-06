@@ -5,16 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class SignUpResponse2(
-    @JsonProperty("code")
-    var code: Int? = null,
-    @JsonProperty("data")
-    var data: Data? = null,
-    @JsonProperty("message")
-    var message: String? = null
-) {
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    data class Data(
+data class SignUpResponse(
         @JsonProperty("access_token")
         var accessToken: String? = null,
         @JsonProperty("country")
@@ -74,4 +65,3 @@ data class SignUpResponse2(
             var subscriptionStartDate: String? = null
         )
     }
-}

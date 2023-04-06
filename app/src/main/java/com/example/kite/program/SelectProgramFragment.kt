@@ -1,7 +1,6 @@
 package com.example.kite.program
 
 import android.annotation.SuppressLint
-import android.content.Context.MODE_PRIVATE
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Spannable
@@ -222,7 +221,7 @@ class SelectProgramFragment : BaseFragment(), OnThirdPartyListing {
     * storing third party id for other fragments
     * */
     override fun onClick(thirdPartyID: String) {
-        PrefManager.put(thirdPartyID,"ThirdPartyID")
+        PrefManager.put(thirdPartyID, "ThirdPartyID")
     }
 
     /*

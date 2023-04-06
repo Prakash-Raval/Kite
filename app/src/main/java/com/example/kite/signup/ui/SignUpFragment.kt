@@ -1,6 +1,5 @@
 package com.example.kite.signup.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
@@ -8,6 +7,7 @@ import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,20 +15,21 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.kite.R
-import com.example.kite.constants.Constants
+import com.example.kite.base.network.client.ResponseHandler
+import com.example.kite.base.network.model.ResponseData
+import com.example.kite.basefragment.BaseFragment
 import com.example.kite.databinding.FragmentSignUpBinding
-import com.example.kite.network.ApiInterface
-import com.example.kite.network.RetrofitHelper
-import com.example.kite.signup.repository.SignUpRepository
-import com.example.kite.signup.viewmodel.SignUpVMFFactory
+import com.example.kite.signup.model.SignUpResponse
 import com.example.kite.signup.viewmodel.SignUpViewModel
+import com.example.kite.utils.PrefManager
 
 
-class SignUpFragment : Fragment() {
+class SignUpFragment : BaseFragment() {
+
     private lateinit var binding: FragmentSignUpBinding
     private lateinit var viewModel: SignUpViewModel
 
@@ -45,57 +46,92 @@ class SignUpFragment : Fragment() {
         )
         // Inflate the layout for this fragment
         countryList()
-        loadFragment()
+        setUpToolBar()
         getSignUpData()
+        spannableText()
+
         return binding.root
     }
 
+    /*
+  * init view model for sign up
+  * */
+    private fun getViewModel(): SignUpViewModel {
+        viewModel = ViewModelProvider(this)[SignUpViewModel::class.java]
+        return viewModel
+    }
+
+    /*
+    * country listing for spinner
+    * */
     private fun countryList() {
         val feelings = resources.getStringArray(R.array.country_list)
         binding.edtCountry.adapter =
             activity?.let { ArrayAdapter(it, R.layout.item_dropdown_spinner, feelings) }
     }
 
-    private fun loadFragment() {
-        binding.imgBack.setOnClickListener {
+    /*
+    * setting up the toolbar
+    * */
+    private fun setUpToolBar() {
+        binding.inSignupBar.imgBack.setOnClickListener {
             findNavController().navigateUp()
         }
+        binding.inSignupBar.txtToolbarHeader.setText(R.string.sign_up)
     }
 
+    /*
+    *
+    * calling api for sign and setting up the observer
+    * */
     private fun getSignUpData() {
-        //shared pref to store access token
-        val sharedPreference =
-            activity?.getSharedPreferences("TOKEN_PREFERENCE", Context.MODE_PRIVATE)
-        val editor = sharedPreference?.edit()
+        viewModel = getViewModel()
 
-        val signUpService =
-            RetrofitHelper.getInstance(Constants.BASE_URL).create(ApiInterface::class.java)
-        val repository = SignUpRepository(signUpService)
-        viewModel =
-            ViewModelProvider(this, SignUpVMFFactory(repository))[SignUpViewModel::class.java]
         binding.signUpData = viewModel
         binding.lifecycleOwner = this
-        spannableText()
+
         viewModel.errorLiveData.observe(viewLifecycleOwner) {
             it.getContentIfNotHandled()?.let { it1 ->
                 Toast.makeText(requireContext(), it1, Toast.LENGTH_SHORT).show()
             }
         }
-
-        viewModel.signUpLiveData.observe(viewLifecycleOwner) {
-            editor?.putString("token", it.data?.accessToken)
-            editor?.apply()
-            if (it.code == 200) {
-                val action =
-                    SignUpFragmentDirections.actionSignUpFragmentToOtpFragment()
-                findNavController().navigate(action)
-            } else {
-                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+        viewModel.responseLiveData.observe(viewLifecycleOwner, Observer { state ->
+            if (state == null) {
+                return@Observer
             }
-        }
+            when (state) {
+                is ResponseHandler.Loading -> {
+                    showProgressDialog()
+                    Log.d("ViewTripFragment", "setObserverData: $state")
+                }
+                is ResponseHandler.OnFailed -> {
+                    hideProgressBar()
+                    Log.d("ViewTripFragment", "setObserverData: $state")
+
+                }
+                is ResponseHandler.OnSuccessResponse<ResponseData<SignUpResponse>?> -> {
+                    hideProgressBar()
+                    if (state.response?.code == 200) {
+                        val action =
+                            SignUpFragmentDirections.actionSignUpFragmentToOtpFragment()
+                        findNavController().navigate(action)
+                        PrefManager.put(state.response.data?.accessToken , "Token")
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            state.response?.message,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+        })
+
     }
 
-
+    /*
+    * setting up the spannable text for term and policy
+    * */
     private fun spannableText() {
         binding.txtTerms.movementMethod = LinkMovementMethod.getInstance()
         val privacy: ClickableSpan = object : ClickableSpan() {

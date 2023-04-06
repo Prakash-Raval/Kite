@@ -12,7 +12,7 @@
 
         <variable
             name="scheduleTripData"
-            type="com.example.kite.scheduletrip.model.ScheduleTripResponse.Data.TripDuration" />
+            type="com.example.kite.scheduletrip.model.ScheduleTripResponse.TripDuration" />
 
          </data>
 

@@ -3,7 +3,6 @@ package com.example.kite.countrylisting
 import com.example.kite.base.BaseRepository
 import com.example.kite.base.network.client.Api
 import com.example.kite.base.network.client.ResponseHandler
-import com.example.kite.base.network.model.ResponseData
 import com.example.kite.base.network.model.ResponseListData
 import com.example.kite.countrylisting.statelisting.StateRequest
 import com.example.kite.countrylisting.statelisting.StateResponse

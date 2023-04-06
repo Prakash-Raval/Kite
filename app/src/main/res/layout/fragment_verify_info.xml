@@ -5,6 +5,15 @@
 
     <data>
 
+        <import type="android.view.View" />
+
+        <variable
+            name="isVerify"
+            type="Boolean" />
+
+        <variable
+            name="data"
+            type="com.example.kite.login.model.LoginResponse" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -46,7 +55,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_20sdp"
                     android:fontFamily="@font/avenir_light"
-                    android:text="@string/not_verified"
+                    android:text="@{isVerify ?@string/verified :@string/not_verified }"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_10sdp"
                     android:textStyle="bold"
@@ -61,6 +70,7 @@
                     android:layout_marginStart="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:fontFamily="@font/avenir_black"
+                    android:text="@{data.customerFirstName}"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_24sdp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -76,6 +86,7 @@
                     android:padding="0dp"
                     android:text="@string/update"
                     android:textSize="@dimen/_8sdp"
+                    android:visibility="@{isVerify ? View.GONE : View.VISIBLE}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -111,6 +122,7 @@
                 android:layout_height="match_parent"
                 android:focusable="false"
                 android:hint="@string/dash"
+                android:text="@{isVerify ? data.subscription.subscriptionEndDate.toString() : `-`}"
                 android:textColorHint="@color/black" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -142,6 +154,7 @@
                 android:layout_height="match_parent"
                 android:focusable="false"
                 android:hint="@string/dash"
+                android:text="@{isVerify ? data.country : `-`}"
                 android:textColorHint="@color/black" />
 
         </com.google.android.material.textfield.TextInputLayout>
