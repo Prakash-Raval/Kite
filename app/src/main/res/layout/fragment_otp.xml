@@ -88,7 +88,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_30sdp"
-            android:onClick="@{()-> otpData.checkValidation()}"
+            android:onClick="@{()-> otpData.verifyOTP()}"
             android:text="@string/confirm"
             app:layout_constraintEnd_toStartOf="@id/glEnd"
             app:layout_constraintStart_toEndOf="@id/glStart"
@@ -109,7 +109,5 @@
             app:layout_constraintStart_toEndOf="@id/glStart"
             app:layout_constraintTop_toBottomOf="@id/btnConfirm" />
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>

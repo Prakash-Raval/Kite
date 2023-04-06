@@ -7,6 +7,8 @@ import com.example.kite.base.network.model.ResponseData
 import com.example.kite.base.network.model.ResponseListData
 import com.example.kite.bikelisting.model.BikeListingRequest
 import com.example.kite.bikelisting.model.BikeListingResponse
+import com.example.kite.changecontact.model.ChangeContactRequest
+import com.example.kite.changecontact.model.ChangeContactResponse
 import com.example.kite.changepassword.model.ChangePasswordRequest
 import com.example.kite.constants.Constants
 import com.example.kite.countrylisting.CountryResponse
@@ -29,7 +31,7 @@ import com.example.kite.notification.model.NotificationResponse
 import com.example.kite.notification.model.UpdateNotificationRequest
 import com.example.kite.notification.model.UpdateNotificationResponse
 import com.example.kite.otpverification.model.OtpRequest
-import com.example.kite.otpverification.model.OtpResponse
+import com.example.kite.otpverification.model.PhoneRequest
 import com.example.kite.paymentsummary.model.AddSessionResponse
 import com.example.kite.profile.model.ViewProfileRequest
 import com.example.kite.profile.model.ViewProfileResponse
@@ -169,7 +171,13 @@ interface Api {
     suspend fun getViewProfile(@Body viewProfileRequest: ViewProfileRequest): Response<ResponseData<ViewProfileResponse>>
 
     @POST(Constants.OTP_URL)
-    suspend fun verifyOTP(@Body body: OtpRequest): Response<ResponseData<OtpResponse>>
+    suspend fun verifyOTP(@Body body: OtpRequest): Response<ResponseData<EmptyResponse>>
+
+    @POST(Constants.CHANGE_PHONE)
+    suspend fun phoneChange(@Body body: PhoneRequest): Response<ResponseData<EmptyResponse>>
+
+    @POST(Constants.CHANGE_CONTACT)
+    suspend fun changeContact(@Body body: ChangeContactRequest): Response<ResponseData<ChangeContactResponse>>
 
     @POST(Constants.CHANGE_PASSWORD)
     suspend fun changePassword(@Body changePasswordRequest: ChangePasswordRequest): Response<ResponseData<EmptyResponse>>

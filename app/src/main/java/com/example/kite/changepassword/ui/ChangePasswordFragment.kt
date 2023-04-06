@@ -134,18 +134,5 @@ class ChangePasswordFragment : BaseFragment() {
         }
     }
 
-    /*
-    * method to make snack bar
-    * */
-    private fun showSnackBar(message: String) {
-        val snackBar = Snackbar.make(
-            (activity as MainActivity).findViewById(android.R.id.content)!!,
-            message,
-            Snackbar.LENGTH_SHORT
-        )
-        val view = snackBar.view
-        val snackTV = view.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
-        snackTV.maxLines = 5
-        snackBar.show()
-    }
+
 }

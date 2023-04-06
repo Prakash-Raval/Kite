@@ -74,6 +74,18 @@
         android:name="com.example.kite.otpverification.ui.OtpFragment"
         android:label="OtpFragment">
 
+        <action
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/loginFragment"
+            android:id="@+id/action_otpFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_otpFragment_to_changeContactFragment"
+            app:destination="@id/changeContactFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/settingFragment"
+            />
+
     </fragment>
     <fragment
         android:id="@+id/policyFragment"
@@ -194,7 +206,11 @@
     <fragment
         android:id="@+id/changeContactFragment"
         android:name="com.example.kite.changecontact.ChangeContactFragment"
-        android:label="ChangeContactFragment" />
+        android:label="ChangeContactFragment" >
+        <action
+            android:id="@+id/action_changeContactFragment_to_otpFragment"
+            app:destination="@id/otpFragment" />
+    </fragment>
     <fragment
         android:id="@+id/changePasswordFragment"
         android:name="com.example.kite.changepassword.ui.ChangePasswordFragment"

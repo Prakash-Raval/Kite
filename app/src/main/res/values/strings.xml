@@ -32,7 +32,7 @@
     <string name="search" translatable="false">Search</string>
     <string name="otp" translatable="false">OTP</string>
     <string name="confirmation_code" translatable="false">Confirmation Code</string>
-    <string name="confirmation_text" translatable="false">We\'ve sent you a 4 digit confirmation code to 9999999999. Please enter it below to confirm your mobile number.</string>
+    <string name="confirmation_text" translatable="false">We\'ve sent you a 4 digit confirmation code to XXXXXXXXXX. Please enter it below to confirm your mobile number.</string>
     <string name="type_code" translatable="false">Type Code</string>
     <string name="send_agin_text" translatable="false">Haven\'t received the OTP? Send it again now</string>
     <string name="terms_and_conditions" translatable="false">Terms and Conditions</string>

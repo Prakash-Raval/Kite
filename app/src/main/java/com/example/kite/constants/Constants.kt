@@ -98,6 +98,9 @@ object Constants {
     //print receipt
     const val PRINT_RECEIPT = "customer/print-transaction-details"
 
+    //change contact
+    const val CHANGE_CONTACT = "customer/send_otp"
+    const val CHANGE_PHONE = "customer/change_phone_number"
 
 }
 

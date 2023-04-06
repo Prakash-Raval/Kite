@@ -1,29 +1,37 @@
 package com.example.kite.otpverification.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.kite.MainActivity
 import com.example.kite.R
-import com.example.kite.constants.Constants
+import com.example.kite.base.network.client.ResponseHandler
+import com.example.kite.base.network.model.EmptyResponse
+import com.example.kite.base.network.model.ResponseData
+import com.example.kite.basefragment.BaseFragment
 import com.example.kite.databinding.FragmentOtpBinding
-import com.example.kite.network.ApiInterface
-import com.example.kite.network.RetrofitHelper
-import com.example.kite.otpverification.repository.OtpRepository
-import com.example.kite.otpverification.viewmodel.OtpVMFactory
+import com.example.kite.extensions.hideKeyboard
+import com.example.kite.login.model.LoginResponse
+import com.example.kite.otpverification.model.PhoneRequest
 import com.example.kite.otpverification.viewmodel.OtpViewModel
+import com.example.kite.otpverification.viewmodel.PhoneViewModel
 import com.example.kite.utils.PrefManager
 
-class OtpFragment : Fragment() {
+class OtpFragment : BaseFragment() {
 
-
+    /*
+    * variables
+    * */
     private lateinit var binding: FragmentOtpBinding
     private lateinit var viewModel: OtpViewModel
+    private lateinit var viewModelPhone: PhoneViewModel
 
 
     override fun onCreateView(
@@ -36,42 +44,105 @@ class OtpFragment : Fragment() {
             container,
             false
         )
-        getOtp()
-        setUpToolBar()
         return binding.root
     }
 
-    private fun getOtp() {
-        val otpService =
-            RetrofitHelper.getInstance(Constants.BASE_URL).create(ApiInterface::class.java)
-        val repository = OtpRepository(otpService)
-        viewModel =
-            ViewModelProvider(this, OtpVMFactory(repository))[OtpViewModel::class.java]
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        /*
+        * method calls
+        * */
+        init()
+        getOtp()
+        setUpToolBar()
+        setUpSnackBar()
+    }
+
+    /*
+    * creating view model for otp
+    * */
+    fun getViewModel(): OtpViewModel {
+        viewModel = ViewModelProvider(this)[OtpViewModel::class.java]
+        return viewModel
+    }
+
+    /*
+   * creating view model for change contact
+   * */
+    private fun getViewModelPhone(): PhoneViewModel {
+        viewModelPhone = ViewModelProvider(this)[PhoneViewModel::class.java]
+        return viewModelPhone
+    }
+
+    /*
+    * init view model
+    * */
+    fun init() {
+        viewModel = getViewModel()
+        viewModelPhone = getViewModelPhone()
         binding.otpData = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
+        var token = PrefManager.get<String>("Token")
+        val args = this.arguments
+        val isContact = args?.getBoolean("OTP")
 
-        viewModel.errorLiveData.observe(viewLifecycleOwner) {
-            it.getContentIfNotHandled()?.let { it1 ->
-                Toast.makeText(requireContext(), it1, Toast.LENGTH_SHORT).show()
-            }
+        if (isContact == true) {
+            token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
         }
-
-        viewModel.otpLiveData.observe(viewLifecycleOwner) {
-            if (it.code == 200) {
-                Toast.makeText(requireContext(), "Otp Verified", Toast.LENGTH_SHORT).show()
-                findNavController().navigate(R.id.loginFragment)
-            } else {
-                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        val token = PrefManager.get<String>("Token")
         if (token != null) {
-            viewModel.otpCheck(token)
+            viewModel.getToken(token)
         }
-        if (viewModel.isCheck) {
-            findNavController().navigate(R.id.loginFragment)
-        }
+    }
+
+    private fun makeApiCallPhone() {
+        val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
+        val args = this.arguments
+        viewModelPhone.getPhone(
+            PhoneRequest(
+                accessToken = token,
+                otpCode = binding.edtOTPVerify.text.toString().trim(),
+                phoneNumber = args?.getString("MOBILE")
+            )
+        )
+        setObserver()
+    }
+
+    /*
+    * setting up observer for otp verification
+    * */
+    private fun getOtp() {
+
+        viewModel.responseLiveData.observe(viewLifecycleOwner, Observer { state ->
+            if (state == null) {
+                return@Observer
+            }
+            when (state) {
+                is ResponseHandler.Loading -> {
+                    showProgressDialog()
+                    Log.d("change_password", "setObserverData: $state")
+                }
+                is ResponseHandler.OnFailed -> {
+                    hideProgressBar()
+                    Toast.makeText(requireContext(), "Wrong OTP Entered", Toast.LENGTH_SHORT).show()
+                    findNavController().navigateUp()
+                    Log.d("change_password", "setObserverData: $state")
+
+                }
+                is ResponseHandler.OnSuccessResponse<ResponseData<EmptyResponse>?> -> {
+                    hideProgressBar()
+                    val args = this.arguments
+                    val isContact = args?.getBoolean("OTP")
+                    Log.d("change_password", "setObserverData: ${state.response?.data}")
+                    if (state.response?.code == 200) {
+                        if (isContact == true) {
+                            makeApiCallPhone()
+                        } else {
+                            findNavController().navigate(OtpFragmentDirections.actionOtpFragmentToLoginFragment())
+                        }
+                    }
+                }
+            }
+        })
+
     }
 
     /*
@@ -79,8 +150,60 @@ class OtpFragment : Fragment() {
     * */
     private fun setUpToolBar() {
         binding.inOTPBar.imgBack.setOnClickListener {
-            findNavController().navigateUp()
+            val args = this.arguments
+            val isContact = args?.getBoolean("OTP")
+            if (isContact == true) {
+                findNavController().navigate(OtpFragmentDirections.actionOtpFragmentToChangeContactFragment())
+            } else {
+                findNavController().navigate(OtpFragmentDirections.actionOtpFragmentToLoginFragment())
+            }
         }
         binding.inOTPBar.txtToolbarHeader.setText(R.string.otp)
+    }
+
+    /*
+  * creating method for showing snack bar
+  * */
+    private fun setUpSnackBar() {
+        viewModel.getSnakeBarMessage().observe(viewLifecycleOwner) { o: Any ->
+            if (o is Int) {
+                hideKeyboard()
+                (activity as MainActivity).resources?.getString(o)?.let { showSnackBar(it) }!!
+            } else if (o is String) {
+                hideKeyboard()
+                showSnackBar(o)
+            }
+        }
+    }
+
+    /*
+    * api call observer for phone change
+    * */
+    fun setObserver() {
+        viewModelPhone.responseLiveData.observe(viewLifecycleOwner, Observer { state ->
+            if (state == null) {
+                return@Observer
+            }
+            when (state) {
+                is ResponseHandler.Loading -> {
+                    showProgressDialog()
+                    Log.d("otp_Verification", "setObserverData: $state")
+                }
+                is ResponseHandler.OnFailed -> {
+                    hideProgressBar()
+                    Log.d("otp_Verification", "setObserverData: $state")
+
+                }
+                is ResponseHandler.OnSuccessResponse<ResponseData<EmptyResponse>?> -> {
+                    hideProgressBar()
+                    Log.d("otp_Verification", "setObserverData: ${state.response?.data}")
+                    if (state.response?.code == 200) {
+                        findNavController().navigate(OtpFragmentDirections.actionOtpFragmentToChangeContactFragment())
+
+                    }
+                }
+            }
+        })
+
     }
 }

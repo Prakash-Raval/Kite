@@ -7,12 +7,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.example.kite.MainActivity
 import com.example.kite.R
 import com.example.kite.databinding.FragmentBaseBinding
+import com.google.android.material.snackbar.Snackbar
 
 open class BaseFragment : Fragment() {
     private lateinit var binding: FragmentBaseBinding
@@ -47,6 +49,19 @@ open class BaseFragment : Fragment() {
     fun hideProgressBar() {
         mProgressDialog.dismiss()
     }
-
+    /*
+       * method to make snack bar
+       * */
+     fun showSnackBar(message: String) {
+        val snackBar = Snackbar.make(
+            (activity as MainActivity).findViewById(android.R.id.content)!!,
+            message,
+            Snackbar.LENGTH_SHORT
+        )
+        val view = snackBar.view
+        val snackTV = view.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
+        snackTV.maxLines = 5
+        snackBar.show()
+    }
 
 }

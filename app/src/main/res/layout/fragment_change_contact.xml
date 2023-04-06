@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+<variable
+    name="data"
+    type="com.example.kite.changecontact.viewmodel.ChangeContactViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -77,6 +79,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edtMobile"
                 style="@style/TextEditText"
+                android:text="@={data.changeContact.phoneNumber}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="phone" />
@@ -90,6 +93,7 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/_20sdp"
             android:text="@string/update_mobile_number"
+            android:onClick="@{() -> data.verifyContact()}"
             app:layout_constraintEnd_toStartOf="@id/glEnd"
             app:layout_constraintStart_toEndOf="@id/glStart"
             app:layout_constraintTop_toBottomOf="@id/tilMobileNumber" />
