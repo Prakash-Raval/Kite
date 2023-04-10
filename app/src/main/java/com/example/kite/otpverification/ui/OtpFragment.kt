@@ -55,7 +55,8 @@ class OtpFragment : BaseFragment() {
         init()
         getOtp()
         setUpToolBar()
-        setUpSnackBar()
+        setUpSnackBar(viewModel)
+        setUpSnackBar(viewModelPhone)
     }
 
     /*
@@ -93,6 +94,9 @@ class OtpFragment : BaseFragment() {
         }
     }
 
+    /*
+    * api call request for phone number change
+    * */
     private fun makeApiCallPhone() {
         val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
         val args = this.arguments
@@ -129,6 +133,9 @@ class OtpFragment : BaseFragment() {
                 }
                 is ResponseHandler.OnSuccessResponse<ResponseData<EmptyResponse>?> -> {
                     hideProgressBar()
+                    /*
+                    * checking otp screen is from change contact or login
+                    * */
                     val args = this.arguments
                     val isContact = args?.getBoolean("OTP")
                     Log.d("change_password", "setObserverData: ${state.response?.data}")
@@ -150,6 +157,9 @@ class OtpFragment : BaseFragment() {
     * */
     private fun setUpToolBar() {
         binding.inOTPBar.imgBack.setOnClickListener {
+            /*
+            * checking otp is from contact or login screen
+            * */
             val args = this.arguments
             val isContact = args?.getBoolean("OTP")
             if (isContact == true) {
@@ -161,20 +171,7 @@ class OtpFragment : BaseFragment() {
         binding.inOTPBar.txtToolbarHeader.setText(R.string.otp)
     }
 
-    /*
-  * creating method for showing snack bar
-  * */
-    private fun setUpSnackBar() {
-        viewModel.getSnakeBarMessage().observe(viewLifecycleOwner) { o: Any ->
-            if (o is Int) {
-                hideKeyboard()
-                (activity as MainActivity).resources?.getString(o)?.let { showSnackBar(it) }!!
-            } else if (o is String) {
-                hideKeyboard()
-                showSnackBar(o)
-            }
-        }
-    }
+
 
     /*
     * api call observer for phone change

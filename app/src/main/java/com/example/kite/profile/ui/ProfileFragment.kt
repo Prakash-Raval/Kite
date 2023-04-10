@@ -52,11 +52,16 @@ class ProfileFragment : BaseFragment(), OnCellClickedRegion {
         binding = DataBindingUtil.inflate(
             LayoutInflater.from(context), R.layout.fragment_profile, container, false
         )
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         getCustomerProfile()
         changeData()
         getTermsPage()
         setUpDialogs()
-        return binding.root
     }
 
     //getting data from api
@@ -95,6 +100,7 @@ class ProfileFragment : BaseFragment(), OnCellClickedRegion {
                     Log.d("ViewTripFragment", "setObserverData: ${state.response?.data}")
                     if (state.response?.code == 200) {
                         binding.viewProfile = state.response.data
+                        PrefManager.put(state.response.data, "ViewProfileResponse")
                         val sh =
                             activity?.getSharedPreferences("MySharedPref", MODE_PRIVATE)?.edit()
                         state.response.data?.subscription?.isSubscribe?.let {
@@ -186,11 +192,18 @@ class ProfileFragment : BaseFragment(), OnCellClickedRegion {
         return viewModelProfile
     }
 
+
     // getting country data from the api
-    @SuppressLint("NotifyDataSetChanged")
     private fun getCountryData() {
         regionViewModel = getViewModel()
-        regionViewModel.getCountryRequest()
+//        regionViewModel.getCountryRequest()
+        setObserverCountry()
+    }
+
+    /*
+    * setting observer for country
+    * */
+    private fun setObserverCountry(){
         regionViewModel.responseLiveDataCountry.observe(viewLifecycleOwner, Observer { state ->
             if (state == null) {
                 return@Observer
@@ -209,7 +222,7 @@ class ProfileFragment : BaseFragment(), OnCellClickedRegion {
                         "setObserverData: ${state.response?.data}"
                     )
                     if (state.response?.code == 200) {
-                        countryListingAdapter.setList(state.response.data as ArrayList<CountryResponse>)
+                        countryListingAdapter.setList(state.response.data as ArrayList<CountryResponse.Country>)
                         countryListingAdapter.notifyDataSetChanged()
                     }
                 }
@@ -221,8 +234,7 @@ class ProfileFragment : BaseFragment(), OnCellClickedRegion {
     @SuppressLint("NotifyDataSetChanged")
     private fun getStateData() {
         regionViewModel = getViewModel()
-
-        regionViewModel.getStateRequest(StateRequest(binding.edtCountry.text.toString()))
+        regionViewModel.getStateRequest(StateRequest(binding.edtCountry.text.toString().trim()))
         regionViewModel.responseLiveDataState.observe(viewLifecycleOwner, Observer { state ->
             if (state == null) {
                 return@Observer

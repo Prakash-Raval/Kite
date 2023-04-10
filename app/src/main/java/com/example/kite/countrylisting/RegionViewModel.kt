@@ -1,5 +1,6 @@
 package com.example.kite.countrylisting
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.kite.base.ViewModelBase
@@ -19,11 +20,11 @@ class RegionViewModel : ViewModelBase() {
     var responseLiveDataState =
         MutableLiveData<ResponseHandler<ResponseListData<StateResponse>?>>()
 
-
-    fun getCountryRequest() {
+    init {
         viewModelScope.launch(coroutineContext) {
             responseLiveDataCountry.value = ResponseHandler.Loading
             responseLiveDataCountry.value = repository.callApiCountry()
+            Log.d("TAG111", "init :  ${repository.callApiCountry()}")
         }
     }
 

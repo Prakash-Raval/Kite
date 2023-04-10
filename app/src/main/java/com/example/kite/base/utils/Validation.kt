@@ -27,7 +27,6 @@ object Validation {
      * @return boolean true for valid false for invalid
      */
     fun isValidPassword(password: String): Boolean {
-        //        String patn = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,12})";
         val patn = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[#?!@$%^&*-]).{6,12})"
         val pattern = Pattern.compile(patn, Pattern.CASE_INSENSITIVE)
         val matcher = pattern.matcher(password)

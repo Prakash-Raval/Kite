@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
@@ -46,16 +47,12 @@ class HomeFragment : BaseFragment() {
     private lateinit var viewModelViewTrip: ViewTripViewModel
     private lateinit var viewModelOnGoingRide: OnGoingRideViewModel
 
-    val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
+    val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")
     private var reservationID = ""
     private var counter: Int = 0
     private val bundle = Bundle()
     private var countDownTimer: CountDownTimer? = null
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        getOnGoingRide()
-    }
+    private var isReservationActive: Boolean? = null
 
 
     override fun onCreateView(
@@ -74,13 +71,21 @@ class HomeFragment : BaseFragment() {
         if (isCheck == true) {
             openUpdateChargeDialog()
         }
-        setUpDrawer()
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        /*
+        * method calls
+        * */
         getOnGoingRide()
+        setUpDrawer()
         setUpNavigation()
         getViewTripApi()
         setObserver()
         viewTrip()
-        return binding.root
+        setDrawerMenu()
     }
 
 
@@ -153,9 +158,12 @@ class HomeFragment : BaseFragment() {
 
                 }
                 is ResponseHandler.OnSuccessResponse<ResponseData<ListReservationResponse>?> -> {
+
                     reservationID =
                         state.response?.data?.reservationData?.getOrNull(0)?.reservationId.toString()
                     if (state.response?.data?.reservationData?.size != 0) {
+                        isReservationActive = true
+                        setDrawerMenu()
                         binding.viewTrip = state.response?.data?.reservationData?.getOrNull(0)
                     }
                 }
@@ -187,6 +195,25 @@ class HomeFragment : BaseFragment() {
         }
     }
 
+    /*
+    * setting up the name of customer in drawer menu
+    * */
+    private fun setDrawerMenu() {
+        val name = activity?.findViewById<TextView>(R.id.txtCustomerName)
+        val tripTaken = activity?.findViewById<TextView>(R.id.txtCustomerTrip)
+        val reservation = activity?.findViewById<TextView>(R.id.txtCustomerReservation)
+        name?.text = token?.customerFirstName
+        tripTaken?.text = buildString {
+            append("Trip taken : ")
+            append(token?.isFirstRide.toString())
+        }
+        if (isReservationActive == true) {
+            reservation?.alpha = 1.0f
+        } else {
+            reservation?.alpha = 0.4f
+        }
+
+    }
 
     /*
     *
@@ -231,11 +258,10 @@ class HomeFragment : BaseFragment() {
     * */
     private fun getOnGoingRide() {
         viewModelOnGoingRide = getViewModelOnGoingRide()
-        val customerID = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.customerId
         viewModelOnGoingRide.getOnGoingRideRequest(
             OnGoingRideRequest(
-                accessToken = token,
-                customerId = customerID,
+                accessToken = token?.accessToken,
+                customerId = token?.customerId,
                 lang = 1
             )
         )
@@ -290,7 +316,7 @@ class HomeFragment : BaseFragment() {
         //passing data to request class
         viewModelViewTrip.getViewTripRequest(
             ListReservationRequest(
-                access_token = token,
+                access_token = token?.accessToken,
                 start_date = DateAndTime.currentDate,
                 start_time = DateAndTime.currentTime,
                 offset = 0,
@@ -313,7 +339,6 @@ class HomeFragment : BaseFragment() {
             findNavController().navigate(action, bundle)
         }
     }
-
 
     /*
     * open bottom sheet dialog when user tries to end trip

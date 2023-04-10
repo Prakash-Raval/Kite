@@ -33,6 +33,7 @@ import com.example.kite.notification.model.UpdateNotificationResponse
 import com.example.kite.otpverification.model.OtpRequest
 import com.example.kite.otpverification.model.PhoneRequest
 import com.example.kite.paymentsummary.model.AddSessionResponse
+import com.example.kite.profile.model.UpdateProfileResponse
 import com.example.kite.profile.model.ViewProfileRequest
 import com.example.kite.profile.model.ViewProfileResponse
 import com.example.kite.program.model.ThirdPartyListRequest
@@ -130,6 +131,23 @@ interface Api {
         @Part("battery") battery: RequestBody?,
         @Part image: MultipartBody.Part
     ): Response<ResponseData<EndRideResponse>>
+
+
+    @Multipart
+    @POST(Constants.UPDATE_PROFILE)
+    suspend fun updateProfile(
+        @Part("access_token") access_token: RequestBody?,
+        @Part("customer_email") customer_email: RequestBody?,
+        @Part("customer_first_name") customer_first_name: RequestBody?,
+        @Part("customer_last_name") customer_last_name: RequestBody?,
+        @Part("city") city: RequestBody?,
+        @Part("state") state: RequestBody?,
+        @Part("country") country: RequestBody?,
+        @Part("zip_postal") zip_postal: RequestBody?,
+        @Part("customer_address") customer_address: RequestBody?,
+        @Part("is_first_ride") is_first_ride: RequestBody?,
+        @Part customer_profile_picture: MultipartBody.Part
+    ): Response<ResponseData<UpdateProfileResponse>>
 
     @POST(Constants.NOTIFICATION_UPDATE)
     suspend fun updateNotificationListing(

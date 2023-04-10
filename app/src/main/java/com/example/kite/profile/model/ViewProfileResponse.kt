@@ -7,15 +7,15 @@ import com.fasterxml.jackson.annotation.JsonProperty
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class ViewProfileResponse(
     @JsonProperty("address")
-    var address: Any? = null,
+    var address: String? = null,
     @JsonProperty("city")
-    var city: Any? = null,
+    var city: String? = null,
     @JsonProperty("country")
     var country: String? = null,
     @JsonProperty("country_code")
     var countryCode: String? = null,
     @JsonProperty("customer_address")
-    var customerAddress: Any? = null,
+    var customerAddress: String? = null,
     @JsonProperty("customer_email")
     var customerEmail: String? = null,
     @JsonProperty("customer_first_name")
@@ -31,7 +31,7 @@ data class ViewProfileResponse(
     @JsonProperty("is_default_card")
     var isDefaultCard: Int? = null,
     @JsonProperty("is_first_ride")
-    var isFirstRide: Int? = null,
+    var isFirstRide: String? = null,
     @JsonProperty("is_verify")
     var isVerify: Int? = null,
     @JsonProperty("is_verify_email")
@@ -53,7 +53,7 @@ data class ViewProfileResponse(
     @JsonProperty("schedule_title_french")
     var scheduleTitleFrench: String? = null,
     @JsonProperty("state")
-    var state: Any? = null,
+    var state: String? = null,
     @JsonProperty("subscription")
     var subscription: Subscription? = null,
     @JsonProperty("trips_count")
@@ -61,7 +61,7 @@ data class ViewProfileResponse(
     @JsonProperty("trulioo_data")
     var truliooData: TruliooData? = null,
     @JsonProperty("zip_postal")
-    var zipPostal: Any? = null
+    var zipPostal: String? = null
 ) {
     data class Subscription(
         @JsonProperty("is_subscribe")

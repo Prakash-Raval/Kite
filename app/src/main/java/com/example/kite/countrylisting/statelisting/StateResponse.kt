@@ -1,8 +1,10 @@
 package com.example.kite.countrylisting.statelisting
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class StateResponse(
     @JsonProperty("state_list")
     var stateList: List<State?>? = null

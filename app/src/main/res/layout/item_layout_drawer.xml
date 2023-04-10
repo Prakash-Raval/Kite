@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -43,7 +44,7 @@
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_8sdp"
             android:fontFamily="@font/avenir_black"
-            android:text="@string/prakash"
+            tools:text="@string/prakash"
             android:textColor="@color/black"
             android:textSize="@dimen/_10sdp"
             app:layout_constraintStart_toEndOf="@id/imgCustomerProfile"
@@ -55,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp"
             android:alpha="0.5"
-            android:text="@string/trip_taken_0"
+            tools:text="@string/trip_taken_0"
             android:textSize="@dimen/_10sdp"
             app:layout_constraintBottom_toBottomOf="@id/imgCustomerProfile"
             app:layout_constraintStart_toStartOf="@id/txtCustomerName"
@@ -78,8 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp"
-            android:alpha="0.5"
-            android:padding="@dimen/_5sdp"
+            android:textColor="@color/light_black_text_color"
             android:background="@drawable/bg_text_grey"
             android:text="@string/reservations"
             app:layout_constraintStart_toEndOf="@id/glStart"

@@ -10,10 +10,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import com.example.kite.MainActivity
 import com.example.kite.R
+import com.example.kite.base.ViewModelBase
 import com.example.kite.databinding.FragmentBaseBinding
+import com.example.kite.extensions.hideKeyboard
 import com.google.android.material.snackbar.Snackbar
 
 open class BaseFragment : Fragment() {
@@ -49,10 +50,11 @@ open class BaseFragment : Fragment() {
     fun hideProgressBar() {
         mProgressDialog.dismiss()
     }
+
     /*
        * method to make snack bar
        * */
-     fun showSnackBar(message: String) {
+    private fun showSnackBar(message: String) {
         val snackBar = Snackbar.make(
             (activity as MainActivity).findViewById(android.R.id.content)!!,
             message,
@@ -61,7 +63,22 @@ open class BaseFragment : Fragment() {
         val view = snackBar.view
         val snackTV = view.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
         snackTV.maxLines = 5
+        snackBar.setBackgroundTint(Color.RED)
         snackBar.show()
     }
 
+    /*
+     * creating method for showing snack bar
+     * */
+    fun setUpSnackBar(viewModel: ViewModelBase) {
+        viewModel.getSnakeBarMessage().observe(viewLifecycleOwner) { o: Any ->
+            if (o is Int) {
+                hideKeyboard()
+                (activity as MainActivity).resources?.getString(o)?.let { showSnackBar(it) }!!
+            } else if (o is String) {
+                hideKeyboard()
+                showSnackBar(o)
+            }
+        }
+    }
 }

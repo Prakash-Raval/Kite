@@ -330,7 +330,7 @@ class UserAgreementFragment : Fragment(), OnCellClicked, OnCellClickedRegion {
     private fun getCountryData() {
 
         regionViewModel = getViewModel()
-        regionViewModel.getCountryRequest()
+        //regionViewModel.getCountryRequest()
         regionViewModel.responseLiveDataCountry.observe(
             viewLifecycleOwner,
             androidx.lifecycle.Observer { state ->
@@ -348,7 +348,7 @@ class UserAgreementFragment : Fragment(), OnCellClicked, OnCellClickedRegion {
                     is ResponseHandler.OnSuccessResponse<ResponseListData<CountryResponse>?> -> {
                         Log.d("ViewTripFragment", "setObserverData: ${state.response?.data}")
                         if (state.response?.code == 200) {
-                            countryListingAdapter.setList(state.response.data as ArrayList<CountryResponse>)
+                            countryListingAdapter.setList(state.response.data as ArrayList<CountryResponse.Country>)
                             countryListingAdapter.notifyDataSetChanged()
                         }
                     }

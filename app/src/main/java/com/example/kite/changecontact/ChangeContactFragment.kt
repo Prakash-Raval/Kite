@@ -48,7 +48,7 @@ class ChangeContactFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
-        setUpSnackBar()
+        setUpSnackBar(viewModel)
         setUPToolbar()
         getApiData()
     }
@@ -125,20 +125,7 @@ class ChangeContactFragment : BaseFragment() {
             }
         })
     }
-    /*
-  * creating method for showing snack bar
-  * */
-    private fun setUpSnackBar() {
-        viewModel.getSnakeBarMessage().observe(viewLifecycleOwner) { o: Any ->
-            if (o is Int) {
-                hideKeyboard()
-                (activity as MainActivity).resources?.getString(o)?.let { showSnackBar(it) }!!
-            } else if (o is String) {
-                hideKeyboard()
-                showSnackBar(o)
-            }
-        }
-    }
+
 
 
 }

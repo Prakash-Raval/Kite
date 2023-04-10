@@ -3,6 +3,7 @@ package com.example.kite.utils
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import com.example.kite.profile.model.ViewProfileResponse
 import com.google.gson.GsonBuilder
 
 object PrefManager {

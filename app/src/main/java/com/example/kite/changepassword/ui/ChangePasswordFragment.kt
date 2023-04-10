@@ -5,24 +5,20 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.example.kite.base.network.model.EmptyResponse
-import com.example.kite.MainActivity
 import com.example.kite.R
 import com.example.kite.base.network.client.ResponseHandler
+import com.example.kite.base.network.model.EmptyResponse
 import com.example.kite.base.network.model.ResponseData
 import com.example.kite.basefragment.BaseFragment
 import com.example.kite.changepassword.viewmodel.ChangePasswordViewModel
 import com.example.kite.databinding.FragmentChangePasswordBinding
-import com.example.kite.extensions.hideKeyboard
 import com.example.kite.login.model.LoginResponse
 import com.example.kite.utils.PrefManager
-import com.google.android.material.snackbar.Snackbar
 
 class ChangePasswordFragment : BaseFragment() {
 
@@ -44,11 +40,14 @@ class ChangePasswordFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
-        setUpSnackBar()
+        setUpSnackBar(viewModel)
         getApiData()
         setUpToolBar()
     }
 
+    /*
+    * init view model
+    * */
     private fun init() {
         viewModel = getViewModel()
         val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
@@ -58,7 +57,7 @@ class ChangePasswordFragment : BaseFragment() {
     }
 
     /*
-    * init view model
+    * creating view model
     * */
     private fun getViewModel(): ChangePasswordViewModel {
         viewModel = ViewModelProvider(this)[ChangePasswordViewModel::class.java]
@@ -86,7 +85,8 @@ class ChangePasswordFragment : BaseFragment() {
                 }
                 is ResponseHandler.OnFailed -> {
                     hideProgressBar()
-                    Toast.makeText(requireContext(), "Please try again later", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Please try again later", Toast.LENGTH_SHORT)
+                        .show()
                     findNavController().navigateUp()
                     Log.d("change_password", "setObserverData: $state")
 
@@ -117,22 +117,5 @@ class ChangePasswordFragment : BaseFragment() {
         }
         binding.inChangePasswordBar.txtToolbarHeader.setText(R.string.change_password)
     }
-
-
-    /*
-    * creating method for showing snack bar
-    * */
-    private fun setUpSnackBar() {
-        viewModel.getSnakeBarMessage().observe(viewLifecycleOwner) { o: Any ->
-            if (o is Int) {
-                hideKeyboard()
-                (activity as MainActivity).resources?.getString(o)?.let { showSnackBar(it) }!!
-            } else if (o is String) {
-                hideKeyboard()
-                showSnackBar(o)
-            }
-        }
-    }
-
 
 }

@@ -2,6 +2,7 @@ package com.example.kite
 
 import android.os.Bundle
 import android.view.WindowManager
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
@@ -14,6 +15,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import com.example.kite.databinding.ActivityMainBinding
 import com.example.kite.extensions.DialogExtensions
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
 class MainActivity : AppCompatActivity() {
@@ -30,15 +32,22 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-
         setUpNavigation()
-        setNavigation()
+        setNavigationDirection()
+        onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+
     }
 
+    /*
+    * set up navigation graph and nav controller
+    * */
     private fun setUpNavigation() {
         pDrawerLayout = binding.drawerLayout
         val pNavigationView = binding.navView
         pNavController = findNavController(R.id.nav_host_fragment)
+        /*
+        * setOf() contains top level destination
+        * */
         appBarConfiguration =
             AppBarConfiguration(setOf(), pDrawerLayout)
         pNavigationView.setupWithNavController(pNavController)
@@ -93,6 +102,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /*
+    * handle the back navigation
+    * if appBarConfiguration has id
+    * else
+    * direct back navigate
+    * */
     override fun onSupportNavigateUp(): Boolean {
         return pNavController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
@@ -104,18 +119,44 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        if (pDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-            pDrawerLayout.closeDrawer(GravityCompat.START)
-        } else {
-            onBackPressedDispatcher.onBackPressed()
+
+    /*
+    * handling onBackPress() method with drawer
+    * */
+    private val onBackPressedCallback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            if (pDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+                pDrawerLayout.closeDrawer(GravityCompat.START)
+            } else {
+                when(pNavController.currentDestination?.id){
+                    R.id.homeFragment -> {
+                        showAppClosingDialog()
+                    }
+                    R.id.selectProgramFragment -> {
+                        showAppClosingDialog()
+                    }
+                    else -> {
+                        pNavController.navigateUp()
+                    }
+                }
+            }
         }
+    }
+    /*
+    * close app dialog
+    * */
+    private fun showAppClosingDialog() {
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.app_name)
+            .setMessage("Do you really want to close the app?")
+            .setPositiveButton("Yes") { _, _ -> finish() }
+            .setNegativeButton("No", null)
+            .show()
     }
 
 
     //managing navigation
-    private fun setNavigation() {
+    private fun setNavigationDirection() {
         binding.menuContainer.txtCustomerSupport.setOnClickListener {
             pNavController.navigate(R.id.supportFragment)
         }
@@ -138,6 +179,5 @@ class MainActivity : AppCompatActivity() {
             pNavController.navigate(R.id.notificationFragment)
         }
     }
-
 
 }

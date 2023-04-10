@@ -102,9 +102,8 @@ class NotificationFragment : BaseFragment(), OnNotifyUpdate {
                             state.response.data?.notificationsData
                                     as ArrayList<NotificationResponse.NotificationsData>
                         )
-                        binding.isSelected = true
-                    } else {
-                        binding.isSelected = false
+
+                        binding.isSelected = state.response.data?.notificationsCount != 0
                     }
                 }
             }

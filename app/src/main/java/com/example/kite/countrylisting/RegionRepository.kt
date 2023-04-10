@@ -1,5 +1,6 @@
 package com.example.kite.countrylisting
 
+import android.util.Log
 import com.example.kite.base.BaseRepository
 import com.example.kite.base.network.client.Api
 import com.example.kite.base.network.client.ResponseHandler
@@ -12,11 +13,15 @@ import kotlinx.coroutines.withContext
 class RegionRepository(private val api: Api) : BaseRepository() {
 
     suspend fun callApiCountry(): ResponseHandler<ResponseListData<CountryResponse>?> {
+
         return withContext(Dispatchers.Default) {
+            val responseCountry = api.getCountryList()
+            Log.d("TAG444", "callApiCountry: ${responseCountry.body()}")
             return@withContext makeAPICallForList(
                 call = {
                     api.getCountryList()
                 })
+
         }
     }
 
