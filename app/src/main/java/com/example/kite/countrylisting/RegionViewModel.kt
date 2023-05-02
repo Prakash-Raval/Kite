@@ -6,17 +6,19 @@ import androidx.lifecycle.viewModelScope
 import com.example.kite.base.ViewModelBase
 import com.example.kite.base.network.ApiClient
 import com.example.kite.base.network.client.ResponseHandler
+import com.example.kite.base.network.model.ResponseData
 import com.example.kite.base.network.model.ResponseListData
 import com.example.kite.countrylisting.statelisting.StateRequest
 import com.example.kite.countrylisting.statelisting.StateResponse
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RegionViewModel : ViewModelBase() {
+class RegionViewModel @Inject constructor() : ViewModelBase() {
 
 
     private var repository = RegionRepository(ApiClient.getApiInterface())
     var responseLiveDataCountry =
-        MutableLiveData<ResponseHandler<ResponseListData<CountryResponse>?>>()
+        MutableLiveData<ResponseHandler<ResponseData<CountryResponse>?>>()
     var responseLiveDataState =
         MutableLiveData<ResponseHandler<ResponseListData<StateResponse>?>>()
 

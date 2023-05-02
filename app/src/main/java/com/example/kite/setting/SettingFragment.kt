@@ -24,7 +24,9 @@ import com.example.kite.utils.PrefManager
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 
 class SettingFragment : BaseFragment() {
 

@@ -14,7 +14,6 @@ import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.kite.R
 import com.example.kite.base.network.client.ResponseHandler
@@ -35,17 +34,23 @@ import com.example.kite.utils.FullScreenDialog
 import com.example.kite.utils.PrefManager
 import com.example.kite.utils.Util
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class HomeFragment : BaseFragment() {
 
     /*
     * variables
     * */
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var viewModelViewTrip: ViewTripViewModel
-    private lateinit var viewModelOnGoingRide: OnGoingRideViewModel
+
+    @Inject
+    lateinit var viewModelViewTrip: ViewTripViewModel
+
+    @Inject
+    lateinit var viewModelOnGoingRide: OnGoingRideViewModel
 
     val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")
     private var reservationID = ""
@@ -236,28 +241,10 @@ class HomeFragment : BaseFragment() {
 
     }
 
-
-    /*
-    assigning view model view schedule trip
-    */
-    private fun getViewModel(): ViewTripViewModel {
-        viewModelViewTrip = ViewModelProvider(this)[ViewTripViewModel::class.java]
-        return viewModelViewTrip
-    }
-
-    /*
-    assigning view model for on going ride
-    */
-    private fun getViewModelOnGoingRide(): OnGoingRideViewModel {
-        viewModelOnGoingRide = ViewModelProvider(this)[OnGoingRideViewModel::class.java]
-        return viewModelOnGoingRide
-    }
-
     /*
     * calling on going ride api
     * */
     private fun getOnGoingRide() {
-        viewModelOnGoingRide = getViewModelOnGoingRide()
         viewModelOnGoingRide.getOnGoingRideRequest(
             OnGoingRideRequest(
                 accessToken = token?.accessToken,
@@ -308,8 +295,6 @@ class HomeFragment : BaseFragment() {
     */
     private fun getViewTripApi() {
 
-        //view model
-        viewModelViewTrip = getViewModel()
 
         //getting value to pass in request class
         val thirdPartyID = PrefManager.get<String>("ThirdPartyID")

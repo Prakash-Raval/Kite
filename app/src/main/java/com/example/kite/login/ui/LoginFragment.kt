@@ -18,11 +18,14 @@ import com.example.kite.databinding.FragmentLoginBinding
 import com.example.kite.login.model.LoginResponse
 import com.example.kite.login.viewmodel.LoginViewModel
 import com.example.kite.utils.PrefManager
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class LoginFragment : BaseFragment() {
     private lateinit var binding: FragmentLoginBinding
-    private lateinit var viewModel: LoginViewModel
+    @Inject
+    lateinit var viewModel: LoginViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,15 +62,12 @@ class LoginFragment : BaseFragment() {
         }
     }
 
-    private fun getViewModel(): LoginViewModel {
-        viewModel = ViewModelProvider(this)[LoginViewModel::class.java]
-        return viewModel
-    }
+
 
 
     //getting data from api
     private fun getRetrofitData() {
-        viewModel = getViewModel()
+
 
         //binding variable from xml
         binding.loginData = viewModel

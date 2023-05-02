@@ -1,5 +1,6 @@
 package com.example.kite.base.network.model
 
+import com.example.kite.countrylisting.CountryResponse
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
@@ -18,9 +19,12 @@ class ResponseListData<T> {
     @Expose
     var data: List<T>? = null
 
-   /* override fun toString(): String {
+    @SerializedName("country_list")
+    @Expose
+    var countryList: List<CountryResponse>? = null
+
+    override fun toString(): String {
         return "com.example.kite.base.network.model.ResponseWrapper{" +
                 "data=" + data.toString()
     }
-*/
 }

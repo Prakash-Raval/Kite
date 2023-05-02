@@ -12,6 +12,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.kite.R
 import com.example.kite.constants.Constants
 import com.example.kite.databinding.FragmentSupportBinding
+import dagger.hilt.android.AndroidEntryPoint
+
+@AndroidEntryPoint
 
 class SupportFragment : Fragment() {
     private lateinit var binding: FragmentSupportBinding

@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.kite.R
 import com.example.kite.base.network.client.ResponseHandler
@@ -21,11 +20,17 @@ import com.example.kite.history.model.RideHistoryResponse
 import com.example.kite.history.viewmodel.RideHistoryViewModel
 import com.example.kite.login.model.LoginResponse
 import com.example.kite.utils.PrefManager
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
+
+@AndroidEntryPoint
 
 class RideHistoryFragment : BaseFragment(), OnRideClick {
 
     private lateinit var binding: FragmentRideHistoryBinding
-    private lateinit var viewModel: RideHistoryViewModel
+
+    @Inject
+    lateinit var viewModel: RideHistoryViewModel
     private lateinit var adapter: RideHistoryAdapter
 
     override fun onCreateView(
@@ -68,13 +73,8 @@ class RideHistoryFragment : BaseFragment(), OnRideClick {
         binding.rvRideHistory.adapter = adapter
     }
 
-    private fun getViewModel(): RideHistoryViewModel {
-        viewModel = ViewModelProvider(this)[RideHistoryViewModel::class.java]
-        return viewModel
-    }
 
     private fun getApiRequest() {
-        viewModel = getViewModel()
 
         //getting data for request class
         val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken

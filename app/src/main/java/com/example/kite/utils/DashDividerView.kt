@@ -11,6 +11,10 @@ class DashDividerView : View {
     constructor(context: Context) : this(context, null, 0)
     constructor(context: Context, attributeSet: AttributeSet) : this(context, attributeSet, 0)
 
+    /*
+    * for horizontal view and vertical view
+    *
+    * */
     companion object {
         const val DIRECTION_VERTICAL = 0
         const val DIRECTION_HORIZONTAL = 1

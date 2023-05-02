@@ -10,10 +10,12 @@ import com.example.kite.base.network.model.ResponseData
 import com.example.kite.base.utils.Validation
 import com.example.kite.otpverification.model.OtpRequest
 import com.example.kite.otpverification.repository.OtpRepository
+import kotlinx.coroutines.GlobalScope.coroutineContext
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
-class OtpViewModel : ViewModelBase() {
+class OtpViewModel @Inject constructor() : ViewModelBase() {
     private var repository = OtpRepository(ApiClient.getApiInterface())
     var responseLiveData =
         MutableLiveData<ResponseHandler<ResponseData<EmptyResponse>?>>()

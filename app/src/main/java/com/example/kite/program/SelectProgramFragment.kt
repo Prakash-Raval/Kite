@@ -18,7 +18,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.ORIENTATION_HORIZONTAL
@@ -35,15 +34,19 @@ import com.example.kite.program.model.ThirdPartyListRequest
 import com.example.kite.program.model.ThirdPartyListResponse
 import com.example.kite.program.viewmodel.ThirdPartyViewModel
 import com.example.kite.utils.PrefManager
-import com.example.kite.utils.onTextChanged
+import com.example.kite.extensions.onTextChanged
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class SelectProgramFragment : BaseFragment(), OnThirdPartyListing {
     /*
     * variables
     * */
     private lateinit var binding: FragmentSelectProgramBinding
-    private lateinit var viewModel: ThirdPartyViewModel
+
+    @Inject
+    lateinit var viewModel: ThirdPartyViewModel
     private lateinit var adapter: ThirdPartyListAdapter
 
 
@@ -73,7 +76,6 @@ class SelectProgramFragment : BaseFragment(), OnThirdPartyListing {
         setUpTextWatcher()
         navigate()
         setUPToolbar()
-        //setAdapterThirdPartyList()
         list = ArrayList()
         adapter = ThirdPartyListAdapter(
             list,
@@ -93,7 +95,7 @@ class SelectProgramFragment : BaseFragment(), OnThirdPartyListing {
     /*
     * setting up the toolbar
     * */
-    fun setUPToolbar() {
+    private fun setUPToolbar() {
         binding.inProgramBar.imgBack.visibility = View.GONE
         binding.inProgramBar.imgBack.setOnClickListener {
             findNavController().navigateUp()
@@ -102,14 +104,8 @@ class SelectProgramFragment : BaseFragment(), OnThirdPartyListing {
         binding.inProgramBar.txtToolbarHeader.setText(R.string.select_your_program)
     }
 
-    private fun getViewModel(): ThirdPartyViewModel {
-        viewModel = ViewModelProvider(this)[ThirdPartyViewModel::class.java]
-        return viewModel
-    }
 
-    @SuppressLint("NotifyDataSetChanged")
     private fun getData() {
-        viewModel = getViewModel()
         val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
         viewModel.getThirdPartyList(
             ThirdPartyListRequest(
@@ -140,6 +136,7 @@ class SelectProgramFragment : BaseFragment(), OnThirdPartyListing {
                 is ResponseHandler.OnSuccessResponse<ResponseListData<ThirdPartyListResponse>?> -> {
                     hideProgressBar()
                     state.response?.data?.let { it1 -> it1.let { it2 -> list.addAll(it2) } }
+                    //Collections.swap(list,0,1)
                     adapter.notifyDataSetChanged()
                     Log.d("ViewTripFragment", "setObserverData: ${state.response?.data}")
                 }
@@ -150,25 +147,23 @@ class SelectProgramFragment : BaseFragment(), OnThirdPartyListing {
     //style  for viewpager 2
     //setting multiple pages on single tab
     private fun viewPagerStyle() {
-
-        with(binding.vpProgram) {
-            clipToPadding = false
-            clipChildren = false
-            offscreenPageLimit = 3
-        }
         val pageMarginPx = resources.getDimensionPixelOffset(R.dimen.pageMargin)
         val offsetPx = resources.getDimensionPixelOffset(R.dimen.offset)
-        binding.vpProgram.setPageTransformer { page, position ->
-            val viewPager = page.parent.parent as ViewPager2
-            val offset = position * -(2 * offsetPx + pageMarginPx)
-            if (viewPager.orientation == ORIENTATION_HORIZONTAL) {
-                if (ViewCompat.getLayoutDirection(viewPager) == ViewCompat.LAYOUT_DIRECTION_RTL) {
-                    page.translationX = -offset
+
+        with(binding.vpProgram) {
+            offscreenPageLimit = 3
+            setPageTransformer { page, position ->
+                val viewPager = page.parent.parent as ViewPager2
+                val offset = position * -(2 * offsetPx + pageMarginPx)
+                if (viewPager.orientation == ORIENTATION_HORIZONTAL) {
+                    if (ViewCompat.getLayoutDirection(viewPager) == ViewCompat.LAYOUT_DIRECTION_RTL) {
+                        page.translationX = -offset
+                    } else {
+                        page.translationX = offset
+                    }
                 } else {
-                    page.translationX = offset
+                    page.translationY = offset
                 }
-            } else {
-                page.translationY = offset
             }
         }
     }
@@ -215,6 +210,7 @@ class SelectProgramFragment : BaseFragment(), OnThirdPartyListing {
         binding.edtSearch.onTextChanged {
             adapter.filter.filter(it)
         }
+
     }
 
     /*
@@ -247,7 +243,6 @@ class SelectProgramFragment : BaseFragment(), OnThirdPartyListing {
                 dataBinding.isSelected = selected == position
 
             }
-
             override fun onItemClick(model: ThirdPartyListResponse, position: Int) {
                 selected = position
                 val select = selected
@@ -257,9 +252,7 @@ class SelectProgramFragment : BaseFragment(), OnThirdPartyListing {
                     activity?.getSharedPreferences("THIRD_PARTY_ID", MODE_PRIVATE)?.edit()
                 sharedPreferences?.putString("ThirdPartyID", model.thirdPartyId)?.apply()
             }
-
         }
-
         binding.vpProgram.adapter = myAdapter
     }*/
 }

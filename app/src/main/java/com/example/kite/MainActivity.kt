@@ -16,8 +16,9 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.kite.databinding.ActivityMainBinding
 import com.example.kite.extensions.DialogExtensions
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     /*
@@ -179,5 +180,4 @@ class MainActivity : AppCompatActivity() {
             pNavController.navigate(R.id.notificationFragment)
         }
     }
-
 }

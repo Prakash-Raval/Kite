@@ -12,8 +12,9 @@ import com.example.kite.endridechecklist.repository.EndRideRepository
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import javax.inject.Inject
 
-class EndRideViewModel : ViewModelBase() {
+class EndRideViewModel @Inject constructor() : ViewModelBase() {
 
     val repository = EndRideRepository(ApiClient.getApiInterface())
     val responseLiveData =

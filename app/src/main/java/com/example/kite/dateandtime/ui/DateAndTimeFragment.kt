@@ -11,7 +11,6 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.example.kite.R
 import com.example.kite.base.network.client.ResponseHandler
 import com.example.kite.base.network.model.ResponseData
@@ -39,13 +38,15 @@ import com.kizitonwose.calendar.core.daysOfWeek
 import com.kizitonwose.calendar.view.MonthDayBinder
 import com.kizitonwose.calendar.view.MonthHeaderFooterBinder
 import com.kizitonwose.calendar.view.ViewContainer
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 import java.util.*
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndTime) :
     BottomSheetDialogFragment() {
 
@@ -56,8 +57,12 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
     * */
     private lateinit var binding: FragmentDateAndTimeBinding
 
-    private lateinit var viewModel: TimeSlotViewModel
-    private lateinit var viewModelPromoCode: PromoCodeViewModel
+    @Inject
+    lateinit var viewModel: TimeSlotViewModel
+
+    @Inject
+    lateinit var viewModelPromoCode: PromoCodeViewModel
+
     private lateinit var adapter: DateAndTimeAdapter
 
     var list = ArrayList<TimeSlotResponse.AllTimeSlot>()
@@ -207,15 +212,6 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
         }
     }
 
-    private fun getViewModel(): PromoCodeViewModel {
-        viewModelPromoCode = ViewModelProvider(this)[PromoCodeViewModel::class.java]
-        return viewModelPromoCode
-    }
-
-    private fun getViewModelTime(): TimeSlotViewModel {
-        viewModel = ViewModelProvider(this)[TimeSlotViewModel::class.java]
-        return viewModel
-    }
 
     //navigation
     private fun setUpNavigate() {
@@ -320,7 +316,6 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
     //calling api data
     private fun getTimeSlotData() {
 
-        viewModel = getViewModelTime()
 
         //collecting data for passing in to request class
         val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
@@ -455,7 +450,6 @@ class DateAndTimeFragment(val context1: Context, val getDateAndTime: GetDateAndT
 
     //promo code api call
     private fun setLiveDataObservers() {
-        viewModelPromoCode = getViewModel()
         binding.viewModelPromoCode = viewModelPromoCode
 
         val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken

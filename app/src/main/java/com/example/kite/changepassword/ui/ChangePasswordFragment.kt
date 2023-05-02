@@ -19,14 +19,18 @@ import com.example.kite.changepassword.viewmodel.ChangePasswordViewModel
 import com.example.kite.databinding.FragmentChangePasswordBinding
 import com.example.kite.login.model.LoginResponse
 import com.example.kite.utils.PrefManager
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class ChangePasswordFragment : BaseFragment() {
 
     /*
     variables
     * */
     private lateinit var binding: FragmentChangePasswordBinding
-    private lateinit var viewModel: ChangePasswordViewModel
+    @Inject
+    lateinit var viewModel: ChangePasswordViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -49,19 +53,10 @@ class ChangePasswordFragment : BaseFragment() {
     * init view model
     * */
     private fun init() {
-        viewModel = getViewModel()
         val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
         if (token != null) {
             viewModel.getToken(token)
         }
-    }
-
-    /*
-    * creating view model
-    * */
-    private fun getViewModel(): ChangePasswordViewModel {
-        viewModel = ViewModelProvider(this)[ChangePasswordViewModel::class.java]
-        return viewModel
     }
 
     /*

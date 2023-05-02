@@ -319,5 +319,6 @@
     <string name="lbl_enter_cvv">Please enter CVV</string>
     <string name="lbl_enter_valid_cvv">Please enter valid CVV</string>
     <string name="lbl_select_year_first">Select Year First</string>
+    <string name="no_data_found">No Data Found</string>
 
 </resources>

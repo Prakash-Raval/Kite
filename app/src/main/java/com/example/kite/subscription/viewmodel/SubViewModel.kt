@@ -13,8 +13,9 @@ import com.example.kite.subscription.model.CancelSubRequest
 import com.example.kite.subscription.model.CancelSubResponse
 import com.example.kite.subscription.repository.SubRepository
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SubViewModel : ViewModelBase() {
+class SubViewModel @Inject constructor() : ViewModelBase() {
 
     private var repository = SubRepository(ApiClient.getApiInterface())
     private var responseLiveDataADD =

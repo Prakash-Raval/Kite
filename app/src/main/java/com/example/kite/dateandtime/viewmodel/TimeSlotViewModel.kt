@@ -11,32 +11,10 @@ import com.example.kite.dateandtime.model.TimeSlotRequest
 import com.example.kite.dateandtime.model.TimeSlotResponse
 import com.example.kite.dateandtime.repository.TimeSlotRepository
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class TimeSlotViewModel : ViewModelBase() {
+class TimeSlotViewModel @Inject constructor() : ViewModelBase() {
 
-/*    private val timeSlotMLD = MutableLiveData<TimeSlotResponse>()
-    val timeSlotLD: LiveData<TimeSlotResponse>
-        get() = timeSlotMLD
-
-
-    fun getRequiredData(request: TimeSlotRequest) {
-        getList(request)
-    }
-
-    private fun getList(request: TimeSlotRequest) =
-        viewModelScope.launch {
-            val response = repository.getTimeSlot(request)
-            try {
-                if (response.isSuccessful) {
-                    timeSlotMLD.postValue(response.body())
-                    Log.d("TIMESLOTDATA", response.toString())
-                } else {
-                    Log.d("TIMESLOTDATA", response.message().toString())
-                }
-            } catch (e: Exception) {
-                Log.d("TIMESLOTDATA", e.message.toString())
-            }
-        }*/
 
     var repository = TimeSlotRepository(ApiClient.getApiInterface())
     var responseLiveData = MutableLiveData<ResponseHandler<ResponseData<TimeSlotResponse>?>>()

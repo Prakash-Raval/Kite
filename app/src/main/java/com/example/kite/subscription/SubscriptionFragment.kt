@@ -14,7 +14,6 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.kite.R
 import com.example.kite.base.network.client.ResponseHandler
@@ -34,13 +33,19 @@ import com.example.kite.subscription.model.CancelSubResponse
 import com.example.kite.subscription.viewmodel.SubViewModel
 import com.example.kite.utils.PrefManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 
 class SubscriptionFragment : BaseFragment() {
 
     private lateinit var binding: FragmentSubscriptionBinding
-    private lateinit var viewModel: SubViewModel
-    private lateinit var viewModelCard: GetCardViewModel
+
+    @Inject
+    lateinit var viewModel: SubViewModel
+    @Inject
+    lateinit var viewModelCard: GetCardViewModel
     val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
     val customerId = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.customerId
 
@@ -75,17 +80,10 @@ class SubscriptionFragment : BaseFragment() {
         }
     }
 
-    //getting the view model
-    private fun getViewModelCard(): GetCardViewModel {
-        viewModelCard = ViewModelProvider(this)[GetCardViewModel::class.java]
-        return viewModelCard
-    }
 
     //collecting request data
     private fun getApiDataCard() {
-        viewModelCard = getViewModelCard()
         //get request data
-
         viewModelCard.getGetCardRequest(
             GetCardRequest(
                 access_token = token,
@@ -248,13 +246,8 @@ class SubscriptionFragment : BaseFragment() {
         getApiData()
     }
 
-    private fun getViewModel(): SubViewModel {
-        viewModel = ViewModelProvider(this)[SubViewModel::class.java]
-        return viewModel
-    }
 
     private fun getApiData() {
-        viewModel = getViewModel()
         //add subscription viw model data
         viewModel.getAddSubRequest(
             AddSubRequest(
@@ -265,7 +258,6 @@ class SubscriptionFragment : BaseFragment() {
     }
 
     private fun getApiDataCancel() {
-        viewModel = getViewModel()
         //cancel subscription view model data
         viewModel.getCancelSubRequest(
             CancelSubRequest(

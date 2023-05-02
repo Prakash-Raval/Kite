@@ -26,12 +26,16 @@ import com.example.kite.databinding.FragmentSignUpBinding
 import com.example.kite.signup.model.SignUpResponse
 import com.example.kite.signup.viewmodel.SignUpViewModel
 import com.example.kite.utils.PrefManager
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 
 class SignUpFragment : BaseFragment() {
 
     private lateinit var binding: FragmentSignUpBinding
-    private lateinit var viewModel: SignUpViewModel
+    @Inject
+    lateinit var viewModel: SignUpViewModel
 
 
     override fun onCreateView(
@@ -53,13 +57,7 @@ class SignUpFragment : BaseFragment() {
         return binding.root
     }
 
-    /*
-  * init view model for sign up
-  * */
-    private fun getViewModel(): SignUpViewModel {
-        viewModel = ViewModelProvider(this)[SignUpViewModel::class.java]
-        return viewModel
-    }
+
 
     /*
     * country listing for spinner
@@ -85,8 +83,6 @@ class SignUpFragment : BaseFragment() {
     * calling api for sign and setting up the observer
     * */
     private fun getSignUpData() {
-        viewModel = getViewModel()
-
         binding.signUpData = viewModel
         binding.lifecycleOwner = this
 

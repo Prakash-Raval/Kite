@@ -11,7 +11,6 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.budiyev.android.codescanner.*
 import com.example.kite.R
@@ -26,7 +25,10 @@ import com.example.kite.scanqr.model.ScanQRRequest
 import com.example.kite.scanqr.model.ScanQRResponse
 import com.example.kite.scanqr.viewmodel.ScanQRViewModel
 import com.example.kite.utils.PrefManager
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 
 class ScanQRCodeFragment : BaseFragment() {
     /*
@@ -35,7 +37,8 @@ class ScanQRCodeFragment : BaseFragment() {
 
     private lateinit var binding: FragmentScanQRCodeBinding
     private lateinit var codeScanner: CodeScanner
-    private lateinit var viewModel: ScanQRViewModel
+    @Inject
+    lateinit var viewModel: ScanQRViewModel
     private var qrCodeString = ""
 
     override fun onCreateView(
@@ -211,19 +214,10 @@ class ScanQRCodeFragment : BaseFragment() {
 
 
     /*
-    * getting view model
-    * */
-    private fun getViewModel(): ScanQRViewModel {
-        viewModel = ViewModelProvider(this)[ScanQRViewModel::class.java]
-        return viewModel
-    }
-
-    /*
     *
     * collecting request class data
     * */
     private fun getApiData() {
-        viewModel = getViewModel()
         val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
         val args = this.arguments
         val vehicleSlug = args?.getString("VehicleSlug")
@@ -243,7 +237,6 @@ class ScanQRCodeFragment : BaseFragment() {
     * setting up the observables
     * */
     private fun setObserver() {
-        viewModel = getViewModel()
         viewModel.liveData.observe(viewLifecycleOwner, Observer { state ->
             if (state == null) {
                 return@Observer

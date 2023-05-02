@@ -1,6 +1,6 @@
 package com.example.kite.base.network
 
-import HttpHandleIntercept
+import com.example.kite.base.network.client.HttpHandleIntercept
 import com.example.kite.BuildConfig
 import com.example.kite.base.network.client.Api
 import com.example.kite.base.utils.DebugLog
@@ -28,8 +28,8 @@ class ApiClient {
     companion object {
 
         private var okHttpClient: OkHttpClient? = null
-        var retrofits: Retrofit? = null
-        var myApiInterface: Api? = null
+        private var retrofits: Retrofit? = null
+        private var myApiInterface: Api? = null
 
 
         /**
@@ -68,7 +68,7 @@ class ApiClient {
         }
 
         /**
-         * generate OKhttp client
+         * generate OkHttp client
          */
         private fun getOkHttpClient(): OkHttpClient {
             if (okHttpClient == null) {

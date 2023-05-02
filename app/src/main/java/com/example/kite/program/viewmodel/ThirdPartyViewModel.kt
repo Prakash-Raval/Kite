@@ -10,9 +10,11 @@ import com.example.kite.base.network.model.ResponseListData
 import com.example.kite.program.model.ThirdPartyListRequest
 import com.example.kite.program.model.ThirdPartyListResponse
 import com.example.kite.program.repository.ThirdPartyRepository
+import kotlinx.coroutines.GlobalScope.coroutineContext
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ThirdPartyViewModel : ViewModelBase() {
+class ThirdPartyViewModel @Inject constructor() : ViewModelBase() {
 
     private var repository = ThirdPartyRepository(ApiClient.getApiInterface())
     private var responseLiveData =

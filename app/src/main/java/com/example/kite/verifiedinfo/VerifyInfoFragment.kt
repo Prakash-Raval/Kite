@@ -12,6 +12,9 @@ import com.example.kite.databinding.FragmentVerifyInfoBinding
 import com.example.kite.login.model.LoginResponse
 import com.example.kite.setting.SettingFragmentDirections
 import com.example.kite.utils.PrefManager
+import dagger.hilt.android.AndroidEntryPoint
+
+@AndroidEntryPoint
 
 class VerifyInfoFragment : Fragment() {
 

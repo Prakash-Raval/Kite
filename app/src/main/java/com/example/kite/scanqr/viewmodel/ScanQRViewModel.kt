@@ -11,8 +11,9 @@ import com.example.kite.scanqr.model.ScanQRRequest
 import com.example.kite.scanqr.model.ScanQRResponse
 import com.example.kite.scanqr.repository.ScanQRRepository
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ScanQRViewModel : ViewModelBase() {
+class ScanQRViewModel @Inject constructor(): ViewModelBase() {
 
     private var repository = ScanQRRepository(ApiClient.getApiInterface())
     private var responseLiveData = MutableLiveData<ResponseHandler<ResponseData<ScanQRResponse>?>>()

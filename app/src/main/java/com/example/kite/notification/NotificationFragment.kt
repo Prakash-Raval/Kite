@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.kite.R
 import com.example.kite.base.network.client.ResponseHandler
@@ -24,10 +23,16 @@ import com.example.kite.notification.model.UpdateNotificationRequest
 import com.example.kite.notification.model.UpdateNotificationResponse
 import com.example.kite.notification.viewmodel.NotificationViewModel
 import com.example.kite.utils.PrefManager
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class NotificationFragment : BaseFragment(), OnNotifyUpdate {
     private lateinit var binding: FragmentNotificationBinding
-    private lateinit var viewModel: NotificationViewModel
+
+    @Inject
+    lateinit var viewModel: NotificationViewModel
+
     private lateinit var adapter: NotificationAdapter
 
     override fun onCreateView(
@@ -61,13 +66,7 @@ class NotificationFragment : BaseFragment(), OnNotifyUpdate {
     }
 
 
-    private fun getViewModel(): NotificationViewModel {
-        viewModel = ViewModelProvider(this)[NotificationViewModel::class.java]
-        return viewModel
-    }
-
     private fun getNotificationList() {
-        viewModel = getViewModel()
         val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
 
         viewModel.getNotificationListing(

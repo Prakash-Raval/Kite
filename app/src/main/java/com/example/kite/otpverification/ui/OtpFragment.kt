@@ -8,30 +8,34 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.example.kite.MainActivity
 import com.example.kite.R
 import com.example.kite.base.network.client.ResponseHandler
 import com.example.kite.base.network.model.EmptyResponse
 import com.example.kite.base.network.model.ResponseData
 import com.example.kite.basefragment.BaseFragment
 import com.example.kite.databinding.FragmentOtpBinding
-import com.example.kite.extensions.hideKeyboard
 import com.example.kite.login.model.LoginResponse
 import com.example.kite.otpverification.model.PhoneRequest
 import com.example.kite.otpverification.viewmodel.OtpViewModel
 import com.example.kite.otpverification.viewmodel.PhoneViewModel
 import com.example.kite.utils.PrefManager
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class OtpFragment : BaseFragment() {
 
     /*
     * variables
     * */
     private lateinit var binding: FragmentOtpBinding
-    private lateinit var viewModel: OtpViewModel
-    private lateinit var viewModelPhone: PhoneViewModel
+
+    @Inject
+    lateinit var viewModel: OtpViewModel
+
+    @Inject
+    lateinit var viewModelPhone: PhoneViewModel
 
 
     override fun onCreateView(
@@ -59,28 +63,12 @@ class OtpFragment : BaseFragment() {
         setUpSnackBar(viewModelPhone)
     }
 
-    /*
-    * creating view model for otp
-    * */
-    fun getViewModel(): OtpViewModel {
-        viewModel = ViewModelProvider(this)[OtpViewModel::class.java]
-        return viewModel
-    }
-
-    /*
-   * creating view model for change contact
-   * */
-    private fun getViewModelPhone(): PhoneViewModel {
-        viewModelPhone = ViewModelProvider(this)[PhoneViewModel::class.java]
-        return viewModelPhone
-    }
 
     /*
     * init view model
     * */
     fun init() {
-        viewModel = getViewModel()
-        viewModelPhone = getViewModelPhone()
+
         binding.otpData = viewModel
         var token = PrefManager.get<String>("Token")
         val args = this.arguments
@@ -170,7 +158,6 @@ class OtpFragment : BaseFragment() {
         }
         binding.inOTPBar.txtToolbarHeader.setText(R.string.otp)
     }
-
 
 
     /*

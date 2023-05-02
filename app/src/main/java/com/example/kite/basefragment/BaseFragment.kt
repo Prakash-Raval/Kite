@@ -16,7 +16,8 @@ import com.example.kite.base.ViewModelBase
 import com.example.kite.databinding.FragmentBaseBinding
 import com.example.kite.extensions.hideKeyboard
 import com.google.android.material.snackbar.Snackbar
-
+import dagger.hilt.android.AndroidEntryPoint
+@AndroidEntryPoint
 open class BaseFragment : Fragment() {
     private lateinit var binding: FragmentBaseBinding
     private lateinit var mProgressDialog: Dialog

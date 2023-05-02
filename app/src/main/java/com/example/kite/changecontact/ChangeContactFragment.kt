@@ -5,13 +5,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.example.kite.MainActivity
 import com.example.kite.R
 import com.example.kite.base.network.client.ResponseHandler
 import com.example.kite.base.network.model.ResponseData
@@ -19,16 +15,19 @@ import com.example.kite.basefragment.BaseFragment
 import com.example.kite.changecontact.model.ChangeContactResponse
 import com.example.kite.changecontact.viewmodel.ChangeContactViewModel
 import com.example.kite.databinding.FragmentChangeContactBinding
-import com.example.kite.extensions.hideKeyboard
 import com.example.kite.login.model.LoginResponse
 import com.example.kite.utils.PrefManager
-import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 
 class ChangeContactFragment : BaseFragment() {
 
     private lateinit var binding: FragmentChangeContactBinding
-    private lateinit var viewModel: ChangeContactViewModel
+
+    @Inject
+    lateinit var viewModel: ChangeContactViewModel
     val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")
 
     override fun onCreateView(
@@ -57,7 +56,6 @@ class ChangeContactFragment : BaseFragment() {
     * init view model and request token
     * */
     fun init() {
-        viewModel = getViewModel()
         binding.data = viewModel
         if (token != null) {
             token.accessToken?.let {
@@ -72,13 +70,6 @@ class ChangeContactFragment : BaseFragment() {
 
     }
 
-    /*
-    * creating view model
-    * */
-    private fun getViewModel(): ChangeContactViewModel {
-        viewModel = ViewModelProvider(this)[ChangeContactViewModel::class.java]
-        return viewModel
-    }
 
     /*
     * setting up toolbar
@@ -115,7 +106,7 @@ class ChangeContactFragment : BaseFragment() {
                     if (state.response?.code == 200) {
                         val bundle = Bundle()
                         bundle.putBoolean("OTP", true)
-                        bundle.putString("MOBILE",binding.edtMobile.text.toString())
+                        bundle.putString("MOBILE", binding.edtMobile.text.toString())
                         findNavController().navigate(
                             R.id.action_changeContactFragment_to_otpFragment,
                             bundle
@@ -125,7 +116,6 @@ class ChangeContactFragment : BaseFragment() {
             }
         })
     }
-
 
 
 }

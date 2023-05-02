@@ -10,8 +10,9 @@ import com.example.kite.base.network.model.ResponseData
 import com.example.kite.otpverification.model.PhoneRequest
 import com.example.kite.otpverification.repository.PhoneRepository
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class PhoneViewModel : ViewModelBase() {
+class PhoneViewModel @Inject constructor() : ViewModelBase() {
 
     private var repository = PhoneRepository(ApiClient.getApiInterface())
     var responseLiveData =

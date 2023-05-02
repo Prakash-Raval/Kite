@@ -11,8 +11,9 @@ import com.example.kite.scheduletrip.model.UpdateTripRequest
 import com.example.kite.scheduletrip.model.UpdateTripResponse
 import com.example.kite.scheduletrip.repository.UpdateTripRepository
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class UpdateTripViewModel : ViewModelBase() {
+class UpdateTripViewModel @Inject constructor(): ViewModelBase() {
 
     var repository = UpdateTripRepository(ApiClient.getApiInterface())
     var responseLiveData = MutableLiveData<ResponseHandler<ResponseData<UpdateTripResponse>?>>()

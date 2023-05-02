@@ -14,11 +14,13 @@ import com.example.kite.signup.model.SignUpRequest
 import com.example.kite.signup.model.SignUpResponse
 import com.example.kite.signup.repository.SignUpRepository
 import com.example.kite.utils.ErrorEvent
+import kotlinx.coroutines.GlobalScope.coroutineContext
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import javax.inject.Inject
 
-class SignUpViewModel : ViewModelBase() {
+class SignUpViewModel @Inject constructor(): ViewModelBase() {
 
 
     var signUPData = SignUpRequest()

@@ -17,11 +17,16 @@ import com.example.kite.base.network.model.ResponseData
 import com.example.kite.basefragment.BaseFragment
 import com.example.kite.databinding.FragmentForgetPasswordBinding
 import com.example.kite.forgetpassword.viewmodel.ForgotPasswordViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
+
+@AndroidEntryPoint
 
 class ForgetPasswordFragment : BaseFragment() {
 
     private lateinit var binding: FragmentForgetPasswordBinding
-    private lateinit var viewModel: ForgotPasswordViewModel
+    @Inject
+    lateinit var viewModel: ForgotPasswordViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,7 +62,6 @@ class ForgetPasswordFragment : BaseFragment() {
     * api call for forgot password
     * */
     private fun getApiData() {
-        viewModel = getViewModel()
         binding.data = viewModel
         /*
         * observing error messages
@@ -102,11 +106,5 @@ class ForgetPasswordFragment : BaseFragment() {
         })
     }
 
-    /*
-    * init view model
-    * */
-    private fun getViewModel(): ForgotPasswordViewModel {
-        viewModel = ViewModelProvider(this)[ForgotPasswordViewModel::class.java]
-        return viewModel
-    }
+
 }

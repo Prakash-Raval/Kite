@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.kite.R
 import com.example.kite.base.network.client.ResponseHandler
@@ -19,11 +18,17 @@ import com.example.kite.utils.PrefManager
 import com.example.kite.viewscheduletrip.model.ViewTripRequest
 import com.example.kite.viewscheduletrip.model.ViewTripResponse
 import com.example.kite.viewscheduletrip.viewmodel.ViewTripDetailsViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
+
+@AndroidEntryPoint
 
 class ViewTripFragment : BaseFragment() {
 
     private lateinit var binding: FragmentViewTripBinding
-    private lateinit var viewModel: ViewTripDetailsViewModel
+
+    @Inject
+    lateinit var viewModel: ViewTripDetailsViewModel
     val bundle = Bundle()
 
     override fun onCreateView(
@@ -52,14 +57,9 @@ class ViewTripFragment : BaseFragment() {
         }
     }
 
-    private fun getViewModel(): ViewTripDetailsViewModel {
-        viewModel = ViewModelProvider(this)[ViewTripDetailsViewModel::class.java]
-        return viewModel
-    }
 
     //getting data from home fragment
     private fun requestApiData() {
-        viewModel = getViewModel()
         val args = this.arguments
         val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
         val reservationID = args?.getString("ReservationID")

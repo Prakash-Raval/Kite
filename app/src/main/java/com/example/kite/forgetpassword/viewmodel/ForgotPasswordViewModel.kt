@@ -13,8 +13,9 @@ import com.example.kite.forgetpassword.model.ForgotPasswordRequest
 import com.example.kite.forgetpassword.repository.ForgotPasswordRepository
 import com.example.kite.utils.ErrorEvent
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ForgotPasswordViewModel : ViewModelBase() {
+class ForgotPasswordViewModel @Inject constructor(): ViewModelBase() {
 
     private var repository = ForgotPasswordRepository(ApiClient.getApiInterface())
     var responseLiveData =

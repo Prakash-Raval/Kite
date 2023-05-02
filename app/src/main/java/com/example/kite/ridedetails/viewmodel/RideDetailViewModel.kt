@@ -10,9 +10,11 @@ import com.example.kite.base.network.model.ResponseData
 import com.example.kite.ridedetails.model.RideDetailRequest
 import com.example.kite.ridedetails.model.RideDetailResponse
 import com.example.kite.ridedetails.repository.RideDetailsRepository
+import kotlinx.coroutines.GlobalScope.coroutineContext
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RideDetailViewModel : ViewModelBase() {
+class RideDetailViewModel @Inject constructor(): ViewModelBase() {
 
     private var repository = RideDetailsRepository(ApiClient.getApiInterface())
     private var responseLiveData =

@@ -11,8 +11,9 @@ import com.example.kite.home.model.OnGoingRideRequest
 import com.example.kite.home.model.OnGoingRideResponse
 import com.example.kite.home.repository.OnGoingRideRepository
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class OnGoingRideViewModel : ViewModelBase() {
+class OnGoingRideViewModel @Inject constructor() : ViewModelBase() {
 
     val repository = OnGoingRideRepository(ApiClient.getApiInterface())
     val responseLiveData =

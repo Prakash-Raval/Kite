@@ -10,8 +10,9 @@ import com.example.kite.history.model.RideHistoryRequest
 import com.example.kite.history.model.RideHistoryResponse
 import com.example.kite.history.repository.RideHistoryRepository
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RideHistoryViewModel : ViewModelBase() {
+class RideHistoryViewModel @Inject constructor(): ViewModelBase() {
 
     private var repository = RideHistoryRepository(ApiClient.getApiInterface())
     var responseLiveData =

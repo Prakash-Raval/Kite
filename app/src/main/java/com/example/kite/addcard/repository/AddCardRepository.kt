@@ -8,6 +8,7 @@ import com.example.kite.base.network.client.ResponseHandler
 import com.example.kite.base.network.model.ResponseData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 class AddCardRepository(val api: Api) : BaseRepository() {
 

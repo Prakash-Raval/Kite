@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.kite.R
 import com.example.kite.addcard.model.AddCardRequest
@@ -25,17 +24,21 @@ import com.example.kite.databinding.FragmentAddCardBinding
 import com.example.kite.extensions.DialogExtensions
 import com.example.kite.login.model.LoginResponse
 import com.example.kite.utils.PrefManager
-import com.example.kite.utils.onTextChanged
+import com.example.kite.extensions.onTextChanged
 import com.stripe.android.ApiResultCallback
 import com.stripe.android.Stripe
 import com.stripe.android.model.CardParams
 import com.stripe.android.model.Token
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class AddCardFragment : BaseFragment() {
     private lateinit var binding: FragmentAddCardBinding
-    private lateinit var viewModel: AddCardViewModel
+
+    @Inject
+    lateinit var viewModel: AddCardViewModel
 
     private var stripe: Stripe? = null
     private var isDefault = 1
@@ -161,7 +164,7 @@ class AddCardFragment : BaseFragment() {
         tokenID: String, stripeCardId: String?,
         last4: String?, displayName: String?
     ) {
-        viewModel = getViewModel()
+        // viewModel = getViewModel()
 
         val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")
         val expiryDate = String.format(
@@ -282,13 +285,13 @@ class AddCardFragment : BaseFragment() {
         }
     }
 
-    /*
+    /* *//*
     * init view model for add card api
-    * */
+    * *//*
     private fun getViewModel(): AddCardViewModel {
         viewModel = ViewModelProvider(this)[AddCardViewModel::class.java]
         return viewModel
-    }
+    }*/
 
     /*
     * setting up the observer for add card api

@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.kite.R
@@ -34,16 +33,24 @@ import com.example.kite.scheduletrip.viewmodel.UpdateTripViewModel
 import com.example.kite.utils.PrefManager
 import com.example.kite.viewscheduletrip.model.ViewTripResponse
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
 
     private lateinit var binding: FragmentScheduleTripBinding
 
-    private lateinit var viewModelTrip: TripViewModel
-    private lateinit var viewModel: ScheduleTripViewModel
+    @Inject
+    lateinit var viewModelTrip: TripViewModel
+    @Inject
+    lateinit var viewModel: ScheduleTripViewModel
+    @Inject
+    lateinit var updateTripViewModel: UpdateTripViewModel
+    @Inject
+    lateinit var cancelTripViewModel: CancelTripViewModel
     private lateinit var scheduleTripAdapter: ScheduleTripAdapter
-    private lateinit var updateTripViewModel: UpdateTripViewModel
-    private lateinit var cancelTripViewModel: CancelTripViewModel
+
 
     private var list = ArrayList<ScheduleTimeDuration>()
 
@@ -259,14 +266,9 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
         binding.rvSTDuration.adapter = scheduleTripAdapter
     }
 
-    private fun getViewModelScheduleTrip(): ScheduleTripViewModel {
-        viewModel = ViewModelProvider(this)[ScheduleTripViewModel::class.java]
-        return viewModel
-    }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun getApiData() {
-        viewModel = getViewModelScheduleTrip()
 
         val args = this.arguments
         val vehicleTypeID = args?.getString("vehicleTypeID")
@@ -351,15 +353,8 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
 
     }
 
-    private fun getViewModel(): TripViewModel {
-        viewModelTrip = ViewModelProvider(this)[TripViewModel::class.java]
-        return viewModelTrip
-    }
-
 
     private fun addTripApiCall() {
-        //view model init
-        viewModelTrip = getViewModel()
 
         //getting request data
 
@@ -457,13 +452,8 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
         }
     }
 
-    private fun getUpdateViewModel(): UpdateTripViewModel {
-        updateTripViewModel = ViewModelProvider(this)[UpdateTripViewModel::class.java]
-        return updateTripViewModel
-    }
 
     private fun setUPUpdateApiCall() {
-        updateTripViewModel = getUpdateViewModel()
         binding.btnSTConfirm.setOnClickListener {
             updateApiCall()
         }
@@ -515,13 +505,8 @@ class ScheduleTripFragment : BaseFragment(), GetDateAndTime, OnTripClick {
         })
     }
 
-    private fun getCancelViewModel(): CancelTripViewModel {
-        cancelTripViewModel = ViewModelProvider(this)[CancelTripViewModel::class.java]
-        return cancelTripViewModel
-    }
 
     private fun cancelTrip() {
-        cancelTripViewModel = getCancelViewModel()
         binding.btnSTCancelTrip.setOnClickListener {
             setUPCancelDialog()
         }

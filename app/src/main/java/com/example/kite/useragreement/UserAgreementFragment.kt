@@ -39,6 +39,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kite.R
 import com.example.kite.base.network.client.ResponseHandler
+import com.example.kite.base.network.model.ResponseData
 import com.example.kite.base.network.model.ResponseListData
 import com.example.kite.countrylisting.CountryListingAdapter
 import com.example.kite.countrylisting.CountryResponse
@@ -51,10 +52,12 @@ import com.example.kite.databinding.FragmentUserAgreementBinding
 import com.example.kite.extensions.setLocalImage
 import com.example.kite.useragreement.adapter.UserAgreementAdapter
 import com.example.kite.useragreement.model.GuestModel
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
+@AndroidEntryPoint
 
 class UserAgreementFragment : Fragment(), OnCellClicked, OnCellClickedRegion {
     private lateinit var binding: FragmentUserAgreementBinding
@@ -345,10 +348,10 @@ class UserAgreementFragment : Fragment(), OnCellClicked, OnCellClickedRegion {
                         Log.d("ViewTripFragment", "setObserverData: $state")
 
                     }
-                    is ResponseHandler.OnSuccessResponse<ResponseListData<CountryResponse>?> -> {
+                    is ResponseHandler.OnSuccessResponse<ResponseData<CountryResponse>?> -> {
                         Log.d("ViewTripFragment", "setObserverData: ${state.response?.data}")
                         if (state.response?.code == 200) {
-                            countryListingAdapter.setList(state.response.data as ArrayList<CountryResponse.Country>)
+                            countryListingAdapter.setList(state.response.data as ArrayList<CountryResponse>)
                             countryListingAdapter.notifyDataSetChanged()
                         }
                     }
@@ -408,7 +411,7 @@ class UserAgreementFragment : Fragment(), OnCellClicked, OnCellClickedRegion {
                         Log.d("ViewTripFragment", "setObserverData: ${state.response?.data}")
                         if (state.response?.code == 200) {
                             stateListingAdapter.setList(
-                                state.response.data?.getOrNull(0)?.stateList?.getOrNull(
+                                state.response.data?.getOrNull(
                                     0
                                 )?.states as ArrayList<String?>
                             )

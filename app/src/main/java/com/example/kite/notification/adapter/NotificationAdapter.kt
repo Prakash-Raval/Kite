@@ -12,7 +12,11 @@ import com.example.kite.databinding.ItemNotificationRecyclerBinding
 import com.example.kite.notification.listner.OnNotifyUpdate
 import com.example.kite.notification.model.NotificationResponse
 
-class NotificationAdapter(val context: Context, val onNotifyUpdate: OnNotifyUpdate) :
+
+class NotificationAdapter(
+    val context: Context,
+    val onNotifyUpdate: OnNotifyUpdate
+) :
     RecyclerView.Adapter<NotificationAdapter.ViewHolder>() {
 
     private var list = ArrayList<NotificationResponse.NotificationsData>()

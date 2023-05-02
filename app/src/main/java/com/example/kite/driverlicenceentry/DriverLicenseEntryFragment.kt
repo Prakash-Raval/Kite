@@ -15,8 +15,9 @@ import com.example.kite.utils.PrefManager
 import com.trulioo.normalizedapi.ApiCallback
 import com.trulioo.normalizedapi.ApiException
 import com.trulioo.normalizedapi.model.*
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class DriverLicenseEntryFragment : Fragment() {
     private lateinit var binding: FragmentDriverLicenseEntryBinding
     override fun onCreateView(

@@ -11,8 +11,9 @@ import com.example.kite.ridedetails.model.PrintReceiptRequest
 import com.example.kite.ridedetails.model.PrintReceiptResponse
 import com.example.kite.ridedetails.repository.PrintReceiptRepository
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class PrintReceiptViewModel : ViewModelBase() {
+class PrintReceiptViewModel @Inject constructor(): ViewModelBase() {
 
     private var repository = PrintReceiptRepository(ApiClient.getApiInterface())
     private var responseLiveData =

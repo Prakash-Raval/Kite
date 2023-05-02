@@ -8,7 +8,6 @@ import com.example.kite.base.network.model.ErrorWrapper
 import com.example.kite.base.network.model.HttpErrorCode
 import com.example.kite.base.network.model.ResponseData
 import com.example.kite.base.network.model.ResponseListData
-import com.example.kite.base.utils.DebugLog
 import com.google.gson.Gson
 import okhttp3.internal.http2.ConnectionShutdownException
 import retrofit2.Response
@@ -127,10 +126,10 @@ open class BaseRepository {
                 response.code() == 200 -> return ResponseHandler.OnSuccessResponse(response.body())
                 response.code() == 401 -> {
                     val body = response.errorBody()
-                    var message: String = ""
+                    val message: String
                     val bodyString = body?.string()
                     val responseWrapper =
-                        Gson().fromJson<ErrorWrapper>(bodyString, ErrorWrapper::class.java)
+                        Gson().fromJson(bodyString, ErrorWrapper::class.java)
                     message = if (responseWrapper.meta?.status_code == 401) {
                         if (responseWrapper.errors != null) {
                             HttpCommonMethod.getErrorMessage(responseWrapper.errors)
@@ -148,10 +147,10 @@ open class BaseRepository {
                 }
                 response.code() == 422 -> {
                     val body = response.errorBody()
-                    var message: String = ""
+                    val message: String
                     val bodyString = body?.string()
                     val responseWrapper =
-                        Gson().fromJson<ErrorWrapper>(bodyString, ErrorWrapper::class.java)
+                        Gson().fromJson(bodyString, ErrorWrapper::class.java)
                     message = if (responseWrapper.meta?.status_code == 422) {
                         if (responseWrapper.errors != null) {
                             HttpCommonMethod.getErrorMessage(responseWrapper.errors)
@@ -169,10 +168,10 @@ open class BaseRepository {
                 }
                 else -> {
                     val body = response.errorBody()
-                    var message = ""
+                    val message: String
                     val bodyString = body?.string()
                     val responseWrapper =
-                        Gson().fromJson<ErrorWrapper>(bodyString, ErrorWrapper::class.java)
+                        Gson().fromJson(bodyString, ErrorWrapper::class.java)
                     message = if (responseWrapper.meta?.status_code == 422) {
                         if (responseWrapper.errors != null) {
                             HttpCommonMethod.getErrorMessage(responseWrapper.errors)
@@ -182,14 +181,14 @@ open class BaseRepository {
                     } else {
                         responseWrapper.meta?.message.toString()
                     }
-                    if (message.isNullOrEmpty()) {
-                        return ResponseHandler.OnFailed(
+                    return if (message.isEmpty()) {
+                        ResponseHandler.OnFailed(
                             HttpErrorCode.EMPTY_RESPONSE.code,
                             message,
                             responseWrapper.meta?.message_code.toString()
                         )
                     } else {
-                        return ResponseHandler.OnFailed(
+                        ResponseHandler.OnFailed(
                             HttpErrorCode.NOT_DEFINED.code,
                             message,
                             responseWrapper.meta?.message_code.toString()
@@ -209,22 +208,6 @@ open class BaseRepository {
             } else {
                 ResponseHandler.OnFailed(HttpErrorCode.NOT_DEFINED.code, "", "")
             }
-            /* if (e is CancellationException) {
-                 return ResponseHandler.OnFailed(HttpErrorCode.NO_CONNECTION.code, "")
-             } else {
-                 return if (e is SocketTimeoutException ||
-                     e is UnknownHostException ||
-                     e is IOException ||
-                     e is NetworkErrorException ||
-                     e is ConnectionShutdownException
-                 ) {
-                     ResponseHandler.OnFailed(HttpErrorCode.NO_CONNECTION.code, "")
-                 } else {
-                     ResponseHandler.OnFailed(HttpErrorCode.NOT_DEFINED.code, "")
-                 }
-             }*/
         }
-
-
     }
 }

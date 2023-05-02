@@ -10,9 +10,11 @@ import com.example.kite.base.network.model.ResponseData
 import com.example.kite.scheduletrip.model.CancelTripRequest
 import com.example.kite.scheduletrip.model.CancelTripResponse
 import com.example.kite.scheduletrip.repository.CancelTripRepository
+import kotlinx.coroutines.GlobalScope.coroutineContext
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CancelTripViewModel : ViewModelBase() {
+class CancelTripViewModel @Inject constructor(): ViewModelBase() {
 
     var repository = CancelTripRepository(ApiClient.getApiInterface())
     var responseLiveData = MutableLiveData<ResponseHandler<ResponseData<CancelTripResponse>?>>()

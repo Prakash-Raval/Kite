@@ -11,8 +11,9 @@ import com.example.kite.dateandtime.model.PromoCodeRequest
 import com.example.kite.dateandtime.model.PromoCodeResponse
 import com.example.kite.dateandtime.repository.PromoCodeRepository
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class PromoCodeViewModel : ViewModelBase() {
+class PromoCodeViewModel @Inject constructor() : ViewModelBase() {
 
     var observableFieldPromoCode: ObservableField<String> = ObservableField("")
     var promoCodeRequest: PromoCodeRequest? = null

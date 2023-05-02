@@ -24,17 +24,21 @@ import com.example.kite.paymentsummary.model.AddSessionResponse
 import com.example.kite.paymentsummary.viewmodel.AddSessionViewModel
 import com.example.kite.scanqr.model.ScanQRResponse
 import com.example.kite.utils.PrefManager
+import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class PaymentSummaryFragment : BaseFragment() {
 
     /*
     * variables
     * */
     private lateinit var binding: FragmentPaymentSummaryBinding
-    private lateinit var viewModelPromoCode: PromoCodeViewModel
+
+    @Inject
+    lateinit var viewModelPromoCode: PromoCodeViewModel
     val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
     private lateinit var viewModelSession: AddSessionViewModel
     val bundle = Bundle()
@@ -126,20 +130,11 @@ class PaymentSummaryFragment : BaseFragment() {
         }
     }
 
-    /*
-    * view model for promo code api
-    * */
-
-    private fun getViewModel(): PromoCodeViewModel {
-        viewModelPromoCode = ViewModelProvider(this)[PromoCodeViewModel::class.java]
-        return viewModelPromoCode
-    }
 
     /*
     * api call and observer for promo code
     * */
     private fun setObserversPromoCode() {
-        viewModelPromoCode = getViewModel()
         binding.viewModelPromoCode = viewModelPromoCode
 
         if (token != null) {

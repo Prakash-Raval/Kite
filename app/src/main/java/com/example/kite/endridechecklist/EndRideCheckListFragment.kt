@@ -30,6 +30,7 @@ import com.example.kite.login.model.LoginResponse
 import com.example.kite.utils.FullScreenDialog
 import com.example.kite.utils.PrefManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -41,7 +42,9 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import javax.inject.Inject
 
+@AndroidEntryPoint
 
 class EndRideCheckListFragment : BaseFragment() {
 
@@ -49,7 +52,7 @@ class EndRideCheckListFragment : BaseFragment() {
     * variables
     * */
     private lateinit var binding: FragmentEndRideCheckListBinding
-    private lateinit var viewModelEndRide: EndRideViewModel
+    @Inject lateinit var viewModelEndRide: EndRideViewModel
     private var profileImagePath: String? = ""
     private var latString = "23.033863"
     private var longString = "72.585022"
@@ -139,21 +142,12 @@ class EndRideCheckListFragment : BaseFragment() {
         binding.inETCBar.txtToolbarHeader.setText(R.string.end_ride_check_List)
     }
 
-    /*
-    assigning view model for end ride
-    */
-    private fun getViewModelEndRide(): EndRideViewModel {
-        viewModelEndRide = ViewModelProvider(this)[EndRideViewModel::class.java]
-        return viewModelEndRide
-    }
 
 
     /*
     * getting request data for end trip view model
     * */
     private fun getEndRideRequest() {
-        //getting view model
-        viewModelEndRide = getViewModelEndRide()
 
         /*
         * getting request values for api call

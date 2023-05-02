@@ -19,8 +19,9 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
+import javax.inject.Inject
 
-class ViewProfileViewModel : ViewModelBase() {
+class ViewProfileViewModel @Inject constructor() : ViewModelBase() {
 
     private var repository = ViewProfileRepository(ApiClient.getApiInterface())
     var responseDataProfile =
@@ -28,7 +29,7 @@ class ViewProfileViewModel : ViewModelBase() {
 
     var responseDataUpdateProfile =
         MutableLiveData<ResponseHandler<ResponseData<UpdateProfileResponse>?>>()
-    private lateinit var viewProfile:ViewProfileResponse
+    private lateinit var viewProfile: ViewProfileResponse
     var token = ""
     fun getToken(token: String) {
         this.token = token
@@ -42,7 +43,8 @@ class ViewProfileViewModel : ViewModelBase() {
     }
 
     fun checkValidation() {
-        viewProfile = (PrefManager.get("ViewProfileResponse") as ViewProfileResponse?)?:ViewProfileResponse()
+        viewProfile = (PrefManager.get("ViewProfileResponse") as ViewProfileResponse?)
+            ?: ViewProfileResponse()
         when {
             !Validation.isNotNull(viewProfile.customerFirstName.toString().trim()) -> {
                 showSnackBarMessage("Please enter first name")

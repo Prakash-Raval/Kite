@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 object Util {
+
     fun getDateFromTimeString(
         millis: Long,
         expectedFormat: String = "yyyy-MM-dd"
@@ -23,11 +24,12 @@ object Util {
         return dateString
     }
 
+
     fun getMillisFromTime(
         timeString: String,
-        timeformat: String = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        timeFormat: String = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
     ): Long {
-        val sdf: DateFormat = SimpleDateFormat(timeformat, Locale.getDefault())
+        val sdf: DateFormat = SimpleDateFormat(timeFormat, Locale.getDefault())
         val date: Date?
         var millis = 0L
         try {

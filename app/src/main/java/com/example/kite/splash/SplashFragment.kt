@@ -12,9 +12,11 @@ import com.example.kite.R
 import com.example.kite.databinding.FragmentSplashBinding
 import com.example.kite.login.model.LoginResponse
 import com.example.kite.utils.PrefManager
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 
 class SplashFragment : Fragment() {
     private lateinit var binding: FragmentSplashBinding

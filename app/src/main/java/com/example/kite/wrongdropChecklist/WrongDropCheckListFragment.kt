@@ -9,22 +9,19 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.kite.R
 import com.example.kite.databinding.FragmentWrongDropCheckListBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class WrongDropCheckListFragment : Fragment() {
 
     private lateinit var binding: FragmentWrongDropCheckListBinding
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(
-            LayoutInflater.from(context),
-            R.layout.fragment_wrong_drop_check_list,
-            container,
-            false
+            LayoutInflater.from(context), R.layout.fragment_wrong_drop_check_list, container, false
         )
         setUPToolbar()
         return binding.root

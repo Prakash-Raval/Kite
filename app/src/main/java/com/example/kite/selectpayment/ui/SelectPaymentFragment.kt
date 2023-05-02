@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.kite.R
 import com.example.kite.base.network.client.ResponseHandler
@@ -21,11 +20,15 @@ import com.example.kite.selectpayment.model.GetCardRequest
 import com.example.kite.selectpayment.model.GetCardResponse
 import com.example.kite.selectpayment.viewmodel.GetCardViewModel
 import com.example.kite.utils.PrefManager
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class SelectPaymentFragment : BaseFragment() {
     private lateinit var binding: FragmentSelectPaymentBinding
-    private lateinit var viewModel: GetCardViewModel
+
+    @Inject
+    lateinit var viewModel: GetCardViewModel
     var cardList = ArrayList<GetCardResponse.Detail>()
 
     override fun onCreateView(
@@ -82,15 +85,9 @@ class SelectPaymentFragment : BaseFragment() {
         binding.inSelectPaymentBar.txtToolbarHeader.setText(R.string.select_payment)
     }
 
-    //getting the view model
-    private fun getViewModel(): GetCardViewModel {
-        viewModel = ViewModelProvider(this)[GetCardViewModel::class.java]
-        return viewModel
-    }
 
     //collecting request data
     private fun getApiData() {
-        viewModel = getViewModel()
         //get request data
         val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")
 

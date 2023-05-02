@@ -2,6 +2,7 @@ package com.example.kite.program.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
@@ -9,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.kite.databinding.ItemThirdpartyListBinding
 import com.example.kite.program.lis.OnThirdPartyListing
 import com.example.kite.program.model.ThirdPartyListResponse
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ThirdPartyListAdapter(
     private var thirdPartyList: ArrayList<ThirdPartyListResponse>,
@@ -53,6 +56,8 @@ class ThirdPartyListAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(position)
         holder.binding.isSelected = selectedItem == position
+
+
     }
 
     override fun getFilter(): Filter {
@@ -69,8 +74,10 @@ class ThirdPartyListAdapter(
                                 ?.contains(constraint.toString().lowercase()) == true
                         ) {
                             resultList.add(row)
+
                         }
                     }
+
                     resultList
                 }
                 val results = FilterResults()

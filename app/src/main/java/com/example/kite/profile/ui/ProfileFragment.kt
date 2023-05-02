@@ -10,9 +10,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kite.R
@@ -34,13 +34,20 @@ import com.example.kite.profile.model.ViewProfileResponse
 import com.example.kite.profile.viewmodel.ViewProfileViewModel
 import com.example.kite.setting.SettingFragmentDirections
 import com.example.kite.utils.PrefManager
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 
 class ProfileFragment : BaseFragment(), OnCellClickedRegion {
 
     private lateinit var binding: FragmentProfileBinding
-    private lateinit var viewModelProfile: ViewProfileViewModel
-    private lateinit var regionViewModel: RegionViewModel
+
+    @Inject
+    lateinit var viewModelProfile: ViewProfileViewModel
+
+    @Inject
+    lateinit var regionViewModel: RegionViewModel
     private lateinit var countryListingAdapter: CountryListingAdapter
     private lateinit var stateListingAdapter: StateListingAdapter
     private lateinit var builder: AlertDialog
@@ -66,8 +73,6 @@ class ProfileFragment : BaseFragment(), OnCellClickedRegion {
 
     //getting data from api
     private fun getCustomerProfile() {
-        viewModelProfile = getViewModelProfile()
-
         /*
         * getting data for profile view model request
         * */
@@ -167,6 +172,7 @@ class ProfileFragment : BaseFragment(), OnCellClickedRegion {
 
     //opening dialog for country list
     private fun openDialogCountry(mCountry: String) {
+        getCountryData()
         builder = AlertDialog.Builder(requireContext())
             .create()
         builder.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -179,31 +185,18 @@ class ProfileFragment : BaseFragment(), OnCellClickedRegion {
 
         builder.setCanceledOnTouchOutside(false)
         builder.show()
-        getCountryData()
-    }
-
-    private fun getViewModel(): RegionViewModel {
-        regionViewModel = ViewModelProvider(this)[RegionViewModel::class.java]
-        return regionViewModel
-    }
-
-    private fun getViewModelProfile(): ViewProfileViewModel {
-        viewModelProfile = ViewModelProvider(this)[ViewProfileViewModel::class.java]
-        return viewModelProfile
     }
 
 
     // getting country data from the api
     private fun getCountryData() {
-        regionViewModel = getViewModel()
-//        regionViewModel.getCountryRequest()
         setObserverCountry()
     }
 
     /*
     * setting observer for country
     * */
-    private fun setObserverCountry(){
+    private fun setObserverCountry() {
         regionViewModel.responseLiveDataCountry.observe(viewLifecycleOwner, Observer { state ->
             if (state == null) {
                 return@Observer
@@ -216,13 +209,18 @@ class ProfileFragment : BaseFragment(), OnCellClickedRegion {
                     Log.d("ProfileFragment", "setObserverData: $state")
 
                 }
-                is ResponseHandler.OnSuccessResponse<ResponseListData<CountryResponse>?> -> {
+                is ResponseHandler.OnSuccessResponse<ResponseData<CountryResponse>?> -> {
                     Log.d(
                         "ProfileFragment",
-                        "setObserverData: ${state.response?.data}"
+                        "setObserverData: ${state.response?.countryList}"
                     )
+                    Toast.makeText(
+                        requireContext(),
+                        "${state.response?.countryList}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     if (state.response?.code == 200) {
-                        countryListingAdapter.setList(state.response.data as ArrayList<CountryResponse.Country>)
+                        countryListingAdapter.setList(state.response.countryList as ArrayList<CountryResponse>)
                         countryListingAdapter.notifyDataSetChanged()
                     }
                 }
@@ -233,7 +231,6 @@ class ProfileFragment : BaseFragment(), OnCellClickedRegion {
     // getting country data from the api
     @SuppressLint("NotifyDataSetChanged")
     private fun getStateData() {
-        regionViewModel = getViewModel()
         regionViewModel.getStateRequest(StateRequest(binding.edtCountry.text.toString().trim()))
         regionViewModel.responseLiveDataState.observe(viewLifecycleOwner, Observer { state ->
             if (state == null) {
@@ -251,9 +248,7 @@ class ProfileFragment : BaseFragment(), OnCellClickedRegion {
                     Log.d("ProfileFragment", "setObserverData: ${state.response?.data}")
                     if (state.response?.code == 200) {
                         stateListingAdapter.setList(
-                            state.response.data?.getOrNull(0)?.stateList?.getOrNull(
-                                0
-                            )?.states as ArrayList<String?>
+                            state.response.data?.getOrNull(0)?.states as ArrayList<String?>
                         )
                         stateListingAdapter.notifyDataSetChanged()
                     }
@@ -270,6 +265,7 @@ class ProfileFragment : BaseFragment(), OnCellClickedRegion {
         builder.dismiss()
     }
 
+    //logout function
     private fun logout() {
         PrefManager.remove()
         findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToWelcomeFragment())

@@ -60,6 +60,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.*
+import javax.inject.Singleton
 
 interface Api {
 
@@ -167,7 +168,7 @@ interface Api {
     suspend fun getOnGoingRide(@Body request: OnGoingRideRequest): Response<ResponseData<OnGoingRideResponse>>
 
     @GET(Constants.COUNTRY_LIST)
-    suspend fun getCountryList(): Response<ResponseListData<CountryResponse>>
+    suspend fun getCountryList(): Response<ResponseData<CountryResponse>>
 
     @POST(Constants.STATE_LIST)
     suspend fun getStateList(@Body stateRequest: StateRequest): Response<ResponseListData<StateResponse>>
@@ -199,6 +200,4 @@ interface Api {
 
     @POST(Constants.CHANGE_PASSWORD)
     suspend fun changePassword(@Body changePasswordRequest: ChangePasswordRequest): Response<ResponseData<EmptyResponse>>
-
-
 }

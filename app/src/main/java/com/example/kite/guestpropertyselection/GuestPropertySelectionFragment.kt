@@ -28,9 +28,10 @@ import com.example.kite.R
 import com.example.kite.databinding.FragmentGuestPropertySelectionBinding
 import com.example.kite.extensions.onRightDrawableClicked
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
-
+@AndroidEntryPoint
 class GuestPropertySelectionFragment : Fragment() {
 
     private lateinit var binding: FragmentGuestPropertySelectionBinding

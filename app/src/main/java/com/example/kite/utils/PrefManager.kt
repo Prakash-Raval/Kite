@@ -5,9 +5,11 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.example.kite.profile.model.ViewProfileResponse
 import com.google.gson.GsonBuilder
+import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 object PrefManager {
-
     lateinit var preferences: SharedPreferences
     private const val PREF_NAME = "KITE_SHARED_PREF"
 

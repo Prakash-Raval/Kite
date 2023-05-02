@@ -13,7 +13,7 @@ class CountryListingAdapter(
     RecyclerView.Adapter<CountryListingAdapter.ViewHolder>() {
 
     private lateinit var binding: ItemCountryListBinding
-    private var list = ArrayList<CountryResponse.Country>()
+    private var list = ArrayList<CountryResponse>()
     var selectedItem = 1
 
     inner class ViewHolder(val binding: ItemCountryListBinding) :
@@ -36,7 +36,7 @@ class CountryListingAdapter(
         }
     }
 
-    fun setList(list: ArrayList<CountryResponse.Country>) {
+    fun setList(list: ArrayList<CountryResponse>) {
         this.list = list
     }
 

@@ -10,9 +10,11 @@ import com.example.kite.base.network.model.ResponseData
 import com.example.kite.selectpayment.model.GetCardRequest
 import com.example.kite.selectpayment.model.GetCardResponse
 import com.example.kite.selectpayment.repository.GetCardRepository
+import kotlinx.coroutines.GlobalScope.coroutineContext
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class GetCardViewModel : ViewModelBase() {
+class GetCardViewModel @Inject constructor(): ViewModelBase() {
 
     private var repository = GetCardRepository(ApiClient.getApiInterface())
     private var responseLiveData =

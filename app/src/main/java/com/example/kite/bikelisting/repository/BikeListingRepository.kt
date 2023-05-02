@@ -8,15 +8,20 @@ import com.example.kite.bikelisting.model.BikeListingRequest
 import com.example.kite.bikelisting.model.BikeListingResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 class BikeListingRepository(val api: Api) : BaseRepository() {
 
-    suspend fun getBikeListing(request: BikeListingRequest): ResponseHandler<ResponseData<BikeListingResponse>?> {
+    suspend fun getBikeListing(request: BikeListingRequest):
+            ResponseHandler<ResponseData<BikeListingResponse>?> {
         return withContext(Dispatchers.Default) {
             return@withContext makeAPICall(
                 call = {
                     api.getBikeListing(request)
                 })
+
         }
+
     }
 }
+

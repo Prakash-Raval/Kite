@@ -12,9 +12,11 @@ import com.example.kite.notification.model.NotificationResponse
 import com.example.kite.notification.model.UpdateNotificationRequest
 import com.example.kite.notification.model.UpdateNotificationResponse
 import com.example.kite.notification.repository.NotificationRepository
+import kotlinx.coroutines.GlobalScope.coroutineContext
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class NotificationViewModel : ViewModelBase() {
+class NotificationViewModel @Inject constructor(): ViewModelBase() {
 
     private var repository = NotificationRepository(ApiClient.getApiInterface())
     private var responseLiveData =
@@ -36,12 +38,6 @@ class NotificationViewModel : ViewModelBase() {
     }
 
 
-    /*fun updateNotification(token: String, read: String, notify: String) {
-        viewModelScope.launch(coroutineContext) {
-            responseLiveDataUpdate.value = ResponseHandler.Loading
-            responseLiveDataUpdate.value = repository.callApiNotificationUpdate(token, read, notify)
-        }
-    }*/
 
     fun updateNotification(req: UpdateNotificationRequest) {
         viewModelScope.launch(coroutineContext) {

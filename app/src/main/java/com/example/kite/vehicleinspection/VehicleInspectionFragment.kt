@@ -13,6 +13,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.kite.R
 import com.example.kite.databinding.DialogViResendCodeBinding
 import com.example.kite.databinding.FragmentVehicleInspectionBinding
+import dagger.hilt.android.AndroidEntryPoint
+
+@AndroidEntryPoint
 
 class VehicleInspectionFragment : Fragment() {
 

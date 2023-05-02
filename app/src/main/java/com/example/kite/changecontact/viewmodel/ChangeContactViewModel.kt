@@ -12,9 +12,10 @@ import com.example.kite.changecontact.model.ChangeContactRequest
 import com.example.kite.changecontact.model.ChangeContactResponse
 import com.example.kite.changecontact.repository.ChangeContactRepository
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
-class ChangeContactViewModel : ViewModelBase() {
+class ChangeContactViewModel @Inject constructor() : ViewModelBase() {
     private var repository = ChangeContactRepository(ApiClient.getApiInterface())
     var responseLiveData =
         MutableLiveData<ResponseHandler<ResponseData<ChangeContactResponse>?>>()

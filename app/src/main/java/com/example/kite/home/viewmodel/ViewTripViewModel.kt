@@ -12,8 +12,9 @@ import com.example.kite.home.repository.ViewTripRepository
 import com.example.kite.reservation.model.ListReservationRequest
 import com.example.kite.reservation.model.ListReservationResponse
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ViewTripViewModel : ViewModelBase() {
+class ViewTripViewModel @Inject constructor() : ViewModelBase() {
 
     val repository = ViewTripRepository(ApiClient.getApiInterface())
     val responseLiveData =

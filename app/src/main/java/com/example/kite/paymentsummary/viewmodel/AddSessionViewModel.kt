@@ -11,8 +11,9 @@ import com.example.kite.paymentsummary.model.AddSessionResponse
 import com.example.kite.paymentsummary.repository.AddSessionRepository
 import kotlinx.coroutines.launch
 import okhttp3.RequestBody
+import javax.inject.Inject
 
-class AddSessionViewModel : ViewModelBase() {
+class AddSessionViewModel @Inject constructor(): ViewModelBase() {
 
     private var repository = AddSessionRepository(ApiClient.getApiInterface())
     private var responseLiveData =

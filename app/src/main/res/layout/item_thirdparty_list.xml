@@ -62,6 +62,22 @@
             bind:text="Brainvire Hotel and Resort" />
 
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtListEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:fontFamily="@font/avenir_black"
+            android:gravity="center"
+            android:text="@string/no_data_found"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14sdp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtListLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -23,15 +23,17 @@ import com.example.kite.databinding.ItemVehicleListingBinding
 import com.example.kite.extensions.DateAndTime
 import com.example.kite.login.model.LoginResponse
 import com.example.kite.utils.PrefManager
-
-
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
+@AndroidEntryPoint
 class BikeListingFragment : BaseFragment() {
 
     /*
     * variables
     * */
     private lateinit var binding: FragmentBikeListingBinding
-    private lateinit var viewModel: BikeListingViewModel
+
+    @Inject lateinit var viewModel: BikeListingViewModel
     val bundle = Bundle()
     var vehicleList = ArrayList<BikeListingResponse.VehicleDetail>()
 
@@ -79,14 +81,6 @@ class BikeListingFragment : BaseFragment() {
         }
     }
 
-    /*
-    *
-    * init view model for vehicle listing
-    * */
-    private fun getViewModel(): BikeListingViewModel {
-        viewModel = ViewModelProvider(this)[BikeListingViewModel::class.java]
-        return viewModel
-    }
 
     /*
     *
@@ -195,7 +189,6 @@ class BikeListingFragment : BaseFragment() {
     *
     * */
     private fun getData() {
-        viewModel = getViewModel()
         val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
         val thirdPartyID = PrefManager.get<String>("ThirdPartyID")
         viewModel.getAddCardRequest(

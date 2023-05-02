@@ -16,7 +16,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.kite.R
 import com.example.kite.databinding.FragmentLicenceAgreementBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LicenceAgreementFragment : Fragment() {
     private lateinit var binding: FragmentLicenceAgreementBinding
     override fun onCreateView(

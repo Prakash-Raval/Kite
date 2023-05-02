@@ -3,8 +3,10 @@ package com.example.kite.countrylisting
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+/*@JsonIgnoreProperties(ignoreUnknown = true)
 data class CountryResponse(
     @JsonProperty("country_list")
     var countryList: List<Country>
@@ -15,12 +17,12 @@ data class CountryResponse(
         @JsonProperty("country")
         var country: String? = null
     )
-}
-/*
-@JsonIgnoreProperties(ignoreUnknown = true)
+}*/
 data class CountryResponse(
-    @JsonProperty("code")
+    @SerializedName("code")
+    @Expose
     var code: String? = null,
-    @JsonProperty("country")
+    @SerializedName("country")
+    @Expose
     var country: String? = null
-)*/
+)

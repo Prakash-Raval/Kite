@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.kite.R
 import com.example.kite.base.network.client.ResponseHandler
@@ -21,11 +20,16 @@ import com.example.kite.reservation.listner.OnReservationViewClick
 import com.example.kite.reservation.model.ListReservationRequest
 import com.example.kite.reservation.model.ListReservationResponse
 import com.example.kite.utils.PrefManager
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
+
+@AndroidEntryPoint
 
 class ReservationFragment : BaseFragment(), OnReservationViewClick {
 
     private lateinit var binding: FragmentReservationBinding
-    private lateinit var viewModel: ViewTripViewModel
+    @Inject
+    lateinit var viewModel: ViewTripViewModel
     private lateinit var adapter: ReservationAdapter
     val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
     private var reservationId = ""
@@ -49,10 +53,6 @@ class ReservationFragment : BaseFragment(), OnReservationViewClick {
         binding.rvReservationData.adapter = adapter
     }
 
-    private fun getViewModel(): ViewTripViewModel {
-        viewModel = ViewModelProvider(this)[ViewTripViewModel::class.java]
-        return viewModel
-    }
 
     private fun navigation() {
         binding.reservationBar.imgBack.setOnClickListener {
@@ -67,7 +67,6 @@ class ReservationFragment : BaseFragment(), OnReservationViewClick {
     //getting api data
     private fun getData() {
 
-        viewModel = getViewModel()
 
         val thirdPartyId = PrefManager.get<String>("ThirdPartyID")
         //getting required data to generate response

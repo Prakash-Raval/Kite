@@ -2,17 +2,18 @@ package com.example.kite.changepassword.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.kite.base.network.model.EmptyResponse
 import com.example.kite.base.ViewModelBase
 import com.example.kite.base.network.ApiClient
 import com.example.kite.base.network.client.ResponseHandler
+import com.example.kite.base.network.model.EmptyResponse
 import com.example.kite.base.network.model.ResponseData
 import com.example.kite.base.utils.Validation
 import com.example.kite.changepassword.model.ChangePasswordRequest
 import com.example.kite.changepassword.repository.ChangePasswordRepository
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ChangePasswordViewModel : ViewModelBase() {
+class ChangePasswordViewModel @Inject constructor() : ViewModelBase() {
     private var repository = ChangePasswordRepository(ApiClient.getApiInterface())
     var responseLiveData =
         MutableLiveData<ResponseHandler<ResponseData<EmptyResponse>?>>()

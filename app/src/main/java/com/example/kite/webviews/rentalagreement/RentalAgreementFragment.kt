@@ -13,8 +13,10 @@ import androidx.navigation.fragment.findNavController
 import com.example.kite.R
 import com.example.kite.constants.Constants
 import com.example.kite.databinding.FragmentRentalAgreementBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 
 class RentalAgreementFragment : Fragment() {
     private lateinit var binding: FragmentRentalAgreementBinding

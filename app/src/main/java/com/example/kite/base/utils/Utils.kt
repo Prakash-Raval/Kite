@@ -11,8 +11,7 @@ object Utils {
      * @return replacedString
      */
     fun removeArrayBrace(message: String): String {
-        val replaceString: String = message.replace("[\"", "").replace("\"]", "").replace(".", "")
-        return replaceString
+        return message.replace("[\"", "").replace("\"]", "").replace(".", "")
     }
 
 }

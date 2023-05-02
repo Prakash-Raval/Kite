@@ -10,8 +10,9 @@ import com.example.kite.scheduletrip.model.ScheduleTripRequest
 import com.example.kite.scheduletrip.model.ScheduleTripResponse
 import com.example.kite.scheduletrip.repository.ScheduleTripRepository
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ScheduleTripViewModel : ViewModelBase() {
+class ScheduleTripViewModel @Inject constructor(): ViewModelBase() {
 
     private var repository = ScheduleTripRepository(ApiClient.getApiInterface())
     var responseLiveData =

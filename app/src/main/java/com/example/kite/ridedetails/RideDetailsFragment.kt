@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.kite.R
@@ -27,16 +26,22 @@ import com.example.kite.ridedetails.viewmodel.RideDetailViewModel
 import com.example.kite.utils.PrefManager
 import com.example.kite.utils.Util
 import com.google.common.primitives.Bytes
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.*
+import javax.inject.Inject
 
+@AndroidEntryPoint
 
 class RideDetailsFragment : BaseFragment() {
 
     private lateinit var binding: FragmentRideDetailsBinding
-    private lateinit var viewModel: RideDetailViewModel
-    private lateinit var viewModelReceipt: PrintReceiptViewModel
+
+    @Inject
+    lateinit var viewModel: RideDetailViewModel
+    @Inject
+    lateinit var viewModelReceipt: PrintReceiptViewModel
     lateinit var list: List<Int>
     private var bookingID = ""
 
@@ -82,24 +87,11 @@ class RideDetailsFragment : BaseFragment() {
         }
     }
 
-    /*
-    * getting the viewModel
-    * */
-    private fun getViewModel(): RideDetailViewModel {
-        viewModel = ViewModelProvider(this)[RideDetailViewModel::class.java]
-        return viewModel
-    }
-
-    private fun getViewModelReceipt(): PrintReceiptViewModel {
-        viewModelReceipt = ViewModelProvider(this)[PrintReceiptViewModel::class.java]
-        return viewModelReceipt
-    }
 
     /*
     * request for api
     * */
     private fun getRideHistoryData() {
-        viewModel = getViewModel()
         val args = this.arguments
         bookingID = args?.getString("BookingID").toString()
         val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken
@@ -121,7 +113,6 @@ class RideDetailsFragment : BaseFragment() {
     * getting receipt api data
     * */
     private fun getReceiptData() {
-        viewModelReceipt = getViewModelReceipt()
         val args = this.arguments
         val bookingID = args?.getString("BookingID")
         val token = PrefManager.get<LoginResponse>("LOGIN_RESPONSE")?.accessToken

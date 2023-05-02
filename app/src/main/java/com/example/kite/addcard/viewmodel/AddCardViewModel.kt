@@ -11,8 +11,9 @@ import com.example.kite.base.network.ApiClient
 import com.example.kite.base.network.client.ResponseHandler
 import com.example.kite.base.network.model.ResponseData
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class AddCardViewModel : ViewModelBase() {
+class AddCardViewModel @Inject constructor(): ViewModelBase() {
 
     private var repository = AddCardRepository(ApiClient.getApiInterface())
     private var responseLiveData =

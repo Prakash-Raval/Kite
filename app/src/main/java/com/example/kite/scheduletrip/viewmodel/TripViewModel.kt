@@ -9,9 +9,11 @@ import com.example.kite.base.network.model.ResponseData
 import com.example.kite.scheduletrip.model.TripRequest
 import com.example.kite.scheduletrip.model.TripResponse
 import com.example.kite.scheduletrip.repository.TripRepository
+import kotlinx.coroutines.GlobalScope.coroutineContext
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class TripViewModel : ViewModelBase() {
+class TripViewModel @Inject constructor(): ViewModelBase() {
 
     var repository = TripRepository(ApiClient.getApiInterface())
     var responseLiveData = MutableLiveData<ResponseHandler<ResponseData<TripResponse>?>>()

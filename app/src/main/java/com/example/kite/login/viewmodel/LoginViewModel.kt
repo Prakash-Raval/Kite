@@ -14,12 +14,13 @@ import com.example.kite.login.model.LoginResponse
 import com.example.kite.login.repository.LoginRepository
 import com.example.kite.utils.ErrorEvent
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LoginViewModel : ViewModelBase() {
+class LoginViewModel @Inject constructor() : ViewModelBase() {
     //setting up response data
 
     var responseLiveData = MutableLiveData<ResponseHandler<ResponseData<LoginResponse>?>>()
-    var userModuleRepository: LoginRepository? =
+    private var userModuleRepository: LoginRepository? =
         LoginRepository(ApiClient.getApiInterface())
     val password: ObservableField<String> = ObservableField("")
     var loginData = LoginRequest()
